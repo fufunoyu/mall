@@ -10,7 +10,7 @@ public class Permission {
     /**
      * 权限id
      */
-    private String pid;
+    private Long id;
     /**
      * 权限名
      */

@@ -14,7 +14,7 @@ public class User {
     /**
      * 用户id
      */
-    private String uid;
+    private Long id;
     /**
      * 用户名
      */

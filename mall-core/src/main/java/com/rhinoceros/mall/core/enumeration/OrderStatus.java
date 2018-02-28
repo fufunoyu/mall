@@ -18,7 +18,12 @@ public enum OrderStatus {
     SHIPPED,
 
     /**
-     * 已结束
+     * 已完成
      */
-    FINISHED
+    COMPLETED,
+
+    /**
+     * 取消
+     */
+    CANCEL,
 }

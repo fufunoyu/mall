@@ -3,7 +3,7 @@ package com.rhinoceros.mall.core.enumeration;
 /**
  * 商品状态枚举
  */
-public enum GoodsStatus {
+public enum ProductStatus {
     /**
      *上架
      */

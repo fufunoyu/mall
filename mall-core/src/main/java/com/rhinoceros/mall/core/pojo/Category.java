@@ -6,17 +6,17 @@ import lombok.Data;
  * 商品分类实体
  */
 @Data
-public class GoodType {
+public class Category {
     /**
      * 商品分类id
      */
-    private String gtid;
+    private Long id;
     /**
      * 分类名称
      */
     private String name;
     /**
-     * 上级分类
+     * 上级分类id
      */
-    private String parentId;
+    private Long parentId;
 }

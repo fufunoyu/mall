@@ -10,11 +10,11 @@ public class RolePermission {
     /**
      * 角色id
       */
-    private String rid;
+    private Long roleId;
     /**
      * 权限id
      */
-    private String pid;
+    private Long permissionId;
 
 
 }

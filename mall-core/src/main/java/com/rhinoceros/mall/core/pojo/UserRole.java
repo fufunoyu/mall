@@ -10,9 +10,9 @@ public class UserRole {
     /**
      * 角色id
      */
-    private String rid;
+    private Long roleId;
     /**
      * 用户id
      */
-    private String uid;
+    private Long userId;
 }

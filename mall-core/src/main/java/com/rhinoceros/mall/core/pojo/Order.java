@@ -14,7 +14,7 @@ public class Order {
     /**
      * 订单id
      */
-    private String oid;
+    private Long id;
     /**
      * 订单状态
      */
@@ -27,23 +27,35 @@ public class Order {
      * 创建时间
      */
     private Date createAt;
+
+    /**
+     * 支付时间
+     */
+    private Date payAt;
     /**
      * 发货时间
      */
-    private Date deleverAt;
+    private Date deliverAt;
+
+    /**
+     * 订单完成时间，包括退货、收货等是订单结束的时间
+     */
+    private Date finishAt;
+
     /**
      *总价
      */
     private BigDecimal totalPrice;
+
     /**
      * 快递单号
      */
     private String expressNum;
+
     /**
      * 订单对应的用户id
      */
     private String userId;
-
 
 }
 
