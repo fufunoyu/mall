@@ -1,6 +1,3 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
@@ -8,7 +5,7 @@
 <script>
  
 $(function(){
-    var stock = ${p.stock};
+    var stock = ${productVo.getProduct().getStoreNum()};
     $(".productNumberSetting").keyup(function(){
         var num= $(".productNumberSetting").val();
         num = parseInt(num);
@@ -141,10 +138,10 @@ $(function(){
 <div class="imgAndInfo">
  
     <div class="imgInimgAndInfo">
-        <img src="img/productSingle/${p.firstProductImage.id}.jpg" class="bigImg">
+        <img src="img/productSingle/${productVo.getFirstImageUrls()}.jpg" class="bigImg">
         <div class="smallImageDiv">
-            <c:forEach items="${p.productSingleImages}" var="pi">
-                <img src="img/productSingle_small/${pi.id}.jpg" bigImageURL="img/productSingle/${pi.id}.jpg" class="smallImage">
+            <c:forEach items="${productVo.getImagesUrls()}" var="pi"> <%-- 多个imageUrls还不知道什么格式--%>
+                <img src="img/productSingle_small/${pi}.jpg" bigImageURL="img/productSingle/${pi}.jpg" class="smallImage">
             </c:forEach>
         </div>
         <div class="img4load hidden" ></div>
@@ -153,20 +150,20 @@ $(function(){
     <div class="infoInimgAndInfo">
          
         <div class="productTitle">
-            ${p.name}
+            ${productVo.getProduct().getName()}
         </div>
         <div class="productSubTitle">
-            ${p.subTitle} 
+            ${productVo.getProduct().getName()}  <%-- 商品副标题数据库中还没写--%>
         </div>
          
         <div class="productPrice">
-            <div class="juhuasuan">
-                <span class="juhuasuanBig" >聚划算</span>
-                <span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>
-            </div>
+            <%--<div class="juhuasuan">--%>
+                <%--<span class="juhuasuanBig" >聚划算</span>--%>
+                <%--<span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>--%>
+            <%--</div>--%>
             <div class="productPriceDiv">
-                <div class="gouwujuanDiv"><img height="16px" src="img/site/gouwujuan.png">
-                <span> 全天猫实物商品通用</span>
+                <div class="gouwujuanDiv"><img height="16px" src="/static/img/site/gouwujuan.png">
+                <span> 全商城实物商品通用</span>
                  
                 </div>
                 <div class="originalDiv">
@@ -174,46 +171,47 @@ $(function(){
                     <span class="originalPriceYuan">¥</span>
                     <span class="originalPrice">
                      
-                        <fmt:formatNumber type="number" value="${p.orignalPrice}" minFractionDigits="2"/>                 
+                        <fmt:formatNumber type="number" value="${productVo.getProduct().getPrice()}" minFractionDigits="2"/>
                     </span>
                 </div>
                 <div class="promotionDiv">
                     <span class="promotionPriceDesc">促销价 </span>
                     <span class="promotionPriceYuan">¥</span>
                     <span class="promotionPrice">
-                        <fmt:formatNumber type="number" value="${p.promotePrice}" minFractionDigits="2"/>
+                        <fmt:formatNumber type="number" value="${productVo.getDiscountPrice()}" minFractionDigits="2"/>
                     </span>               
                 </div>
             </div>
         </div>
         <div class="productSaleAndReviewNumber">
-            <div>销量 <span class="redColor boldWord"> ${p.saleCount }</span></div>   
+            <div>销量 <span class="redColor boldWord"> ${productVo.getProduct().getSaleNum() }</span></div>
             <div>累计评价 <span class="redColor boldWord"> ${p.reviewCount}</span></div>    
         </div>
         <div class="productNumber">
             <span>数量</span>
             <span>
+
                 <span class="productNumberSettingSpan">
                 <input class="productNumberSetting" type="text" value="1">
                 </span>
                 <span class="arrow">
                     <a href="#nowhere" class="increaseNumber">
                     <span class="updown">
-                            <img src="img/site/increase.png">
+                            <img src="/static/img/site/increase.png">
                     </span>
                     </a>
-                     
+
                     <span class="updownMiddle"> </span>
                     <a href="#nowhere"  class="decreaseNumber">
                     <span class="updown">
-                            <img src="img/site/decrease.png">
+                            <img src="/static/img/site/decrease.png">
                     </span>
                     </a>
-                     
+
                 </span>
                      
             件</span>
-            <span>库存${p.stock}件</span>
+            <span>库存${productVo.getProduct().getStoreNum()}件</span>
         </div>
         <div class="serviceCommitment">
             <span class="serviceCommitmentDesc">服务承诺</span>
@@ -226,7 +224,7 @@ $(function(){
         </div>    
          
         <div class="buyDiv">
-            <a class="buyLink" href="forebuyone?pid=${p.id}"><button class="buyButton">立即购买</button></a>
+            <a class="buyLink" href="forebuyone?pid=${productVo.getProduct().getId()}"><button class="buyButton">立即购买</button></a>
             <a href="#nowhere" class="addCartLink"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
         </div>
     </div>
