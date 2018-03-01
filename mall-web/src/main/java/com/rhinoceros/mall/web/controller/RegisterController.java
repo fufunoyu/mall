@@ -6,7 +6,14 @@ import com.rhinoceros.mall.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sun.misc.Request;
+import sun.security.x509.AttributeNameEnumeration;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  *注册控制层
@@ -34,16 +41,15 @@ public class RegisterController {
      * @return
      */
     @RequestMapping("/foreregister")
-    public String registerSubmit(RegisterUserDto userDto, Model model) {
-        //判断用户名是否不为空，且规定用户名长度不小于6位
-        if(userDto.getUsername() == null || userDto.getUsername().length() < 6){
-            model.addAttribute("msg","用户名为空或长度小于6位");
-               return "register";
+    public String registerSubmit(@Validated RegisterUserDto userDto, BindingResult br, Model model) {
+
+        if(br.hasErrors()){
+            model.addAttribute("msg",br.getFieldError().getDefaultMessage());
+            return "register";
         }
 
-        //密码不为空，长度不小于6位并且密码与再次确认密码必须相同
-        if (userDto.getPassword() == null || userDto.getPassword().length() < 6 || !userDto.getPassword().equals(userDto.getRePassword())) {
-            model.addAttribute("msg","密码为空，长度小于6位或两次输入密码不同");
+        if(!userDto.getPassword().equals(userDto.getRePassword())){
+            model.addAttribute("msg","两次密码不一致");
             return "register";
         }
         //若正确操作则录入该用户信息，并跳转至注册成功界面，否则抛出异常跳转至当前界面
@@ -51,6 +57,7 @@ public class RegisterController {
             userService.register(userDto);
             return "registerSuccess";
         } catch (UserExistException e) {
+            model.addAttribute("msg","该用户名已被占用");
             return "register";
         }
     }

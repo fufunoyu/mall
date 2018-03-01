@@ -19,7 +19,7 @@
 	$(".registerForm").submit(function(){
 		if(0==$("#name").val().length){
 			$("span.errorMessage").html("请输入用户名");
-			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			$("div.registerErrorMessageDiv").css("visibility","visible");
 			return false;
 		}
 
@@ -33,7 +33,7 @@
         //密码未输入时显示提示信息
 		if(0==$("#password").val().length){
 			$("span.errorMessage").html("请输入密码");
-			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			$("div.registerErrorMessageDiv").css("visibility","visible");
 			return false;
 		}
 
@@ -47,16 +47,16 @@
         //提示输入确认密码
 		if(0==$("#repeatpassword").val().length){
 			$("span.errorMessage").html("请输入重复密码");
-			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			$("div.registerErrorMessageDiv").css("visibility","visible");
 			return false;
 		}
 
 		//提示两次密码输入不一致
 		if($("#password").val() !=$("#repeatpassword").val()){
 			$("span.errorMessage").html("重复密码不一致");
-			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			$("div.registerErrorMessageDiv").css("visibility","visible");
 			return false;
-		}		
+		}
 
 		return true;
 	});

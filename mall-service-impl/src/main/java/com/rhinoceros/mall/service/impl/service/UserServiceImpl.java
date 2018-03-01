@@ -7,6 +7,7 @@ import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.dao.dao.UserDao;
 import com.rhinoceros.mall.service.impl.exception.UserExistException;
 import com.rhinoceros.mall.service.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
