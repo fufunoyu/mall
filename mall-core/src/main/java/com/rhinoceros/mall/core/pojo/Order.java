@@ -43,7 +43,7 @@ public class Order {
     private Date finishAt;
 
     /**
-     *总价
+     * 总价
      */
     private BigDecimal totalPrice;
 
@@ -51,6 +51,11 @@ public class Order {
      * 快递单号
      */
     private String expressNum;
+
+    /**
+     * 地址
+     */
+    private String address;
 
     /**
      * 订单对应的用户id
