@@ -38,13 +38,13 @@ public class UserServiceImpl implements UserService {
                throw new UserNotFoundException("用户不存在");
             }
         /**
-         *  如果存在，比较密码是否匹配，如果不匹配，则返回null/
-         如果匹配，则返回user信息
+         *  用户存在，比较密码是否匹配，如果不匹配，则抛出异常
          */
         if(!user.getPassword().equals(userDto.getPassword())){
             log.info("密码输入错误");
             throw new PsaawordNotMatchException("密码输入错误");
         }
+        //返回用户信息
         return user;
 
     }

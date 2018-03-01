@@ -4,8 +4,8 @@
 <script>
 $(function(){
 	
-	<c:if test="${!empty msg}">
-	$("span.errorMessage").html("${msg}");
+	<c:if test="${!empty error}">
+	$("span.errorMessage").html("${error}");
 	$("div.loginErrorMessageDiv").show();		
 	</c:if>
 	
@@ -44,7 +44,7 @@ $(function(){
 			<div class="loginErrorMessageDiv">
 				<div class="alert alert-danger" >
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-				  	<span class="errorMessage"></span>
+					<span class="errorMessage"></span>
 				</div>
 			</div>
 				
@@ -55,6 +55,7 @@ $(function(){
 				</span>
 				<input id="name" name="username" value="${user.username}" placeholder="手机/用户名/邮箱" type="text">
 			</div>
+
 			
 			<div class="loginInput " >
 				<span class="loginInputIcon ">

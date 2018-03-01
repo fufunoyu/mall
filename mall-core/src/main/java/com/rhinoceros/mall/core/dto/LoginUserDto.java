@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 public class LoginUserDto {
 
     @NotBlank(message = "用户名不能为空")
-    @Size(min=6 ,max= 20 ,message = "用户长度不符合标准")
+    @Size(min=6 ,max= 20 ,message = "用户长度输入在6-20位之间")
     private String username;
-    @Size(min=6 ,max= 20 ,message = "密码长度不符合标准")
+    @Size(min=6 ,max= 20 ,message = "密码长度在6-20位之间")
     private String password;
 }
