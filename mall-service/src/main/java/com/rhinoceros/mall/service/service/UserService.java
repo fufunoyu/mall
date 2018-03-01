@@ -1,23 +1,26 @@
 package com.rhinoceros.mall.service.service;
 
-import com.rhinoceros.mall.core.dto.RegisterUserDto;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
+import com.rhinoceros.mall.core.dto.RegisterUserDto;
 import com.rhinoceros.mall.core.pojo.User;
-
-import java.util.List;
 
 /**
  * 用户业务逻辑接口
  */
 public interface UserService {
 
-    List<User> findAll();
-
     /**
-     * 注册方法
+     * 用户注册
+     *
      * @param userDto
      */
     void register(RegisterUserDto userDto);
 
-   User login(LoginUserDto userDto);
+    /**
+     * 用户登录
+     *
+     * @param userDto
+     * @return
+     */
+    User login(LoginUserDto userDto);
 }
