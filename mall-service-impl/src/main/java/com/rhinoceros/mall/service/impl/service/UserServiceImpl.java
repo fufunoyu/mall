@@ -1,11 +1,14 @@
 package com.rhinoceros.mall.service.impl.service;
 
+import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
 import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.service.impl.exception.PsaawordNotMatchException;
 import com.rhinoceros.mall.service.impl.exception.UserExistException;
+import com.rhinoceros.mall.service.impl.exception.UserNotFoundException;
 import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +83,7 @@ public class UserServiceImpl implements UserService {
      */
     public User login(LoginUserDto userDto) {
         //根据用户名从dao中查询用户信息
-        User user = userDao.getByUserName(userDto.getUsername());
+        User user = userDao.findByUsername(userDto.getUsername());
         //判断用户是否存在,不存在则返回null
         if (user == null) {
             log.info("用户不存在");
