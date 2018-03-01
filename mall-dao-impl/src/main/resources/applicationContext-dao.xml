@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <!--加载配置文件-->
     <util:properties id="dbProps" location="classpath:db.properties"/>
@@ -16,10 +15,6 @@
         <property name="password" value="#{dbProps['jdbc.password']}"/>
     </bean>
 
-    <!--配置事务-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
 
     <!--扫描mapper-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -32,7 +27,5 @@
         <property name="basePackage" value="com.rhinoceros.mall.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
