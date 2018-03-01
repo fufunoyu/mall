@@ -100,7 +100,7 @@ CREATE TABLE `product` (
   price                  DECIMAL(10, 2) NOT NULL
   COMMENT '价格',
   discount               DECIMAL(10, 2)          DEFAULT NULL
-  COMMENT '折扣',
+  COMMENT '折扣后的价格',
   status                 CHAR(10)       NOT NULL
   COMMENT '商品状态',
   category_id            INT(20)        NOT NULL
