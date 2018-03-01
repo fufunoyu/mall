@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td class="registerTableLeftTD">登陆名</td>
-			<td  class="registerTableRightTD"><input id="name" name="username" placeholder="用户名一旦设置成功，无法修改" > </td>
+			<td  class="registerTableRightTD"><input id="name" name="username" value="${registerUser.username}" placeholder="用户名一旦设置成功，无法修改" > </td>
 		</tr>
 		<tr>
 			<td  class="registerTip registerTableLeftTD">设置登陆密码</td>

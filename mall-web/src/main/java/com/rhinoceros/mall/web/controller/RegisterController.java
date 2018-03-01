@@ -3,11 +3,13 @@ package com.rhinoceros.mall.web.controller;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
 import com.rhinoceros.mall.service.impl.exception.UserExistException;
 import com.rhinoceros.mall.service.service.UserService;
+import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import sun.misc.Request;
 import sun.security.x509.AttributeNameEnumeration;
@@ -41,7 +43,7 @@ public class RegisterController {
      * @return
      */
     @RequestMapping("/foreregister")
-    public String registerSubmit(@Validated RegisterUserDto userDto, BindingResult br, Model model) {
+    public String registerSubmit(@Validated @ModelAttribute("registerUser") RegisterUserDto userDto, BindingResult br, Model model) {
 
         if(br.hasErrors()){
             model.addAttribute("msg",br.getFieldError().getDefaultMessage());
@@ -49,6 +51,7 @@ public class RegisterController {
         }
 
         if(!userDto.getPassword().equals(userDto.getRePassword())){
+
             model.addAttribute("msg","两次密码不一致");
             return "register";
         }
