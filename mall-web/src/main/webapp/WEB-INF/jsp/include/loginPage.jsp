@@ -52,7 +52,7 @@
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>
 				</span>
-                <input id="name" name="username" value="${user.username}" placeholder="手机/用户名/邮箱" type="text">
+                <input id="name" name="username" value="${loginUser.username}" placeholder="手机/用户名/邮箱" type="text">
             </div>
 
 
@@ -60,12 +60,11 @@
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-lock"></span>
 				</span>
-                <input id="password" name="password" type="password" value="${user.password}" placeholder="密码"
+                <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码"
                        type="text">
             </div>
             <br/>
             <br/>
-
 
             <div>
                 <a class="notImplementLink" href="#nowhere">忘记登录密码</a>

@@ -11,14 +11,18 @@
     });
 
 </script>
-<c:forEach items="${categories}" var="categoryVo">
-    <div cid="${categoryVo.category.id}" class="productsAsideCategorys">
-        <c:forEach items="${categoryVo.children}" var="category">
+<c:forEach items="${categories}" var="category">
+    <c:if test="${category.parentId==null}">
+        <div cid="${category.id}" class="productsAsideCategorys">
             <div class="row show1">
-                <a href="category?cid=${category.id}">${category.name}</a>
+                <c:forEach items="${categories}" var="subCategory">
+                    <c:if test="${subCategory.parentId==category.id}">
+                        <a href="category?cid=${subCategory.id}">${subCategory.name}</a>
+                    </c:if>
+                </c:forEach>
                 <div class="seperator"></div>
             </div>
-        </c:forEach>
-    </div>
+        </div>
+    </c:if>
 </c:forEach>
 	
