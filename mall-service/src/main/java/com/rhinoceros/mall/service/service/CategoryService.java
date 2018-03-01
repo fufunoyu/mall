@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.service.service;
 
-import com.rhinoceros.mall.core.vo.CategoryVo;
+import com.rhinoceros.mall.core.pojo.Category;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface CategoryService {
      *
      * @return 分类列表
      */
-    List<CategoryVo> findAll();
+    List<Category> findAll();
 }

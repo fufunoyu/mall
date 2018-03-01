@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
+import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.pojo.User;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface UserService {
      * @param userDto
      */
     void register(RegisterUserDto userDto);
+
+   User login(LoginUserDto userDto);
 }

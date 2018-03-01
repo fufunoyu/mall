@@ -66,10 +66,10 @@
             <span style="margin-left:10px">商品分类</span>
         </div>
         <div class="rightMenu">
-            <c:forEach items="${categories}" var="categoryVo" varStatus="st">
+            <c:forEach items="${categories}" var="category" varStatus="st">
                 <c:if test="${st.count<=4}">
 				<span>
-				    <a href="category?cid=${categoryVo.category.id}">${categoryVo.category.name}</a>
+				    <a href="category?cid=${category.id}">${category.name}</a>
                 </span>
                 </c:if>
             </c:forEach>
