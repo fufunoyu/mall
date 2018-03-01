@@ -5,7 +5,7 @@
 <script>
  
 $(function(){
-    var stock = ${productVo.getProduct().getStoreNum()};
+    var stock = ${productVo.product.storeNum};
     $(".productNumberSetting").keyup(function(){
         var num= $(".productNumberSetting").val();
         num = parseInt(num);
@@ -40,7 +40,7 @@ $(function(){
                 page,
                 function(result){
                     if("success"==result){
-                        var pid = ${productVo.getProduct().getId()};
+                        var pid = ${productVo.product.id};
                         var num= $(".productNumberSetting").val();
                         var addCartpage = "foreaddCart";
                         $.get(
@@ -138,9 +138,9 @@ $(function(){
 <div class="imgAndInfo">
  
     <div class="imgInimgAndInfo">
-        <img src="/static/img/productSingle/${productVo.getFirstImageUrls()}.jpg" class="bigImg">
+        <img src="/static/img/productSingle/${productVo.firstImageUrls}.jpg" class="bigImg">
         <div class="smallImageDiv">
-            <c:forEach items="${productVo.getImagesUrls()}" var="pi">
+            <c:forEach items="${productVo.imagesUrls}" var="pi">
                 <img src="/static/img/productSingle_small/${pi}.jpg" bigImageURL="/static/img/productSingle/${pi}.jpg" class="smallImage">
             </c:forEach>
         </div>
@@ -150,10 +150,10 @@ $(function(){
     <div class="infoInimgAndInfo">
          
         <div class="productTitle">
-            ${productVo.getProduct().getName()}
+            ${productVo.product.name}
         </div>
         <div class="productSubTitle">
-            ${productVo.getProduct().getName()}  <%-- 商品副标题数据库中还没写--%>
+            ${productVo.product.name}  <%-- 商品副标题数据库中还没写--%>
         </div>
          
         <div class="productPrice">
@@ -171,21 +171,21 @@ $(function(){
                     <span class="originalPriceYuan">¥</span>
                     <span class="originalPrice">
                      
-                        <fmt:formatNumber type="number" value="${productVo.getProduct().getPrice()}" minFractionDigits="2"/>
+                        <fmt:formatNumber type="number" value="${productVo.product.price}" minFractionDigits="2"/>
                     </span>
                 </div>
                 <div class="promotionDiv">
                     <span class="promotionPriceDesc">促销价 </span>
                     <span class="promotionPriceYuan">¥</span>
                     <span class="promotionPrice">
-                        <fmt:formatNumber type="number" value="${productVo.getProduct().getDiscount()}" minFractionDigits="2"/>
+                        <fmt:formatNumber type="number" value="${productVo.product.discount}" minFractionDigits="2"/>
                     </span>               
                 </div>
             </div>
         </div>
         <div class="productSaleAndReviewNumber">
-            <div>销量 <span class="redColor boldWord"> ${productVo.getProduct().getSaleNum() }</span></div>
-            <div>累计评价 <span class="redColor boldWord"> ${productVo.getProduct().getCommentNum()}</span></div>
+            <div>销量 <span class="redColor boldWord"> ${productVo.product.saleNum }</span></div>
+            <div>累计评价 <span class="redColor boldWord"> ${productVo.product.commentNum}</span></div>
         </div>
         <div class="productNumber">
             <span>数量</span>
@@ -211,7 +211,7 @@ $(function(){
                 </span>
                      
             件</span>
-            <span>库存${productVo.getProduct().getStoreNum()}件</span>
+            <span>库存${productVo.product.storeNum}件</span>
         </div>
         <div class="serviceCommitment">
             <span class="serviceCommitmentDesc">服务承诺</span>
@@ -224,11 +224,11 @@ $(function(){
         </div>    
          
         <div class="buyDiv">
-            <a class="buyLink" href="forebuyone?pid=${productVo.getProduct().getId()}"><button class="buyButton">立即购买</button></a>
+            <a class="buyLink" href="forebuyone?pid=${productVo.product.id}"><button class="buyButton">立即购买</button></a>
             <a href="#nowhere" class="addCartLink"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
         </div>
     </div>
      
     <div style="clear:both"></div>
      
-</div>K
+</div>

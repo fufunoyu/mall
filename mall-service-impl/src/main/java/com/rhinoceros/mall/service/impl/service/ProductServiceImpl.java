@@ -24,6 +24,8 @@ public class ProductServiceImpl implements ProductService {
         //获取商品图片url数组
         productVo.setImagesUrls(product.getImageUrls().split(Product.IMAGE_SEPARATION));
         productVo.setFirstImageUrls(productVo.getImagesUrls()[0]);
+        //获取商品详情图片的url数组
+        productVo.setDescriptionImagesUrls(product.getDescriptionImageUrls().split(Product.IMAGE_SEPARATION));
         productVo.setProduct(product);
         return  productVo;
     }

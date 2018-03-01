@@ -27,5 +27,9 @@ public class ProductVo extends Product{
      */
     private String firstImageUrls;
 
+    /**
+     * 此变量储存商品详情图片的url
+     */
+    private String[] descriptionImagesUrls;
 
 }

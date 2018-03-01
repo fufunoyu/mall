@@ -6,7 +6,7 @@
 <div class="productDetailDiv" >
 	<div class="productDetailTopPart">
 		<a href="#nowhere" class="productDetailTopPartSelectedLink selected">商品详情</a>
-		<a href="#nowhere" class="productDetailTopReviewLink">累计评价 <span class="productDetailTopReviewLinkNumber">${p.reviewCount}</span> </a>
+		<a href="#nowhere" class="productDetailTopReviewLink">累计评价 <span class="productDetailTopReviewLinkNumber">${productVo.product.commentNum}</span> </a>
 	</div>
 	
 	
@@ -14,16 +14,17 @@
 		<div class="productParamter">产品参数：</div>
 		
 		<div class="productParamterList">
-			<c:forEach items="${pvs}" var="pv">
-				<span>${pv.property.name}:  ${fn:substring(pv.value, 0, 10)} </span>
-			</c:forEach>
+			<%--<c:forEach items="${pvs}" var="pv">--%>
+				<%--<span>${pv.property.name}:  ${fn:substring(pv.value, 0, 10)} </span>--%>
+			<%--</c:forEach>--%>
 		</div>
 		<div style="clear:both"></div>
 	</div>
 	
 	<div class="productDetailImagesPart">
-		<c:forEach items="${p.productDetailImages}" var="pi">
-			<img src="img/productDetail/${pi.id}.jpg">
+
+		<c:forEach items="${productVo.descriptionImagesUrls}" var="pi">
+			<img src="/static/img/productDetail/${pi}.jpg">
 		</c:forEach>
 	</div>
 </div>
