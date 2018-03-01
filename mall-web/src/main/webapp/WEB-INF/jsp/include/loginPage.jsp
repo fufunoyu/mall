@@ -1,10 +1,5 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
-
 
 <script>
 $(function(){
@@ -38,13 +33,13 @@ $(function(){
 <div id="loginDiv" style="position: relative">
 
 	<div class="simpleLogo">
-		<a href="${contextPath}"><img src="img/site/simpleLogo.png"></a>
+		<a href="${contextPath}"><img src="/static/img/site/logo.jpg"></a>
 	</div>
 
 	
-	<img id="loginBackgroundImg" class="loginBackgroundImg" src="img/site/loginBackground.png">
+	<img id="loginBackgroundImg" class="loginBackgroundImg" src="/static/img/site/loginBackground.jpg">
 	
-	<form class="loginForm" action="forelogin" method="post">
+	<form class="loginForm" action="/loginSubmit" method="post">
 		<div id="loginSmallDiv" class="loginSmallDiv">
 			<div class="loginErrorMessageDiv">
 				<div class="alert alert-danger" >
@@ -58,7 +53,7 @@ $(function(){
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>
 				</span>
-				<input id="name" name="name" placeholder="手机/会员名/邮箱" type="text">			
+				<input id="name" name="username" placeholder="手机/用户名/邮箱" type="text">
 			</div>
 			
 			<div class="loginInput " >
@@ -67,7 +62,7 @@ $(function(){
 				</span>
 				<input id="password" name="password" type="password" placeholder="密码" type="text">
 			</div>
-			<span class="text-danger">不要输入真实的天猫账号密码</span><br><br>
+			<span class="text-danger">不要输入真实的商城账号密码</span><br><br>
 			
 			
 			<div>

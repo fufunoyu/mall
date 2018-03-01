@@ -7,5 +7,9 @@
         SELECT *
         FROM user
     </select>
-
+    <!-- 此处select标签的id值对应Mapper类中方法名 -->
+    <select id="getByUserName" parameterType="String" resultType="User" >
+        <!-- 此处写sql语句,#{Mapper类传入的参数} -->
+        select * from user where username = #{username}
+    </select>
 </mapper>

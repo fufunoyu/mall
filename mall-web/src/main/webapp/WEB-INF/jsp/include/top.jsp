@@ -10,7 +10,7 @@
 		<span>欢迎来民生商城</span>
 		
 		<c:if test="${!empty user}">
-			<a href="/user/me">${user.name}</a>
+			<a href="/user/me">${user.nickname}</a>
 			<a href="/logout">退出</a>
 		</c:if>
 		
