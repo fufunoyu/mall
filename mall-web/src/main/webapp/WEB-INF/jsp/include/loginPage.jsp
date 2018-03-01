@@ -10,8 +10,13 @@
         </c:if>
 
         $("form.loginForm").submit(function () {
-            if (0 == $("#name").val().length || 0 == $("#password").val().length) {
-                $("span.errorMessage").html("请输入账号密码");
+            if ($("#name").val().length < 6 || $("#name").val().length > 20) {
+                $("span.errorMessage").html("用户名在6-20位之间");
+                $("div.loginErrorMessageDiv").show();
+                return false;
+            }
+            if ($("#password").val().length < 6 || $("#name").val().length > 20) {
+                $("span.errorMessage").html("密码在6-20位之间");
                 $("div.loginErrorMessageDiv").show();
                 return false;
             }
@@ -32,7 +37,7 @@
 <div id="loginDiv" style="position: relative">
 
     <div class="simpleLogo">
-        <a href="${contextPath}"><img src="/static/img/site/logo.jpg"></a>
+        <a href="/"><img src="/static/img/site/logo.jpg"></a>
     </div>
 
 
@@ -52,7 +57,7 @@
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>
 				</span>
-                <input id="name" name="username" value="${loginUser.username}" placeholder="手机/用户名/邮箱" type="text">
+                <input id="name" name="username" value="${loginUser.username}" placeholder="用户名" type="text">
             </div>
 
 

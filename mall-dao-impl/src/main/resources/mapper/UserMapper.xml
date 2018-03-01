@@ -7,9 +7,32 @@
         SELECT *
         FROM user
     </select>
-    <!-- 此处select标签的id值对应Mapper类中方法名 -->
-    <select id="getByUserName" parameterType="String" resultType="User" >
-        <!-- 此处写sql语句,#{Mapper类传入的参数} -->
-        select * from user where username = #{username}
+
+    <!--查寻注册用户是否已存在-->
+    <select id="findByUsername" resultType="User" parameterType="String">
+        SELECT *
+        FROM USER
+        WHERE username = #{username}
     </select>
+
+    <!--录入注册用户-->
+    <insert id="add" parameterType="User">
+        INSERT INTO USER(username,password,email,nickname,gender,telephone,birthday,
+        avatar,create_at,last_login_at,last_login_ip,status)
+        VALUE (
+        #{username},
+        #{password},
+        #{email},
+        #{nickname},
+        #{gender},
+        #{telephone},
+        #{birthday},
+        #{avatar},
+        #{createAt},
+        #{lastLoginAt},
+        #{lastLoginIp},
+        #{status}
+        )
+    </insert>
+
 </mapper>
