@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -66,5 +67,22 @@ public class LoginController {
             model.addAttribute("error", e.getMessage());
             return "login";
         }
+    }
+    @RequestMapping("/retrievePassword")
+    public String retrievePassword(){
+        return "retrievePassword";
+    }
+
+    @ResponseBody
+    @RequestMapping("/verifyMail")
+    public String verifyMail(String mail,String code,HttpSession session){
+        String validateCode = (String) session.getAttribute("validateCode");
+        if(validateCode != null && validateCode.equals(code)){
+            //TODO 验证mail
+            return "OK";
+        }else {
+            return "validateCode incorrect";
+        }
+
     }
 }
