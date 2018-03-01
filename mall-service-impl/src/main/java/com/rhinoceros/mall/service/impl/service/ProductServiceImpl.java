@@ -25,7 +25,6 @@ public class ProductServiceImpl implements ProductService {
         productVo.setImagesUrls(product.getImageUrls().split(Product.IMAGE_SEPARATION));
         productVo.setFirstImageUrls(productVo.getImagesUrls()[0]);
         productVo.setProduct(product);
-        productVo.setDiscountPrice(product.getPrice().multiply(product.getDiscount()));
         return  productVo;
     }
 }

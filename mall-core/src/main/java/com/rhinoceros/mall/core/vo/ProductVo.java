@@ -27,8 +27,5 @@ public class ProductVo extends Product{
      */
     private String firstImageUrls;
 
-    /**
-     * 这个变量储存商品折扣价
-     */
-    private BigDecimal discountPrice;
+
 }

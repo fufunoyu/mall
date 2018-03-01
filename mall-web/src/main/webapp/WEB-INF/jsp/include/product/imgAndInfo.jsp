@@ -40,7 +40,7 @@ $(function(){
                 page,
                 function(result){
                     if("success"==result){
-                        var pid = ${p.id};
+                        var pid = ${productVo.getProduct().getId()};
                         var num= $(".productNumberSetting").val();
                         var addCartpage = "foreaddCart";
                         $.get(
@@ -138,10 +138,10 @@ $(function(){
 <div class="imgAndInfo">
  
     <div class="imgInimgAndInfo">
-        <img src="img/productSingle/${productVo.getFirstImageUrls()}.jpg" class="bigImg">
+        <img src="/static/img/productSingle/${productVo.getFirstImageUrls()}.jpg" class="bigImg">
         <div class="smallImageDiv">
-            <c:forEach items="${productVo.getImagesUrls()}" var="pi"> <%-- 多个imageUrls还不知道什么格式--%>
-                <img src="img/productSingle_small/${pi}.jpg" bigImageURL="img/productSingle/${pi}.jpg" class="smallImage">
+            <c:forEach items="${productVo.getImagesUrls()}" var="pi">
+                <img src="/static/img/productSingle_small/${pi}.jpg" bigImageURL="/static/img/productSingle/${pi}.jpg" class="smallImage">
             </c:forEach>
         </div>
         <div class="img4load hidden" ></div>
@@ -178,14 +178,14 @@ $(function(){
                     <span class="promotionPriceDesc">促销价 </span>
                     <span class="promotionPriceYuan">¥</span>
                     <span class="promotionPrice">
-                        <fmt:formatNumber type="number" value="${productVo.getDiscountPrice()}" minFractionDigits="2"/>
+                        <fmt:formatNumber type="number" value="${productVo.getProduct().getDiscount()}" minFractionDigits="2"/>
                     </span>               
                 </div>
             </div>
         </div>
         <div class="productSaleAndReviewNumber">
             <div>销量 <span class="redColor boldWord"> ${productVo.getProduct().getSaleNum() }</span></div>
-            <div>累计评价 <span class="redColor boldWord"> ${p.reviewCount}</span></div>    
+            <div>累计评价 <span class="redColor boldWord"> ${productVo.getProduct().getCommentNum()}</span></div>
         </div>
         <div class="productNumber">
             <span>数量</span>
@@ -231,4 +231,4 @@ $(function(){
      
     <div style="clear:both"></div>
      
-</div>
+</div>K

@@ -7,7 +7,7 @@
 
 <div >
 	<a href="${contextPath}">
-		<img id="simpleLogo" class="simpleLogo" src="img/site/simpleLogo.png">	
+		<img id="simpleLogo" class="simpleLogo" src="/static/img/site/simpleLogo.png">
 	</a>
 
 	<form action="foresearch" method="post" >	
