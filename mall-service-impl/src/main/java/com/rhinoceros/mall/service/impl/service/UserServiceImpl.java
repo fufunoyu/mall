@@ -7,7 +7,6 @@ import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.dao.dao.UserDao;
 import com.rhinoceros.mall.service.impl.exception.UserExistException;
 import com.rhinoceros.mall.service.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 注册实现方法
+     *
      * @param userDto
      */
     public void register(RegisterUserDto userDto) {
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         //通过输入的用户名查询数据库
         User user = userDao.findByUsername(username);
         //如果用户已存在，程序抛出异常
-        if(user != null){
+        if (user != null) {
             throw new UserExistException();
         }
         //创建用户

@@ -65,9 +65,7 @@
 
 
 
-<form method="post" action="foreregister" class="registerForm">
-
-
+<form method="post" action="/registerSubmit" class="registerForm">
 <div class="registerDiv">
 	<div class="registerErrorMessageDiv">
 		<div class="alert alert-danger" role="alert">
@@ -79,23 +77,15 @@
 	
 	<table class="registerTable" align="center">
 		<tr>
-			<td  class="registerTip registerTableLeftTD">设置用户名</td>
-			<td></td>
+			<td class="registerTableLeftTD">用户名</td>
+			<td  class="registerTableRightTD"><input id="name" name="username" value="${registerUser.username}" placeholder="请输入用户名" > </td>
 		</tr>
 		<tr>
-			<td class="registerTableLeftTD">登陆名</td>
-			<td  class="registerTableRightTD"><input id="name" name="username" value="${registerUser.username}" placeholder="用户名一旦设置成功，无法修改" > </td>
+			<td class="registerTableLeftTD">密码</td>
+			<td class="registerTableRightTD"><input id="password" name="password" type="password"  placeholder="请输入登陆密码" > </td>
 		</tr>
 		<tr>
-			<td  class="registerTip registerTableLeftTD">设置登陆密码</td>
-			<td  class="registerTableRightTD">登陆时验证，保护账号信息</td>
-		</tr>		
-		<tr>
-			<td class="registerTableLeftTD">登陆密码</td>
-			<td class="registerTableRightTD"><input id="password" name="password" type="password"  placeholder="设置你的登陆密码" > </td>
-		</tr>
-		<tr>
-			<td class="registerTableLeftTD">密码确认</td>
+			<td class="registerTableLeftTD">确认密码</td>
 			<td class="registerTableRightTD"><input id="rePassword" name="rePassword" type="password"   placeholder="请再次输入你的密码" > </td>
 		</tr>
 				

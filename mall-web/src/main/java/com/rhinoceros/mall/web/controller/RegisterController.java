@@ -42,7 +42,7 @@ public class RegisterController {
      * @param userDto
      * @return
      */
-    @RequestMapping("/foreregister")
+    @RequestMapping("/registerSubmit")
     public String registerSubmit(@Validated @ModelAttribute("registerUser") RegisterUserDto userDto, BindingResult br, Model model) {
 
         if(br.hasErrors()){
@@ -51,7 +51,6 @@ public class RegisterController {
         }
 
         if(!userDto.getPassword().equals(userDto.getRePassword())){
-
             model.addAttribute("msg","两次密码不一致");
             return "register";
         }
