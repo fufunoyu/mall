@@ -63,9 +63,9 @@ $(function(){
 				</span>
 				<input id="password" name="password" type="password" value="${user.password}" placeholder="密码" type="text">
 			</div>
-			<span class="text-danger">不要输入真实的商城账号密码</span><br><br>
-			
-			
+			<span class="text-danger"></span><br><br>
+
+
 			<div>
 				<a class="notImplementLink" href="#nowhere">忘记登录密码</a> 
 				<a href="register.jsp" class="pull-right">免费注册</a> 
