@@ -24,28 +24,25 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 根据用户名实例化用户对象
-     * @param userDto
+     * 根据用户信息进行登录操作
      *
+     * @param userDto
      * @return user
      */
     public User login(LoginUserDto userDto) {
         //根据用户名从dao中查询用户信息
         User user = userDao.getByUserName(userDto.getUsername());
         //判断用户是否存在,不存在则返回null
-            if(user==null){
-                log.info("用户不存在");
-               throw new UserNotFoundException("用户不存在");
-            }
-        /**
-         *  用户存在，比较密码是否匹配，如果不匹配，则抛出异常
-         */
-        if(!user.getPassword().equals(userDto.getPassword())){
+        if (user == null) {
+            log.info("用户不存在");
+            throw new UserNotFoundException("用户不存在");
+        }
+        // 用户存在，比较密码是否匹配，如果不匹配，则抛出异常
+        if (!user.getPassword().equals(userDto.getPassword())) {
             log.info("密码输入错误");
             throw new PsaawordNotMatchException("密码输入错误");
         }
         //返回用户信息
         return user;
-
     }
 }
