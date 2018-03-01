@@ -11,7 +11,7 @@
 		
 		<c:if test="${!empty user}">
 			<a href="/user/me">${user.nickname}</a>
-			<a href="/logout">退出</a>
+			<a href="/logout" action="/logout">退出</a>
 		</c:if>
 		
 		<c:if test="${empty user}">

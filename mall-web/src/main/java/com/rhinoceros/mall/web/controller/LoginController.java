@@ -51,11 +51,24 @@ public class LoginController {
         try {
             User user = userService.login(userDto);
             //将用户信息放入session
-            httpSession.setAttribute("user", user);
+            httpSession.setAttribute("user",user);
             return "redirect:/index";
         } catch (UserException e) {
             model.addAttribute("error", e.getMessage());
             return "login";
         }
+    }
+
+    /**
+     * 退出登录
+     * @param userDto
+     * @param httpSession
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(LoginUserDto userDto,HttpSession httpSession){
+        //删除用户的session信息
+        httpSession.removeAttribute("user");
+        return "index";
     }
 }
