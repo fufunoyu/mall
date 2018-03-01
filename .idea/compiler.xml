@@ -31,7 +31,7 @@
       <module name="mall-dao" target="1.5" />
       <module name="mall-dao-impl" target="1.5" />
       <module name="mall-service" target="1.5" />
-      <module name="mall-service-impl" target="1.5" />
+      <module name="mall-service-impl" target="1.7" />
       <module name="mall-web" target="1.5" />
     </bytecodeTargetLevel>
   </component>

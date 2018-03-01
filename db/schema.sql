@@ -60,7 +60,7 @@ CREATE TABLE `user` (
   COMMENT '头像url',
   create_at     DATETIME    NOT NULL
   COMMENT '注册时间',
-  last_login_at DATETIME    NOT NULL
+  last_login_at DATETIME             DEFAULT NULL
   COMMENT '上次登录时间',
   last_login_ip CHAR(40)             DEFAULT NULL
   COMMENT '上次登录ip',
@@ -161,6 +161,8 @@ CREATE TABLE `order` (
   COMMENT '总价',
   express_num CHAR(18)       NULL
   COMMENT '快递单号',
+  address     VARCHAR(128)   NULL
+  COMMENT '地址',
   user_id     CHAR(32)       NOT NULL
   COMMENT '订单对应的用户id',
   PRIMARY KEY `id`(`id`),
