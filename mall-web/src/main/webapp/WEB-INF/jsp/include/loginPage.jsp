@@ -53,14 +53,14 @@ $(function(){
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>
 				</span>
-				<input id="name" name="username" placeholder="手机/用户名/邮箱" type="text">
+				<input id="name" name="username" value="${user.username}" placeholder="手机/用户名/邮箱" type="text">
 			</div>
 			
 			<div class="loginInput " >
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-lock"></span>
 				</span>
-				<input id="password" name="password" type="password" placeholder="密码" type="text">
+				<input id="password" name="password" type="password" value="${user.password}" placeholder="密码" type="text">
 			</div>
 			<span class="text-danger">不要输入真实的商城账号密码</span><br><br>
 			

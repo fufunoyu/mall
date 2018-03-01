@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
-public class UserDto {
+public class LoginUserDto {
 
     @NotBlank(message = "用户名不能为空")
     @Size(min=6 ,max= 20 ,message = "用户长度不符合标准")

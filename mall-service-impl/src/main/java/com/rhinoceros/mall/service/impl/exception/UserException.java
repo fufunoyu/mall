@@ -1,4 +1,8 @@
 package com.rhinoceros.mall.service.impl.exception;
 
-public class UserEXception {
+public abstract class UserException extends RuntimeException {
+
+    public UserException(){}
+    public UserException(String msg) {
+    }
 }
