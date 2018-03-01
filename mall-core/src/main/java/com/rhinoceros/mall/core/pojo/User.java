@@ -42,7 +42,7 @@ public class User {
     /**
      * 出生日期
      */
-    private String birthday;
+    private Date birthday;
 
     /**
      * 头像url

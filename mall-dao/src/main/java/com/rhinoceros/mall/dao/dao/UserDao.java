@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface UserDao {
     List<User> select();
+
+    User findByUsername(String username);
+
+    int add(User user);
 }
