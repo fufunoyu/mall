@@ -4,13 +4,14 @@ package com.rhinoceros.mall.core.vo;
 import com.rhinoceros.mall.core.pojo.Product;
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 这个类封装商品展示信息
  */
 @Data
-public class ProductVo extends Product{
+public class ProductVo {
 
     /**
      * 父类
@@ -31,5 +32,10 @@ public class ProductVo extends Product{
      * 此变量储存商品详情图片的url
      */
     private String[] descriptionImagesUrls;
+
+    /**
+     * 配置信息
+     */
+    private Map<String, String> params = new HashMap<String, String>();
 
 }

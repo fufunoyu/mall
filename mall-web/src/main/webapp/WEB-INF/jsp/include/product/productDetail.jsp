@@ -14,9 +14,9 @@
 		<div class="productParamter">产品参数：</div>
 		
 		<div class="productParamterList">
-			<%--<c:forEach items="${pvs}" var="pv">--%>
-				<%--<span>${pv.property.name}:  ${fn:substring(pv.value, 0, 10)} </span>--%>
-			<%--</c:forEach>--%>
+			<c:forEach items="${productVo.params}" var="productItem">
+				<span>${productItem.key}:  ${productItem.value} </span>
+			</c:forEach>
 		</div>
 		<div style="clear:both"></div>
 	</div>

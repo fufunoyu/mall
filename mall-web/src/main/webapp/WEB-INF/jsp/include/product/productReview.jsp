@@ -28,9 +28,9 @@
                 //第2页就是http://www.xx.com/news/20131212_2.html
                 //第n页就是http://www.xx.com/news/20131212_n.html
                 if (n == 1) {
-                    return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter+'#comment';
+                    return this.hrefFormer + '&pid=${productVo.product.id}' + this.hrefLatter + '#comment';
                 }
-                return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter+'#comment';
+                return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter + '#comment';
                 <%--if (n == 1) {--%>
                 <%--return this.hrefFormer + this.hrefLatter + '?pid= ${productVo.product.id}';--%>
                 <%--}--%>
@@ -44,11 +44,11 @@
 </script>
 
 <c:if test="${isComment}">
-<script >
-    $(function(){
-    $("div.productReviewDiv").show();
-    $("div.productDetailDiv").hide();
-    });
+    <script>
+        $(function () {
+            $("div.productReviewDiv").show();
+            $("div.productDetailDiv").hide();
+        });
     </script>
 </c:if>
 

@@ -29,10 +29,11 @@ public class ProductDetailsController {
     public String index(
             @RequestParam("pid") Long id,
             @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "isComment", required = false) String isComment,
             Model model
     ) {
 
-        model.addAttribute("isComment", page != null);
+        model.addAttribute("isComment", isComment != null);
         if (page == null) {
             page = 1;
         }
