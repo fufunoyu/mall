@@ -184,4 +184,16 @@ CREATE TABLE `order_product` (
   COMMENT '订单商品关系表';
 
 
-
+CREATE TABLE `cart_user_product` (
+  id          INT(20) NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  product_id  INT(20) NOT NULL
+  COMMENT '商品id',
+  user_id     INT(20) NOT NULL
+  COMMENT '用户id',
+  product_num INT(5)  NOT NULL
+  COMMENT '商品数量',
+  PRIMARY KEY (`product_id`),
+  KEY `cart_id`(`user_id`)
+)
+  COMMENT '购物车商品关系表';
