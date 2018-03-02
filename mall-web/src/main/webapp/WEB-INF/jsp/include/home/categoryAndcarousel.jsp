@@ -68,9 +68,9 @@
         <div class="rightMenu">
             <c:forEach items="${categories}" var="category" varStatus="st">
                 <c:if test="${st.count<=4}">
-				<span>
-				    <a href="category?cid=${category.id}">${category.name}</a>
-                </span>
+                    <span>
+                        <a href="category?cid=${category.id}">${category.name}</a>
+                    </span>
                 </c:if>
             </c:forEach>
         </div>
