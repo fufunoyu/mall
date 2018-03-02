@@ -6,9 +6,8 @@
     <select id="findByCategoryId" resultType="Product">
         SELECT *
         FROM product
-        WHERE category_id = #{categoryId}
+        WHERE root_category_id = #{categoryId}
         ${page.orderString}
         LIMIT ${page.offset}, ${page.size}
     </select>
-
 </mapper>
