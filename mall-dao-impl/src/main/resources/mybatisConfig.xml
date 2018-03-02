@@ -5,7 +5,7 @@
 <configuration>
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
-        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
         <package name="com.rhinoceros.mall.core.pojo"/>
@@ -13,7 +13,7 @@
 
     <typeHandlers>
         <!--枚举类型在数据库中的转换方式-->
-        <!--<typeHandler handler="org.apache.ibatis.type.EnumTypeHandler" javaType=""/>-->
+        <!--<typeHandler handler="org.apache.ibatis.type.EnumTypeHandler" javaType="com.rhinoceros.mall.core.enumeration.UserStatus"/>-->
     </typeHandlers>
 
 </configuration>

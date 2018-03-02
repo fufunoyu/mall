@@ -16,4 +16,14 @@ public interface ProductDao {
      * @return 商品对象
      */
     Product findById(@Param("id") Long id);
+
+
+    /**
+     * 根据分类id和分页条件查找产品列表
+     *
+     * @param categoryId
+     * @param pageQuery
+     * @return
+     */
+    List<Product> findByCategoryId(@Param("categoryId") Long categoryId, @Param("page") PageQuery pageQuery);
 }
