@@ -31,13 +31,15 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ProductVo findProductVoById(Long id) {
-        ObjectMapper mapper = new ObjectMapper();
         Product product = productDao.findById(id);
         String params = product.getParams();
         ProductVo productVo = new ProductVo();
         try {
-            Map<String, String> map = mapper.readValue(params, Map.class);
-            productVo.setParams(map);
+            if (params != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                Map<String, String> map = mapper.readValue(params, Map.class);
+                productVo.setParams(map);
+            }
         } catch (IOException e) {
             log.error(e.getMessage());
             e.printStackTrace();
