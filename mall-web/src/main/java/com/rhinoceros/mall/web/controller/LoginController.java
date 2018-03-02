@@ -62,6 +62,7 @@ public class LoginController {
             User user = userService.login(userDto);
             //将用户信息放入session
             session.setAttribute(USERNAME, user);
+            session.setAttribute("userID",user.getId());
             return "redirect:/index";
         } catch (UserException e) {
             model.addAttribute("error", e.getMessage());
