@@ -3,6 +3,7 @@ package com.rhinoceros.mall.dao.dao;
 
 import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.query.PageQuery;
 import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Resource;

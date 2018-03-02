@@ -6,31 +6,31 @@
 <link rel="stylesheet" type="text/css" href="/static/css/kkpager/kkpager_orange.css"/>
 <%--使用kkpager--%>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         //生成分页控件
         kkpager.generPageHtml({
-            pno : '${nowPage}',
+            pno: '${nowPage}',
             //总页码
-            total : '${(productVo.product.commentNum+10-1)/10}',
+            total: '${(productVo.product.commentNum+10-1)/10}',
             //总数据条数
-            totalRecords : '${productVo.product.commentNum}',
+            totalRecords: '${productVo.product.commentNum}',
             //链接前部
-            hrefFormer : '',
+            hrefFormer: '',
             //链接尾部
-            hrefLatter : '',
-            mode : 'link', //可选，默认就是link
+            hrefLatter: '',
+            mode: 'link', //可选，默认就是link
             //链接算法
-            getLink : function(n){
+            getLink: function (n) {
                 //这里是默认算法，算法适用于比如：
                 //hrefFormer=http://www.xx.com/news/20131212
                 //hrefLatter=.html
                 //那么首页（第1页）就是http://www.xx.com/news/20131212.html
                 //第2页就是http://www.xx.com/news/20131212_2.html
                 //第n页就是http://www.xx.com/news/20131212_n.html
-                if(n == 1){
-                    return this.hrefFormer + '?pid= ${productVo.product.id}' + this.hrefLatter;
+                if (n == 1) {
+                    return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter+'#comment';
                 }
-                return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter;
+                return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter+'#comment';
                 <%--if (n == 1) {--%>
                 <%--return this.hrefFormer + this.hrefLatter + '?pid= ${productVo.product.id}';--%>
                 <%--}--%>
@@ -43,9 +43,16 @@
 
 </script>
 
+<c:if test="${isComment}">
+<script >
+    $(function(){
+    $("div.productReviewDiv").show();
+    $("div.productDetailDiv").hide();
+    });
+    </script>
+</c:if>
 
-
-<div class="productReviewDiv">
+<div id="comment" class="productReviewDiv">
     <div class="productReviewTopPart">
         <a href="#nowhere" class="productReviewTopPartSelectedLink">商品详情</a>
         <a href="#nowhere" class="selected">累计评价 <span

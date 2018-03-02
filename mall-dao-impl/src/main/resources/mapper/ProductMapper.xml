@@ -7,6 +7,7 @@
         SELECT *
         FROM product
         WHERE id=#{id}
+    </select>
     <select id="findByCategoryId" resultType="Product">
         SELECT *
         FROM product

@@ -20,9 +20,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findByProductId(Long productId, Integer page, Integer size) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPage(page);
-        pageQuery.setSize(size);
+        PageQuery pageQuery = new PageQuery(page,size);
+;
 
         return commentDao.findByProductId(productId, pageQuery);
     }

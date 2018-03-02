@@ -6,7 +6,7 @@
     <select id="findByProductId" resultType="Comment">
         SELECT * FROM COMMENT c
         WHERE c.`product_id` = #{productId}
-        LIMIT ${page.offset},${page.size}
+        LIMIT ${page.getOffset()},${page.size}
     </select>
 
 </mapper>

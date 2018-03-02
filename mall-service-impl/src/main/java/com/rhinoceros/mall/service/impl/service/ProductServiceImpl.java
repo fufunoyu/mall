@@ -1,14 +1,13 @@
 package com.rhinoceros.mall.service.impl.service;
-<<<<<<< HEAD
+
 /* created at 4:12 PM 2/28/2018  */
 
 import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.core.vo.ProductVo;
-=======
 
-import com.rhinoceros.mall.core.pojo.Product;
+
 import com.rhinoceros.mall.core.query.PageQuery;
->>>>>>> origin/dev
+
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
