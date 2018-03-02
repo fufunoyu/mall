@@ -6,6 +6,7 @@ import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.service.impl.exception.EmailHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.PsaawordNotMatchException;
 import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.UserNotFoundException;
@@ -33,6 +34,8 @@ public class UserServiceImpl implements UserService {
     public void register(RegisterUserDto userDto) {
         //设置变量获取注册时输入的用户名
         String username = userDto.getUsername();
+        //设置变量获取注册时输入的邮箱
+        String email=userDto.getEmail();
 
         //通过输入的用户名查询数据库
         User user = userDao.findByUsername(username);
@@ -41,6 +44,15 @@ public class UserServiceImpl implements UserService {
             log.info("用户已经存在");
             throw new UserHasFoundException("用户已经存在");
         }
+
+        //通过输入的邮箱查询数据库
+        user = userDao.findByEmail(email);
+        //如果用户已存在，程序抛出异常
+        if (user != null) {
+            log.info("邮件已经注册过");
+            throw new EmailHasFoundException("邮箱已经注册过");
+        }
+
         //创建用户
         User u = new User();
 
@@ -49,7 +61,7 @@ public class UserServiceImpl implements UserService {
         //录入登陆密码
         u.setPassword(userDto.getPassword());
         //初始邮件设置为空
-        u.setEmail(null);
+        u.setEmail(userDto.getEmail());
         //注册时昵称默认使用用户名
         u.setNickname(userDto.getUsername());
         //初始性别初始为空

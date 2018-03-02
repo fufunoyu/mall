@@ -3,22 +3,6 @@
 
 
 <script>
-    /**
-     * 功能：判断用户输入的邮箱格式是否正确
-     *传参：无
-     *返回值：true or false
-    */
-
-    function emailCheck() {
-        var email = document.getElementById("email").value; //获取邮箱地址
-        //判断邮箱格式是否正确
-        if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(email)) {
-            alert("邮箱格式错误!");
-            document.getElementById("email").focus(); //让邮箱文本框获得焦点
-            return false;
-        }
-        return true;
-    }
 
 
     /**
@@ -47,6 +31,7 @@
                 return false;
             }
 
+
             //密码未输入时显示提示信息
             if (0 == $("#password").val().length) {
                 $("span.errorMessage").html("请输入密码");
@@ -62,14 +47,13 @@
             }
 
             //提示输入确认密码
-            if (0 == $("#repeatpassword").val().length) {
+            if (0 == $("#rePassword").val().length) {
                 $("span.errorMessage").html("请输入重复密码");
                 $("div.registerErrorMessageDiv").css("visibility", "visible");
                 return false;
             }
-
             //提示两次密码输入不一致
-            if ($("#password").val() != $("#repeatpassword").val()) {
+            if ($("#password").val() != $("#rePassword").val()) {
                 $("span.errorMessage").html("重复密码不一致");
                 $("div.registerErrorMessageDiv").css("visibility", "visible");
                 return false;
@@ -83,8 +67,13 @@
             }
 
             //检测邮箱格式是否合法
-            emailCheck();
 
+            //判断邮箱格式是否正确
+            var email = $("#email").val(); //获取邮箱地址
+            if(!/^([a-zA-Z0-9_])+@([a-zA-Z0-9_])+((\.[a-zA-Z0-9_]{2,3}){1,2})$/.test(email)) {
+                $("span.errorMessage").html("请输入正确的邮箱格式");
+                return false;
+            }
             return true;
         });
     })
@@ -120,7 +109,7 @@
 
             <tr>
                 <td class="registerTableLeftTD">邮箱</td>
-                <td class="registerTableRightTD"><input id="email" name="email" type="email"
+                <td class="registerTableRightTD"><input id="email" name="email" type="text" value="${registerUser.email}"
                                                         placeholder="请输入你的邮箱"></td>
             </tr>
 
