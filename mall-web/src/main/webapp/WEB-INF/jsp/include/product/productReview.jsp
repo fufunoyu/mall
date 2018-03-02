@@ -66,14 +66,14 @@
 
                 <div class="productReviewItemDesc">
                     <div class="productReviewItemContent">
-                            ${r.content }
+                            ${r.comment.content }
                     </div>
-                    <div class="productReviewItemDate"><fmt:formatDate value="${r.createAt}"
+                    <div class="productReviewItemDate"><fmt:formatDate value="${r.comment.createAt}"
                                                                        pattern="yyyy-MM-dd"/></div>
                 </div>
                 <div class="productReviewItemUserInfo">
 
-                        ${r.userId}<%--<span class="userInfoGrayPart">（匿名）</span>--%>
+                        ${r.user.nickname}<%--<span class="userInfoGrayPart">（匿名）</span>--%>
                 </div>
 
                 <div style="clear:both"></div>
