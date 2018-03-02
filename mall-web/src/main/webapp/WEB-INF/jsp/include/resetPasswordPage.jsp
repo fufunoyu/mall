@@ -9,7 +9,7 @@
     }
 
 </script>
-<form method="post" action="/verifyCode/verifyMail" class="registerForm">
+<form method="post" action="/resetPassword" class="registerForm">
     <div class="registerDiv">
         <div class="registerErrorMessageDiv">
             <div class="alert alert-danger" role="alert">
@@ -21,9 +21,15 @@
 
         <table class="registerTable" align="center">
             <tr>
-                <td class="registerTableLeftTD">邮箱账号</td>
-                <td class="registerTableRightTD"><input id="name" name="mail" value="${registerUser.username}"
-                                                        placeholder="请输入邮箱"></td>
+                <td class="registerTableLeftTD">重置密码</td>
+                <td class="registerTableRightTD"><input id="password" name="mail" value="${registerUser.username}"
+                                                        placeholder="请输入密码"></td>
+            </tr>
+
+            <tr>
+                <td class="registerTableLeftTD">确认密码</td>
+                <td class="registerTableRightTD"><input id="rePassword" name="mail" value="${registerUser.username}"
+                                                        placeholder="请再次输入密码"></td>
             </tr>
 
             <tr>

@@ -85,14 +85,23 @@ public class LoginController {
      * @param session
      * @return
      */
-    @ResponseBody
     @RequestMapping("/verifyMail")
     public String verifyMail(String mail,String code,HttpSession session){
         String validateCode = (String) session.getAttribute("validateCode");
+        //查询数据库，确定邮箱对应的用户是否存在，
         if(validateCode != null && validateCode.equals(code)){
-            //TODO 验证mail
+
+            //如果存在，发送激活链接到对应的邮箱
+
+            //用户在一定时间内点击对应的激活链接，
+
+            //如果链接有效，校验链接中的加密字符串，获取用户信息（不能基于session），跳转到重置密码界面
+            //链接中加密用户id，可以使用jwt，这样检验的controller就可以获取到用户id
+
+            //如果链接失效，提示链接失效
             return "OK";
         }else {
+            //如果用户不存在，提示用户未注册
             return "validateCode incorrect";
         }
 
