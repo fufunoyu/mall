@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByCategoryId(Long categoryId, PageQuery pageQuery) {
-        return productDao.findByCategoryId(categoryId, pageQuery);
+    public List<Product> findByRootCategoryId(Long categoryId, PageQuery pageQuery) {
+        return productDao.findByRootCategoryId(categoryId, pageQuery);
     }
 }

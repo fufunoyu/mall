@@ -15,5 +15,5 @@ public enum Gender {
     /**
      * 未知
      */
-    UNKOWN
+    UNKNOWN
 }

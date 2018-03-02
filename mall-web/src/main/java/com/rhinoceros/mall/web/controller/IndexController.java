@@ -45,13 +45,12 @@ public class IndexController {
                 vo.setCategory(category);
                 //查询分类下销量最好的产品
                 PageQuery pageQuery = new PageQuery(1, 5, new Order("saleNum", Order.Direction.DESC));
-                List<Product> products = productService.findByCategoryId(category.getId(), pageQuery);
+                List<Product> products = productService.findByRootCategoryId(category.getId(), pageQuery);
                 vo.setProducts(products);
                 categoryWithProductList.add(vo);
             }
         }
         model.addAttribute("categoryWithProductList", categoryWithProductList);
-
         return "index";
     }
 }
