@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rhinoceros.mall.dao.dao.ProductDao">
+    <select id="findByCategoryId" resultType="Product">
+        SELECT *
+        FROM product
+        WHERE category_id = #{categoryId}
+        ${page.orderString}
+        LIMIT ${page.offset}, ${page.size}
+    </select>
+
+</mapper>
