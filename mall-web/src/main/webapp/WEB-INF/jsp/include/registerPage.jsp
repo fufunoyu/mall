@@ -4,6 +4,24 @@
 
 <script>
     /**
+     * 功能：判断用户输入的邮箱格式是否正确
+     *传参：无
+     *返回值：true or false
+    */
+
+    function emailCheck() {
+        var email = document.getElementById("email").value; //获取邮箱地址
+        //判断邮箱格式是否正确
+        if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(email)) {
+            alert("邮箱格式错误!");
+            document.getElementById("email").focus(); //让邮箱文本框获得焦点
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
      * 对注册页面各项操作的提示
      */
     $(function () {
@@ -57,6 +75,16 @@
                 return false;
             }
 
+            //提示输入邮箱
+            if (0 == $("#email").val().length) {
+                $("span.errorMessage").html("请输入邮箱");
+                $("div.registerErrorMessageDiv").css("visibility", "visible");
+                return false;
+            }
+
+            //检测邮箱格式是否合法
+            emailCheck();
+
             return true;
         });
     })
@@ -88,6 +116,12 @@
                 <td class="registerTableLeftTD">确认密码</td>
                 <td class="registerTableRightTD"><input id="rePassword" name="rePassword" type="password"
                                                         placeholder="请再次输入你的密码"></td>
+            </tr>
+
+            <tr>
+                <td class="registerTableLeftTD">邮箱</td>
+                <td class="registerTableRightTD"><input id="email" name="email" type="email"
+                                                        placeholder="请输入你的邮箱"></td>
             </tr>
 
             <tr>

@@ -68,11 +68,23 @@ public class LoginController {
             return "login";
         }
     }
+
+    /**
+     * 点击忘记密码时，跳转至密码找回界面
+     * @return
+     */
     @RequestMapping("/retrievePassword")
     public String retrievePassword(){
         return "retrievePassword";
     }
 
+    /**
+     * 点击确定时验证邮箱和验证码校对
+     * @param mail
+     * @param code
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/verifyMail")
     public String verifyMail(String mail,String code,HttpSession session){

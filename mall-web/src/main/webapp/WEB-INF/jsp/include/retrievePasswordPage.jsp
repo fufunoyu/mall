@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 <script >
+    /**
+     * 点击验证码刷新
+     */
     function refreshVerifyCode() {
         $('#verifyCode').attr('src',"/verifyCode/getCode?a="+Math.random());
     }
