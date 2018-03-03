@@ -2,8 +2,10 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
+import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.pojo.User;
+import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
 /**
  * 用户业务逻辑接口
@@ -26,8 +28,10 @@ public interface UserService {
     User login(LoginUserDto userDto);
 
     /**
-     * 找回密码
+     * 找回密码登陆提示邮箱是否已经注册
      * @param retrievePasswordDto
      */
-    void resetPassword(RetrievePasswordDto retrievePasswordDto);
+    void retrievePassword(RetrievePasswordDto retrievePasswordDto);
+
+    void resetPassword(ResetPasswordDto resetPasswordDto);
 }

@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 @Setter
 public class ResetPasswordDto {
 
+
+    private String secret;
+
     //重置登陆密码
     @NotBlank(message = "重置登陆密码不能为空")
     @Size(min=6,max=20,message = "密码长度不少于6位且不大于20位")

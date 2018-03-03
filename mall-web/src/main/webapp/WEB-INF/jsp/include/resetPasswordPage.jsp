@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
-<script >
+<script>
     /**
      * 点击验证码刷新
      */
     function refreshVerifyCode() {
-        $('#verifyCode').attr('src',"/verifyCode/getCode?a="+Math.random());
+        $('#verifyCode').attr('src', "/verifyCode/getCode?a=" + Math.random());
     }
 
     //显示错误提示信息
-    $(document).ready(function(){
+    $(document).ready(function () {
         <c:if test="${!empty msg}">
         $("span.errorMessage").html("${msg}");
-        $("div.registerErrorMessageDiv").css('visibility','visible')
+        $("div.registerErrorMessageDiv").css('visibility', 'visible')
         </c:if>
     })
 
 </script>
-<form method="post" action="/resetPassword" class="registerForm">
+<form method="post" action="/resetPasswordSubmit" class="registerForm">
     <div class="registerDiv">
         <div class="registerErrorMessageDiv">
             <div class="alert alert-danger" role="alert">
@@ -26,6 +26,7 @@
             </div>
         </div>
 
+        <input name="secret" value="${secret}" type="hidden">
 
         <table class="registerTable" align="center">
             <tr>
@@ -36,12 +37,14 @@
 
             <tr>
                 <td class="registerTableLeftTD">确认密码</td>
-                <td class="registerTableRightTD"><input id="rePassword" name="rePassword" value="${registerUser.username}"
+                <td class="registerTableRightTD"><input id="rePassword" name="rePassword"
+                                                        value="${registerUser.username}"
                                                         placeholder="请再次输入密码"></td>
             </tr>
 
             <tr>
-                <td class="registerTableLeftTD"><img id="verifyCode" src="/verifyCode/getCode" onclick="refreshVerifyCode()"></td>
+                <td class="registerTableLeftTD"><img id="verifyCode" src="/verifyCode/getCode"
+                                                     onclick="refreshVerifyCode()"></td>
                 <td class="registerTableRightTD"><input id="name1" name="code" value="${registerUser.username}"
                                                         placeholder="请输入验证码"></td>
 

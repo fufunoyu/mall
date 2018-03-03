@@ -4,6 +4,7 @@ import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.utils.SecurityUtils;
 import com.rhinoceros.mall.service.impl.exception.EmailHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.UserException;
 import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
@@ -16,16 +17,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.PublicKey;
 
 @Controller
 public class LoginController {
 
 
-    private static final String USERNAME = "user";
+    public static final String SECRET = "secret";
+
+    public static final String USERNAME = "user";
     @Autowired
     private UserService userService;
 
@@ -78,39 +80,49 @@ public class LoginController {
 
     /**
      * 点击忘记密码时，跳转至密码找回界面
+     *
      * @return
      */
     @RequestMapping("/retrievePassword")
-    public String retrievePassword(){
+    public String retrievePassword() {
+
         return "retrievePassword";
     }
 
     /**
      * 点击确定时验证邮箱和验证码校对
-     * @param session
+     *
+     * @param retrievePasswordDto
+     * @param br
+     * @param request
+     * @param model
      * @return
      */
     @RequestMapping("/verifyMail")
-    public String verifyMail(@Validated @ModelAttribute("retrievePassword") RetrievePasswordDto retrievePasswordDto,BindingResult br, HttpSession session, Model model){
+    public String verifyMail(@Validated @ModelAttribute("retrievePassword") RetrievePasswordDto retrievePasswordDto, BindingResult br, HttpServletRequest request, Model model) {
 
         //如果点击提交时有不规范操作会出现提示并返回当前界面
-        if(br.hasErrors()){
+        if (br.hasErrors()) {
             model.addAttribute("msg", br.getFieldError().getDefaultMessage());
             return "retrievePassword";
         }
 
-        String validateCode = (String) session.getAttribute("validateCode");
+        String validateCode = (String) request.getSession().getAttribute("validateCode");
 
         //验证码不正确
-        if(validateCode!=null&&!(validateCode.equals((retrievePasswordDto.getCode())))){
-            model.addAttribute("msg","验证码错误");
+        if (validateCode != null && !(validateCode.equals((retrievePasswordDto.getCode())))) {
+            model.addAttribute("msg", "验证码错误");
             return "retrievePassword";
         }
         //查询数据库，确定邮箱对应的用户是否存在，
         try {
-            userService.resetPassword(retrievePasswordDto);
-            return "resetPassword";
-        } catch (UserHasFoundException |EmailHasFoundException e) {
+            userService.retrievePassword(retrievePasswordDto);
+            String encodeStr = SecurityUtils.encode(retrievePasswordDto.getEmail());
+            String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            //TODO 发送邮件
+            System.out.println(basePath + "/resetPassword?" + SECRET + "=" + encodeStr);
+            return "sendEmailSuccess";
+        } catch (UserHasFoundException | EmailHasFoundException e) {
             model.addAttribute("msg", e.getMessage());
             return "retrievePassword";
         }
@@ -132,14 +144,23 @@ public class LoginController {
 
     }
 
+    @RequestMapping("/resetPassword")
+    public String resetPassword(Model model, @RequestParam(SECRET) String secret) {
+        model.addAttribute("secret", secret);
+        return "resetPassword";
+    }
+
     /**
      * 点击确定重置密码
+     *
      * @return
      */
-    @RequestMapping("resetPassword")
-    public String resetPassword(@Validated @ModelAttribute("resetPassword") ResetPasswordDto resetPasswordDto, BindingResult br, HttpSession session, Model model){
-        if(br.hasErrors()){
-            model.addAttribute("msg",br.getFieldError().getDefaultMessage());
+    @RequestMapping("/resetPasswordSubmit")
+    public String resetPasswordSubmit(@Validated @ModelAttribute("resetPassword") ResetPasswordDto resetPasswordDto, BindingResult br, HttpSession session, Model model) {
+        String email = SecurityUtils.decode(resetPasswordDto.getSecret());
+
+        if (br.hasErrors()) {
+            model.addAttribute("msg", br.getFieldError().getDefaultMessage());
             return "resetPassword";
         }
         String validateCode = (String) session.getAttribute("validateCode");
@@ -147,8 +168,8 @@ public class LoginController {
             model.addAttribute("msg", "两次密码不一致");
             return "resetPassword";
         }
-        if(validateCode!=null&&!(validateCode.equals((resetPasswordDto.getCode())))){
-            model.addAttribute("msg","验证码错误");
+        if (validateCode != null && !(validateCode.equals((resetPasswordDto.getCode())))) {
+            model.addAttribute("msg", "验证码错误");
             return "resetPassword";
         }
         return "resetPasswordSuccess";

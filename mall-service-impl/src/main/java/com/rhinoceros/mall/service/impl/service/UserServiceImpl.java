@@ -2,6 +2,7 @@ package com.rhinoceros.mall.service.impl.service;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
+import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
@@ -110,14 +111,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetPassword(RetrievePasswordDto resetPasswordDto) {
+    public void retrievePassword(RetrievePasswordDto retrievePasswordDto) {
         //通过输入的邮箱查询数据库
         //TODO CCCC
-        User email = userDao.findByEmail(resetPasswordDto.getEmail());
+        User user = userDao.findByEmail(retrievePasswordDto.getEmail());
         //如果用户已存在，程序抛出异常
-        if (email == null) {
+        if (user == null) {
             log.info("该邮箱还未注册");
             throw new EmailHasFoundException("该邮箱还未注册");
         }
+    }
+
+    public void resetPassword(ResetPasswordDto resetPasswordDto){
+
     }
 }
