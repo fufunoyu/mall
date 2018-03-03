@@ -42,6 +42,11 @@ public class Product {
     private Long categoryId;
 
     /**
+     * 商品分类id
+     */
+    private Long rootCategoryId;
+
+    /**
      * 商品库存总量
      */
     private Integer storeNum;
