@@ -73,7 +73,7 @@
 
             <div>
                 <a class="notImplementLink" href="#nowhere">忘记登录密码</a>
-                <a href="register.jsp" class="pull-right">免费注册</a>
+                <a href="/register" class="pull-right">免费注册</a>
             </div>
             <div style="margin-top:20px">
                 <button class="btn btn-block redButton" type="submit">登录</button>
