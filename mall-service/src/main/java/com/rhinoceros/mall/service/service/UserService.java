@@ -2,6 +2,7 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
+import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.pojo.User;
 
 /**
@@ -23,4 +24,10 @@ public interface UserService {
      * @return
      */
     User login(LoginUserDto userDto);
+
+    /**
+     * 找回密码
+     * @param retrievePasswordDto
+     */
+    void resetPassword(RetrievePasswordDto retrievePasswordDto);
 }

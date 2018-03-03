@@ -1,8 +1,12 @@
 package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
+import com.rhinoceros.mall.core.dto.ResetPasswordDto;
+import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.service.impl.exception.EmailHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.UserException;
+import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
 import com.rhinoceros.mall.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,7 @@ import java.security.PublicKey;
 
 @Controller
 public class LoginController {
+
 
     private static final String USERNAME = "user";
     @Autowired
@@ -82,30 +87,70 @@ public class LoginController {
 
     /**
      * 点击确定时验证邮箱和验证码校对
-     * @param mail
-     * @param code
      * @param session
      * @return
      */
     @RequestMapping("/verifyMail")
-    public String verifyMail(@RequestParam("mail") String mail, String code, HttpSession session){
-        String validateCode = (String) session.getAttribute("validateCode");
-        //查询数据库，确定邮箱对应的用户是否存在，
-        if(validateCode != null && validateCode.equals(code)){
+    public String verifyMail(@Validated @ModelAttribute("retrievePassword") RetrievePasswordDto retrievePasswordDto,BindingResult br, HttpSession session, Model model){
 
-            //如果存在，发送激活链接到对应的邮箱
-
-            //用户在一定时间内点击对应的激活链接，
-
-            //如果链接有效，校验链接中的加密字符串，获取用户信息（不能基于session），跳转到重置密码界面
-            //链接中加密用户id，可以使用jwt，这样检验的controller就可以获取到用户id
-
-            //如果链接失效，提示链接失效
-            return "resetPassword";
-        }else {
-            //如果用户不存在，提示用户未注册
-            return "validateCode incorrect";
+        //如果点击提交时有不规范操作会出现提示并返回当前界面
+        if(br.hasErrors()){
+            model.addAttribute("msg", br.getFieldError().getDefaultMessage());
+            return "retrievePassword";
         }
 
+        String validateCode = (String) session.getAttribute("validateCode");
+
+        //验证码不正确
+        if(validateCode!=null&&!(validateCode.equals((retrievePasswordDto.getCode())))){
+            model.addAttribute("msg","验证码错误");
+            return "retrievePassword";
+        }
+        //查询数据库，确定邮箱对应的用户是否存在，
+        try {
+            userService.resetPassword(retrievePasswordDto);
+            return "resetPassword";
+        } catch (UserHasFoundException |EmailHasFoundException e) {
+            model.addAttribute("msg", e.getMessage());
+            return "retrievePassword";
+        }
+//        if(validateCode != null && validateCode.equals(resetPasswordDto.getCode())){
+//
+//            //如果存在，发送激活链接到对应的邮箱
+//
+//            //用户在一定时间内点击对应的激活链接，
+//
+//            //如果链接有效，校验链接中的加密字符串，获取用户信息（不能基于session），跳转到重置密码界面
+//            //链接中加密用户id，可以使用jwt，这样检验的controller就可以获取到用户id
+//
+//            //如果链接失效，提示链接失效
+//            return "resetPassword";
+//        }else {
+//            //如果用户不存在，提示用户未注册
+//            return "validateCode incorrect";
+//        }
+
+    }
+
+    /**
+     * 点击确定重置密码
+     * @return
+     */
+    @RequestMapping("resetPassword")
+    public String resetPassword(@Validated @ModelAttribute("resetPassword") ResetPasswordDto resetPasswordDto, BindingResult br, HttpSession session, Model model){
+        if(br.hasErrors()){
+            model.addAttribute("msg",br.getFieldError().getDefaultMessage());
+            return "resetPassword";
+        }
+        String validateCode = (String) session.getAttribute("validateCode");
+        if (!(resetPasswordDto.getPassword().equals(resetPasswordDto.getRePassword()))) {
+            model.addAttribute("msg", "两次密码不一致");
+            return "resetPassword";
+        }
+        if(validateCode!=null&&!(validateCode.equals((resetPasswordDto.getCode())))){
+            model.addAttribute("msg","验证码错误");
+            return "resetPassword";
+        }
+        return "resetPasswordSuccess";
     }
 }

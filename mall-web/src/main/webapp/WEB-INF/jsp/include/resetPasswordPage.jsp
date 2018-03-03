@@ -8,6 +8,14 @@
         $('#verifyCode').attr('src',"/verifyCode/getCode?a="+Math.random());
     }
 
+    //显示错误提示信息
+    $(document).ready(function(){
+        <c:if test="${!empty msg}">
+        $("span.errorMessage").html("${msg}");
+        $("div.registerErrorMessageDiv").css('visibility','visible')
+        </c:if>
+    })
+
 </script>
 <form method="post" action="/resetPassword" class="registerForm">
     <div class="registerDiv">
@@ -22,13 +30,13 @@
         <table class="registerTable" align="center">
             <tr>
                 <td class="registerTableLeftTD">重置密码</td>
-                <td class="registerTableRightTD"><input id="password" name="mail" value="${registerUser.username}"
+                <td class="registerTableRightTD"><input id="password" name="password" value="${registerUser.username}"
                                                         placeholder="请输入密码"></td>
             </tr>
 
             <tr>
                 <td class="registerTableLeftTD">确认密码</td>
-                <td class="registerTableRightTD"><input id="rePassword" name="mail" value="${registerUser.username}"
+                <td class="registerTableRightTD"><input id="rePassword" name="rePassword" value="${registerUser.username}"
                                                         placeholder="请再次输入密码"></td>
             </tr>
 
