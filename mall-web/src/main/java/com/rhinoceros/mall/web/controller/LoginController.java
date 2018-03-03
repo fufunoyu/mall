@@ -23,6 +23,8 @@ import java.net.URLEncoder;
 public class LoginController {
 
     public static final String USERNAME = "user";
+    public static final String USERNAME_COOKIE = "userName";
+    public static final String USEPASSWORD_COOKIE = "userPsaaword";
     @Autowired
     private UserService userService;
 
@@ -51,29 +53,28 @@ public class LoginController {
      */
     @RequestMapping("/loginSubmit")
     public String login(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
-        // 用户已登录，直接返回首页
-        if (session.getAttribute(USERNAME) != null) {
-            return "redirect:/index";
-        }
+
         // 检查用户输入是否规范，不规范则返回到登录页面
         if (br.hasErrors()) {
             model.addAttribute("error", br.getFieldError().getDefaultMessage());
             return "login";
         }
-
+        // 用户已登录，直接返回首页
+        if (session.getAttribute(USERNAME) != null) {
+            return "redirect:/index";
+        }
         //检查输入的用户是否存在，存在则跳转到到主页面，不存在则返回到登录页面
         try {
             User user = userService.login(userDto);
             //创建Cookie
-            Cookie nameCookie=new Cookie("name", user.getUsername());
-            Cookie pswCookie=new Cookie("psw",user.getPassword());
+            Cookie nameCookie=new Cookie(USERNAME_COOKIE, user.getUsername());
+            Cookie pswCookie=new Cookie(USEPASSWORD_COOKIE,user.getPassword());
             //设置Cookie的父路径
             nameCookie.setPath(request.getContextPath()+"/");
             pswCookie.setPath(request.getContextPath()+"/");
 
             //获取是否保存Cookie
-            String rememberMe=request.getParameter("rember");
-            if(rememberMe==null || rememberMe.equals(false)){//不保存Cookie
+            if(!userDto.getRememberMe()){//不保存Cookie
                 nameCookie.setMaxAge(0);
                 pswCookie.setMaxAge(0);
             }else{//保存Cookie的时间长度，单位为秒

@@ -96,7 +96,7 @@
 				</span>
                 <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码">
             </div>
-                <input id="remberBtn" name="rember" type="checkbox">
+                <input id="remberBtn" name="rememberMe" type="checkbox">
                 <span class="loginInputIcon ">记住我</span>
 
             <br/>
