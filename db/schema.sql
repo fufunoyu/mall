@@ -105,9 +105,11 @@ CREATE TABLE `product` (
   COMMENT '商品状态',
   category_id            INT(20)        NOT NULL
   COMMENT '商品类型id',
+  root_category_id       INT(20)        NOT NULL
+  COMMENT '根分类的id',
   store_num              INT(20)                 DEFAULT 0
   COMMENT '库存',
-  saleNum                INT(20)                 DEFAULT 0
+  sale_num               INT(20)                 DEFAULT 0
   COMMENT '销量',
   image_urls             VARCHAR(512)   NOT NULL
   COMMENT '商品图片url',

@@ -1,37 +1,86 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+         pageEncoding="UTF-8" isELIgnored="false" %>
 
-	
-<div class="productReviewDiv" >
-	<div class="productReviewTopPart">
-		<a  href="#nowhere" class="productReviewTopPartSelectedLink">商品详情</a>
-		<a  href="#nowhere" class="selected">累计评价 <span class="productReviewTopReviewLinkNumber">${p.reviewCount}</span> </a>
-	</div>
-	
-		
-	<div class="productReviewContentPart">
-		<c:forEach items="${reviews}" var="r">
-		<div class="productReviewItem">
-		
-			<div class="productReviewItemDesc">
-				<div class="productReviewItemContent">
-					${r.content }
-				</div>
-				<div class="productReviewItemDate"><fmt:formatDate value="${r.createDate}" pattern="yyyy-MM-dd"/></div>
-			</div>
-			<div class="productReviewItemUserInfo">
-			
-				${r.user.anonymousName}<span class="userInfoGrayPart">（匿名）</span>
-			</div>
-			
-			<div style="clear:both"></div>
-		
-		</div>
-		</c:forEach>
-	</div>
+<%--引入kkpager--%>
+<script type="text/javascript" src="/static/js/kkpager/kkpager.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/kkpager/kkpager_orange.css"/>
+<%--使用kkpager--%>
+<script type="text/javascript">
+    $(function () {
+        //生成分页控件
+        kkpager.generPageHtml({
+            pno: '${nowPage}',
+            //总页码
+            total: '${(productVo.product.commentNum+10-1)/10}',
+            //总数据条数
+            totalRecords: '${productVo.product.commentNum}',
+            //链接前部
+            hrefFormer: '',
+            //链接尾部
+            hrefLatter: '',
+            mode: 'link', //可选，默认就是link
+            //链接算法
+            getLink: function (n) {
+                //这里是默认算法，算法适用于比如：
+                //hrefFormer=http://www.xx.com/news/20131212
+                //hrefLatter=.html
+                //那么首页（第1页）就是http://www.xx.com/news/20131212.html
+                //第2页就是http://www.xx.com/news/20131212_2.html
+                //第n页就是http://www.xx.com/news/20131212_n.html
+                return this.hrefFormer + '?page=' + n + '&pid=${productVo.product.id}' + this.hrefLatter+'#comment';
+                <%--if (n == 1) {--%>
+                <%--return this.hrefFormer + this.hrefLatter + '?pid= ${productVo.product.id}';--%>
+                <%--}--%>
+                <%--return this.hrefFormer + this.hrefLatter + '?page=' + n + '&pid=${productVo.product.id}';--%>
+
+            }
+
+        });
+    });
+
+</script>
+
+<c:if test="${isComment}">
+<script >
+    $(function(){
+    $("div.productReviewDiv").show();
+    $("div.productDetailDiv").hide();
+    });
+    </script>
+</c:if>
+
+<div id="comment" class="productReviewDiv">
+    <div class="productReviewTopPart">
+        <a href="#nowhere" class="productReviewTopPartSelectedLink">商品详情</a>
+        <a href="#nowhere" class="selected">累计评价 <span
+                class="productReviewTopReviewLinkNumber">${productVo.product.commentNum}</span> </a>
+    </div>
+
+
+    <div class="productReviewContentPart">
+        <c:forEach items="${comments}" var="r">
+            <div class="productReviewItem">
+
+                <div class="productReviewItemDesc">
+                    <div class="productReviewItemContent">
+                            ${r.comment.content }
+                    </div>
+                    <div class="productReviewItemDate"><fmt:formatDate value="${r.comment.createAt}"
+                                                                       pattern="yyyy-MM-dd"/></div>
+                </div>
+                <div class="productReviewItemUserInfo">
+
+                        ${r.user.nickname}<%--<span class="userInfoGrayPart">（匿名）</span>--%>
+                </div>
+
+                <div style="clear:both"></div>
+
+            </div>
+        </c:forEach>
+
+        <%--显示kkpager--%>
+        <div id="kkpager"></div>
+
+    </div>
 
 </div>

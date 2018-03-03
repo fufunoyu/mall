@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RegisterController {
 
-    //创建用户业务逻辑对象
     @Autowired
     private UserService userService;
 
