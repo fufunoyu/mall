@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `order`;
 DROP TABLE IF EXISTS `product`;
 DROP TABLE IF EXISTS `category`;
 DROP TABLE IF EXISTS `comment`;
-
+DROP TABLE IF EXISTS `cart_product`;
 CREATE TABLE `permission` (
   id   INT(20)     NOT NULL AUTO_INCREMENT
   COMMENT 'id',
@@ -186,4 +186,17 @@ CREATE TABLE `order_product` (
   COMMENT '订单商品关系表';
 
 
-
+CREATE TABLE `cart_product` (
+  id          INT(20) NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  product_id  INT(20) NOT NULL
+  COMMENT '商品id',
+  user_id     INT(20) NOT NULL
+  COMMENT '用户id',
+  product_num INT(5)  NOT NULL
+  COMMENT '商品数量',
+  PRIMARY KEY (`id`),
+  KEY `product_id`(`product_id`),
+  KEY `cart_id`(`user_id`)
+)
+  COMMENT '购物车商品关系表';

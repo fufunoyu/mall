@@ -117,10 +117,10 @@
 <div class="imgAndInfo">
 
     <div class="imgInimgAndInfo">
-        <img src="/static/img/productSingle/${productVo.firstImageUrls}.jpg" class="bigImg">
+        <img src="${productVo.firstImageUrls}" class="bigImg">
         <div class="smallImageDiv">
             <c:forEach items="${productVo.imagesUrls}" var="pi">
-                <img src="/static/img/productSingle_small/${pi}.jpg" bigImageURL="/static/img/productSingle/${pi}.jpg"
+                <img src="${pi}" bigImageURL="${pi}"
                      class="smallImage">
             </c:forEach>
         </div>
