@@ -1,7 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
+<%  //java
+    String name="";
+    String psw="";
+    Cookie[] cookies=request.getCookies();
+    if(cookies!=null&&cookies.length>0){
+        //遍历Cookie
+        for(int i=0;i<cookies.length;i++){
+            Cookie cookie=cookies[i];
+            //此处类似与Map有name和value两个字段,name相等才赋值,并处理编码问题
+            if("name".equals(cookie.getName())){
+                name=java.net.URLDecoder.decode(cookie.getValue(),"utf-8");
 
+            }
+            if("psw".equals(cookie.getName())){
+                psw=cookie.getValue();
+            }
+        }
+    }
+%>
 <script>
+    $('#remberBtn').on(oTools.clickEvent, function(){
+        var $_this = $(this);
+        var selected = $_this.data('rember');
+        if (selected != true) {
+            $_this.data('rember', true);
+
+        } else {
+            $_this.data('rember', false);
+
+        }
+    });
     $(function () {
 
         <c:if test="${!empty error}">
@@ -65,9 +94,11 @@
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-lock"></span>
 				</span>
-                <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码"
-                       type="text">
+                <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码">
             </div>
+                <input id="remberBtn" name="rememberMe" type="checkbox">
+                <span class="loginInputIcon ">记住我</span>
+
             <br/>
             <br/>
 
