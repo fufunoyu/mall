@@ -2,6 +2,7 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.pojo.CartProduct;
 import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.service.service.CartProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,11 @@ public class CartProductController {
 
     @RequestMapping("/cart/list")
     public String cart( Model model,HttpSession session){
-        System.out.println("ttttttttttttt"+session.getAttribute("userId"));
-        List<CartProduct> cartProduct = cartProductService.findByUserId((Long)session.getAttribute("userId"));
+        User user = (User) session.getAttribute(LoginController.USERNAME);
+        if(user==null){
+            return "redirect:/login";
+        }
+        List<CartProduct> cartProduct = cartProductService.findByUserId(user.getId());
         for(int i=0;i<cartProduct.size();i++){
             Long tempID=cartProduct.get(i).getProductId();
             List<Product> product = cartProductService.findByProductId(tempID);
