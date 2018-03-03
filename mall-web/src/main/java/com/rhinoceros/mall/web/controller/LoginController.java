@@ -67,4 +67,15 @@ public class LoginController {
             return "login";
         }
     }
+
+    /**
+     * 登出
+     * @param session
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute(USERNAME);
+        return "redirect:/index";
+    }
 }
