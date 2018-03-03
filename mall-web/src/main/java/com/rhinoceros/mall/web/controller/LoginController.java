@@ -67,19 +67,19 @@ public class LoginController {
         try {
             User user = userService.login(userDto);
             //创建Cookie
-            Cookie nameCookie=new Cookie(USERNAME_COOKIE, user.getUsername());
-            Cookie pswCookie=new Cookie(USEPASSWORD_COOKIE,user.getPassword());
+            Cookie nameCookie = new Cookie(USERNAME_COOKIE, user.getUsername());
+            Cookie pswCookie = new Cookie(USEPASSWORD_COOKIE, user.getPassword());
             //设置Cookie的父路径
-            nameCookie.setPath(request.getContextPath()+"/");
-            pswCookie.setPath(request.getContextPath()+"/");
+            nameCookie.setPath(request.getContextPath() + "/");
+            pswCookie.setPath(request.getContextPath() + "/");
 
             //获取是否保存Cookie
-            if(!userDto.getRememberMe()){//不保存Cookie
+            if (!userDto.getRememberMe()) {//不保存Cookie
                 nameCookie.setMaxAge(0);
                 pswCookie.setMaxAge(0);
-            }else{//保存Cookie的时间长度，单位为秒
-                nameCookie.setMaxAge(7*24*60*60);
-                pswCookie.setMaxAge(7*24*60*60);
+            } else {//保存Cookie的时间长度，单位为秒
+                nameCookie.setMaxAge(7 * 24 * 60 * 60);
+                pswCookie.setMaxAge(7 * 24 * 60 * 60);
             }
             //加入Cookie到响应头
             response.addCookie(nameCookie);
@@ -96,12 +96,20 @@ public class LoginController {
 
     /**
      * 登出
+     *
      * @param session
      * @return
      */
     @RequestMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute(USERNAME);
+        //删除cookie
+        Cookie username = new Cookie(USERNAME_COOKIE, "");
+        username.setMaxAge(-1);
+        Cookie password = new Cookie(USEPASSWORD_COOKIE, "");
+        password.setMaxAge(-1);
+        response.addCookie(username);
+        response.addCookie(password);
         return "redirect:/index";
     }
 }

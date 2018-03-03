@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * 用户拦截器
+ */
 @Slf4j
 public class UserCookieInterceptor extends HandlerInterceptorAdapter {
 
