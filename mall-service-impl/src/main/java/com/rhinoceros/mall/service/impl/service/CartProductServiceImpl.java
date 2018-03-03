@@ -23,9 +23,9 @@ public class CartProductServiceImpl implements CartProductService{
     public List<CartProduct> findByUserId(Long userId) {
         return cartProductDao.findByUserId(userId);
     }
-    @Override
-    public List<Product> findByProductId(Long productId) {
-        return productDao.findByProductId(productId);
-    }
+//    @Override
+//    public List<Product> findByProductId(Long productId) {
+//        return productDao.findByProductId(productId);
+//    }
 }
 

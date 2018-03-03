@@ -21,5 +21,5 @@ public interface CartProductService {
      * @param productId
      * @return
      */
-    List<Product> findByProductId(Long productId);
+  //  List<Product> findByProductId(Long productId);
 }
