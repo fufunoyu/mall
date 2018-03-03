@@ -20,16 +20,16 @@ $(function(){
 	
 	$('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
 		if(deleteOrderItem){
-			var page="foredeleteOrderItem";
+			var page="/cart/delete";
 			$.post(
 				    page,
-				    {"oiid":deleteOrderItemid},
+				    {"cid":deleteOrderItemid},
 				    function(result){
 						if("success"==result){
 							$("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
 						}
 						else{
-							location.href="login.jsp";
+							location.href="/login";
 						}
 				    }
 				);
@@ -276,7 +276,7 @@ function syncPrice(pid,num,price){
 						
 						</td>
 						<td>
-							<a class="deleteOrderItem" oiid="${cartProducts[vs.index].id}"  href="#nowhere">删除</a>
+							<a class="deleteOrderItem" oiid="${cartProducts[vs.index].id}"  href="#">删除</a>
 						</td>
 					</tr>
 				</c:forEach>				

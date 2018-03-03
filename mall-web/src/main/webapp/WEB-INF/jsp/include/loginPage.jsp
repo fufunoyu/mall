@@ -65,9 +65,11 @@
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-lock"></span>
 				</span>
-                <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码"
-                       type="text">
+                <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码">
             </div>
+                <input name="rememberMe" type="checkbox">
+                <span class="loginInputIcon ">记住我</span>
+
             <br/>
             <br/>
 

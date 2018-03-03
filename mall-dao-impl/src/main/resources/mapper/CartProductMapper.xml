@@ -16,4 +16,11 @@
         FROM product
         WHERE id = #{productId}
     </select>
+
+    <!--删除商品消息-->
+    <select id="deleteByCartProductId" resultType="CartProduct" parameterType="Long">
+        DELETE
+        FROM cart_product
+        WHERE id = #{cartProductId}
+    </select>
 </mapper>

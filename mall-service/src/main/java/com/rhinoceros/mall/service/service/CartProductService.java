@@ -21,5 +21,9 @@ public interface CartProductService {
      * @param productId
      * @return
      */
-  //  List<Product> findByProductId(Long productId);
+    /**
+     * 从购物车删除商品信息
+     * @param cartProductId
+     */
+    void deleteByCartProductId(Long cartProductId);
 }

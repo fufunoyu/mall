@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,11 @@ public class CartProductController {
     private CartProductService cartProductService;
     @Autowired
     private  ProductService productService;
+
+
+    /**
+     * 浏览购物车商品信息
+     */
     @RequestMapping("/cart/list")
     public String cart( Model model,HttpSession session){
         User user = (User) session.getAttribute(LoginController.USERNAME);
@@ -38,7 +45,18 @@ public class CartProductController {
         }
         model.addAttribute("products",products);
         model.addAttribute("cartProducts",cartProducts);
-
         return "cart";
     }
+
+    /**
+     * 删除购物车商品信息
+     * @param cid
+     */
+    @ResponseBody
+    @RequestMapping("/cart/delete")
+    public String deleteCartProducts(@RequestParam("cid") Long cid ){
+       cartProductService.deleteByCartProductId(cid);
+        return "success";
+    }
+
 }

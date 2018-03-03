@@ -20,7 +20,10 @@ public interface CartProductDao {
      * @return
      */
     List<CartProduct> findByProductId(Long productId);
+
     /**
      * 删除购物车商品
+     * @param cartProductId
      */
+    void deleteByCartProductId(Long cartProductId);
 }
