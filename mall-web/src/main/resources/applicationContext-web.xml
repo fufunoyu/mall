@@ -13,6 +13,13 @@
     <!--注解驱动-->
     <mvc:annotation-driven/>
 
+    <!--设置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.rhinoceros.mall.web.interceptor.UserCookieInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
     <!--静态文件-->
     <mvc:resources mapping="/static/**" location="/static/"/>
 

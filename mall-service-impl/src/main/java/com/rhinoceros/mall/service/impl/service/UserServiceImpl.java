@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         //注册时昵称默认使用用户名
         u.setNickname(userDto.getUsername());
         //初始性别初始为空
-        u.setGender(Gender.UNKOWN);
+        u.setGender(Gender.UNKNOWN);
         //初始电话为空
         u.setTelephone(null);
         //初始生日为空
@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
      * @param userDto
      * @return user 登录成功返回的用户信息
      */
+    @Transactional
     public User login(LoginUserDto userDto) {
         //根据用户名从dao中查询用户信息
         User user = userDao.findByUsername(userDto.getUsername());

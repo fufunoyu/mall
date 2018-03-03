@@ -11,9 +11,9 @@ public enum Gender {
     /**
      * 男
      */
-    MELE,
+    MALE,
     /**
      * 未知
      */
-    UNKOWN
+    UNKNOWN
 }

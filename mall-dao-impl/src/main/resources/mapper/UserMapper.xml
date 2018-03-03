@@ -42,4 +42,10 @@
         )
     </insert>
 
+    <select id="findById" resultType="User" parameterType="Long">
+        SELECT *
+        FROM USER
+        WHERE id=#{id}
+    </select>
+
 </mapper>
