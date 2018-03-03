@@ -13,6 +13,7 @@ import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param userDto
      */
+    @Transactional
     public void register(RegisterUserDto userDto) {
         //设置变量获取注册时输入的用户名
         String username = userDto.getUsername();
@@ -51,7 +53,7 @@ public class UserServiceImpl implements UserService {
         //注册时昵称默认使用用户名
         u.setNickname(userDto.getUsername());
         //初始性别初始为空
-        u.setGender(Gender.UNKOWN);
+        u.setGender(Gender.UNKNOWN);
         //初始电话为空
         u.setTelephone(null);
         //初始生日为空
@@ -77,6 +79,7 @@ public class UserServiceImpl implements UserService {
      * @param userDto
      * @return user 登录成功返回的用户信息
      */
+    @Transactional
     public User login(LoginUserDto userDto) {
         //根据用户名从dao中查询用户信息
         User user = userDao.findByUsername(userDto.getUsername());

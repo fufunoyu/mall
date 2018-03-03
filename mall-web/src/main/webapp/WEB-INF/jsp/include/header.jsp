@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
@@ -42,8 +43,6 @@ function checkEmpty(id, name){
 
 
 $(function(){
-
-	
 	$("a.productDetailTopReviewLink").click(function(){
 		$("div.productReviewDiv").show();
 		$("div.productDetailDiv").hide();
@@ -60,20 +59,6 @@ $(function(){
 		$("span.leaveMessageTextareaSpan").show();
 		$("div.orderItemSumDiv").css("height","100px");
 	});
-	
-	$("div#footer a[href$=#nowhere]").click(function(){
-		alert("模仿天猫的连接，并没有跳转到实际的页面");
-	});
-	
-
-	$("a.wangwanglink").click(function(){
-		alert("模仿旺旺的图标，并不会打开旺旺");
-	});
-	$("a.notImplementLink").click(function(){
-		alert("这个功能没做，蛤蛤~");
-	});
-	
-
 });
 
 </script>	
