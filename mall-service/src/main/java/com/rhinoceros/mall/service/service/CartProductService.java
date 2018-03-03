@@ -16,14 +16,17 @@ public interface CartProductService {
      */
     List<CartProduct> findByUserId(Long userId);
 
-    /**
-     * 浏览购物车信息
-     * @param productId
-     * @return
-     */
+
     /**
      * 从购物车删除商品信息
      * @param cartProductId
      */
     void deleteByCartProductId(Long cartProductId);
+
+    /**
+     * 统计购物车中购买商品的数量
+     * @param cartProductId
+     * @return
+     */
+    int countByCartProductId(Long cartProductId);
 }

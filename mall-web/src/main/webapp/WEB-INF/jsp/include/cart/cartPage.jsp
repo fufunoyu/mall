@@ -286,13 +286,12 @@ function syncPrice(pid,num,price){
 	</div>
 	
 	<div class="cartFoot">
-		<img selectit="false" class="selectAllItem" src="static/img/site/cartNotSelected.png">
+		<img selectit="false" class="selectAllItem" src="/static/img/site/cartNotSelected.png">
 		<span>全选</span>
 <!-- 		<a href="#">删除</a> -->
 		
 		<div class="pull-right">
 			<span>已选商品 <span class="cartSumNumber" >0</span> 件</span>
-			
 			<span>合计 (不含运费): </span> 
 			<span class="cartSumPrice" >￥0.00</span>
 			<button class="createOrderButton" disabled="disabled" >结  算</button>
