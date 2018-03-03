@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
+import com.rhinoceros.mall.service.impl.exception.UserException;
 import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
 import com.rhinoceros.mall.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class RegisterController {
         try {
             userService.register(userDto);
             return "registerSuccess";
-        } catch (UserHasFoundException e) {
+        } catch (UserException e) {
             model.addAttribute("msg", e.getMessage());
             return "register";
         }

@@ -1,7 +1,3 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
@@ -21,19 +17,18 @@
 							<span class="loginInputIcon ">
 								<span class=" glyphicon glyphicon-user"></span>
 							</span>
-							<input id="name" name="name" placeholder="手机/会员名/邮箱" type="text">			
+							<input id="username" name="username" placeholder="手机/会员名/邮箱" type="text">
 						</div>
 						
 						<div class="loginInput " >
 							<span class="loginInputIcon ">
 								<span class=" glyphicon glyphicon-lock"></span>
 							</span>
-							<input id="password" name="password"  type="password" placeholder="密码" type="text">			
+							<input id="password" name="password"  type="password" placeholder="密码">
 						</div>
-									<span class="text-danger">不要输入真实的天猫账号密码</span><br><br>
 						<div>
-							<a href="#nowhere">忘记登录密码</a> 
-							<a href="register.jsp" class="pull-right">免费注册</a> 
+							<a href="/retrievePassword">忘记登录密码</a>
+							<a href="/register" class="pull-right">免费注册</a>
 						</div>
 						<div style="margin-top:20px">
 							<button class="btn btn-block redButton loginSubmitButton" type="submit">登录</button>
