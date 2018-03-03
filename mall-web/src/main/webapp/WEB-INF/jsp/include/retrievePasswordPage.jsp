@@ -9,7 +9,7 @@
     }
 
 </script>
-<form method="post" action="/verifyCode/verifyMail" class="registerForm">
+<form method="post" action="/verifyMail" class="registerForm">
     <div class="registerDiv">
         <div class="registerErrorMessageDiv">
             <div class="alert alert-danger" role="alert">

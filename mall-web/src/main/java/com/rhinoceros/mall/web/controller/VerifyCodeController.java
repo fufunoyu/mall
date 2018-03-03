@@ -130,8 +130,4 @@ public class VerifyCodeController {
 		sos.close();
 	}
 
-	@RequestMapping("/verifyMail")
-	public String resetPassword(){
-		return"resetPassword";
-	}
 }

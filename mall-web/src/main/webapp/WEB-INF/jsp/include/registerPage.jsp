@@ -72,6 +72,7 @@
             var email = $("#email").val(); //获取邮箱地址
             if(!/^([a-zA-Z0-9_])+@([a-zA-Z0-9_])+((\.[a-zA-Z0-9_]{2,3}){1,2})$/.test(email)) {
                 $("span.errorMessage").html("请输入正确的邮箱格式");
+                $("div.registerErrorMessageDiv").css("visibility", "visible");
                 return false;
             }
             return true;

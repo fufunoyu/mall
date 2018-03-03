@@ -11,9 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.security.PublicKey;
 
 @Controller
 public class LoginController {
@@ -86,7 +88,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/verifyMail")
-    public String verifyMail(String mail,String code,HttpSession session){
+    public String verifyMail(@RequestParam("mail") String mail, String code, HttpSession session){
         String validateCode = (String) session.getAttribute("validateCode");
         //查询数据库，确定邮箱对应的用户是否存在，
         if(validateCode != null && validateCode.equals(code)){
@@ -99,7 +101,7 @@ public class LoginController {
             //链接中加密用户id，可以使用jwt，这样检验的controller就可以获取到用户id
 
             //如果链接失效，提示链接失效
-            return "OK";
+            return "resetPassword";
         }else {
             //如果用户不存在，提示用户未注册
             return "validateCode incorrect";
