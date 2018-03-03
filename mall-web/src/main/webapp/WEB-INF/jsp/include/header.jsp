@@ -43,8 +43,6 @@ function checkEmpty(id, name){
 
 
 $(function(){
-
-	
 	$("a.productDetailTopReviewLink").click(function(){
 		$("div.productReviewDiv").show();
 		$("div.productDetailDiv").hide();
@@ -61,8 +59,6 @@ $(function(){
 		$("span.leaveMessageTextareaSpan").show();
 		$("div.orderItemSumDiv").css("height","100px");
 	});
-
-
 });
 
 </script>	

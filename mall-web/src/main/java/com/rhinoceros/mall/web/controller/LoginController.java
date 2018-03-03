@@ -93,16 +93,15 @@ public class LoginController {
             return "login";
         }
     }
-        /**
-         * 退出登录
-         * @param userDto
-         * @param httpSession
-         * @return
-         */
+
+    /**
+     * 登出
+     * @param session
+     * @return
+     */
     @RequestMapping("/logout")
-    public String logout(LoginUserDto userDto,HttpSession httpSession){
-        //删除用户的session信息
-        httpSession.removeAttribute(USERNAME);
+    public String logout(HttpSession session) {
+        session.removeAttribute(USERNAME);
         return "redirect:/index";
     }
 }
