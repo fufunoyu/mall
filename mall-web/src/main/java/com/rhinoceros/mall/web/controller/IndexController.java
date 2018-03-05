@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,15 +26,16 @@ public class IndexController {
     private ProductService productService;
 
     @RequestMapping({"/index", "/"})
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
         // 首页轮播图
+        String path = request.getContextPath();
         List<String> urls = new LinkedList<String>();
-        urls.add("${pageContext.request.contextPath}/static/img/lunbo/1.jpg");
-        urls.add("${pageContext.request.contextPath}/static/img/lunbo/2.jpg");
-        urls.add("${pageContext.request.contextPath}/static/img/lunbo/3.jpg");
-        urls.add("${pageContext.request.contextPath}/static/img/lunbo/4.jpg");
+        urls.add(path + "/static/img/lunbo/1.jpg");
+        urls.add(path + "/static/img/lunbo/2.jpg");
+        urls.add(path + "/static/img/lunbo/3.jpg");
+        urls.add(path + "/static/img/lunbo/4.jpg");
         model.addAttribute("images", urls);
 
         //获取每种根分类下的销量最好的5种产品
