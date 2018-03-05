@@ -117,10 +117,10 @@
 <div class="imgAndInfo">
 
     <div class="imgInimgAndInfo">
-        <img src="/static/img/productSingle/${productVo.firstImageUrls}.jpg" class="bigImg">
+        <img src="${productVo.firstImageUrls}" class="bigImg">
         <div class="smallImageDiv">
             <c:forEach items="${productVo.imagesUrls}" var="pi">
-                <img src="/static/img/productSingle_small/${pi}.jpg" bigImageURL="/static/img/productSingle/${pi}.jpg"
+                <img src="${pi}" bigImageURL="${pi}"
                      class="smallImage">
             </c:forEach>
         </div>
@@ -132,9 +132,7 @@
         <div class="productTitle">
             ${productVo.product.name}
         </div>
-        <div class="productSubTitle">
-            ${productVo.product.name} <%-- 商品副标题数据库中还没写--%>
-        </div>
+        <br>
 
         <div class="productPrice">
             <%--<div class="juhuasuan">--%>
@@ -142,10 +140,6 @@
             <%--<span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>--%>
             <%--</div>--%>
             <div class="productPriceDiv">
-                <div class="gouwujuanDiv"><img height="16px" src="/static/img/site/gouwujuan.png">
-                    <span> 全商城实物商品通用</span>
-
-                </div>
                 <div class="originalDiv">
                     <span class="originalPriceDesc">价格</span>
                     <span class="originalPriceYuan">¥</span>
