@@ -29,4 +29,12 @@ public interface CartProductService {
      * @return
      */
     int countByCartProductId(Long cartProductId);
+
+    /**
+     * 添加商品到购物车
+     * @param productId
+     * @param userId
+     * @param ProductNum
+     */
+    void addProduct(Long productId, Long userId, Integer ProductNum);
 }

@@ -18,11 +18,11 @@
     </select>
 
     <!--删除商品消息-->
-    <select id="deleteByCartProductId" resultType="CartProduct" parameterType="Long">
+    <delete id="deleteByCartProductId" parameterType="Long">
         DELETE
         FROM cart_product
         WHERE id = #{cartProductId}
-    </select>
+    </delete>
 
     <!-- 统计购物车中每个商品的购买数量-->
     <update id="countByCartProductId"  parameterType="Long">
@@ -30,4 +30,15 @@
         SET product_num = #{productNum}
         WHERE id = #{cartProductId}
     </update>
+
+    <!-- 添加商品 -->
+    <insert id="add" parameterType="CartProduct">
+        INSERT INTO cart_product(product_id,user_id,product_num)
+        VALUE (
+        #{productId},
+        #{userId},
+        #{productNum}
+        )
+    </insert>
+
 </mapper>
