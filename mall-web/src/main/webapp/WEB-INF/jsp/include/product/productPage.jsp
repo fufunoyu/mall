@@ -4,7 +4,7 @@
 
 <title>商品展示 ${p.name}</title>
 <div class="categoryPictureInProductPageDiv">
-	<img class="categoryPictureInProductPage" src="/static/img/category/2.jpg">
+	<img class="categoryPictureInProductPage" src="${pageContext.request.contextPath}/static/img/category/2.jpg">
 </div>
 
 <div class="productPageDiv">
