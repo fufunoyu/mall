@@ -28,6 +28,11 @@ public class CartProductServiceImpl implements CartProductService{
     public void deleteByCartProductId(Long cartProductId) {
         cartProductDao.deleteByCartProductId(cartProductId);
     }
+
+    @Override
+    public int countByCartProductId(Long cartProductId) {
+        return cartProductDao.countByCartProductId(cartProductId);
+    }
 //    @Override
 //    public List<Product> findByProductId(Long productId) {
 //        return productDao.findByProductId(productId);

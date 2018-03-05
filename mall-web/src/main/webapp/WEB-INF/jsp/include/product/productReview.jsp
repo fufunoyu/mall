@@ -2,8 +2,8 @@
          pageEncoding="UTF-8" isELIgnored="false" %>
 
 <%--引入kkpager--%>
-<script type="text/javascript" src="/static/js/kkpager/kkpager.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/kkpager/kkpager_orange.css"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/kkpager/kkpager.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/kkpager/kkpager_orange.css"/>
 <%--使用kkpager--%>
 <script type="text/javascript">
     $(function () {

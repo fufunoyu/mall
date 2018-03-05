@@ -23,4 +23,11 @@
         FROM cart_product
         WHERE id = #{cartProductId}
     </select>
+
+    <!-- 统计购物车中每个商品的购买数量-->
+    <update id="countByCartProductId"  parameterType="Long">
+        UPDATE cart_product
+        SET product_num = #{productNum}
+        WHERE id = #{cartProductId}
+    </update>
 </mapper>
