@@ -292,7 +292,6 @@ function syncPrice(pid,num,price){
 		
 		<div class="pull-right">
 			<span>已选商品 <span class="cartSumNumber" >0</span> 件</span>
-			
 			<span>合计 (不含运费): </span> 
 			<span class="cartSumPrice" >￥0.00</span>
 			<button class="createOrderButton" disabled="disabled" >结  算</button>
