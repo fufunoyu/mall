@@ -9,6 +9,9 @@ DROP TABLE IF EXISTS `product`;
 DROP TABLE IF EXISTS `category`;
 DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `cart_product`;
+DROP TABLE IF EXISTS `admin`;
+
+
 CREATE TABLE `permission` (
   id   INT(20)     NOT NULL AUTO_INCREMENT
   COMMENT 'id',
@@ -69,6 +72,7 @@ CREATE TABLE `user` (
   PRIMARY KEY `id`(`id`)
 )
   COMMENT '用户表';
+
 
 CREATE TABLE `user_role` (
   user_id INT(20) NOT NULL
@@ -200,4 +204,17 @@ CREATE TABLE `cart_product` (
   KEY `cart_id`(`user_id`)
 )
   COMMENT '购物车商品关系表';
+
+
+CREATE TABLE `admin` (
+  id       INT(20)     NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  username VARCHAR(32) NOT NULL
+  COMMENT '管理员名',
+  password VARCHAR(20) NOT NULL
+  COMMENT '密码',
+  PRIMARY KEY `id`(`id`)
+)
+  COMMENT '管理员表';
+
 
