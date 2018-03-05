@@ -1,7 +1,3 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 	
@@ -24,16 +20,16 @@ $(function(){
 	
 	$('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
 		if(deleteOrderItem){
-			var page="foredeleteOrderItem";
+			var page="${pageContext.request.contextPath}/cart/delete";
 			$.post(
 				    page,
-				    {"oiid":deleteOrderItemid},
+				    {"cid":deleteOrderItemid},
 				    function(result){
 						if("success"==result){
 							$("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
 						}
 						else{
-							location.href="login.jsp";
+							location.href="${pageContext.request.contextPath}/login";
 						}
 				    }
 				);
@@ -44,12 +40,12 @@ $(function(){
 	$("img.cartProductItemIfSelected").click(function(){
 		var selectit = $(this).attr("selectit")
 		if("selectit"==selectit){
-			$(this).attr("src","img/site/cartNotSelected.png");
+			$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 			$(this).attr("selectit","false")
 			$(this).parents("tr.cartProductItemTR").css("background-color","#fff");
 		}
 		else{
-			$(this).attr("src","img/site/cartSelected.png");
+			$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 			$(this).attr("selectit","selectit")
 			$(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
 		}
@@ -60,19 +56,19 @@ $(function(){
 	$("img.selectAllItem").click(function(){
 		var selectit = $(this).attr("selectit")
 		if("selectit"==selectit){
-			$("img.selectAllItem").attr("src","img/site/cartNotSelected.png");
+			$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 			$("img.selectAllItem").attr("selectit","false")
 			$(".cartProductItemIfSelected").each(function(){
-				$(this).attr("src","img/site/cartNotSelected.png");
+				$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 				$(this).attr("selectit","false");
 				$(this).parents("tr.cartProductItemTR").css("background-color","#fff");
 			});			
 		}
 		else{
-			$("img.selectAllItem").attr("src","img/site/cartSelected.png");
+			$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 			$("img.selectAllItem").attr("selectit","selectit")
 			$(".cartProductItemIfSelected").each(function(){
-				$(this).attr("src","img/site/cartSelected.png");
+				$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 				$(this).attr("selectit","selectit");
 				$(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
 			});				
@@ -167,9 +163,9 @@ function syncSelect(){
 	});
 	
 	if(selectAll)
-		$("img.selectAllItem").attr("src","img/site/cartSelected.png");
+		$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 	else
-		$("img.selectAllItem").attr("src","img/site/cartNotSelected.png");
+		$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 	
 	
 	
@@ -199,16 +195,16 @@ function syncPrice(pid,num,price){
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
 	calcCartSumPriceAndNumber();
 	
-	var page = "forechangeOrderItem";
-	$.post(
-		    page,
-		    {"pid":pid,"number":num},
-		    function(result){
-				if("success"!=result){
-					location.href="login.jsp";
-				}
-		    }
-		);
+	var page = "${pageContext.request.contextPath}/forechangeOrderItem";
+	// $.post(
+	// 	    page,
+	// 	    {"pid":pid,"number":num},
+	// 	    function(result){
+	// 			if("success"!=result){
+	// 				location.href="login.jsp";
+	// 			}
+	// 	    }
+	// 	);
 
 }
 </script>	
@@ -227,7 +223,7 @@ function syncPrice(pid,num,price){
 			<thead>
 				<tr>
 					<th class="selectAndImage">
-							<img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png">				
+							<img selectit="false" class="selectAllItem" src="${pageContext.request.contextPath}/static/img/site/cartNotSelected.png">
 					全选
 					
 					</th>
@@ -239,48 +235,48 @@ function syncPrice(pid,num,price){
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${ois }" var="oi">
-					<tr oiid="${oi.id}" class="cartProductItemTR">
+				<c:forEach items="${products }" var="p" varStatus="vs">
+					<tr oiid="${cartProducts[vs.index].id}" class="cartProductItemTR">
 						<td>
-							<img selectit="false" oiid="${oi.id}" class="cartProductItemIfSelected" src="img/site/cartNotSelected.png">
-							<a style="display:none" href="#nowhere"><img src="img/site/cartSelected.png"></a>
-							<img class="cartProductImg"  src="img/productSingle_middle/${oi.product.firstProductImage.id}.jpg">
+							<img selectit="false" oiid="${cartProducts[vs.index].id}" class="cartProductItemIfSelected" src="/static/img/site/cartNotSelected.png">
+							<a style="display:none" href="#nowhere"><img src="${pageContext.request.contextPath}/static/img/site/cartSelected.png"></a>
+							<img class="cartProductImg"  src="${p.firstImageUrls}">
 						</td>
 						<td>
 							<div class="cartProductLinkOutDiv">
-								<a href="foreproduct?pid=${oi.product.id}" class="cartProductLink">${oi.product.name}</a>
+								<a href="foreproduct?pid=${p.product.id}" class="cartProductLink">${p.product.name}</a>
 								<div class="cartProductLinkInnerDiv">
-									<img src="img/site/creditcard.png" title="支持信用卡支付">
-									<img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
-									<img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
+									<img src="${pageContext.request.contextPath}/static/img/site/creditcard.png" title="支持信用卡支付">
+									<img src="${pageContext.request.contextPath}/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">
+									<img src="${pageContext.request.contextPath}/static/img/site/promise.png" title="消费者保障服务,承诺如实描述">
 								</div>
 							</div>
 							
 						</td>
 						<td>
-							<span class="cartProductItemOringalPrice">￥${oi.product.orignalPrice}</span>
-							<span  class="cartProductItemPromotionPrice">￥${oi.product.promotePrice}</span>
+							<span class="cartProductItemOringalPrice">￥${p.product.price}</span>
+							<span  class="cartProductItemPromotionPrice">￥${p.product.discount}</span>
 							
 						</td>
 						<td>
 						
 							<div class="cartProductChangeNumberDiv">
-								<span class="hidden orderItemStock " pid="${oi.product.id}">${oi.product.stock}</span>
-								<span class="hidden orderItemPromotePrice " pid="${oi.product.id}">${oi.product.promotePrice}</span>
-								<a  pid="${oi.product.id}" class="numberMinus" href="#nowhere">-</a>
-								<input pid="${oi.product.id}" oiid="${oi.id}" class="orderItemNumberSetting" autocomplete="off" value="${oi.number}">
-								<a  stock="${oi.product.stock}" pid="${oi.product.id}" class="numberPlus" href="#nowhere">+</a>
+								<span class="hidden orderItemStock " pid="${p.product.id}">${p.product.storeNum}</span>
+								<span class="hidden orderItemPromotePrice " pid="${p.product.id}">${p.product.discount}</span>
+								<a  pid="${p.product.id}" class="numberMinus" href="#nowhere">-</a>
+								<input pid="${p.product.id}" oiid="${cartProducts[vs.index].id}" class="orderItemNumberSetting" autocomplete="off" value="${cartProducts[vs.index].productNum}">
+								<a  stock="${p.product.storeNum}" pid="${p.product.id}" class="numberPlus" href="#nowhere">+</a>
 							</div>					
 						
 						 </td>
 						<td >
-							<span class="cartProductItemSmallSumPrice" oiid="${oi.id}" pid="${oi.product.id}" >
-							￥<fmt:formatNumber type="number" value="${oi.product.promotePrice*oi.number}" minFractionDigits="2"/>
+							<span class="cartProductItemSmallSumPrice" oiid="${cartProducts[vs.index].id}" pid="${p.product.id}" >
+							￥<fmt:formatNumber type="number" value="${p.product.discount*cartProducts[vs.index].productNum}" minFractionDigits="2"/>
 							</span>
 						
 						</td>
 						<td>
-							<a class="deleteOrderItem" oiid="${oi.id}"  href="#nowhere">删除</a>
+							<a class="deleteOrderItem" oiid="${cartProducts[vs.index].id}"  href="#">删除</a>
 						</td>
 					</tr>
 				</c:forEach>				
@@ -290,13 +286,12 @@ function syncPrice(pid,num,price){
 	</div>
 	
 	<div class="cartFoot">
-		<img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png">
+		<img selectit="false" class="selectAllItem" src="${pageContext.request.contextPath}/static/img/site/cartNotSelected.png">
 		<span>全选</span>
 <!-- 		<a href="#">删除</a> -->
 		
 		<div class="pull-right">
 			<span>已选商品 <span class="cartSumNumber" >0</span> 件</span>
-			
 			<span>合计 (不含运费): </span> 
 			<span class="cartSumPrice" >￥0.00</span>
 			<button class="createOrderButton" disabled="disabled" >结  算</button>

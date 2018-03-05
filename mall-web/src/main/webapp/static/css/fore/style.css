@@ -64,10 +64,10 @@ nav.top div.row div {
 div.searchDiv {
     background-color: #C40000;
     width: 400px;
-    margin: 50px auto;
     padding: 1px;
     height: 40px;
     display: block;
+    margin: 50px auto;
 }
 
 div.searchDiv input {
@@ -247,8 +247,9 @@ img.catear {
 
 img.logo {
     position: absolute;
-    left: 0px;
+    left: 30px;
     top: 55px;
+    width: 250px;
     /* 	z-index:-1; */
 }
 
@@ -402,12 +403,14 @@ div.license span {
 }
 
 div.simpleLogo {
-    padding: 32px 0px;
+    padding: 32px 50px;
 }
 
 img.loginBackgroundImg {
     display: block;
     margin: 0px auto;
+    width: calc(100% - 180px);
+    height: 500px;
 }
 
 div.loginDivInProductPageModalDiv {
@@ -661,7 +664,7 @@ img.simpleLogo {
     position: absolute;
     left: 10px;
     top: 50px;
-    width: 140px;
+    width: 300px;
 }
 
 div.simpleSearchDiv {

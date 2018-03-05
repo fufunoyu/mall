@@ -11,10 +11,10 @@
 <html>
 
 <head>
-	<script src="/static/js/jquery/2.0.0/jquery.min.js"></script>
-	<link href="/static/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
-	<script src="/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-	<link href="/static/css/fore/style.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath}/static/js/jquery/2.0.0/jquery.min.js"></script>
+	<link href="${pageContext.request.contextPath}/static/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath}/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+	<link href="${pageContext.request.contextPath}/static/css/fore/style.css" rel="stylesheet">
 <script>
 function formatMoney(num){
 	num = num.toString().replace(/\$|\,/g,'');  
@@ -43,8 +43,6 @@ function checkEmpty(id, name){
 
 
 $(function(){
-
-	
 	$("a.productDetailTopReviewLink").click(function(){
 		$("div.productReviewDiv").show();
 		$("div.productDetailDiv").hide();
@@ -61,20 +59,6 @@ $(function(){
 		$("span.leaveMessageTextareaSpan").show();
 		$("div.orderItemSumDiv").css("height","100px");
 	});
-	
-	$("div#footer a[href$=#nowhere]").click(function(){
-		alert("模仿天猫的连接，并没有跳转到实际的页面");
-	});
-	
-
-	$("a.wangwanglink").click(function(){
-		alert("模仿旺旺的图标，并不会打开旺旺");
-	});
-	$("a.notImplementLink").click(function(){
-		alert("这个功能没做，蛤蛤~");
-	});
-	
-
 });
 
 </script>	
