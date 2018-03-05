@@ -8,4 +8,9 @@
         FROM category
     </select>
 
+    <select id="findById" parameterType="Long" resultType="Category">
+        SELECT *
+        FROM category
+        WHERE id = #{id}
+    </select>
 </mapper>

@@ -6,12 +6,12 @@
     <select id="findById" resultType="Product" parameterType="Long">
         SELECT *
         FROM product
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
-    <select id="findByRootCategoryId" resultType="Product">
+    <select id="findByCategoryId" resultType="Product">
         SELECT *
         FROM product
-        WHERE root_category_id = #{categoryId}
+        WHERE root_category_id = #{categoryId} OR category_id = #{categoryId}
         ${page.orderString}
         LIMIT ${page.offset}, ${page.size}
     </select>
