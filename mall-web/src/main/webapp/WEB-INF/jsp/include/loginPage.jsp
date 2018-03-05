@@ -1,36 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
-<%  //java
-    String name="";
-    String psw="";
-    Cookie[] cookies=request.getCookies();
-    if(cookies!=null&&cookies.length>0){
-        //遍历Cookie
-        for(int i=0;i<cookies.length;i++){
-            Cookie cookie=cookies[i];
-            //此处类似与Map有name和value两个字段,name相等才赋值,并处理编码问题
-            if("name".equals(cookie.getName())){
-                name=java.net.URLDecoder.decode(cookie.getValue(),"utf-8");
-
-            }
-            if("psw".equals(cookie.getName())){
-                psw=cookie.getValue();
-            }
-        }
-    }
-%>
 <script>
-    $('#remberBtn').on(oTools.clickEvent, function(){
-        var $_this = $(this);
-        var selected = $_this.data('rember');
-        if (selected != true) {
-            $_this.data('rember', true);
-
-        } else {
-            $_this.data('rember', false);
-
-        }
-    });
     $(function () {
 
         <c:if test="${!empty error}">
@@ -66,13 +36,13 @@
 <div id="loginDiv" style="position: relative">
 
     <div class="simpleLogo">
-        <a href="/"><img src="/static/img/site/logo.jpg"></a>
+        <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/static/img/site/logo.jpg"></a>
     </div>
 
 
-    <img id="loginBackgroundImg" class="loginBackgroundImg" src="/static/img/site/loginBackground.jpg">
+    <img id="loginBackgroundImg" class="loginBackgroundImg" src="${pageContext.request.contextPath}/static/img/site/loginBackground.jpg">
 
-    <form class="loginForm" action="/loginSubmit" method="post">
+    <form class="loginForm" action="${pageContext.request.contextPath}/loginSubmit" method="post">
         <div id="loginSmallDiv" class="loginSmallDiv">
             <div class="loginErrorMessageDiv">
                 <div class="alert alert-danger">
@@ -103,8 +73,8 @@
             <br/>
 
             <div>
-                <a href="/retrievePassword">忘记登录密码</a>
-                <a href="/register" class="pull-right">免费注册</a>
+                <a class="notImplementLink" href="#nowhere">忘记登录密码</a>
+                <a href="${pageContext.request.contextPath}/register" class="pull-right">免费注册</a>
             </div>
             <div style="margin-top:20px">
                 <button class="btn btn-block redButton" type="submit">登录</button>

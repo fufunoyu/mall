@@ -99,7 +99,9 @@ public class LoginController {
             session.setAttribute(USERNAME, user);
             return "redirect:/index";
         } catch (UserException e) {
+            System.out.println("数据回显:");
             model.addAttribute("error", e.getMessage());
+            System.out.println("数据回显"+e.getMessage());
             return "login";
         }
     }

@@ -8,7 +8,7 @@
 
     <div id="footer_ensure" class="footer_ensure">
         <a href="#nowhere">
-            <img src="/static/img/site/ensure.png">
+            <img src="${pageContext.request.contextPath}/static/img/site/ensure.png">
         </a>
     </div>
 
@@ -43,28 +43,19 @@
         </div>
         <div class="descColumn">
             <span class="descColumnTitle">手机商城</span>
-            <a href="#nowhere"><img src="/static/img/site/ma.png"></a>
+            <a href="#nowhere"><img src="${pageContext.request.contextPath}/static/img/site/ma.png"></a>
         </div>
 
     </div>
 
     <div style="clear:both"></div>
 
-    <img id="cateye" class="cateye" src="/static/img/site/cateye.png">
 
     <div id="copyright" class="copyright">
 
 
         <div class="license">
-            <span>增值电信业务经营许可证： 浙B2-20110446</span>
-            <span>网络文化经营许可证：浙网文[2015]0295-065号</span>
-            <span>互联网医疗保健信息服务 审核同意书 浙卫网审【2014】6号 </span>
-            <span>互联网药品信息服务资质证书编号：浙-（经营性）-2012-0005</span>
-            <div class="copyRightYear">&copy; 2003-2016 TMALL.COM 版权所有</div>
-            <div>
-                <img src="/static/img/site/copyRight1.jpg">
-                <img src="/static/img/site/copyRight2.jpg">
-            </div>
+            <div class="copyRightYear">&copy; 2003-2016 MSMall.COM 版权所有</div>
         </div>
     </div>
 </div>
