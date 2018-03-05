@@ -27,4 +27,6 @@ public interface ProductDao {
      * @return
      */
     List<Product> findByRootCategoryId(@Param("categoryId") Long categoryId, @Param("page") PageQuery pageQuery);
+
+
 }

@@ -8,6 +8,9 @@ DROP TABLE IF EXISTS `order`;
 DROP TABLE IF EXISTS `product`;
 DROP TABLE IF EXISTS `category`;
 DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS `cart_product`;
+DROP TABLE IF EXISTS `admin`;
+
 
 CREATE TABLE `permission` (
   id   INT(20)     NOT NULL AUTO_INCREMENT
@@ -70,6 +73,7 @@ CREATE TABLE `user` (
 )
   COMMENT '用户表';
 
+
 CREATE TABLE `user_role` (
   user_id INT(20) NOT NULL
   COMMENT '用户id',
@@ -101,7 +105,7 @@ CREATE TABLE `product` (
   COMMENT '价格',
   discount               DECIMAL(10, 2)          DEFAULT NULL
   COMMENT '折扣后的价格',
-  status                 CHAR(10)       NOT NULL
+  status                 CHAR(20)       NOT NULL
   COMMENT '商品状态',
   category_id            INT(20)        NOT NULL
   COMMENT '商品类型id',
@@ -185,14 +189,32 @@ CREATE TABLE `order_product` (
 )
   COMMENT '订单商品关系表';
 
-CREATE TABLE `admin` (
-  id            INT(20)     NOT NULL AUTO_INCREMENT
+
+CREATE TABLE `cart_product` (
+  id          INT(20) NOT NULL AUTO_INCREMENT
   COMMENT 'id',
-  username      VARCHAR(32) NOT NULL
+  product_id  INT(20) NOT NULL
+  COMMENT '商品id',
+  user_id     INT(20) NOT NULL
+  COMMENT '用户id',
+  product_num INT(5)  NOT NULL
+  COMMENT '商品数量',
+  PRIMARY KEY (`id`),
+  KEY `product_id`(`product_id`),
+  KEY `cart_id`(`user_id`)
+)
+  COMMENT '购物车商品关系表';
+
+
+CREATE TABLE `admin` (
+  id       INT(20)     NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  username VARCHAR(32) NOT NULL
   COMMENT '管理员名',
-  password      VARCHAR(20) NOT NULL
+  password VARCHAR(20) NOT NULL
   COMMENT '密码',
   PRIMARY KEY `id`(`id`)
 )
   COMMENT '管理员表';
+
 
