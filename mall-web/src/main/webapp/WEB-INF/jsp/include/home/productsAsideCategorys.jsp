@@ -17,7 +17,7 @@
             <div class="row show1">
                 <c:forEach items="${categories}" var="subCategory">
                     <c:if test="${subCategory.parentId==category.id}">
-                        <a href="category?cid=${subCategory.id}">${subCategory.name}</a>
+                        <a href="${pageContext.request.contextPath}/category?cid=${subCategory.id}">${subCategory.name}</a>
                     </c:if>
                 </c:forEach>
                 <div class="seperator"></div>

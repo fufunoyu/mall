@@ -1,7 +1,3 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 	
@@ -20,7 +16,7 @@
 		<div class="productUnit" price="${p.promotePrice}">
 			<div class="productUnitFrame">
 				<a href="foreproduct?pid=${p.id}">
-					<img class="productImage" src="img/productSingle_middle/${p.firstProductImage.id}.jpg">
+					<img class="productImage" src="${pageContext.request.contextPath}/static/img/productSingle_middle/${p.firstProductImage.id}.jpg">
 				</a>
 				<span class="productPrice">¥<fmt:formatNumber type="number" value="${p.promotePrice}" minFractionDigits="2"/></span>
 				<a class="productLink" href="foreproduct?pid=${p.id}">
@@ -34,7 +30,7 @@
 					<span class="productReview">评价<span class="productReviewNumber">${p.reviewCount}</span></span>
 					<span class="wangwang">
 					<a class="wangwanglink" href="#nowhere">
-						<img src="img/site/wangwang.png">
+						<img src="${pageContext.request.contextPath}/static/img/site/wangwang.png">
 					</a>
 					
 					</span>
