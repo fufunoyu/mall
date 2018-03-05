@@ -32,6 +32,10 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
         }
         //获取cookie信息
         Cookie[] cookies = request.getCookies();
+        // 如果cookies不存在，直接返回
+        if (cookies == null) {
+            return true;
+        }
         String username = null;
         String password = null;
         //获取到cookie中的用户名和密码
@@ -56,7 +60,7 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
             User user = userService.login(dto);
             //把用户信息放在session里面
             request.getSession().setAttribute(LoginController.USERNAME, user);
-        }catch (UserException e){
+        } catch (UserException e) {
             e.printStackTrace();
             log.info(e.getMessage());
         }

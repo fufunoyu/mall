@@ -196,15 +196,15 @@ function syncPrice(pid,num,price){
 	calcCartSumPriceAndNumber();
 	
 	var page = "forechangeOrderItem";
-	$.post(
-		    page,
-		    {"pid":pid,"number":num},
-		    function(result){
-				if("success"!=result){
-					location.href="login.jsp";
-				}
-		    }
-		);
+	// $.post(
+	// 	    page,
+	// 	    {"pid":pid,"number":num},
+	// 	    function(result){
+	// 			if("success"!=result){
+	// 				location.href="login.jsp";
+	// 			}
+	// 	    }
+	// 	);
 
 }
 </script>	
@@ -286,7 +286,7 @@ function syncPrice(pid,num,price){
 	</div>
 	
 	<div class="cartFoot">
-		<img selectit="false" class="selectAllItem" src="static/img/site/cartNotSelected.png">
+		<img selectit="false" class="selectAllItem" src="/static/img/site/cartNotSelected.png">
 		<span>全选</span>
 <!-- 		<a href="#">删除</a> -->
 		
