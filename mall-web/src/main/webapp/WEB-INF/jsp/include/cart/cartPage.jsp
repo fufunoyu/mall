@@ -195,16 +195,14 @@ function syncPrice(pid,num,price){
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
 	calcCartSumPriceAndNumber();
 	
-	var page = "forechangeOrderItem";
-	// $.post(
-	// 	    page,
-	// 	    {"pid":pid,"number":num},
-	// 	    function(result){
-	// 			if("success"!=result){
-	// 				location.href="login.jsp";
-	// 			}
-	// 	    }
-	// 	);
+	var page = "/cart/count";
+	$.post(
+		    page,
+		    {"pid":pid,"number":num},
+		    function(result){
+				return;
+		    }
+		);
 
 }
 </script>	

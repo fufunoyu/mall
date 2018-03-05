@@ -3,6 +3,7 @@ package com.rhinoceros.mall.dao.dao;
 import com.rhinoceros.mall.core.pojo.CartProduct;
 import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.core.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -32,5 +33,5 @@ public interface CartProductDao {
      * @param cartProductId
      * @return
      */
-    int countByCartProductId(Long cartProductId);
+    Integer updateByCartProductId(@Param("productId") Long cartProductId, @Param("productNum") Integer num);
 }
