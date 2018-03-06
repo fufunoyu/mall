@@ -12,18 +12,23 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class AdminLoginController {
 
     private static final String USERNAME = "admin";
+    public static final String USERNAME_COOKIE = "userName";
+    public static final String USER_PASSWORD_COOKIE = "userPsaaword";
     @Autowired
     private AdminService adminService;
 
     /**
-     * 登录页面展示
-     *
+     * 登录页面显示
+     * @param session
      * @return
      */
     @RequestMapping("/login")
@@ -36,16 +41,18 @@ public class AdminLoginController {
     }
 
     /**
-     * 登录表单提交
-     *
+     * 提交表单数据
      * @param userDto
      * @param br
      * @param session
      * @param model
+     * @param response
+     * @param request
      * @return
      */
     @RequestMapping("/loginSubmit")
-    public String loginSubmit(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model) {
+    public String loginSubmit(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
+
         // 管理员已登录，直接返回管理员首页
         if (session.getAttribute(USERNAME) != null) {
             return "redirect:/index";
@@ -59,6 +66,25 @@ public class AdminLoginController {
         //检查输入的管理员是否存在，存在则跳转到到管理员主页面，不存在则返回到管理员登录页面
         try {
             Admin admin = adminService.login(userDto);
+            //创建Cookie
+            Cookie nameCookie = new Cookie(USERNAME_COOKIE, admin.getUsername());
+            Cookie pswCookie = new Cookie(USER_PASSWORD_COOKIE, admin.getPassword());
+            //设置Cookie的父路径
+            nameCookie.setPath(request.getContextPath() + "/");
+            pswCookie.setPath(request.getContextPath() + "/");
+
+            //获取是否保存Cookie
+            if (!userDto.getRememberMe()) {//不保存Cookie
+                nameCookie.setMaxAge(0);
+                pswCookie.setMaxAge(0);
+            } else {//保存Cookie的时间长度，单位为秒
+                nameCookie.setMaxAge(7 * 24 * 60 * 60);
+                pswCookie.setMaxAge(7 * 24 * 60 * 60);
+            }
+            //加入Cookie到响应头
+            response.addCookie(nameCookie);
+            response.addCookie(pswCookie);
+
             //将管理员信息放入session
             session.setAttribute(USERNAME, admin);
             return "redirect:/index";
@@ -71,12 +97,22 @@ public class AdminLoginController {
     /**
      * 退出登录
      * @param session
+     * @param response
      * @return
      */
     @RequestMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute(USERNAME);
+        //删除cookie
+        Cookie username = new Cookie(USERNAME_COOKIE, "");
+        username.setMaxAge(-1);
+        Cookie password = new Cookie(USER_PASSWORD_COOKIE, "");
+        password.setMaxAge(-1);
+        response.addCookie(username);
+        response.addCookie(password);
         return "redirect:/login";
     }
+
+
 
 }

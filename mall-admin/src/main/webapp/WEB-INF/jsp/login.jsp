@@ -31,8 +31,8 @@
         }
         .titlogin{
             padding-top: 40px;
-            font-size: 22px;
-            font-weight: 100;
+            font-size: 30px;
+            font-weight: 900;
             color: rgba(255, 255, 255, 0.8);
         }
         .meslogin{
@@ -43,7 +43,7 @@
             margin-bottom: 20px;
         }
         .rember{
-            font-size: 12px;
+            font-size: 10px;
         }
         .usermsg{
             width: 206px;
@@ -59,12 +59,15 @@
             font-size: 14px;
             background: rgba(51, 107, 135, 0.85);;
             border: none;
+            border-radius: 8px;
         }
         .sublogin input:hover{
-            background: rgba(57, 113, 146, 0.85);
+            background: rgba(64, 116, 146, 0.85);
         }
         .sublogin input:active{
             background: #336b87;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
         }
         .error{
             font-size: 12px;
@@ -76,7 +79,7 @@
 <body class="body">
 <center>
     <div class="boxlogin">
-        <h1 class="titlogin">管理员登录</h1>
+        <h1 class="titlogin">民生商城后台管理员登录</h1>
         <form id="indexform" name="indexForm" action="${pageContext.request.contextPath}/loginSubmit" method="post">
             <c:if test="${!empty error}">
                 <span class="error">${error}</span>
@@ -94,10 +97,10 @@
                     <td><input class="usermsg" type="password" value="${loginUser.password}" name="password" placeholder="请输入密码">
                     </td>
                 </tr>
-                <%-- <tr>
+                <tr>
                 <td class="rember">记住我：</td>
                 <td><input class="remberBtn" id="remberBtn" name="rememberMe" type="checkbox"></td>
-            </tr>--%>
+                </tr>
             </table>
             <div class="sublogin">
                 <input type="submit" value="登 录">
