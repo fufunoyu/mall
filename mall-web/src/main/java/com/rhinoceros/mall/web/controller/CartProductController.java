@@ -71,7 +71,7 @@ public class CartProductController {
 
     /**
      * 添加购物车商品
-     * @param id
+     * @param pid
      * @param num
      * @param session
      * @return
@@ -79,17 +79,15 @@ public class CartProductController {
     @ResponseBody
     @RequestMapping({"/cart/add"})
     public String addToCartProduct(
-            @RequestParam("pid") Long id,
+            @RequestParam("pid") Long pid,
             @RequestParam("num") Integer num,
             HttpSession session
-
-
     ){
         User user = (User) session.getAttribute(LoginController.USERNAME);
         if(user==null){
             return "redirect:/login";
         }
-        cartProductService.addProduct(id,user.getId(),num);
+        cartProductService.addProduct(pid,user.getId(),num);
         return "success";
     }
 

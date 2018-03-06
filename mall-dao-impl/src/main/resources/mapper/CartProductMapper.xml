@@ -41,4 +41,11 @@
         )
     </insert>
 
+    <!--查找购物车中商品-->
+    <select id="findByUserIdAndProductId" resultType="CartProduct">
+        SELECT *
+        FROM cart_product
+        WHERE user_id = #{userId} AND product_id = #{productId}
+    </select>
+
 </mapper>

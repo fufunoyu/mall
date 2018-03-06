@@ -34,5 +34,15 @@ public interface CartProductDao {
      * @return 修改条目数目
      */
     int add(CartProduct cartProduct);
-    Integer updateById(@Param("productId") Long cartProductId, @Param("productNum") Integer num);
+
+
+    int updateById(CartProduct cartProduct);
+
+    /**
+     * 根据用户id和商品id查找购物车中商品
+     * @param userId
+     * @param productId
+     * @return
+     */
+    CartProduct findByUserIdAndProductId(@Param("userId")Long userId, @Param("productId")Long productId);
 }
