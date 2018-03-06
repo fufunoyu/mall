@@ -2,6 +2,7 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * <p>
  * 2018/03/05 09:57
  */
+@Controller
 public class CategoryController {
 
     @Autowired
@@ -18,6 +20,7 @@ public class CategoryController {
     @RequestMapping("/category")
     public String list(@RequestParam("cid") Long cid,
                        @RequestParam(value = "page", required = false, defaultValue = "1") Long page) {
+
 
 
         return "category";

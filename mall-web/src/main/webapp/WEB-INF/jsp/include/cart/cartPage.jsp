@@ -20,7 +20,7 @@ $(function(){
 	
 	$('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
 		if(deleteOrderItem){
-			var page="/cart/delete";
+			var page="${pageContext.request.contextPath}/cart/delete";
 			$.post(
 				    page,
 				    {"cid":deleteOrderItemid},
@@ -29,7 +29,7 @@ $(function(){
 							$("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
 						}
 						else{
-							location.href="/login";
+							location.href="${pageContext.request.contextPath}/login";
 						}
 				    }
 				);
@@ -40,12 +40,12 @@ $(function(){
 	$("img.cartProductItemIfSelected").click(function(){
 		var selectit = $(this).attr("selectit")
 		if("selectit"==selectit){
-			$(this).attr("src","/static/img/site/cartNotSelected.png");
+			$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 			$(this).attr("selectit","false")
 			$(this).parents("tr.cartProductItemTR").css("background-color","#fff");
 		}
 		else{
-			$(this).attr("src","/static/img/site/cartSelected.png");
+			$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 			$(this).attr("selectit","selectit")
 			$(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
 		}
@@ -56,19 +56,19 @@ $(function(){
 	$("img.selectAllItem").click(function(){
 		var selectit = $(this).attr("selectit")
 		if("selectit"==selectit){
-			$("img.selectAllItem").attr("src","/static/img/site/cartNotSelected.png");
+			$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 			$("img.selectAllItem").attr("selectit","false")
 			$(".cartProductItemIfSelected").each(function(){
-				$(this).attr("src","/static/img/site/cartNotSelected.png");
+				$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 				$(this).attr("selectit","false");
 				$(this).parents("tr.cartProductItemTR").css("background-color","#fff");
 			});			
 		}
 		else{
-			$("img.selectAllItem").attr("src","/static/img/site/cartSelected.png");
+			$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 			$("img.selectAllItem").attr("selectit","selectit")
 			$(".cartProductItemIfSelected").each(function(){
-				$(this).attr("src","/static/img/site/cartSelected.png");
+				$(this).attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 				$(this).attr("selectit","selectit");
 				$(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
 			});				
@@ -163,9 +163,9 @@ function syncSelect(){
 	});
 	
 	if(selectAll)
-		$("img.selectAllItem").attr("src","/static/img/site/cartSelected.png");
+		$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartSelected.png");
 	else
-		$("img.selectAllItem").attr("src","/static/img/site/cartNotSelected.png");
+		$("img.selectAllItem").attr("src","${pageContext.request.contextPath}/static/img/site/cartNotSelected.png");
 	
 	
 	
@@ -195,14 +195,16 @@ function syncPrice(pid,num,price){
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
 	calcCartSumPriceAndNumber();
 	
-	var page = "/cart/count";
-	$.post(
-		    page,
-		    {"pid":pid,"number":num},
-		    function(result){
-				return;
-		    }
-		);
+	var page = "${pageContext.request.contextPath}/forechangeOrderItem";
+	// $.post(
+	// 	    page,
+	// 	    {"pid":pid,"number":num},
+	// 	    function(result){
+	// 			if("success"!=result){
+	// 				location.href="login.jsp";
+	// 			}
+	// 	    }
+	// 	);
 
 }
 </script>	
@@ -221,7 +223,7 @@ function syncPrice(pid,num,price){
 			<thead>
 				<tr>
 					<th class="selectAndImage">
-							<img selectit="false" class="selectAllItem" src="/static/img/site/cartNotSelected.png">
+							<img selectit="false" class="selectAllItem" src="${pageContext.request.contextPath}/static/img/site/cartNotSelected.png">
 					全选
 					
 					</th>
@@ -237,16 +239,16 @@ function syncPrice(pid,num,price){
 					<tr oiid="${cartProducts[vs.index].id}" class="cartProductItemTR">
 						<td>
 							<img selectit="false" oiid="${cartProducts[vs.index].id}" class="cartProductItemIfSelected" src="/static/img/site/cartNotSelected.png">
-							<a style="display:none" href="#nowhere"><img src="/static/img/site/cartSelected.png"></a>
+							<a style="display:none" href="#nowhere"><img src="${pageContext.request.contextPath}/static/img/site/cartSelected.png"></a>
 							<img class="cartProductImg"  src="${p.firstImageUrls}">
 						</td>
 						<td>
 							<div class="cartProductLinkOutDiv">
 								<a href="foreproduct?pid=${p.product.id}" class="cartProductLink">${p.product.name}</a>
 								<div class="cartProductLinkInnerDiv">
-									<img src="/static/img/site/creditcard.png" title="支持信用卡支付">
-									<img src="/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">
-									<img src="/static/img/site/promise.png" title="消费者保障服务,承诺如实描述">
+									<img src="${pageContext.request.contextPath}/static/img/site/creditcard.png" title="支持信用卡支付">
+									<img src="${pageContext.request.contextPath}/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">
+									<img src="${pageContext.request.contextPath}/static/img/site/promise.png" title="消费者保障服务,承诺如实描述">
 								</div>
 							</div>
 							
@@ -284,7 +286,7 @@ function syncPrice(pid,num,price){
 	</div>
 	
 	<div class="cartFoot">
-		<img selectit="false" class="selectAllItem" src="/static/img/site/cartNotSelected.png">
+		<img selectit="false" class="selectAllItem" src="${pageContext.request.contextPath}/static/img/site/cartNotSelected.png">
 		<span>全选</span>
 <!-- 		<a href="#">删除</a> -->
 		

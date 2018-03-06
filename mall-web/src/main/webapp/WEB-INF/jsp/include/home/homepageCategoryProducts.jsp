@@ -26,6 +26,6 @@
         </div>
     </c:forEach>
 
-    <img id="endpng" class="endpng" src="/static/img/site/end.png">
+    <img id="endpng" class="endpng" src="${pageContext.request.contextPath}/static/img/site/end.png">
 
 </div>

@@ -36,14 +36,14 @@
 
         $(".addCartButton").removeAttr("disabled");
         $(".addCartLink").click(function () {
-            var page = "forecheckLogin";
+            var page = "${pageContext.request.contextPath}/forecheckLogin";
             $.get(
                 page,
                 function (result) {
                     if ("success" == result) {
                         var pid = ${productVo.product.id};
                         var num = $(".productNumberSetting").val();
-                        var addCartpage = "foreaddCart";
+                        var addCartpage = "${pageContext.request.contextPath}/foreaddCart";
                         $.get(
                             addCartpage,
                             {"pid": pid, "num": num},
@@ -87,7 +87,7 @@
                 return false;
             }
 
-            var page = "/login";
+            var page = "${pageContext.request.contextPath}/login";
 
             return true;
         });
@@ -171,14 +171,14 @@
                 <span class="arrow">
                     <a href="#nowhere" class="increaseNumber">
                     <span class="updown">
-                            <img src="/static/img/site/increase.png">
+                            <img src="${pageContext.request.contextPath}/static/img/site/increase.png">
                     </span>
                     </a>
 
                     <span class="updownMiddle"> </span>
                     <a href="#nowhere" class="decreaseNumber">
                     <span class="updown">
-                            <img src="/static/img/site/decrease.png">
+                            <img src="${pageContext.request.contextPath}/static/img/site/decrease.png">
                     </span>
                     </a>
 
@@ -198,7 +198,7 @@
         </div>
 
         <div class="buyDiv">
-            <a class="buyLink" href="forebuyone?pid=${productVo.product.id}">
+            <a class="buyLink" href="${pageContext.request.contextPath}/forebuyone?pid=${productVo.product.id}">
                 <button class="buyButton">立即购买</button>
             </a>
             <a href="#nowhere" class="addCartLink">

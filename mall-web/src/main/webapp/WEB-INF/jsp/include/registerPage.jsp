@@ -63,7 +63,7 @@
 </script>
 
 
-<form method="post" action="/registerSubmit" class="registerForm">
+<form method="post" action="${pageContext.request.contextPath}/registerSubmit" class="registerForm">
     <div class="registerDiv">
         <div class="registerErrorMessageDiv">
             <div class="alert alert-danger" role="alert">
