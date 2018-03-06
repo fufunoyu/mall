@@ -28,8 +28,8 @@ public class CartProductServiceImpl implements CartProductService{
      * @param id
      */
     @Override
-    public void deleteByid(Long id) {
-        return cartProductDao.deleteById(id);
+    public void deleteById(Long id) {
+        cartProductDao.deleteById(id);
     }
 
     @Override

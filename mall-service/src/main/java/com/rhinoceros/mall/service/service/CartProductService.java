@@ -20,7 +20,7 @@ public interface CartProductService {
      * 从购物车删除商品信息
      * @param id
      */
-    int deleteByid(Long id);
+    void deleteById(Long id);
 
     /**
      * 统计购物车中购买商品的数量
@@ -28,8 +28,6 @@ public interface CartProductService {
      * @return
      */
     Integer updateSelectionById(CartProduct cartProduct);
-    Integer updateByCartProductId(long cartProductId,Integer num);
-
 
     /**
      * 添加商品到购物车

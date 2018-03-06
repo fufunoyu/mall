@@ -70,7 +70,7 @@ public class CartProductController {
     @ResponseBody
     @RequestMapping("/cart/delete")
     public String deleteCartProducts(@RequestParam("cid") Long cid) {
-        cartProductService.deleteByid(cid);
+        cartProductService.deleteById(cid);
         return "success";
     }
 
