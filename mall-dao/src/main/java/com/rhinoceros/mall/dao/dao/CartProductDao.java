@@ -16,20 +16,13 @@ public interface CartProductDao {
     List<CartProduct> findByUserId(Long userId);
 
     /**
-     * 浏览购物车中的商品信息
-     * @param productId
-     * @return
-     */
-    List<CartProduct> findByProductId(Long productId);
-
-    /**
      * 删除购物车商品
      * @param cartProductId
      */
-    int deleteByCartProductId(Long cartProductId);
+    void deleteById(Long cartProductId);
 
     /**
-     * 统计购物车每个商品的购买数量
+     * 修改购物车每个商品的购买数量
      * @param cartProductId
      * @return
      */
@@ -41,4 +34,5 @@ public interface CartProductDao {
      * @return 修改条目数目
      */
     int add(CartProduct cartProduct);
+    Integer updateById(@Param("productId") Long cartProductId, @Param("productNum") Integer num);
 }

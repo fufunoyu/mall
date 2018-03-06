@@ -13,7 +13,7 @@ import java.util.List;
 public class CartProductServiceImpl implements CartProductService{
     @Autowired
     private CartProductDao cartProductDao;
-
+    private ProductDao productDao;
     /**
      * 获取用户的购物车中的商品信息
      * @param userId
@@ -26,12 +26,16 @@ public class CartProductServiceImpl implements CartProductService{
 
     @Override
     public void deleteByCartProductId(Long cartProductId) {
-        cartProductDao.deleteByCartProductId(cartProductId);
+        cartProductDao.deleteById(cartProductId);
     }
-
+    /**
+     * 删除购物车中商品
+     * @param cartProductId
+     * @param num
+     */
     @Override
-    public int countByCartProductId(Long cartProductId) {
-        return cartProductDao.countByCartProductId(cartProductId);
+    public Integer updateByCartProductId(long cartProductId, Integer num) {
+        return cartProductDao.updateById(cartProductId,num);
     }
 
     @Override
