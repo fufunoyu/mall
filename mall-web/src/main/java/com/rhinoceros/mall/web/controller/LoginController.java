@@ -9,7 +9,6 @@ import com.rhinoceros.mall.service.impl.exception.EmailHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.UserException;
 import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
 import com.rhinoceros.mall.service.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.URLEncoder;
 
 @Controller
 public class LoginController {
