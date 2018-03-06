@@ -23,4 +23,10 @@ public interface CategoryService {
      * @return
      */
     Category findById(Long id);
+
+    List<Category> findRootCategories();
+
+    List<Category> findByParentId(Long parentId);
+
+    Category add(Category category);
 }

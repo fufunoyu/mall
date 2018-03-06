@@ -195,16 +195,14 @@ function syncPrice(pid,num,price){
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
 	calcCartSumPriceAndNumber();
 	
-	var page = "${pageContext.request.contextPath}/forechangeOrderItem";
-	// $.post(
-	// 	    page,
-	// 	    {"pid":pid,"number":num},
-	// 	    function(result){
-	// 			if("success"!=result){
-	// 				location.href="login.jsp";
-	// 			}
-	// 	    }
-	// 	);
+	var page = "${pageContext.request.contextPath}/cart/count";
+    $.post(
+        page,
+        {"pid":pid,"number":num},
+        function(result){
+            return;
+        }
+    );
 
 }
 </script>	
@@ -238,13 +236,13 @@ function syncPrice(pid,num,price){
 				<c:forEach items="${products }" var="p" varStatus="vs">
 					<tr oiid="${cartProducts[vs.index].id}" class="cartProductItemTR">
 						<td>
-							<img selectit="false" oiid="${cartProducts[vs.index].id}" class="cartProductItemIfSelected" src="/static/img/site/cartNotSelected.png">
+							<img selectit="false" oiid="${cartProducts[vs.index].id}" class="cartProductItemIfSelected" src="${pageContext.request.contextPath}/static/img/site/cartNotSelected.png">
 							<a style="display:none" href="#nowhere"><img src="${pageContext.request.contextPath}/static/img/site/cartSelected.png"></a>
 							<img class="cartProductImg"  src="${p.firstImageUrls}">
 						</td>
 						<td>
 							<div class="cartProductLinkOutDiv">
-								<a href="foreproduct?pid=${p.product.id}" class="cartProductLink">${p.product.name}</a>
+								<a href="${pageContext.request.contextPath}/product?pid=${p.product.id}" class="cartProductLink">${p.product.name}</a>
 								<div class="cartProductLinkInnerDiv">
 									<img src="${pageContext.request.contextPath}/static/img/site/creditcard.png" title="支持信用卡支付">
 									<img src="${pageContext.request.contextPath}/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">

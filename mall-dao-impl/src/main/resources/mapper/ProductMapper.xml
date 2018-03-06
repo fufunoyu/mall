@@ -15,4 +15,10 @@
         ${page.orderString}
         LIMIT ${page.offset}, ${page.size}
     </select>
+    <select id="findProduct" resultType="Product">
+        SELECT *
+        FROM product
+        ${page.orderString}
+        LIMIT ${page.offset}, ${page.size}
+    </select>
 </mapper>

@@ -27,4 +27,10 @@ public interface UserDao {
      * @return
      */
     User findById(@Param("id")Long id);
+
+    //修改用户信息
+    int update(User user);
+
+    //通过写入的邮箱在数据库中查找
+    User findByEmail(String email);
 }

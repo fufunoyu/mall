@@ -8,6 +8,23 @@
         FROM category
     </select>
 
+    <select id="findRootCategories" resultType="Category">
+        SELECT *
+        FROM category
+        WHERE parent_id IS NULL
+    </select>
+
+    <select id="findByParentId" parameterType="Long" resultType="Category">
+        SELECT *
+        FROM category
+        WHERE parent_id = #{parentId}
+    </select>
+
+    <insert id="add" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO category
+        (name, parent_id)
+        VALUE (#{name},#{parentId})
+    </insert>
     <select id="findById" parameterType="Long" resultType="Category">
         SELECT *
         FROM category
