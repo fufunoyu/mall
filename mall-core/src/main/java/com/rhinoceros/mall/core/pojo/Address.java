@@ -1,10 +1,14 @@
 package com.rhinoceros.mall.core.pojo;
 /* created at 1:39 PM 3/6/2018  */
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class Address {
+@NoArgsConstructor
+@AllArgsConstructor
+ public class Address {
 
     /**
      * 多级地址隔开符号
