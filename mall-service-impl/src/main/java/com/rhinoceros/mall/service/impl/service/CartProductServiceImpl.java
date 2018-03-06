@@ -1,7 +1,6 @@
 package com.rhinoceros.mall.service.impl.service;
 
 import com.rhinoceros.mall.core.pojo.CartProduct;
-import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.dao.dao.CartProductDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.service.service.CartProductService;
@@ -24,15 +23,21 @@ public class CartProductServiceImpl implements CartProductService{
         return cartProductDao.findByUserId(userId);
     }
 
-    @Override
-    public void deleteByCartProductId(Long cartProductId) {
-        cartProductDao.deleteByCartProductId(cartProductId);
-    }
 
     @Override
-    public int countByCartProductId(Long cartProductId) {
-        return cartProductDao.countByCartProductId(cartProductId);
+    public void deleteByCartProductId(Long cartProductId) {
+        cartProductDao.deleteById(cartProductId);
     }
+    /**
+     * 删除购物车中商品
+     * @param cartProductId
+     * @param num
+     */
+    @Override
+    public Integer updateByCartProductId(long cartProductId, Integer num) {
+        return cartProductDao.updateById(cartProductId,num);
+    }
+
 //    @Override
 //    public List<Product> findByProductId(Long productId) {
 //        return productDao.findByProductId(productId);
