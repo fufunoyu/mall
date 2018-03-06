@@ -19,12 +19,12 @@ public interface CartProductDao {
      * 删除购物车商品
      * @param cartProductId
      */
-    void deleteById(Long cartProductId);
+    int deleteById(Long cartProductId);
 
     /**
-     * 修改购物车每个商品的购买数量
-     * @param cartProductId
+     * 修改购物车商品的购买数量
+     * @param cartProduct
      * @return
      */
-    Integer updateById(@Param("productId") Long cartProductId, @Param("productNum") Integer num);
+    Integer updateSelectionById(CartProduct cartProduct);
 }

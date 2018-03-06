@@ -23,24 +23,22 @@ public class CartProductServiceImpl implements CartProductService{
         return cartProductDao.findByUserId(userId);
     }
 
-
-    @Override
-    public void deleteByCartProductId(Long cartProductId) {
-        cartProductDao.deleteById(cartProductId);
-    }
     /**
      * 删除购物车中商品
-     * @param cartProductId
-     * @param num
+     * @param id
      */
     @Override
-    public Integer updateByCartProductId(long cartProductId, Integer num) {
-        return cartProductDao.updateById(cartProductId,num);
+    public int deleteByid(Long id) {
+        return cartProductDao.deleteById(id);
     }
 
-//    @Override
-//    public List<Product> findByProductId(Long productId) {
-//        return productDao.findByProductId(productId);
-//    }
+    /**
+     * 修改购物车中商品数量
+     * @param cartProduct
+     */
+    @Override
+    public Integer updateSelectionById(CartProduct cartProduct) {
+        return cartProductDao.updateSelectionById(cartProduct);
+    }
 }
 
