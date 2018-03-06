@@ -29,7 +29,7 @@ public interface CartProductDao {
     void deleteByCartProductId(Long cartProductId);
 
     /**
-     * 统计购物车每个商品的购买数量
+     * 修改购物车每个商品的购买数量
      * @param cartProductId
      * @return
      */
