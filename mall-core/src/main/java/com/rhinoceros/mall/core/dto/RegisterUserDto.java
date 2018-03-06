@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,7 +23,9 @@ public class RegisterUserDto {
     @Size(min=6 ,max= 20 ,message = "密码长度不少于6位且不大于20位")
     private String password;
     //确认登陆密码
-
     private String rePassword;
 
+    @NotBlank(message = "邮箱不能为空")
+    @Email(message = "邮箱格式不正确")
+    private String email;
 }

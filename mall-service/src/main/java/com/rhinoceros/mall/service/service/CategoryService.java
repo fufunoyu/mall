@@ -15,4 +15,10 @@ public interface CategoryService {
      * @return 分类列表
      */
     List<Category> findAll();
+
+    List<Category> findRootCategories();
+
+    List<Category> findByParentId(Long parentId);
+
+    Category add(Category category);
 }
