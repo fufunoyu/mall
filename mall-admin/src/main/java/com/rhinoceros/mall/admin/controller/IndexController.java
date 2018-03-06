@@ -23,17 +23,4 @@ public class IndexController {
         return "index";
     }
 
-    /**
-     * 返回对应的iframe
-     *
-     * @param frameName
-     * @return
-     */
-    @RequestMapping({"/frame"})
-    public String frame(
-            @RequestParam(value = "frameName") String frameName
-    ) {
-        return "iframe/" + frameName;
-    }
-
 }

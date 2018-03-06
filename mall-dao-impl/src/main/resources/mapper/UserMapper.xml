@@ -15,6 +15,13 @@
         WHERE username = #{username}
     </select>
 
+    <!--查寻注册邮箱是否已存在-->
+    <select id="findByEmail" resultType="User" parameterType="String">
+        SELECT *
+        FROM USER
+        WHERE email = #{email}
+    </select>
+
     <!--录入注册用户-->
     <insert id="add" parameterType="User">
         INSERT INTO `user`(username,password,email,nickname,gender,telephone,birthday,
