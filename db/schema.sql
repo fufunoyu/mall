@@ -170,7 +170,7 @@ CREATE TABLE `order` (
   COMMENT '快递单号',
   address_id     INT(20)   NULL
   COMMENT '收货信息id',
-  user_id     CHAR(32)       NOT NULL
+  user_id     INT(20)       NOT NULL
   COMMENT '订单对应的用户id',
   PRIMARY KEY `id`(`id`),
   KEY `user_id`(`user_id`),

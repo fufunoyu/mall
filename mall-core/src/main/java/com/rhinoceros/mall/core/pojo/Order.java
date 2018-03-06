@@ -60,7 +60,7 @@ public class Order {
     /**
      * 订单对应的用户id
      */
-    private String userId;
+    private Integer userId;
 
 }
 

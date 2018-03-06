@@ -43,7 +43,7 @@ import lombok.NoArgsConstructor;
     /**
      * 地址所属用户id
      */
-    private String userId;
+    private Integer userId;
 
 
 }
