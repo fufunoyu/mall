@@ -97,7 +97,7 @@ public class LoginController {
             //将用户信息放入session
             session.setAttribute(USERNAME, user);
 
-            if (userDto.getFrom() != null) {
+            if (userDto.getFrom() != null&&!userDto.getFrom().trim().equals("")) {
                 return "redirect:" + userDto.getFrom();
             }
             return "redirect:/index";
