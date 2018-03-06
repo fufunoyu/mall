@@ -11,23 +11,23 @@
     </select>
 
     <!-- 浏览商品消息-->
-    <select id="findByProductId" resultType="Product" parameterType="Long">
+    <select id="findById" resultType="Product" parameterType="Long">
         SELECT *
         FROM product
         WHERE id = #{productId}
     </select>
 
     <!--删除商品消息-->
-    <select id="deleteByCartProductId" resultType="CartProduct" parameterType="Long">
+    <delete id="deleteById"  parameterType="Long">
         DELETE
         FROM cart_product
         WHERE id = #{cartProductId}
-    </select>
+    </delete>
 
-    <!-- 统计购物车中每个商品的购买数量-->
-    <update id="countByCartProductId"  parameterType="Long">
+    <!-- 修改购物车中每个商品的购买数量-->
+    <update id="updateById">
         UPDATE cart_product
         SET product_num = #{productNum}
-        WHERE id = #{cartProductId}
+        WHERE product_id = #{productId}
     </update>
 </mapper>
