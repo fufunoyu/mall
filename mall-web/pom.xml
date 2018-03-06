@@ -33,12 +33,14 @@
             <artifactId>commons-fileupload</artifactId>
         </dependency>
 
-        <!--jstl-->
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!--jstl-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>

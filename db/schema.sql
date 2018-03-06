@@ -123,6 +123,8 @@ CREATE TABLE `product` (
   COMMENT '商品参数，json格式',
   comment_num            INT(20)                 DEFAULT 0
   COMMENT '评论数',
+  sale_date              DATETIME       NOT NULL
+  COMMENT '上架时间',
   KEY `category_id`(`category_id`),
   PRIMARY KEY `id`(`id`)
 )

@@ -6,6 +6,7 @@ import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CategoryService;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.core.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +29,21 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 获取商品分类下的商品列表
+     *
+     * @param cid    商品id
+     * @param page   第几页
+     * @param sortBy 以什么字段进行排序
+     *               field,DESC:按照field降序
+     *               field,ASC:按照field升序排序
+     * @param model
+     * @return
+     */
     @RequestMapping("/category")
     public String list(@RequestParam("cid") Long cid,
                        @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                       @PageDefault PageQuery pageQuery,
                        Model model) {
 
 
