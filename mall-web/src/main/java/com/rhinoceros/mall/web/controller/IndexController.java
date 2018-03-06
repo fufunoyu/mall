@@ -30,10 +30,10 @@ public class IndexController {
         model.addAttribute("categories", categories);
         // 首页轮播图
         List<String> urls = new LinkedList<String>();
-        urls.add("/static/img/lunbo/1.jpg");
-        urls.add("/static/img/lunbo/2.jpg");
-        urls.add("/static/img/lunbo/3.jpg");
-        urls.add("/static/img/lunbo/4.jpg");
+        urls.add("${pageContext.request.contextPath}/static/img/lunbo/1.jpg");
+        urls.add("${pageContext.request.contextPath}/static/img/lunbo/2.jpg");
+        urls.add("${pageContext.request.contextPath}/static/img/lunbo/3.jpg");
+        urls.add("${pageContext.request.contextPath}/static/img/lunbo/4.jpg");
         model.addAttribute("images", urls);
 
         //获取每种根分类下的销量最好的5种产品

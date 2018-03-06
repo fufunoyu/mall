@@ -8,7 +8,7 @@
 
     <div id="footer_ensure" class="footer_ensure">
         <a href="#nowhere">
-            <img src="/static/img/site/ensure.png">
+            <img src="${pageContext.request.contextPath}/static/img/site/ensure.png">
         </a>
     </div>
 
@@ -43,7 +43,7 @@
         </div>
         <div class="descColumn">
             <span class="descColumnTitle">手机商城</span>
-            <a href="#nowhere"><img src="/static/img/site/ma.png"></a>
+            <a href="#nowhere"><img src="${pageContext.request.contextPath}/static/img/site/ma.png"></a>
         </div>
 
     </div>
