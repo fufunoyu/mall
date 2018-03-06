@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `category`;
 DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `cart_product`;
 DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `address`;
 
 
 CREATE TABLE `permission` (
@@ -218,3 +219,22 @@ CREATE TABLE `admin` (
   COMMENT '管理员表';
 
 
+CREATE TABLE `address` (
+
+  id          INT(20)        NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  postal_code CHAR(6)        NOT NULL
+  COMMENT '邮政编码',
+  delivery_address     VARCHAR(128)   NULL
+  COMMENT '收货地址',
+  delivery_name varchar(32)  NOT NULL
+  COMMENT '收货人姓名',
+  phone char(20) NOT NULL
+  COMMENT '收货人电话',
+  user_id     INT(20)       NOT NULL
+  COMMENT '地址对应的用户id',
+  PRIMARY KEY `id`(`id`),
+  KEY `user_id`(`user_id`)
+
+)
+  COMMENT '地址表';
