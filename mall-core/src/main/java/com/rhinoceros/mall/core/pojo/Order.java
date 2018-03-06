@@ -53,9 +53,9 @@ public class Order {
     private String expressNum;
 
     /**
-     * 地址
+     * 收货信息id
      */
-    private String address;
+    private Integer addressId;
 
     /**
      * 订单对应的用户id
