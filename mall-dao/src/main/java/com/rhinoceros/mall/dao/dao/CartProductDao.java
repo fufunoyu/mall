@@ -22,10 +22,11 @@ public interface CartProductDao {
     void deleteById(Long cartProductId);
 
     /**
-     * 修改购物车每个商品的购买数量
-     * @param cartProductId
+     * 修改购物车商品的购买数量
+     * @param cartProduct
      * @return
      */
+    Integer updateSelectionById(CartProduct cartProduct);
     int countByCartProductId(Long cartProductId);
 
     /**

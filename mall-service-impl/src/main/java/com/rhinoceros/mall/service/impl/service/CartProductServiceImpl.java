@@ -23,42 +23,36 @@ public class CartProductServiceImpl implements CartProductService{
         return cartProductDao.findByUserId(userId);
     }
 
-    @Override
-    public void deleteByCartProductId(Long cartProductId) {
-        cartProductDao.deleteById(cartProductId);
-    }
     /**
      * 删除购物车中商品
-     * @param cartProductId
-     * @param num
+     * @param id
      */
     @Override
-    public Integer updateByCartProductId(long cartProductId, Integer num) {
-        CartProduct cartProduct = new CartProduct();
-        cartProduct.setId(cartProductId);
-        cartProduct.setProductNum(num);
-        return cartProductDao.updateById(cartProduct);
+    public void deleteByid(Long id) {
+        return cartProductDao.deleteById(id);
     }
 
     @Override
-    public void addProduct(Long productId, Long userId, Integer productNum){
+    public void addProduct(Long productId, Long userId, Integer productNum) {
         CartProduct cartProduct = new CartProduct();
         cartProduct.setProductId(productId);
         cartProduct.setUserId(userId);
         cartProduct.setProductNum(productNum);
         CartProduct cartProduct1 = cartProductDao.findByUserIdAndProductId(userId, productId);
-        if (cartProduct1!=null) {
+        if (cartProduct1 != null) {
             cartProduct1.setProductNum(cartProduct1.getProductNum() + productNum);
             cartProductDao.updateById(cartProduct1);
-        }
-        else{
+        } else {
             cartProductDao.add(cartProduct);
         }
-
     }
-//    @Override
-//    public List<Product> findByProductId(Long productId) {
-//        return productDao.findByProductId(productId);
-//    }
+    /**
+     * 修改购物车中商品数量
+     * @param cartProduct
+     */
+    @Override
+    public Integer updateSelectionById(CartProduct cartProduct) {
+        return cartProductDao.updateSelectionById(cartProduct);
+    }
 }
 

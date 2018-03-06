@@ -81,6 +81,7 @@ $(function(){
 	
 	$(".orderItemNumberSetting").keyup(function(){
 		var pid=$(this).attr("pid");
+        var oiid=$(this).attr("oiid");
 		var stock= $("span.orderItemStock[pid="+pid+"]").text();
 		var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
 		
@@ -93,12 +94,13 @@ $(function(){
 		if(num>stock)
 			num = stock;
 		
-		syncPrice(pid,num,price);
+		syncPrice(pid,num,price,oiid);
 	});
 
 	$(".numberPlus").click(function(){
-		
-		var pid=$(this).attr("pid");
+
+        var pid=$(this).attr("pid");
+        var oiid=$(this).attr("oiid");
 		var stock= $("span.orderItemStock[pid="+pid+"]").text();
 		var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
 		var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
@@ -106,10 +108,11 @@ $(function(){
 		num++;
 		if(num>stock)
 			num = stock;
-		syncPrice(pid,num,price);
+		syncPrice(pid,num,price,oiid);
 	});
 	$(".numberMinus").click(function(){
 		var pid=$(this).attr("pid");
+        var oiid=$(this).attr("oiid");
 		var stock= $("span.orderItemStock[pid="+pid+"]").text();
 		var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
 		
@@ -117,7 +120,7 @@ $(function(){
 		--num;
 		if(num<=0)
 			num=1;
-		syncPrice(pid,num,price);
+		syncPrice(pid,num,price,oiid);
 	});	
 	
 	$("button.createOrderButton").click(function(){
@@ -189,16 +192,16 @@ function calcCartSumPriceAndNumber(){
 	$("span.cartTitlePrice").html("￥"+formatMoney(sum));
 	$("span.cartSumNumber").html(totalNumber);
 }
-function syncPrice(pid,num,price){
+function syncPrice(pid,num,price,oiid){
 	$(".orderItemNumberSetting[pid="+pid+"]").val(num);
 	var cartProductItemSmallSumPrice = formatMoney(num*price); 
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
-	calcCartSumPriceAndNumber();
+	calcCartSumPriceAndNumber(oiid);
 	
 	var page = "${pageContext.request.contextPath}/cart/count";
     $.post(
         page,
-        {"pid":pid,"number":num},
+        {"id":oiid,"productNum":num},
         function(result){
             return;
         }
@@ -261,9 +264,9 @@ function syncPrice(pid,num,price){
 							<div class="cartProductChangeNumberDiv">
 								<span class="hidden orderItemStock " pid="${p.product.id}">${p.product.storeNum}</span>
 								<span class="hidden orderItemPromotePrice " pid="${p.product.id}">${p.product.discount}</span>
-								<a  pid="${p.product.id}" class="numberMinus" href="#nowhere">-</a>
+								<a  pid="${p.product.id}" oiid="${cartProducts[vs.index].id}" class="numberMinus" href="#nowhere">-</a>
 								<input pid="${p.product.id}" oiid="${cartProducts[vs.index].id}" class="orderItemNumberSetting" autocomplete="off" value="${cartProducts[vs.index].productNum}">
-								<a  stock="${p.product.storeNum}" pid="${p.product.id}" class="numberPlus" href="#nowhere">+</a>
+								<a  stock="${p.product.storeNum}" oiid="${cartProducts[vs.index].id}" pid="${p.product.id}" class="numberPlus" href="#nowhere">+</a>
 							</div>					
 						
 						 </td>
