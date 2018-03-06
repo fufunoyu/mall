@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.web.controller;
+package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.pojo.Admin;
@@ -26,11 +26,11 @@ public class AdminLoginController {
      *
      * @return
      */
-    @RequestMapping("/Login")    //管理员登录页面
+    @RequestMapping("/login")
     public String login(HttpSession session) {
         // 管理员已登录，直接返回管理员首页
         if (session.getAttribute(USERNAME) != null) {
-            return "redirect:/index"; //管理员首页
+            return "redirect:/index";
         }
         return "login";
     }
@@ -44,8 +44,8 @@ public class AdminLoginController {
      * @param model
      * @return
      */
-    @RequestMapping("/loginSubmit")  //?????????????????????????
-    public String login(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model) {
+    @RequestMapping("/loginSubmit")
+    public String loginSubmit(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model) {
         // 管理员已登录，直接返回管理员首页
         if (session.getAttribute(USERNAME) != null) {
             return "redirect:/index";
@@ -67,4 +67,16 @@ public class AdminLoginController {
             return "login";
         }
     }
+
+    /**
+     * 退出登录
+     * @param session
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute(USERNAME);
+        return "redirect:/login";
+    }
+
 }

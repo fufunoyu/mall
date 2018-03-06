@@ -5,19 +5,19 @@
 <mapper namespace="com.rhinoceros.mall.dao.dao.AdminDao">
     <select id="select" resultType="Admin">
         SELECT *
-        FROM admin
+        FROM `admin`
     </select>
 
     <!--查寻注册用户是否已存在-->
     <select id="findByUsername" resultType="Admin" parameterType="String">
         SELECT *
-        FROM ADMIN
+        FROM `admin`
         WHERE username = #{username}
     </select>
 
     <select id="findById" resultType="User" parameterType="Long">
         SELECT *
-        FROM ADMIN
+        FROM `admin`
         WHERE id=#{id}
     </select>
 

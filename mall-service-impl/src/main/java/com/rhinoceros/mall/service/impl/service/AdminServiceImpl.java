@@ -27,6 +27,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Transactional
     public Admin login(LoginUserDto userDto) {
+
         //根据用户名从dao中查询用户信息
         Admin admin = adminDao.findByUsername(userDto.getUsername());
         //判断用户是否存在,不存在则返回null

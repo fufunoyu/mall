@@ -158,3 +158,11 @@ UNLOCK TABLES;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+/*Data for the table `admin` */
+LOCK TABLES `admin` WRITE ;
+
+insert into `admin` (`id`, `username`, `password`) values('1','zhangsanfeng','111111');
+insert into `admin` (`id`, `username`, `password`) values('2','liubeibei','111111');
+
+UNLOCK TABLES ;
