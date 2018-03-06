@@ -68,7 +68,7 @@
         }
         .error{
             font-size: 12px;
-            color: #a94442;
+            color: #a9758c;
             padding: 5px;
         }
     </style>
