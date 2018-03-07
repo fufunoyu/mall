@@ -31,6 +31,7 @@ public class CategoryController {
 
     /**
      * 获取商品分类下的商品列表
+     *
      * @param cid
      * @param pageQuery
      * @param model
@@ -48,7 +49,7 @@ public class CategoryController {
         for (Product p : products) {
             ProductVo productVo = new ProductVo();
             productVo.setProduct(p);
-            productVo.setDescriptionImagesUrls(p.getImageUrls().split(Product.IMAGE_SEPARATION));
+//            productVo.setDescriptionImagesUrls(p.getDescriptionImageUrls().split(Product.IMAGE_SEPARATION));
             productVo.setImagesUrls(p.getImageUrls().split(Product.IMAGE_SEPARATION));
             productVo.setFirstImageUrl(productVo.getImagesUrls()[0]);
             productVos.add(productVo);
