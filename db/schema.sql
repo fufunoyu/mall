@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS `category`;
 DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `cart_product`;
 DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `address`;
+DROP TABLE IF EXISTS `product_description`;
 
 
 CREATE TABLE `permission` (
@@ -117,12 +119,10 @@ CREATE TABLE `product` (
   COMMENT '销量',
   image_urls             VARCHAR(512)   NOT NULL
   COMMENT '商品图片url',
-  description_image_urls VARCHAR(512)   NOT NULL
-  COMMENT '商品图片url',
-  params                 TEXT                    DEFAULT NULL
-  COMMENT '商品参数，json格式',
   comment_num            INT(20)                 DEFAULT 0
   COMMENT '评论数',
+  sale_date              DATETIME       NOT NULL
+  COMMENT '上架时间',
   KEY `category_id`(`category_id`),
   PRIMARY KEY `id`(`id`)
 )
@@ -151,7 +151,7 @@ CREATE TABLE `comment` (
 CREATE TABLE `order` (
   id          INT(20)        NOT NULL AUTO_INCREMENT
   COMMENT 'id',
-  status      VARCHAR(10)    NOT NULL
+  status      VARCHAR(20)    NOT NULL
   COMMENT '订单状态',
   identifier  CHAR(18)       NOT NULL
   COMMENT '订单编号',
@@ -167,9 +167,9 @@ CREATE TABLE `order` (
   COMMENT '总价',
   express_num CHAR(18)       NULL
   COMMENT '快递单号',
-  address     VARCHAR(128)   NULL
-  COMMENT '地址',
-  user_id     CHAR(32)       NOT NULL
+  address_id     INT(20)   NULL
+  COMMENT '收货信息id',
+  user_id     INT(20)       NOT NULL
   COMMENT '订单对应的用户id',
   PRIMARY KEY `id`(`id`),
   KEY `user_id`(`user_id`),
@@ -218,3 +218,30 @@ CREATE TABLE `admin` (
   COMMENT '管理员表';
 
 
+CREATE TABLE `address` (
+
+  id                  INT(20)        NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  postal_code         CHAR(6)        NOT NULL
+  COMMENT '邮政编码',
+  delivery_address    VARCHAR(128)   NULL
+  COMMENT '收货地址',
+  delivery_name       varchar(32)    NOT NULL
+  COMMENT '收货人姓名',
+  phone               char(20)       NOT NULL
+  COMMENT '收货人电话',
+  user_id             INT(20)        NOT NULL
+  COMMENT '地址对应的用户id',
+  PRIMARY KEY `id`(`id`),
+  KEY `user_id`(`user_id`)
+
+)
+  COMMENT '地址表';
+
+CREATE TABLE `product_description` (
+  product_id            INT(20)       NOT NUll  AUTO_INCREMENT
+  COMMENT '商品id',
+  description           TEXT          DEFAULT NULL
+  COMMENT '商品详情',
+  PRIMARY KEY `product_id`(`product_id`)
+)
