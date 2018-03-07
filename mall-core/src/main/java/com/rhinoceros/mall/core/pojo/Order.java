@@ -53,14 +53,14 @@ public class Order {
     private String expressNum;
 
     /**
-     * 地址
+     * 收货信息id
      */
-    private String address;
+    private Long addressId;
 
     /**
      * 订单对应的用户id
      */
-    private String userId;
+    private Long userId;
 
 }
 

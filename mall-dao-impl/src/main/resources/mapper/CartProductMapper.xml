@@ -10,12 +10,7 @@
         WHERE user_id = #{userId}
     </select>
 
-    <!-- 浏览商品消息-->
-    <select id="findById" resultType="Product" parameterType="Long">
-        SELECT *
-        FROM product
-        WHERE id = #{productId}
-    </select>
+
 
     <!--删除商品消息-->
     <delete id="deleteById"  parameterType="Long">
@@ -24,11 +19,21 @@
         WHERE id = #{cartProductId}
     </delete>
 
-    <!-- 修改购物车中每个商品的购买数量-->
-    <update id="updateById">
+    <!-- 修改购物车中每个商品的购买数量，增加一个判断，当参数不符合要求的时候，我们可以不去判断此查询条件-->
+    <update id="updateSelectionById" parameterType="CartProduct">
         UPDATE cart_product
-        SET product_num = #{productNum}
-        WHERE product_id = #{productId}
+        <set>
+            <if test="productId!=null">
+                product_id = #{productId},
+            </if>
+            <if test="userId!=null">
+                user_id = #{userId},
+            </if>
+            <if test="productNum!=null">
+                product_num = #{productNum},
+            </if>
+        </set>
+        WHERE id = #{id}
     </update>
 
     <!-- 添加商品 -->

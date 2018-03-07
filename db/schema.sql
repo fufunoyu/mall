@@ -154,7 +154,7 @@ CREATE TABLE `comment` (
 CREATE TABLE `order` (
   id          INT(20)        NOT NULL AUTO_INCREMENT
   COMMENT 'id',
-  status      VARCHAR(10)    NOT NULL
+  status      VARCHAR(20)    NOT NULL
   COMMENT '订单状态',
   identifier  CHAR(18)       NOT NULL
   COMMENT '订单编号',
@@ -170,9 +170,9 @@ CREATE TABLE `order` (
   COMMENT '总价',
   express_num CHAR(18)       NULL
   COMMENT '快递单号',
-  address     VARCHAR(128)   NULL
-  COMMENT '地址',
-  user_id     CHAR(32)       NOT NULL
+  address_id     INT(20)   NULL
+  COMMENT '收货信息id',
+  user_id     INT(20)       NOT NULL
   COMMENT '订单对应的用户id',
   PRIMARY KEY `id`(`id`),
   KEY `user_id`(`user_id`),
