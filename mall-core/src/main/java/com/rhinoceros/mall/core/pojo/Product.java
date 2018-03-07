@@ -4,6 +4,7 @@ import com.rhinoceros.mall.core.enumeration.ProductStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 商品实体
@@ -75,4 +76,9 @@ public class Product {
      * 商品总评论数
      */
     private Long commentNum;
+
+    /**
+     * 上架时间
+     */
+    private Date saleDate;
 }
