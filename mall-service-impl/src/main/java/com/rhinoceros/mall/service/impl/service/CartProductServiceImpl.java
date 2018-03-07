@@ -33,7 +33,8 @@ public class CartProductServiceImpl implements CartProductService{
     }
 
     /**
-     * 添加购物车
+
+     * 向购物车中增加商品
      * @param productId
      * @param userId
      * @param productNum
