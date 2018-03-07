@@ -9,6 +9,11 @@
 <html>
 <head>
     <title>首页商品分类列表</title>
+    <link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../demo.css">
+    <script type="text/javascript" src="../../jquery.min.js"></script>
+    <script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 <script>
@@ -54,7 +59,7 @@
                 <th data-options="field:'id',width:80">商品ID</th>
                 <th data-options="field:'name',width:100">商品名称</th>
                 <th data-options="field:'price',width:80,align:'right'">价格</th>
-                <th data-options="field:'discount',width:80,align:'right'">折后价t</th>
+                <th data-options="field:'discount',width:80,align:'right'">折后价</th>
                 <th data-options="field:'status',width:60,align:'center'">商品状态</th>
                 <th data-options="field:'categoryId',width:60,align:'center'">分类ID</th>
                 <th data-options="field:'rootCategoryId',width:60,align:'center'">根分类ID</th>
@@ -67,6 +72,17 @@
             </tr>
             </thead>
         </table>
+            <script type="text/javascript">
+                var toolbar = [{
+                    text:'Add',
+                    iconCls:'icon-add',
+                    handler:function(){alert('add')}
+                },{
+                    text:'Cut',
+                    iconCls:'icon-cut',
+                    handler:function(){alert('cut')}
+                }];
+            </script>
     </div>
 </div>
 </body>
