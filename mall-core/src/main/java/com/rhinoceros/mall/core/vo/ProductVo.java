@@ -26,16 +26,20 @@ public class ProductVo {
     /**
      * 这变量储存商品第一张图片的地址
      */
-    private String firstImageUrls;
+    private String firstImageUrl;
 
     /**
-     * 此变量储存商品详情图片的url
+     * 商品详情
      */
-    private String[] descriptionImagesUrls;
-
-    /**
-     * 配置信息
-     */
-    private Map<String, String> params = new HashMap<String, String>();
+    private String description;
+//    /**
+//     * 此变量储存商品详情图片的url
+//     */
+//    private String[] descriptionImagesUrls;
+//
+//    /**
+//     * 配置信息
+//     */
+//    private Map<String, String> params = new HashMap<String, String>();
 
 }

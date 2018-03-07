@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface CartProductService {
     /**
-     * 找到购物车
+     * 获取用户的购物车中的商品信息
      * @return
      */
     List<CartProduct> findByUserId(Long userId);
@@ -18,17 +18,16 @@ public interface CartProductService {
 
     /**
      * 从购物车删除商品信息
-     * @param cartProductId
+     * @param id
      */
-    void deleteByCartProductId(Long cartProductId);
+    void deleteById(Long id);
 
     /**
-     * 统计购物车中购买商品的数量
-     * @param cartProductId
+     * 修改购物车中商品数量
+     * @param cartProduct
      * @return
      */
-    Integer updateByCartProductId(long cartProductId,Integer num);
-
+    Integer updateSelectionById(CartProduct cartProduct);
 
     /**
      * 添加商品到购物车

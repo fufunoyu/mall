@@ -1,7 +1,11 @@
 package com.rhinoceros.mall.core.enumeration;
 
 /**
- * 订单状态
+ * 订单状态,
+ * 订单状态的走向
+ * 待支付--(完成支付)->待发货--(完成发货)-->待收货--(完成收货或者一段时间后)-->待评价--(评价完成或者一段时间后)-->已完成
+ *
+ * 中途任意环节出问题，订单状态都变为取消(CANCEL)
  */
 public enum OrderStatus {
     /**
@@ -9,21 +13,24 @@ public enum OrderStatus {
      */
     WAIT_PAY,
     /**
-     * 已支付
+     * 待发货
      */
-    PAYED,
+    WAIT_SHIP,
     /**
-     * 已发货
+     * 待收货
      */
-    SHIPPED,
+    WAIT_RECEIVE,
+    /**
+     * 待评价
+     */
+    WAIT_COMMENT,
 
     /**
      * 已完成
      */
     COMPLETED,
-
     /**
      * 取消
      */
-    CANCEL,
+    CANCEL
 }
