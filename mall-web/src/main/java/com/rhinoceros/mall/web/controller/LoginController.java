@@ -29,6 +29,7 @@ public class LoginController {
     public static final String USERNAME = "user";
     public static final String USERNAME_COOKIE = "userName";
     public static final String USEPASSWORD_COOKIE = "userPsaaword";
+    public static final String FROM_URL = "from";
 
     public static final String SECRET = "secret";
 
@@ -41,11 +42,16 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(HttpSession session) {
+    public String login(@RequestParam(value = FROM_URL, required = false) String url, HttpSession session, Model model) {
         // 用户已登录，直接返回首页
         if (session.getAttribute(USERNAME) != null) {
+            //判断到请求页面的URL是否为空
+            if (url != null) {
+                return "redirect:" + url;
+            }
             return "redirect:/index";
         }
+        model.addAttribute(FROM_URL, url);
         return "login";
     }
 
@@ -61,6 +67,7 @@ public class LoginController {
     @RequestMapping("/loginSubmit")
     public String login(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
 
+
         // 检查用户输入是否规范，不规范则返回到登录页面
         if (br.hasErrors()) {
             model.addAttribute("error", br.getFieldError().getDefaultMessage());
@@ -68,6 +75,9 @@ public class LoginController {
         }
         // 用户已登录，直接返回首页
         if (session.getAttribute(USERNAME) != null) {
+            if (userDto.getFrom() != null) {
+                return "redirect:" + userDto.getFrom();
+            }
             return "redirect:/index";
         }
         //检查输入的用户是否存在，存在则跳转到到主页面，不存在则返回到登录页面
@@ -94,11 +104,15 @@ public class LoginController {
 
             //将用户信息放入session
             session.setAttribute(USERNAME, user);
+
+            if (userDto.getFrom() != null&&!userDto.getFrom().trim().equals("")) {
+                return "redirect:" + userDto.getFrom();
+            }
             return "redirect:/index";
         } catch (UserException e) {
             System.out.println("数据回显:");
             model.addAttribute("error", e.getMessage());
-            System.out.println("数据回显"+e.getMessage());
+            System.out.println("数据回显" + e.getMessage());
             return "login";
         }
     }

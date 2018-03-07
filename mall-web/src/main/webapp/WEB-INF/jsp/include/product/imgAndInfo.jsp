@@ -125,7 +125,7 @@
 <div class="imgAndInfo">
 
     <div class="imgInimgAndInfo">
-        <img src="${productVo.firstImageUrls}" class="bigImg">
+        <img src="${productVo.firstImageUrl}" class="bigImg">
         <div class="smallImageDiv">
             <c:forEach items="${productVo.imagesUrls}" var="pi">
                 <img src="${pi}" bigImageURL="${pi}"
@@ -143,10 +143,6 @@
         <br>
 
         <div class="productPrice">
-            <%--<div class="juhuasuan">--%>
-            <%--<span class="juhuasuanBig" >聚划算</span>--%>
-            <%--<span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>--%>
-            <%--</div>--%>
             <div class="productPriceDiv">
                 <div class="originalDiv">
                     <span class="originalPriceDesc">价格</span>

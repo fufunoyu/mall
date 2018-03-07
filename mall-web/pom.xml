@@ -33,6 +33,11 @@
             <artifactId>mall-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.rhinoceros</groupId>
+            <artifactId>mall-web-support</artifactId>
+        </dependency>
+
         <!--springmvc-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -45,12 +50,14 @@
             <artifactId>commons-fileupload</artifactId>
         </dependency>
 
-        <!--jstl-->
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!--jstl-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -66,6 +73,7 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+
 
     </dependencies>
 </project>
