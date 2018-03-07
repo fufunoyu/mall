@@ -28,6 +28,10 @@ public interface ProductService {
      */
     List<Product> findByRootCategoryId(Long categoryId, PageQuery pageQuery);
 
+    List<Product> findByCategoryId(Long categoryId, PageQuery pageQuery);
+
     List<Product> findProduct(PageQuery pageQuery);
+
+
 
 }

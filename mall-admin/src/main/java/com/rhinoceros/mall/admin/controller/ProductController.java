@@ -1,5 +1,6 @@
 package com.rhinoceros.mall.admin.controller;
 
+import com.rhinoceros.mall.core.pojo.Category;
 import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.service.service.ProductService;
@@ -15,6 +16,7 @@ import java.util.List;
  * 创建商品控制器
  */
 @Controller
+@RequestMapping("/product")
 public class ProductController {
 
     //定义要调用的逻辑业务对象
@@ -28,14 +30,18 @@ public class ProductController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/productList")
-    public List productList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
+    @RequestMapping("/list")
+    public List productList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page, @RequestParam(value="categoryId") Long categoryId) {
         PageQuery pageQuery = new PageQuery(page, 10);
-        List<Product> productList = productService.findProduct(pageQuery);
+        List<Product> productList = productService.findByCategoryId(categoryId,pageQuery);
         return productList;
     }
 
-    @RequestMapping("/product")
+    /**
+     * 显示商品
+     * @return
+     */
+    @RequestMapping
     public String showProduct() {
         return "include/product";
     }

@@ -23,6 +23,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 获取所有商品分类列表的方法
+     * @param id
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/list")
     public List<TreeNodeDto> getList(@RequestParam(value = "id", required = false) Long id) {
@@ -49,4 +54,11 @@ public class CategoryController {
     public Category add(Category category){
         return categoryService.add(category);
     }
+
+//    @ResponseBody
+//    @RequestMapping("/delete")
+//    public Category delete(Category category){
+//        return categoryService.fcategory);
+//    }
+
 }
