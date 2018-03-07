@@ -166,3 +166,14 @@ insert into `admin` (`id`, `username`, `password`) values('1','zhangsanfeng','11
 insert into `admin` (`id`, `username`, `password`) values('2','liubeibei','111111');
 
 UNLOCK TABLES ;
+
+/*Data for the table `index_product` */
+LOCK TABLES `index_product` WRITE;
+
+insert into `index_product` (`id`, `product_id`) values('1','1');
+insert into `index_product` (`id`, `product_id`) values('2','2');
+insert into `index_product` (`id`, `product_id`) values('3','3');
+insert into `index_product` (`id`, `product_id`) values('4','4');
+insert into `index_product` (`id`, `product_id`) values('5','5');
+
+UNLOCK TABLES ;

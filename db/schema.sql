@@ -238,3 +238,19 @@ CREATE TABLE `address` (
 
 )
   COMMENT '地址表';
+
+create table `index_product` (
+	`id` int (20),
+	`root_category_id` int (20),
+	`product_id` int (20)
+);
+
+CREATE TABLE `index_product`(
+
+  id          INT(20)        NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  product_id  INT(20) NOT NULL
+  COMMENT '商品id',
+
+);
+  COMMENT '主页分类展示商品表'
