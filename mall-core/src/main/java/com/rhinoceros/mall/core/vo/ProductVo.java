@@ -38,4 +38,9 @@ public class ProductVo {
      */
     private Map<String, String> params = new HashMap<String, String>();
 
+    /**
+     * 分类名称
+     */
+    private String categoryName;
+
 }

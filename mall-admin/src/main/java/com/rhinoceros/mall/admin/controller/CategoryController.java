@@ -23,6 +23,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @RequestMapping
+    @ResponseBody
+    public Category findById(@RequestParam(value = "id") Long id){
+        return categoryService.findById(id);
+    }
     /**
      * 获取所有商品分类列表的方法
      * @param id

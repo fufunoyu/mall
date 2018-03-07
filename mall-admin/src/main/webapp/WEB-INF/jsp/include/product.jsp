@@ -89,11 +89,18 @@
      * @param row
      */
     function onTableClickRow(index, row) {
+        $.ajax({
+            url:'${pageContext.request.contextPath}/category?id='+row.categoryId,
+            method:'get',
+            success:function(category){
+                $("#productCategory").textbox('setText',category.name)
+            }
+        })
         $("#productName").textbox('setText', row.name)
         $("#productPrice").textbox('setText', row.price)
         $("#productDiscount").textbox('setText', row.discount)
         $("#productStatus").textbox('setText', row.status)
-        $("#productCategory").textbox('setText', row.category)
+
         var images = row.imageUrls.split(";")
         $("#image").empty()
         for(var i=0;i<images.length;i++){

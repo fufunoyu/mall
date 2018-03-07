@@ -21,4 +21,6 @@ public interface CategoryService {
     List<Category> findByParentId(Long parentId);
 
     Category add(Category category);
+
+    Category findById(Long categoryId);
 }

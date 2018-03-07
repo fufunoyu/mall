@@ -17,4 +17,7 @@ public interface CategoryDao {
     List<Category> findByParentId(Long parentId);
 
     int add(Category category);
+
+
+    Category findById(Long categoryId);
 }
