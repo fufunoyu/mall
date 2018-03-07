@@ -1,5 +1,6 @@
 package com.rhinoceros.mall.web.support.web.resolver;
 
+import com.rhinoceros.mall.core.query.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.core.MethodParameter;
@@ -10,6 +11,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.net.URLDecoder;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Rhys Xia
@@ -17,7 +20,7 @@ import java.net.URLDecoder;
  * 2018/03/06 09:58
  * 处理{@link com.rhinoceros.mall.web.support.web.annotation.PageDefault}注解参数的绑定
  */
-public class PageDefaultArgumentResolover implements HandlerMethodArgumentResolver {
+public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolver {
 
 
     public static final String PAGE_PARAM = "page";
@@ -40,19 +43,51 @@ public class PageDefaultArgumentResolover implements HandlerMethodArgumentResolv
         // 获取请求参数，并进行url解码
         String pageStr = URLDecoder.decode(nativeWebRequest.getParameter(PAGE_PARAM), "UTF-8");
         String sizeStr = URLDecoder.decode(nativeWebRequest.getParameter(SIZE_PARAM), "UTF-8");
-        String[] sortStrs = nativeWebRequest.getParameterValues(SIZE_PARAM);
+        String[] sortStrArr = nativeWebRequest.getParameterValues(SIZE_PARAM);
 
-        for (int i = 0; i < sortStrs.length; i++) {
-            sortStrs[i] = URLDecoder.decode(sortStrs[i], "UTF-8");
+        Integer page = null;
+        Integer size = null;
+        List<Order> orders = new LinkedList<Order>();
+
+        for (int i = 0; i < sortStrArr.length; i++) {
+            sortStrArr[i] = URLDecoder.decode(sortStrArr[i], "UTF-8");
         }
 
         if (webDataBinderFactory != null) {
+            //绑定page size参数
             WebDataBinder binder = webDataBinderFactory.createBinder(nativeWebRequest, null, methodParameter.getParameterName());
-            Integer page = binder.convertIfNecessary(pageStr, Integer.class);
-            Integer size = binder.convertIfNecessary(sizeStr, Integer.class);
+            page = binder.convertIfNecessary(pageStr, Integer.class);
+            size = binder.convertIfNecessary(sizeStr, Integer.class);
 
+            // 判断是否可以为空，如果不能，使用注解中的默认值
+            PageDefault annotation = methodParameter.getParameterAnnotation(PageDefault.class);
+            if (!annotation.required()) {
+                if (page == null) {
+                    page = annotation.page();
+                }
+                if (size == null) {
+                    size = annotation.size();
+                }
+            }
         }
-        return null;
 
+        // 绑定排序参数
+        for (String sortStr : sortStrArr) {
+            String[] split = sortStr.split(",");
+            if (split.length != 2) {
+                continue;
+            }
+            Order.Direction direction = null;
+            if (split[1].toUpperCase().equals(Order.Direction.ASC.name())) {
+                direction = Order.Direction.ASC;
+            } else if (split[1].toUpperCase().equals(Order.Direction.DESC.name())) {
+                direction = Order.Direction.DESC;
+            }
+            if (direction != null) {
+                orders.add(new Order(split[0], direction));
+            }
+        }
+
+        return new PageQuery(page, size, orders);
     }
 }
