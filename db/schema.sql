@@ -243,5 +243,5 @@ CREATE TABLE `product_description` (
   COMMENT '商品id',
   description   TEXT                  DEFAULT NULL
   COMMENT '商品详情',
-  PRIMARY KEY `prodcut_id`(`prodcut_id`)
+  PRIMARY KEY `product_id`(`product_id`)
 )
