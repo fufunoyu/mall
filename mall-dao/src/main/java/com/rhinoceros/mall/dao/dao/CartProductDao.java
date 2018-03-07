@@ -26,8 +26,7 @@ public interface CartProductDao {
      * @param cartProduct
      * @return
      */
-    Integer updateSelectionById(CartProduct cartProduct);
-    int countByCartProductId(Long cartProductId);
+    int updateSelectionById(CartProduct cartProduct);
 
     /**
      * 向购物车中添加商品
@@ -35,13 +34,6 @@ public interface CartProductDao {
      * @return 修改条目数目
      */
     int add(CartProduct cartProduct);
-
-    /**
-     * 修改购物车商品购买数量
-     * @param cartProduct
-     * @return
-     */
-    int updateById(CartProduct cartProduct);
 
     /**
      * 根据用户id和商品id查找购物车中商品
