@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `cart_product`;
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `address`;
+DROP TABLE IF EXISTS `product_description`;
 
 
 CREATE TABLE `permission` (
@@ -118,10 +119,6 @@ CREATE TABLE `product` (
   COMMENT '销量',
   image_urls             VARCHAR(512)   NOT NULL
   COMMENT '商品图片url',
-  description_image_urls VARCHAR(512)   NOT NULL
-  COMMENT '商品图片url',
-  params                 TEXT                    DEFAULT NULL
-  COMMENT '商品参数，json格式',
   comment_num            INT(20)                 DEFAULT 0
   COMMENT '评论数',
   sale_date              DATETIME       NOT NULL
@@ -240,3 +237,11 @@ CREATE TABLE `address` (
 
 )
   COMMENT '地址表';
+
+CREATE TABLE `product_description` (
+  product_id            INT(20)       NOT NUll  AUTO_INCREMENT
+  COMMENT '商品id',
+  description   TEXT                  DEFAULT NULL
+  COMMENT '商品详情',
+  PRIMARY KEY `prodcut_id`(`prodcut_id`)
+)
