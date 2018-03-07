@@ -36,7 +36,11 @@ public interface CartProductDao {
      */
     int add(CartProduct cartProduct);
 
-
+    /**
+     * 修改购物车商品购买数量
+     * @param cartProduct
+     * @return
+     */
     int updateById(CartProduct cartProduct);
 
     /**
