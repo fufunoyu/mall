@@ -20,7 +20,7 @@ import java.util.List;
  * 2018/03/06 09:58
  * 处理{@link com.rhinoceros.mall.web.support.web.annotation.PageDefault}注解参数的绑定
  */
-public class PageDefaultArgumentResolover implements HandlerMethodArgumentResolver {
+public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolver {
 
 
     public static final String PAGE_PARAM = "page";
