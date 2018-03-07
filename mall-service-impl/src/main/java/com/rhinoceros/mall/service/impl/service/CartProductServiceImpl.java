@@ -32,6 +32,12 @@ public class CartProductServiceImpl implements CartProductService{
         cartProductDao.deleteById(id);
     }
 
+    /**
+     * 向购物车中增加商品
+     * @param productId
+     * @param userId
+     * @param productNum
+     */
     @Override
     public void addProduct(Long productId, Long userId, Integer productNum) {
         CartProduct cartProduct = new CartProduct();
@@ -41,7 +47,7 @@ public class CartProductServiceImpl implements CartProductService{
         CartProduct cartProduct1 = cartProductDao.findByUserIdAndProductId(userId, productId);
         if (cartProduct1 != null) {
             cartProduct1.setProductNum(cartProduct1.getProductNum() + productNum);
-            cartProductDao.updateById(cartProduct1);
+            cartProductDao.updateSelectionById(cartProduct1);
         } else {
             cartProductDao.add(cartProduct);
         }
