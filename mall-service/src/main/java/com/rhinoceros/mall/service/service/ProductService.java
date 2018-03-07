@@ -27,4 +27,7 @@ public interface ProductService {
      * @return
      */
     List<Product> findByRootCategoryId(Long categoryId, PageQuery pageQuery);
+
+    List<Product> findProduct(PageQuery pageQuery);
+
 }

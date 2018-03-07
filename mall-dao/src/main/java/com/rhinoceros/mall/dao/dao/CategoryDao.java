@@ -11,4 +11,10 @@ public interface CategoryDao {
      * @return
      */
     List<Category> findAll();
+
+    List<Category> findRootCategories();
+
+    List<Category> findByParentId(Long parentId);
+
+    int add(Category category);
 }
