@@ -14,7 +14,8 @@
 <script>
     function onCategoryClick(index, row) {
         var products = row.products
-        console.log(products)
+//        console.log(products)
+        $("#index_product_list").datagrid('loadData', products)
 
     }
 
@@ -43,22 +44,22 @@
         }">
         </ul>
     </div>
-    <div data-options="region:'center'">
+    <div data-options="region:'center'" style="height: 100%">
         <%--     <div id="product_tt" class="easyui-tabs" style="width:100%;height: auto;">
              </div>--%>
-            <table class="easyui-datagrid" title="商品列表" style="width:700px;height:250px"
-                   data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
-                <thead>
-                <tr>
-                    <th data-options="field:'itemid',width:80">商品ID</th>
-                    <th data-options="field:'productid',width:100">Product</th>
-                    <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
-                    <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
-                    <th data-options="field:'attr1',width:250">Attribute</th>
-                    <th data-options="field:'status',width:60,align:'center'">Status</th>
-                </tr>
-                </thead>
-            </table>
+        <table id="index_product_list" class="easyui-datagrid" title="商品列表" style="width:100%;height:100%"
+               data-options="singleSelect:true,collapsible:true">
+            <thead>
+            <tr>
+                <th data-options="field:'id',width:80">商品ID</th>
+                <th data-options="field:'name',width:100">Product</th>
+                <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
+                <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
+                <th data-options="field:'attr1',width:250">Attribute</th>
+                <th data-options="field:'status',width:60,align:'center'">Status</th>
+            </tr>
+            </thead>
+        </table>
     </div>
 </div>
 </body>
