@@ -26,4 +26,9 @@ public enum OrderStatus {
      * 取消
      */
     CANCEL,
+
+    /**
+     * 待评价
+     */
+    WAIT_COMMENT
 }

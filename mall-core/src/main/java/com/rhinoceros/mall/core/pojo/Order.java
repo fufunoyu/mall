@@ -55,12 +55,12 @@ public class Order {
     /**
      * 收货信息id
      */
-    private Integer addressId;
+    private Long addressId;
 
     /**
      * 订单对应的用户id
      */
-    private Integer userId;
+    private Long userId;
 
 }
 

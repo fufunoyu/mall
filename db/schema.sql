@@ -152,7 +152,7 @@ CREATE TABLE `comment` (
 CREATE TABLE `order` (
   id          INT(20)        NOT NULL AUTO_INCREMENT
   COMMENT 'id',
-  status      VARCHAR(10)    NOT NULL
+  status      VARCHAR(20)    NOT NULL
   COMMENT '订单状态',
   identifier  CHAR(18)       NOT NULL
   COMMENT '订单编号',
