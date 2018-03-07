@@ -77,12 +77,17 @@
         );
         return false;
     });
+    /*立即购买商品生成订单的逻辑*/
     $(".buyLink").click(function () {
-        if (!isLogin) {
-            $("#loginModal").modal('show');
-            return false;
-        }
+        <c:if test="${not empty user}">
+        var pid = ${productVo.product.id};
+        var num = $(".productNumberSetting").val();
+        var userId = ${user.id};
+        var addCartpage = "${pageContext.request.contextPath}/cart/add";
+        </c:if>
+
         return true
+
     });
 
     $("button.loginSubmitButton").click(function () {

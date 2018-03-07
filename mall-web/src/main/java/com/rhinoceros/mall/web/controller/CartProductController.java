@@ -32,9 +32,9 @@ public class CartProductController {
     @RequestMapping("/cart/list")
     public String cart(Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request){
         User user = (User) session.getAttribute(LoginController.USERNAME);
-        if (user == null) {
-            return "redirect:/login?from=/cart/list";
-        }
+//        if (user == null) {
+//            return "redirect:/login?from=/cart/list";
+//        }
         List<CartProduct> cartProducts = cartProductService.findByUserId(user.getId());
         List<ProductVo> products = new LinkedList<ProductVo>();
         for (int i = 0; i < cartProducts.size(); i++) {
