@@ -11,14 +11,12 @@
     <select id="findByCategoryId" resultType="Product">
         SELECT *
         FROM product
-        WHERE root_category_id = #{categoryId} OR category_id = #{categoryId}
-        ${page.orderString}
-        LIMIT ${page.offset}, ${page.size}
+        WHERE category_id = #{categoryId}
+        ${page.queryString}
     </select>
     <select id="findProduct" resultType="Product">
         SELECT *
         FROM product
-        ${page.orderString}
-        LIMIT ${page.offset}, ${page.size}
+        ${page.queryString}
     </select>
 </mapper>
