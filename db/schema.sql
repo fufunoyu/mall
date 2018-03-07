@@ -99,29 +99,27 @@ CREATE TABLE `category` (
   COMMENT '商品分类表';
 
 CREATE TABLE `product` (
-  id               INT(20)        NOT NULL AUTO_INCREMENT
+  id             INT(20)        NOT NULL AUTO_INCREMENT
   COMMENT 'id',
-  name             VARCHAR(32)    NOT NULL
+  name           VARCHAR(32)    NOT NULL
   COMMENT '商品名称',
-  price            DECIMAL(10, 2) NOT NULL
+  price          DECIMAL(10, 2) NOT NULL
   COMMENT '价格',
-  discount         DECIMAL(10, 2)          DEFAULT NULL
+  discount       DECIMAL(10, 2)          DEFAULT NULL
   COMMENT '折扣后的价格',
-  status           CHAR(20)       NOT NULL
+  status         CHAR(20)       NOT NULL
   COMMENT '商品状态',
-  category_id      INT(20)        NOT NULL
+  category_id    INT(20)        NOT NULL
   COMMENT '商品类型id',
-  root_category_id INT(20)        NOT NULL
-  COMMENT '根分类的id',
-  store_num        INT(20)                 DEFAULT 0
+  store_num      INT(20)                 DEFAULT 0
   COMMENT '库存',
-  sale_num         INT(20)                 DEFAULT 0
+  sale_num       INT(20)                 DEFAULT 0
   COMMENT '销量',
-  image_urls       VARCHAR(512)   NOT NULL
+  image_urls     VARCHAR(512)   NOT NULL
   COMMENT '商品图片url',
-  comment_num      INT(20)                 DEFAULT 0
+  comment_num    INT(20)                 DEFAULT 0
   COMMENT '评论数',
-  sale_date        DATETIME
+  sale_date      DATETIME                DEFAULT NULL
   COMMENT '上架时间',
   KEY `category_id`(`category_id`),
   PRIMARY KEY `id`(`id`)
@@ -245,3 +243,4 @@ CREATE TABLE `product_description` (
   COMMENT '商品详情',
   PRIMARY KEY `product_id`(`product_id`)
 )
+  COMMENT '商品评论信息表';
