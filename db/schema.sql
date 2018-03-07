@@ -119,8 +119,6 @@ CREATE TABLE `product` (
   COMMENT '销量',
   image_urls             VARCHAR(512)   NOT NULL
   COMMENT '商品图片url',
-  description_id         INT(20)        NOT NULL
-  COMMENT '商品详情描述id',
   comment_num            INT(20)                 DEFAULT 0
   COMMENT '评论数',
   sale_date              DATETIME       NOT NULL
@@ -241,9 +239,9 @@ CREATE TABLE `address` (
   COMMENT '地址表';
 
 CREATE TABLE `product_description` (
-  id            INT(20)           NOT NUll AUTO_INCREMENT
-  COMMENT 'id',
-  description   TEXT              DEFAULT NULL
-  COMMENT '商品详情'
-  PRIMARY KEY `id`(`id`)
+  product_id            INT(20)       NOT NUll  AUTO_INCREMENT
+  COMMENT '商品id',
+  description   TEXT                  DEFAULT NULL
+  COMMENT '商品详情',
+  PRIMARY KEY `prodcut_id`(`prodcut_id`)
 )

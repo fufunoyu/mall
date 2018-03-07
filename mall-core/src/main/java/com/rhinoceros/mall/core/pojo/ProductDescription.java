@@ -7,9 +7,9 @@ import lombok.Data;
 public class ProductDescription {
 
     /**
-     * 详情id
+     * 商品id
      */
-    private Long id;
+    private Long productId;
 
     /**
      * 详情内容
