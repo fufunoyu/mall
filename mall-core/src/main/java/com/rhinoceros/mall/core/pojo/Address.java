@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
     /**
      * 地址id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 邮政编码
@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
     private String postalCode;
 
     /**
-     * 收货地址,多级地址则以{@link ADDRESS_SEPATATION}隔开
+     * 收货地址,多级地址则以{@link ADDRESS_SEPARATION}隔开
      */
     private String deliveryAddress;
 
@@ -43,7 +43,7 @@ import lombok.NoArgsConstructor;
     /**
      * 地址所属用户id
      */
-    private Integer userId;
+    private Long userId;
 
 
 }

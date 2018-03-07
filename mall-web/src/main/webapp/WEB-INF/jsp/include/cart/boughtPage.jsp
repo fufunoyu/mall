@@ -1,6 +1,4 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
@@ -95,12 +93,12 @@ $(function(){
 	</div>
 	
 	<div class="orderListItem">
-		<c:forEach items="${os}" var="o">
-			<table class="orderListItemTable" orderStatus="${o.status}" oid="${o.id}">
+		<c:forEach items="${orderListVos}" var="o">
+			<table class="orderListItemTable" orderStatus="${o.order.status}" oid="${o.order.id}"><%--oid不知道干吗用--%>
 				<tr class="orderListItemFirstTR">
 					<td colspan="2">
-					<b><fmt:formatDate value="${o.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></b> 
-					<span>订单号: ${o.orderCode} 
+					<b><fmt:formatDate value="${o.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/></b>
+					<span>订单号: ${o.order.identifier}
 					</span>
 					</td>
 					<td  colspan="2"><img width="13px" src="img/site/orderItemTmall.png">民生商城</td>
@@ -111,60 +109,64 @@ $(function(){
 						
 					</td>
 					<td class="orderItemDeleteTD">
-						<a class="deleteOrderLink" oid="${o.id}" href="#nowhere">
+						<a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
 							<span  class="orderListItemDelete glyphicon glyphicon-trash"></span>
 						</a>
 						
 					</td>
 				</tr>
-				<c:forEach items="${o.orderItems}" var="oi" varStatus="st">
+				<c:forEach items="${o.orderProductVos}" var="oi" varStatus="st">
 					<tr class="orderItemProductInfoPartTR" >
-						<td class="orderItemProductInfoPartTD"><img width="80" height="80" src="img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
+						<td class="orderItemProductInfoPartTD"><img width="80" height="80" src="${oi.productVo.firstImageUrls}"></td>
 						<td class="orderItemProductInfoPartTD">
 							<div class="orderListItemProductLinkOutDiv">
-								<a href="foreproduct?pid=${oi.product.id}">${oi.product.name}</a>
+								<a href="${pageContext.request.contextPath}/product?pid=${oi.productVo.product.id}">${oi.productVo.product.name}</a>
 								<div class="orderListItemProductLinkInnerDiv">
-											<img src="img/site/creditcard.png" title="支持信用卡支付">
-											<img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
-											<img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">						
+											<img src="${pageContext.request.contextPath}/static/img/site/creditcard.png" title="支持信用卡支付">
+											<img src="${pageContext.request.contextPath}/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">
+											<img src="${pageContext.request.contextPath}/static/img/site/promise.png" title="消费者保障服务,承诺如实描述">
 								</div>
 							</div>
 						</td>
 						<td  class="orderItemProductInfoPartTD" width="100px">
 						
-							<div class="orderListItemProductOriginalPrice">￥<fmt:formatNumber type="number" value="${oi.product.orignalPrice}" minFractionDigits="2"/></div>
-							<div class="orderListItemProductPrice">￥<fmt:formatNumber type="number" value="${oi.product.promotePrice}" minFractionDigits="2"/></div>
+							<div class="orderListItemProductOriginalPrice">￥<fmt:formatNumber type="number" value="${oi.productVo.product.price}" minFractionDigits="2"/></div>
+							<div class="orderListItemProductPrice">￥<fmt:formatNumber type="number" value="${oi.productVo.product.discount}" minFractionDigits="2"/></div>
 		
 		
 						</td>
+						<td align="center" class="orderItemProductInfoPartTD" width="100px">
+							<span class="orderListItemNumber" >${oi.num}</span>
+						</td>
+
 						<c:if test="${st.count==1}">
-						 
-							<td valign="top" rowspan="${fn:length(o.orderItems)}" class="orderListItemNumberTD orderItemOrderInfoPartTD" width="100px">
-								<span class="orderListItemNumber">${o.totalNumber}</span>
-							</td>
-							<td valign="top" rowspan="${fn:length(o.orderItems)}" width="120px" class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD">
-								<div class="orderListItemProductRealPrice">￥<fmt:formatNumber  minFractionDigits="2"  maxFractionDigits="2" type="number" value="${o.total}"/></div>
+							<%--<td valign="top" rowspan="${fn:length(o.orderProductVos)}" class="orderListItemNumberTD orderItemOrderInfoPartTD" width="100px">
+								<span class="orderListItemNumber">${oi.num}</span>
+							</td>--%>
+
+							<td valign="top" rowspan="${fn:length(o.orderProductVos)}" width="120px" class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD">
+								<div class="orderListItemProductRealPrice">￥<fmt:formatNumber  minFractionDigits="2"  maxFractionDigits="2" type="number" value="${o.order.totalPrice}"/></div>
 								<div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
 							</td>
-							<td valign="top" rowspan="${fn:length(o.orderItems)}" class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
-								<c:if test="${o.status=='waitConfirm' }">
+							<td valign="top" rowspan="${fn:length(o.orderProductVos)}" class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
+								<c:if test="${o.order.status=='SHIPPED' }">
 									<a href="foreconfirmPay?oid=${o.id}">
 										<button class="orderListItemConfirm">确认收货</button>
 									</a>
 								</c:if>
-								<c:if test="${o.status=='waitPay' }">
+								<c:if test="${o.order.status=='WAIT_PAY' }">
 									<a href="forealipay?oid=${o.id}&total=${o.total}">
 										<button class="orderListItemConfirm">付款</button>
 									</a>								
 								</c:if>
 								
-								<c:if test="${o.status=='waitDelivery' }">
+								<c:if test="${o.order.status=='PAYED' }">
 									<span>待发货</span>
 <%-- 									<button class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?id=${o.id}">催卖家发货</button> --%>
 									
 								</c:if>
 
-								<c:if test="${o.status=='waitReview' }">
+								<c:if test="${o.order.status=='WAIT_COMMENT' }">
 									<a href="forereview?oid=${o.id}">
 										<button  class="orderListItemReview">评价</button>
 									</a>

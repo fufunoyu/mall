@@ -12,7 +12,7 @@ public class AddressServiceImpl implements AddressService {
     AddressDao addressDao;
 
     @Override
-    public void add(String postalCode,String deliveryAddress, String deliveryName, String phone, String userId) {
+    public void add(String postalCode,String deliveryAddress, String deliveryName, String phone, Long userId) {
         Address address = new Address(null,postalCode,deliveryAddress,deliveryName,phone,userId);
         addressDao.add(address);
     }
