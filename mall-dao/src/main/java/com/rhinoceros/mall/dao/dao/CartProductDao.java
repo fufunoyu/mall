@@ -35,8 +35,6 @@ public interface CartProductDao {
      */
     int add(CartProduct cartProduct);
 
-
-
     /**
      * 根据用户id和商品id查找购物车中商品
      * @param userId
