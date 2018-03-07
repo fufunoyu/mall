@@ -33,6 +33,11 @@
             <artifactId>mall-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.rhinoceros</groupId>
+            <artifactId>mall-web-support</artifactId>
+        </dependency>
+
         <!--springmvc-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -68,6 +73,7 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+
 
     </dependencies>
 </project>

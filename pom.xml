@@ -98,6 +98,16 @@
                 <artifactId>mall-core</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.rhinoceros</groupId>
+                <artifactId>mall-web-support</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rhinoceros</groupId>
+                <artifactId>mall-admin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
 
             <!--javaee-->
             <dependency>
