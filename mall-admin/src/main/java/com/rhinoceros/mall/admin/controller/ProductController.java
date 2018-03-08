@@ -15,6 +15,7 @@ import java.util.List;
  * 创建商品控制器
  */
 @Controller
+@RequestMapping("/product")
 public class ProductController {
 
     //定义要调用的逻辑业务对象
@@ -28,14 +29,13 @@ public class ProductController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/productList")
+    @RequestMapping("/list")
     public List productList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
         PageQuery pageQuery = new PageQuery(page, 10);
         List<Product> productList = productService.findProduct(pageQuery);
         return productList;
     }
 
-    @RequestMapping("/product")
     public String showProduct() {
         return "include/product";
     }

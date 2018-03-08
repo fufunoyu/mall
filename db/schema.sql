@@ -244,13 +244,16 @@ CREATE TABLE `product_description` (
   KEY `product_id`(`product_id`)
   PRIMARY KEY `product_id`(`product_id`)
 )COMMENT '商品评论信息表';
+
+
 CREATE TABLE `index_product`(
 
   id          INT(20)        NOT NULL AUTO_INCREMENT
   COMMENT 'id',
   product_id  INT(20) NOT NULL
   COMMENT '商品id',
-
+  PRIMARY KEY `id`(`id`),
+  KEY `product_id`(`product_id`)
 )
 
   COMMENT '主页分类展示商品表';

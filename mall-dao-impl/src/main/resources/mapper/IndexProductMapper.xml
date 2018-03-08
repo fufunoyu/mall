@@ -17,7 +17,6 @@
             <result column="p_store_num" property="storeNum"/>
             <result column="p_sale_num" property="saleNum"/>
             <result column="p_image_urls" property="imageUrls"/>
-            <result column="p_description_id" property="descriptionId"/>
             <result column="p_comment_num" property="commentNum"/>
             <result column="p_sale_date" property="saleDate"/>
         </collection>
@@ -35,7 +34,6 @@
       p.store_num AS p_store_num,
       p.sale_num AS p_sale_num,
       p.`image_urls` AS p_image_urls,
-      p.description_id AS p_description_id
       p.`sale_date` AS p_sale_date,
       p.comment_num AS p_comment_num,
       c.id AS c_id,

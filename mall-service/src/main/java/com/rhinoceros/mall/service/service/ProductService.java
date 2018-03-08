@@ -29,6 +29,12 @@ public interface ProductService {
      */
     List<Product> findByCategoryId(Long categoryId, PageQuery pageQuery);
 
+    /**
+     * 查找商品列表，无分页信息
+     * @return
+     */
+    List<Product> findAll();
+
     List<Product> findProduct(PageQuery pageQuery);
 
 

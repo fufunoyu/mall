@@ -29,6 +29,12 @@ public interface ProductDao {
     List<Product> findByCategoryId(@Param("categoryId") Long categoryId, @Param("page") PageQuery pageQuery);
 
     /**
+     * 查找产品列表,无分类信息
+     * @return
+     */
+    List<Product> findProductNoPQ();
+
+    /**
      * 查找出商品的全部信息
      * @param pageQuery
      * @return

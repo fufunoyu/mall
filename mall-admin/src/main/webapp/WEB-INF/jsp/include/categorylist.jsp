@@ -18,7 +18,7 @@
         $("#index_product_list").datagrid('loadData', products)
 
     }
-
+    
     (function () {
         $.ajax({
             url: '${pageContext.request.contextPath}/home/list',
@@ -36,6 +36,17 @@
             }
         })
     })()
+    function loadFilter(data) {
+        var arr=[]
+        for(var i=0;i<data.length;i++){
+            arr.push({
+                id:data[i].id,
+                text:data[i].name,
+                parentId:data[i].parentId
+            })
+        }
+        return arr
+    }
 </script>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
     <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
@@ -45,14 +56,8 @@
         </ul>
     </div>
     <div data-options="region:'center'" style="height: 100%">
-        <%--     <div id="product_tt" class="easyui-tabs" style="width:100%;height: auto;">
-             </div>--%>
         <table id="index_product_list" class="easyui-datagrid" title="商品列表" style="width:100%;height:100%"
-               data-options="singleSelect:true,collapsible:true">
-            <div id="index_product_operation">
-                <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">Add</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:alert('Cut')">Cut</a>
-            </div>
+               data-options="singleSelect:false,collapsible:true,toolbar:toolbar">
             <thead>
             <tr>
                 <th data-options="field:'id',width:80">商品ID</th>
@@ -63,13 +68,156 @@
                 <th data-options="field:'categoryId',width:60,align:'center'">分类ID</th>
                 <th data-options="field:'storeNum',width:60,align:'center'">库存总量</th>
                 <th data-options="field:'saleNum',width:60,align:'center'">销售总量</th>
-                <th data-options="field:'imageUrls',width:60,align:'center'">商品图片</th>
-                <th data-options="field:'descriptionId',width:60,align:'center'">产品参数</th>
                 <th data-options="field:'commentNum',width:60,align:'center'">评论总数</th>
                 <th data-options="field:'saleDate',width:60,align:'center'">上架时间</th>
             </tr>
             </thead>
         </table>
+        <script>
+            function getSelectionsIds(){
+                var itemList = $("#index_product_list");
+                var sels = itemList.datagrid("getSelections");
+                var ids = [];
+                for(var i in sels){
+                    ids.push(sels[i].id);
+                }
+                ids = ids.join(",");
+                return ids;
+            }
+
+            var toolbar = [{
+                text: '添加商品',
+                iconCls: 'icon-add',
+                handler:function(){
+                    addProductWin = $("#add_product_window").window('open');
+                }
+            },{
+                text:'删除商品',
+                iconCls: 'icon-remove',
+                handler:function(){
+                    var ids = getSelectionsIds();
+                    if(ids.length == 0){
+                        $.messager.alert('提示','未选中商品！');
+                        return ;
+                    }
+                    $.messager.confirm('确认','确定删除ID为'+ids+'的商品吗？',function (r) {
+                        if(r){
+                            var params = {"ids":ids};
+                            $.post("${pageContext.request.contextPath}/home/deleteproduct",params, function(data){
+                                if(data.status == 200){
+                                    $.messager.alert('提示','删除商品成功!',undefined,function(){
+                                        $("#index_product_list").datagrid("reload");
+                                    });
+                                }
+                            });
+                        }
+                    })
+                }
+            }];
+        </script>
+    </div>
+</div>
+<!-- 弹出窗口：添加产品 -->
+<div id="add_product_window" class="easyui-window" title="选择添加商品" data-options="iconCls:'icon-save',closed:true" style="width:1000px;height:300px;padding:10px;">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-add" onclick="addProduct()" style="width:90px">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancelChoose()" style="width:90px">取消</a>
+    <div class="easyui-layout" style="width: 100%;height: 100%;">
+        <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
+            <ul id="category_tree" class="easyui-tree" data-options="{
+                 url:'${pageContext.request.contextPath}/category/list',
+                 method:'get',
+                 onContextMenu: function(e,node){
+                    e.preventDefault();
+                    $(this).tree('select',node.target);
+                    $('#mm').menu('show',{
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                 },
+                 loadFilter:loadFilter,
+                 onDblClick:function (node) {
+                    if(node.children&&node.children.length>0){
+                        return
+                    }
+                    $.ajax({
+                        url:'${pageContext.request.contextPath}/product/list?id='+node.id,
+                        method:'get',
+                        success:function(data){
+                            $('#category_tree').tree('append',data)
+                        }
+                    })
+                },
+                onClick:function(node){
+                    var table = $('#choose_list')
+                    if(node.id>0){
+                        $.ajax({
+                            url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id,
+                            method:'get',
+                            success:function(data){
+                                table.datagrid('loadData',data)
+                            }
+                         })
+                    }
+                }
+
+            }">
+            </ul>
+        </div>
+        <div data-options="region:'center'" style="height: 100%">
+            <table id="choose_list"class="easyui-datagrid" title="商品列表" style="width:960px;height:250px;padding:10px;"
+                   toolbar="#toolbar" idField="id" collapsible="true"
+                   rownumbers="true" fitColumns="true" singleSelect="false">
+                <thead>
+                <tr>
+                    <th data-options="field:'ck',checkbox:true"></th>
+                    <th data-options="field:'id',width:150">商品ID</th>
+                    <th data-options="field:'name',width:150">商品名称</th>
+                    <th data-options="field:'price',width:150,align:'right'">价格</th>
+                    <th data-options="field:'discount',width:150,align:'right'">折后价</th>
+                    <th data-options="field:'status',width:150,align:'center'">商品状态</th>
+                    <th data-options="field:'categoryId',width:150,align:'center'">分类ID</th>
+                    <th data-options="field:'saleNum',width:150,align:'center'">销售总量</th>
+                    <th data-options="field:'commentNum',width:150,align:'center'">评论总数</th>
+                </tr>
+                </thead>
+            </table>
+            <script>
+
+                function getSelectionsSubIds(){
+                    var itemList = $("#choose_list");
+                    var sels = itemList.datagrid("getSelections");
+                    var ids = [];
+                    for(var i in sels){
+                        ids.push(sels[i].id);
+                    }
+                    ids = ids.join(",");
+                    return ids;
+                }
+                function addProduct() {
+                    var ids = getSelectionsSubIds();
+                    if(ids.length == 0){
+                        $.messager.alert('提示','未选中商品！');
+                        return ;
+                    }
+                    $.messager.confirm('确认','确定添加ID为'+ids+'的商品吗？',function (r) {
+                        if(r){
+                            var params = {"ids":ids};
+                            $.post("${pageContext.request.contextPath}/home/addproduct",params, function(data){
+                                if(data.status == 200){
+                                    $.messager.alert('提示','添加商品成功!',undefined,function(){
+                                        $("#choose_list").datagrid("load");
+                                    });
+                                }
+                            });
+                        }
+                    })
+                }
+                function cancelChoose() {
+                    alert("取消选项！")
+                    closeWin = $("#add_product_window").window('close');
+                }
+            </script>
+        </div>
 
     </div>
 </div>
