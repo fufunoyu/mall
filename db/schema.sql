@@ -75,7 +75,6 @@ CREATE TABLE `user` (
 )
   COMMENT '用户表';
 
-
 CREATE TABLE `user_role` (
   user_id INT(20) NOT NULL
   COMMENT '用户id',

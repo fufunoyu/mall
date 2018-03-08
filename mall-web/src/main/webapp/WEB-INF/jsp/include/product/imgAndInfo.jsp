@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 
-<%@page import="com.rhinoceros.mall.core.pojo.User" %>
-<%@ page import="com.rhinoceros.mall.web.controller.LoginController" %>
-
-<%
-    String userKey = LoginController.USERNAME;
-    User user = (User) session.getAttribute(userKey);
-%>
+<%@page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
+<%@ page import="com.rhinoceros.mall.core.pojo.User" %>
 
 <script>
 
@@ -45,7 +40,7 @@
         /*加入购物车按钮的逻辑*/
         $(".addCartButton").removeAttr("disabled");
         $(".addCartLink").click(function () {
-                <c:if test="${not empty user}">
+                <c:if test="${not empty sessionScope[ConstantValue.CURRENT_USER]}">
 
                 var pid = ${productVo.product.id};
                 var num = $(".productNumberSetting").val();
@@ -68,7 +63,7 @@
                         }
                     })
                 </c:if>
-                <c:if test="${empty user}">
+                <c:if test="${empty sessionScope[ConstantValue.CURRENT_USER]}">
 
                 location.href = "${pageContext.request.contextPath}/login";
                 // $("#loginModal").modal('show');

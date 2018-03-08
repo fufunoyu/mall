@@ -20,14 +20,14 @@ public interface ProductService {
     ProductVo findProductVoById(Long id);
 
     /**
-     * 根据分类id和分页条件查找产品列表
+     * 根据分类id和分页条件查找该分类下及其子分类下的所有产品
      *
      * @param categoryId 分类id
      * @param pageQuery  分页条件
      * @return
      */
-    List<Product> findByCategoryId(Long categoryId, PageQuery pageQuery);
+    List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery);
 
-    List<Product> findProduct(PageQuery pageQuery);
+    List<Product> findAll(PageQuery pageQuery);
 
 }

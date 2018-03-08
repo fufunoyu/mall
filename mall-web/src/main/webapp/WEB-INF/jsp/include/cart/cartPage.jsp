@@ -198,7 +198,7 @@ function syncPrice(pid,num,price,oiid){
 	$(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
 	calcCartSumPriceAndNumber(oiid);
 	
-	var page = "${pageContext.request.contextPath}/cart/count";
+	var page = "${pageContext.request.contextPath}/cart/update";
     $.post(
         page,
         {"id":oiid,"productNum":num},
