@@ -30,5 +30,4 @@ public interface CategoryService {
 
     Category add(Category category);
 
-    Category findById(Long categoryId);
 }

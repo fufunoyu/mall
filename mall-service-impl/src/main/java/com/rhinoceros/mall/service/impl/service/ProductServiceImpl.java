@@ -61,11 +61,6 @@ public class ProductServiceImpl implements ProductService {
         return productDao.findByCategoryId(categoryId, pageQuery);
     }
 
-    @Override
-    public List<Product> findByCategoryId(Long categoryId, PageQuery pageQuery) {
-        return productDao.findByCategoryId(categoryId, pageQuery);
-    }
-
     /**
      * 找寻商品的方法
      * @param pageQuery

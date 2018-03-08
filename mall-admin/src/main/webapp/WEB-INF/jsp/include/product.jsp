@@ -99,7 +99,12 @@
         $("#productName").textbox('setText', row.name)
         $("#productPrice").textbox('setText', row.price)
         $("#productDiscount").textbox('setText', row.discount)
-        $("#productStatus").textbox('setText', row.status)
+        var status
+        if(row.status=="ON_SHELF")
+            status="上架"
+        else
+            status="下架"
+        $("#productStatus").textbox('setText', status)
 
         var images = row.imageUrls.split(";")
         $("#image").empty()
@@ -136,7 +141,7 @@
                     var url = e.target.result;
                     var photo = $('<img class="photo" src="'+url+'"/>')
                     $("#image").append(photo)
-                    photoImgUrl+=photo
+                    // photoImgUrl+=
                 };
                 $('#selectImage').empty();
             }
@@ -169,8 +174,10 @@
                    data-options="label:'优惠价:',required:true">
         </div>
         <div style="margin-bottom:20px">
-            <input id="productStatus" class="easyui-textbox" name="status" style="width:100%"
-                   data-options="label:'商品状态:',required:true">
+            <select class="easyui-combobox" name="state" label="状态:" labelPosition="left" style="width:100%;" panelHeight="50">
+                <option value="ON_SHELF">上架</option>
+                <option value=" LEAVE_SHELF">下架</option>
+            </select>
         </div>
         <div style="margin-bottom:20px">
             <input id="productCategory" class="easyui-textbox" name="category" style="width:100%"
