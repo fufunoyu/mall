@@ -1,10 +1,10 @@
 package com.rhinoceros.mall.web.interceptor;
 
+import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.service.impl.exception.UserException;
 import com.rhinoceros.mall.service.service.UserService;
-import com.rhinoceros.mall.web.controller.LoginController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -27,7 +27,7 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         //session中没有信息，说明用户从未登录过，直接返回true进行登录
-        if (session.getAttribute(LoginController.USERNAME) != null) {
+        if (session.getAttribute(ConstantValue.CURRENT_USER) != null) {
             return true;
         }
         //获取cookie信息
@@ -40,9 +40,9 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
         String password = null;
         //获取到cookie中的用户名和密码
         for (Cookie c : cookies) {
-            if (LoginController.USERNAME_COOKIE.equals(c.getName())) {
+            if (ConstantValue.COOKIE_USERNAME.equals(c.getName())) {
                 username = c.getValue();
-            } else if (LoginController.USEPASSWORD_COOKIE.equals(c.getName())) {
+            } else if (ConstantValue.COOKIE_PASSWORD.equals(c.getName())) {
                 password = c.getValue();
             }
         }
@@ -59,7 +59,7 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
         try {
             User user = userService.login(dto);
             //把用户信息放在session里面
-            request.getSession().setAttribute(LoginController.USERNAME, user);
+            request.getSession().setAttribute(ConstantValue.CURRENT_USER, user);
         } catch (UserException e) {
             e.printStackTrace();
             log.info(e.getMessage());

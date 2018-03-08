@@ -31,7 +31,7 @@ public class ProductController {
     @RequestMapping("/productList")
     public List productList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
         PageQuery pageQuery = new PageQuery(page, 10);
-        List<Product> productList = productService.findProduct(pageQuery);
+        List<Product> productList = productService.findAll(pageQuery);
         return productList;
     }
 

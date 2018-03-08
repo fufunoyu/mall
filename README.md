@@ -14,7 +14,10 @@
   * mall-core:公共文件模块，存放公共类，pojo，dto，vo等
   * mall-dao:数据访问层接口定义模块
   * mall-dao-impl:数据访问层接口实现模块
-  * mall-service：业务逻辑层接口定义模块
-  * mall-service-impl：业务逻辑层接口实现模块
-  * mall-web：界面展示模块
-  * mall-auth：权限管理模块
+  * mall-manager:通用处理模块，主要对dao数据进行处理封装（缓存等）
+  * mall-manager-impl:通用处理模块实现
+  * mall-service:业务逻辑层接口定义模块
+  * mall-service-impl:业务逻辑层接口实现模块
+  * mall-web:用户显示模块
+  * mall-admin:后台管理模块
+  * mall-web-support：显示层扩展模块，对相关显示层通用功能封装
