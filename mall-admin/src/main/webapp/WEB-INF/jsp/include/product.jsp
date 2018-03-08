@@ -1,3 +1,4 @@
+<%@ taglib prefix="method" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,6 +14,25 @@
     }
 </style>
 <script>
+
+    /**
+     * 上架时间修改为正确的显示格式
+     * */
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
     /**
      * 新增分类
      */
@@ -53,35 +73,35 @@
         t.tree('beginEdit', node.target);
     }
 
-    /**
-     * 点击跳转至图片详情
-     * @param val
-     * @param row
-     * @returns {string}
-     */
-    function formatImage(val, row) {
-        return '<a href=' + val + ' target="_blank">点击查看图片</a>'
-    }
+    // /**
+    //  * 点击跳转至图片详情
+    //  * @param val
+    //  * @param row
+    //  * @returns {string}
+    //  */
+    // function formatImage(val, row) {
+    //     return '<a href=' + val + ' target="_blank">点击查看图片</a>'
+    // }
 
-    /**
-     * 点击跳转至图片描述详情
-     * @param val
-     * @param row
-     * @returns {string}
-     */
-    function formatDescriptionImage(val, row) {
-        return '<a href=' + val + ' target="_blank">点击查看图片描述</a>'
-    }
+    // /**
+    //  * 点击跳转至图片描述详情
+    //  * @param val
+    //  * @param row
+    //  * @returns {string}
+    //  */
+    // function formatDescriptionImage(val, row) {
+    //     return '<a href=' + val + ' target="_blank">点击查看图片描述</a>'
+    // }
 
-    /**
-     * 点击跳转至商品描述窗口
-     * @param val
-     * @param row
-     * @returns {string}
-     */
-    function formatParams(val, row) {
-        return '<a href="javascript:void(0)" onclick="paramsClick(this)" data-params=\'' + val + '\'>点击查看商品详细参数</a>'
-    }
+    // /**
+    //  * 点击跳转至商品描述窗口
+    //  * @param val
+    //  * @param row
+    //  * @returns {string}
+    //  */
+    // function formatParams(val, row) {
+    //     return '<a href="javascript:void(0)" onclick="paramsClick(this)" data-params=\'' + val + '\'>点击查看商品详细参数</a>'
+    // }
 
     /**
      * 双击进入商品详情修改界面
@@ -99,13 +119,17 @@
         $("#productName").textbox('setText', row.name)
         $("#productPrice").textbox('setText', row.price)
         $("#productDiscount").textbox('setText', row.discount)
+        $("#productStoreNum").textbox('setText', row.storeNum)
+        $("#productSaleNum").textbox('setText', row.saleNum)
+        $("#productCommentNum").textbox('setText', row.commentNum)
         var status
         if(row.status=="ON_SHELF")
             status="上架"
         else
             status="下架"
         $("#productStatus").textbox('setText', status)
-
+        var date = row.saleDate
+        $("#productSaleDate").textbox('setText', new Date(date).Format("yyyy/MM/dd HH:mm:ss"))
         var images = row.imageUrls.split(";")
         $("#image").empty()
         for(var i=0;i<images.length;i++){
@@ -125,6 +149,10 @@
         $("#product_win").window("open")
         }
 
+    /**
+     * 上传图片
+     * @type {string}
+     */
     var photoImgUrl = '';
     $(function () {
         //file change event
@@ -174,18 +202,30 @@
                    data-options="label:'优惠价:',required:true">
         </div>
         <div style="margin-bottom:20px">
-            <select class="easyui-combobox" name="state" label="状态:" labelPosition="left" style="width:100%;" panelHeight="50">
+            <select class="easyui-combobox" name="state" label="商品状态:" labelPosition="left" style="width:100%;" panelHeight="50">
                 <option value="ON_SHELF">上架</option>
                 <option value=" LEAVE_SHELF">下架</option>
             </select>
         </div>
         <div style="margin-bottom:20px">
-            <input id="productCategory" class="easyui-textbox" name="category" style="width:100%"
-                   data-options="label:'商品分类:',required:true">
+            <input id="productSaleDate" class="easyui-textbox" name="saleDate" style="width:100%"
+                   data-options="label:'上架日期:',required:true" readonly>
         </div>
         <div style="margin-bottom:20px">
-            <input class="easyui-textbox" name="message" style="width:100%;height:60px"
-                   data-options="label:'Message:',multiline:true">
+            <input id="productCategory" class="easyui-combotree" name="category" value="122"
+                   data-options="url:'${pageContext.request.contextPath}/category',method:'get',label:'商品分类:',labelPosition:'left'" style="width:100%" >
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
+                   data-options="label:'商品库存总量:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="productSaleNum" class="easyui-textbox" name="saleNum" style="width:100%"
+                   data-options="label:'商品销售总量:',required:true" readonly>
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
+                   data-options="label:'评论总数:',required:true" readonly>
         </div>
     </form>
 </div>
@@ -270,7 +310,7 @@
     </div>
     <%--商品表单--%>
     <div data-options="region:'center'">
-        <table class="easyui-datagrid" id="product_table" style="width:100%;height:auto;border:1px solid #ccc;"
+        <table class="easyui-datagrid" id="product_table" style="width:auto;height:auto;border:1px solid #ccc;"
                data-options="{
                                     singleSelect:true,
                                     collapsible:true,
@@ -279,19 +319,16 @@
             <thead>
             <%--表格显示项目--%>
             <tr>
-                <th data-options="field:'id'">商品ID</th>
+                <%--<th data-options="field:'id'">商品ID</th>--%>
                 <th data-options="field:'name'">商品名</th>
                 <th data-options="field:'price',align:'right'">商品价格</th>
                 <th data-options="field:'discount',align:'right'">优惠价</th>
-                <th data-options="field:'status'">商品状态</th>
-                <th data-options="field:'categoryId'">商品分类ID</th>
-                <th data-options="field:'rootCategoryId'">商品父分类ID</th>
+                <%--<th data-options="field:'status'">商品状态</th>--%>
+                <%--<th data-options="field:'saleDate'">上架时间</th>--%>
+                <%--<th data-options="field:'categoryId'">商品分类ID</th>--%>
                 <th data-options="field:'storeNum'">商品库存总量</th>
                 <th data-options="field:'saleNum'">商品销售总量</th>
-                <th data-options="field:'imageUrls',width:150,formatter:formatImage">商品图片</th>
-                <th data-options="field:'params',formatter:formatParams">商品参数</th>
-                <th data-options="field:'descriptionImageUrls',width:150,formatter:formatDescriptionImage">商品描述图片
-                </th>
+                <%--<th data-options="field:'imageUrls',width:150,formatter:formatImage">商品图片</th>--%>
                 <th data-options="field:'commentNum'">总评论数</th>
             </tr>
             </thead>
