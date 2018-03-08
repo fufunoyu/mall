@@ -19,8 +19,19 @@
         FROM product
     </select>
     <select id="findProduct" resultType="Product">
+    <select id="findAll" resultType="Product">
         SELECT *
         FROM product
+             ${page.queryString}
+    </select>
+
+    <select id="findByCategoryIdIn" resultType="Product">
+        SELECT *
+        FROM `product`
+        WHERE category_id in
+        <foreach collection="categoryIds" item="categoryId" open="(" close=")" separator=",">
+            #{categoryId}
+        </foreach>
         ${page.queryString}
     </select>
 </mapper>
