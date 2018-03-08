@@ -33,7 +33,7 @@
                 //那么首页（第1页）就是http://www.xx.com/news/20131212.html
                 //第2页就是http://www.xx.com/news/20131212_2.html
                 //第n页就是http://www.xx.com/news/20131212_n.html
-                return this.hrefFormer + '?page=' + n + this.hrefLatter;
+                return this.hrefFormer + '?page=' + n + '&status=' + '${orderStatus}' + this.hrefLatter;
                 <%--if (n == 1) {--%>
                 <%--return this.hrefFormer + this.hrefLatter + '?pid= ${productVo.product.id}';--%>
                 <%--}--%>
@@ -216,9 +216,10 @@
                             <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
-                                    <a href="foreconfirmPay?oid=${o.id}">
+                                    <button class="orderListItemConfirm">确认收货</button>
+                                    <%--<a href="foreconfirmPay?oid=${o.id}">
                                         <button class="orderListItemConfirm">确认收货</button>
-                                    </a>
+                                    </a>--%>
                                 </c:if>
                                 <c:if test="${o.order.status=='WAIT_PAY' }">
 
@@ -238,9 +239,10 @@
                                 </c:if>
 
                                 <c:if test="${o.order.status=='WAIT_COMMENT' }">
-                                    <a href="forereview?oid=${o.id}">
+                                    <button class="orderListItemReview">评价</button>
+                                    <%--<a href="forereview?oid=${o.id}">
                                         <button class="orderListItemReview">评价</button>
-                                    </a>
+                                    </a>--%>
                                 </c:if>
 
                                 <c:if test="${o.order.status=='COMPLETED'}">

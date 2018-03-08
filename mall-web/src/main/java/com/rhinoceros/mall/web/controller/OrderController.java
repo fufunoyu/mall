@@ -46,7 +46,7 @@ public class OrderController {
         List<OrderListVo> orderListVos;
         Integer orderNum;
         Integer pageSize = 2;
-        if (status == null|| status=="ALL") {
+        if (status == null || status.equals("ALL") ) {
             orderNum = orderService.findOrderNumByUserIdAndStatus(user.getId());
             orderListVos = orderService.findOrderListVoByUserId(user.getId(), page, pageSize);
             status = "ALL";
