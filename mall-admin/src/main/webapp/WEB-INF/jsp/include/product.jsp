@@ -56,7 +56,7 @@
     function removeit() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('removeit', {
+        t.tree('remove', {
             parent: null,
             data: [{
                 id: -1,
@@ -232,11 +232,12 @@
         </div>
     </form>
 </div>
-<%--用户工具栏--%>
+<%--商品分类用户工具栏--%>
 <div id="category_tool">
     <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
     <a href="javascript:void(0)" class="icon-edit" onclick="edit()" style="margin-right: 10px"></a>
 </div>
+<%--商品列表用户工具栏--%>
 <div id="category_tool2">
     <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
     <a href="javascript:void(0)" class="icon-remove" onclick="removeit()" style="margin-right: 10px"></a>

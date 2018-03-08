@@ -54,11 +54,8 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
         
         Integer page = null;
         Integer size = null;
-        List<Order> orders = new LinkedList<Order>();
 
-        for (int i = 0; i < sortStrArr.length; i++) {
-            sortStrArr[i] = URLDecoder.decode(sortStrArr[i], "UTF-8");
-        }
+
 
         if (webDataBinderFactory != null) {
             //绑定page size参数
@@ -78,23 +75,29 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
             }
         }
 
-        // 绑定排序参数
-        for (String sortStr : sortStrArr) {
-            String[] split = sortStr.split(",");
-            if (split.length != 2) {
-                continue;
+        List<Order> orders = new LinkedList<Order>();
+        if(sortStrArr != null){
+            for (int i = 0; i < sortStrArr.length; i++) {
+                sortStrArr[i] = URLDecoder.decode(sortStrArr[i], "UTF-8");
             }
-            Order.Direction direction = null;
-            if (split[1].toUpperCase().equals(Order.Direction.ASC.name())) {
-                direction = Order.Direction.ASC;
-            } else if (split[1].toUpperCase().equals(Order.Direction.DESC.name())) {
-                direction = Order.Direction.DESC;
-            }
-            if (direction != null) {
-                orders.add(new Order(split[0], direction));
+            for (String sortStr : sortStrArr) {
+                String[] split = sortStr.split(",");
+                if (split.length != 2) {
+                    continue;
+                }
+                Order.Direction direction = null;
+                if (split[1].toUpperCase().equals(Order.Direction.ASC.name())) {
+                    direction = Order.Direction.ASC;
+                } else if (split[1].toUpperCase().equals(Order.Direction.DESC.name())) {
+                    direction = Order.Direction.DESC;
+                }
+                if (direction != null) {
+                    orders.add(new Order(split[0], direction));
+                }
             }
         }
 
+        // 绑定排序参数
         return new PageQuery(page, size, orders);
     }
 }
