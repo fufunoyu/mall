@@ -56,10 +56,6 @@ public class Product {
     private String imageUrls;
 
     /**
-     * 产品参数，json数据格式
-     */
-    private Long descriptionId;
-    /**
      * 商品总评论数
      */
     private Long commentNum;
