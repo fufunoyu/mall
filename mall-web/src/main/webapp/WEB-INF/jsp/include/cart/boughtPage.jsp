@@ -149,7 +149,7 @@ $(function(){
 								<div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
 							</td>
 							<td valign="top" rowspan="${fn:length(o.orderProductVos)}" class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
-								<c:if test="${o.order.status=='SHIPPED' }">
+								<c:if test="${o.order.status=='WAIT_RECEIVE' }">
 									<a href="foreconfirmPay?oid=${o.id}">
 										<button class="orderListItemConfirm">确认收货</button>
 									</a>
@@ -160,7 +160,7 @@ $(function(){
 									</a>								
 								</c:if>
 								
-								<c:if test="${o.order.status=='PAYED' }">
+								<c:if test="${o.order.status=='WAIT_SHIP' }">
 									<span>待发货</span>
 <%-- 									<button class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?id=${o.id}">催卖家发货</button> --%>
 									
@@ -171,6 +171,15 @@ $(function(){
 										<button  class="orderListItemReview">评价</button>
 									</a>
 								</c:if>
+
+                                <c:if test="${o.order.status=='COMPLETED'}">
+                                    <span>已完成</span>
+                                </c:if>
+
+                                <c:if test="${o.order.status=='CANCEL'}">
+                                    <span>已取消</span>
+                                </c:if>
+
 							</td>						
 						</c:if>
 					</tr>

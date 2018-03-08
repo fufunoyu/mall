@@ -13,5 +13,7 @@ public interface OrderService {
      * @param userId
      * @return
      */
+    List<OrderListVo> findOrderListVoByUserId(Long userId, String status);
+
     List<OrderListVo> findOrderListVoByUserId(Long userId);
 }

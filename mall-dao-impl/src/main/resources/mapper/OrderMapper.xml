@@ -11,5 +11,18 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="findByUserIdAndStatus" resultType="Order">
+        SELECT *
+        FROM `order`
+        <set>
+            <if test="status=null">
+                WHERE user_id = #{userId}
+            </if>
+            <if test="status!=null">
+                WHERE user_id = #{userId} AND status = #{status}
+            </if>
+        </set>
+        ${page.queryString}
+    </select>
 
 </mapper>

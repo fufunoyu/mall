@@ -80,33 +80,28 @@ insert  into `comment`(`id`,`product_id`,`order_id`,`user_id`,`content`,`create_
 
 UNLOCK TABLES;
 
-/*Data for the table `good_type` */
 
-LOCK TABLES `good_type` WRITE;
 
-UNLOCK TABLES;
-
-/*Data for the table `goods` */
-
-LOCK TABLES `goods` WRITE;
-
-UNLOCK TABLES;
 
 /*Data for the table `order` */
 
 LOCK TABLES `order` WRITE;
 
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_PAY','12341234','2018-03-15 21:12:56','2018-03-15 21:12:57','2018-03-15 21:13:56','2018-03-15 21:14:56','1000.00','12351345',1,1);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_SHIP','1623461234','2018-03-16 21:12:56','2018-03-16 21:12:57','2018-03-16 21:13:56','2018-03-16 21:14:56','2000.00','1213624345',1,1);
 UNLOCK TABLES;
 
-/*Data for the table `order_goods` */
 
-LOCK TABLES `order_goods` WRITE;
 
-UNLOCK TABLES;
+
 
 /*Data for the table `order_product` */
 
 LOCK TABLES `order_product` WRITE;
+
+INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (1,2,3);
+INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (2,3,1);
+INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (3,2,2);
 
 UNLOCK TABLES;
 
@@ -152,6 +147,14 @@ UNLOCK TABLES;
 /*Data for the table `user_role` */
 
 LOCK TABLES `user_role` WRITE;
+
+UNLOCK TABLES;
+
+/*Data for the table `address` */
+LOCK TABLES `address` WRITE;
+
+INSERT  INTO `address`(`postal_code`,`delivery_address`,`delivery_name`,`phone`,`user_id`) VALUES ('123123','slkdfjiwniwaenf','zhb','13888881113',1);
+INSERT  INTO `address`(`postal_code`,`delivery_address`,`delivery_name`,`phone`,`user_id`) VALUES ('342362','rtsdheag','zhb','13888881113',1);
 
 UNLOCK TABLES;
 

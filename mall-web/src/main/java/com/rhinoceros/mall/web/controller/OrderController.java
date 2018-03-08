@@ -25,6 +25,7 @@ public class OrderController {
         if (user == null) {
             return "redirect:/login";
         }
+
         List<OrderListVo> orderListVos= orderService.findOrderListVoByUserId(user.getId());
         model.addAttribute("orderListVos",orderListVos);
 

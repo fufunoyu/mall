@@ -4,6 +4,7 @@ package com.rhinoceros.mall.service.impl.service;
 import com.rhinoceros.mall.core.pojo.Order;
 import com.rhinoceros.mall.core.pojo.OrderProduct;
 import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
@@ -29,9 +30,19 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductDao productDao;
 
+    /**
+     * 根据userId和订单状态找出所有符合条件的订单
+     * @param userId
+     * @return
+     */
     @Override
-    public List<OrderListVo> findOrderListVoByUserId(Long userId) {
-        List<Order> orders = orderDao.findByUserId(userId);
+    public List<OrderListVo> findOrderListVoByUserId(Long userId, String status ) {
+        //选择排序方式
+        com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
+        //选择分页方式
+        PageQuery pageQuery = new PageQuery(1,1,queryOrder);
+
+        List<Order> orders = orderDao.findByUserIdAndStatus(userId, status, pageQuery);
         List<OrderListVo> orderListVos = new LinkedList<OrderListVo>();
         for(Order order:orders){
             OrderListVo orderListVo = new OrderListVo();
@@ -55,7 +66,13 @@ public class OrderServiceImpl implements OrderService {
             orderListVos.add(orderListVo);
         }
 
-
         return orderListVos;
     }
+    @Override
+    public List<OrderListVo> findOrderListVoByUserId(Long userId){
+        String status = null;
+        return findOrderListVoByUserId(userId, status);
+    }
+
+
 }
