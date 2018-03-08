@@ -76,7 +76,7 @@ public class PageQuery {
             sb.deleteCharAt(sb.length() - 1);
         }
 
-        if (this.getOffset() > 0 && this.getSize() > 0) {
+        if (this.getOffset() >= 0 && this.getSize() > 0) {
             sb.append(" LIMIT ").append(this.getOffset()).append(",").append(this.size);
         }
 
