@@ -23,9 +23,9 @@ import java.util.List;
 public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolver {
 
 
-    public static final String PAGE_PARAM = "page";
-    public static final String SIZE_PARAM = "size";
-    public static final String SORT_PARAM = "sort";
+    private static final String PAGE_PARAM = "page";
+    private static final String SIZE_PARAM = "size";
+    private static final String SORT_PARAM = "sort";
 
     /**
      * 判断参数是否是PageQuery类型，且是否有PageDefault注解
@@ -34,17 +34,24 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
      * @return
      */
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.hasMethodAnnotation(PageDefault.class) && methodParameter.getParameterType().isAssignableFrom(PageQuery.class);
+
+        return methodParameter.hasParameterAnnotation(PageDefault.class) && methodParameter.getParameterType().isAssignableFrom(PageQuery.class);
     }
 
 
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
 
         // 获取请求参数，并进行url解码
-        String pageStr = URLDecoder.decode(nativeWebRequest.getParameter(PAGE_PARAM), "UTF-8");
-        String sizeStr = URLDecoder.decode(nativeWebRequest.getParameter(SIZE_PARAM), "UTF-8");
-        String[] sortStrArr = nativeWebRequest.getParameterValues(SIZE_PARAM);
-
+        String pageStr = nativeWebRequest.getParameter(PAGE_PARAM);
+        String sizeStr = nativeWebRequest.getParameter(SIZE_PARAM);
+        if (pageStr != null) {
+            pageStr = URLDecoder.decode(pageStr, "UTF-8");
+        }
+        if (sizeStr != null) {
+            sizeStr = URLDecoder.decode(sizeStr, "UTF-8");
+        }
+        String[] sortStrArr = nativeWebRequest.getParameterValues(SORT_PARAM);
+        
         Integer page = null;
         Integer size = null;
         List<Order> orders = new LinkedList<Order>();

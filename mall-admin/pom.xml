@@ -15,11 +15,11 @@
             <groupId>com.rhinoceros</groupId>
             <artifactId>mall-service-impl</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.rhinoceros</groupId>
-            <artifactId>mall-core</artifactId>
+            <artifactId>mall-web-support</artifactId>
         </dependency>
+
 
         <!--springmvc-->
         <dependency>

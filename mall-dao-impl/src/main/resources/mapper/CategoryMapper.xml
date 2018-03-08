@@ -14,10 +14,10 @@
         WHERE parent_id IS NULL
     </select>
 
-    <select id="findByParentId" parameterType="Long" resultType="Category">
+    <select id="findChildrenById" parameterType="Long" resultType="Category">
         SELECT *
         FROM category
-        WHERE parent_id = #{parentId}
+        WHERE parent_id = #{id}
     </select>
 
     <insert id="add" parameterType="Category" useGeneratedKeys="true" keyProperty="id">

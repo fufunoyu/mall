@@ -19,7 +19,7 @@ import java.util.List;
  * 商品详情页跳转
  */
 @Controller
-public class ProductDetailsController {
+public class ProductController {
 
     @Autowired
     private CommentService commentService;
@@ -35,6 +35,9 @@ public class ProductDetailsController {
             @RequestParam(value = "page", required = false) Integer page,
             Model model
     ) {
+
+
+
 
         model.addAttribute("isComment", page != null);
         if (page == null) {
