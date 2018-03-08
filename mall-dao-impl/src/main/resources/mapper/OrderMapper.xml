@@ -25,4 +25,17 @@
         ${page.queryString}
     </select>
 
+    <select id="findOrderNumByUserIdAndStatus" resultType="Integer" >
+        SELECT count(*)
+        FROM `order`
+        <set>
+            <if test="status=null">
+                WHERE user_id = #{userId}
+            </if>
+            <if test="status!=null">
+                WHERE user_id = #{userId} AND status = #{status}
+            </if>
+        </set>
+    </select>
+
 </mapper>

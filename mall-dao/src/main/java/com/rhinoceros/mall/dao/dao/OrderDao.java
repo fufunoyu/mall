@@ -17,4 +17,6 @@ public interface OrderDao {
     List<Order> findByUserId(Long userId);
 
     List<Order> findByUserIdAndStatus(@Param("userId") Long userId, @Param("status") String status, @Param("page")PageQuery pageQuery);
+
+    Integer findOrderNumByUserIdAndStatus(@Param("userId") Long userId, @Param("status") String status);
 }

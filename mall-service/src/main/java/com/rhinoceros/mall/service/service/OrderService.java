@@ -13,7 +13,11 @@ public interface OrderService {
      * @param userId
      * @return
      */
-    List<OrderListVo> findOrderListVoByUserId(Long userId, String status);
+    List<OrderListVo> findOrderListVoByUserId(Long userId, String status,Integer page,Integer size);
 
-    List<OrderListVo> findOrderListVoByUserId(Long userId);
+    List<OrderListVo> findOrderListVoByUserId(Long userId,Integer page,Integer size);
+
+    Integer findOrderNumByUserIdAndStatus(Long userId);
+
+    Integer findOrderNumByUserIdAndStatus(Long userId, String status);
 }

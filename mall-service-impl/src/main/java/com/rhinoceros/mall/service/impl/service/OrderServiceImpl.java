@@ -31,20 +31,23 @@ public class OrderServiceImpl implements OrderService {
     private ProductDao productDao;
 
     /**
-     * 根据userId和订单状态找出所有符合条件的订单
+     * 根据userId和订单状态找出所有符合条件的分页订单
      * @param userId
+     * @param status
+     * @param page
+     * @param size
      * @return
      */
     @Override
-    public List<OrderListVo> findOrderListVoByUserId(Long userId, String status ) {
+    public List<OrderListVo> findOrderListVoByUserId(Long userId, String status, Integer page, Integer size) {
         //选择排序方式
         com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
         //选择分页方式
-        PageQuery pageQuery = new PageQuery(1,2,queryOrder);
+        PageQuery pageQuery = new PageQuery(page, size, queryOrder);
 
         List<Order> orders = orderDao.findByUserIdAndStatus(userId, status, pageQuery);
         List<OrderListVo> orderListVos = new LinkedList<OrderListVo>();
-        for(Order order:orders){
+        for (Order order : orders) {
             OrderListVo orderListVo = new OrderListVo();
             orderListVo.setOrder(order);
             List<OrderProduct> orderProducts = orderProductDao.findByOrderId(order.getId());
@@ -68,10 +71,41 @@ public class OrderServiceImpl implements OrderService {
 
         return orderListVos;
     }
+
+    /**
+     * 根据userId找出所有符合条件的分页订单
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
     @Override
-    public List<OrderListVo> findOrderListVoByUserId(Long userId){
+    public List<OrderListVo> findOrderListVoByUserId(Long userId, Integer page, Integer size) {
         String status = null;
-        return findOrderListVoByUserId(userId, status);
+        return findOrderListVoByUserId(userId, status, page, size);
+    }
+
+    /**
+     * 根据用户id找出符合条件的订单数量
+     * @param userId
+     * @return 订单数量
+     */
+    @Override
+    public Integer findOrderNumByUserIdAndStatus(Long userId) {
+        String status = null;
+        return findOrderNumByUserIdAndStatus(userId, status);
+    }
+
+    /**
+     * 根据用户id和状态找出符合条件的订单数量
+     * @param userId
+     * @param status
+     * @return 订单数量
+     */
+    @Override
+    public Integer findOrderNumByUserIdAndStatus(Long userId, String status) {
+        Integer num = orderDao.findOrderNumByUserIdAndStatus(userId,status);
+        return num;
     }
 
 
