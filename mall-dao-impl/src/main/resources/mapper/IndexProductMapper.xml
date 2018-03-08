@@ -14,7 +14,6 @@
             <result column="p_discount" property="discount"/>
             <result column="p_status" property="status"/>
             <result column="p_category_id" property="categoryId"/>
-            <result column="p_root_category_id" property="rootCategoryId"/>
             <result column="p_store_num" property="storeNum"/>
             <result column="p_sale_num" property="saleNum"/>
             <result column="p_image_urls" property="imageUrls"/>
@@ -33,7 +32,6 @@
       p.discount AS p_discount,
       p.status AS p_status,
       p.category_id AS p_category_id,
-      p.root_category_id AS p_root_category_id,
       p.store_num AS p_store_num,
       p.sale_num AS p_sale_num,
       p.`image_urls` AS p_image_urls,

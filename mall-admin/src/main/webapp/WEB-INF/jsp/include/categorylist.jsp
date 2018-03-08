@@ -9,11 +9,6 @@
 <html>
 <head>
     <title>首页商品分类列表</title>
-    <link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="../demo.css">
-    <script type="text/javascript" src="../../jquery.min.js"></script>
-    <script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 <script>
@@ -54,6 +49,10 @@
              </div>--%>
         <table id="index_product_list" class="easyui-datagrid" title="商品列表" style="width:100%;height:100%"
                data-options="singleSelect:true,collapsible:true">
+            <div id="index_product_operation">
+                <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">Add</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:alert('Cut')">Cut</a>
+            </div>
             <thead>
             <tr>
                 <th data-options="field:'id',width:80">商品ID</th>
@@ -62,7 +61,6 @@
                 <th data-options="field:'discount',width:80,align:'right'">折后价</th>
                 <th data-options="field:'status',width:60,align:'center'">商品状态</th>
                 <th data-options="field:'categoryId',width:60,align:'center'">分类ID</th>
-                <th data-options="field:'rootCategoryId',width:60,align:'center'">根分类ID</th>
                 <th data-options="field:'storeNum',width:60,align:'center'">库存总量</th>
                 <th data-options="field:'saleNum',width:60,align:'center'">销售总量</th>
                 <th data-options="field:'imageUrls',width:60,align:'center'">商品图片</th>
@@ -72,17 +70,7 @@
             </tr>
             </thead>
         </table>
-            <script type="text/javascript">
-                var toolbar = [{
-                    text:'Add',
-                    iconCls:'icon-add',
-                    handler:function(){alert('add')}
-                },{
-                    text:'Cut',
-                    iconCls:'icon-cut',
-                    handler:function(){alert('cut')}
-                }];
-            </script>
+
     </div>
 </div>
 </body>

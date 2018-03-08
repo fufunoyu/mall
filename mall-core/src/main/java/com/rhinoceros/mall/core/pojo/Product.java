@@ -41,17 +41,10 @@ public class Product {
      * 商品分类id
      */
     private Long categoryId;
-
-    /**
-     * 商品分类id
-     */
-    private Long rootCategoryId;
-
     /**
      * 商品库存总量
      */
     private Integer storeNum;
-
     /**
      * 商品销售总量
      */
