@@ -72,10 +72,10 @@ $(function(){
 <div class="boughtDiv">
 	<div class="orderType">
 		<div class="selectedOrderType"><a orderStatus="all" href="#nowhere">所有订单</a></div>
-		<div><a  orderStatus="waitPay" href="#nowhere">待付款</a></div>
-		<div><a  orderStatus="waitDelivery" href="#nowhere">待发货</a></div>
-		<div><a  orderStatus="waitConfirm" href="#nowhere">待收货</a></div>
-		<div><a  orderStatus="waitReview" href="#nowhere" class="noRightborder">待评价</a></div>
+		<div><a  orderStatus="WAIT_PAY" href="#nowhere">待付款</a></div>
+		<div><a  orderStatus="WAIT_SHIP" href="#nowhere">待发货</a></div>
+		<div><a  orderStatus="WAIT_RECEIVE" href="#nowhere">待收货</a></div>
+		<div><a  orderStatus="WAIT_COMMENT" href="#nowhere" class="noRightborder">待评价</a></div>
 		<div class="orderTypeLastOne"><a class="noRightborder">&nbsp;</a></div>
 	</div>
 	<div style="clear:both"></div>
@@ -155,10 +155,15 @@ $(function(){
 									</a>
 								</c:if>
 								<c:if test="${o.order.status=='WAIT_PAY' }">
+
+										<button class="orderListItemConfirm">付款</button>
+
+								</c:if>
+									<%--<c:if test="${o.order.status=='WAIT_PAY' }">
 									<a href="forealipay?oid=${o.id}&total=${o.total}">
 										<button class="orderListItemConfirm">付款</button>
 									</a>								
-								</c:if>
+								</c:if>--%>
 								
 								<c:if test="${o.order.status=='WAIT_SHIP' }">
 									<span>待发货</span>

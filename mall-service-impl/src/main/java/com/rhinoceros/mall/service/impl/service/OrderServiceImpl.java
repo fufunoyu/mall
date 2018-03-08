@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
         //选择排序方式
         com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
         //选择分页方式
-        PageQuery pageQuery = new PageQuery(1,1,queryOrder);
+        PageQuery pageQuery = new PageQuery(1,2,queryOrder);
 
         List<Order> orders = orderDao.findByUserIdAndStatus(userId, status, pageQuery);
         List<OrderListVo> orderListVos = new LinkedList<OrderListVo>();
