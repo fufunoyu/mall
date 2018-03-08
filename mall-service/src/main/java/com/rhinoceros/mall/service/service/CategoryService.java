@@ -24,9 +24,35 @@ public interface CategoryService {
      */
     Category findById(Long id);
 
+    /**
+     * 查询根分类
+     *
+     * @return
+     */
     List<Category> findRootCategories();
 
-    List<Category> findByParentId(Long parentId);
+    /**
+     * 根据分类id查询直接子分类列表
+     *
+     * @param id
+     * @return
+     */
+    List<Category> findChildrenById(Long id);
 
+    /**
+     * 根据id查询子分类及其下所有分类的列表
+     *
+     * @param id
+     * @return
+     */
+    List<Category> findChildrenAndBelowById(Long id);
+
+    /**
+     * 添加分类
+     *
+     * @param category
+     * @return
+     */
     Category add(Category category);
+
 }

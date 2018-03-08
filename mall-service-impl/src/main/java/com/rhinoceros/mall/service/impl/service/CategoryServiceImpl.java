@@ -6,6 +6,7 @@ import com.rhinoceros.mall.service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -24,8 +25,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findByParentId(Long parentId) {
-        return categoryDao.findByParentId(parentId);
+    public List<Category> findChildrenById(Long id) {
+        return categoryDao.findChildrenById(id);
+    }
+
+    @Override
+    public List<Category> findChildrenAndBelowById(Long id) {
+        List<Category> list = this.findChildrenById(id);
+        Iterator<Category> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            list.addAll(this.findChildrenById(iterator.next().getId()));
+        }
+        return list;
     }
 
     @Override
