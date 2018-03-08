@@ -62,19 +62,24 @@ public class PageQuery {
      *
      * @return
      */
-    public String getOrderString() {
-        if (orders.size() == 0) {
-            return "";
-        }
-        StringBuffer sb = new StringBuffer("ORDER BY ");
+    public String getQueryString() {
+        StringBuffer sb = new StringBuffer("");
 
-        for (Order order : orders) {
-            // 驼峰转下划线
-            String field = StringUtils.camel2Underline(order.getField());
-            sb.append(field).append(" ").append(order.getDirection().name()).append(',');
+        if (orders.size() > 0) {
+            sb.append(" ORDER BY ");
+            for (Order order : orders) {
+                // 驼峰转下划线
+                String field = StringUtils.camel2Underline(order.getField());
+                sb.append(field).append(" ").append(order.getDirection().name()).append(',');
+            }
+            //去除最后的逗号
+            sb.deleteCharAt(sb.length() - 1);
         }
-        //去除最后的逗号
-        sb.deleteCharAt(sb.length() - 1);
+
+        if (this.getOffset() >= 0 && this.getSize() > 0) {
+            sb.append(" LIMIT ").append(this.getOffset()).append(",").append(this.size);
+        }
+
         return sb.toString();
     }
 }

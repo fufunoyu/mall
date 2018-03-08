@@ -16,6 +16,14 @@ public interface CategoryService {
      */
     List<Category> findAll();
 
+    /**
+     * 根据id查找分类
+     *
+     * @param id
+     * @return
+     */
+    Category findById(Long id);
+
     List<Category> findRootCategories();
 
     List<Category> findByParentId(Long parentId);

@@ -4,6 +4,7 @@ import com.rhinoceros.mall.core.enumeration.ProductStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 商品实体
@@ -62,17 +63,12 @@ public class Product {
     private String imageUrls;
 
     /**
-     * 产品参数，json数据格式
-     */
-    private String params;
-
-    /**
-     * 商品描述图片url，多个url则以{@link IMAGE_SEPARATION}隔开
-     */
-    private String descriptionImageUrls;
-
-    /**
      * 商品总评论数
      */
     private Long commentNum;
+
+    /**
+     * 上架时间
+     */
+    private Date saleDate;
 }

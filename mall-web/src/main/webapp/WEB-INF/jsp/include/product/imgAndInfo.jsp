@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 
+<%@page import="com.rhinoceros.mall.core.pojo.User" %>
+<%@ page import="com.rhinoceros.mall.web.controller.LoginController" %>
+
+<%
+    String userKey = LoginController.USERNAME;
+    User user = (User) session.getAttribute(userKey);
+%>
+
 <script>
 
     $(function () {
@@ -34,90 +42,90 @@
             $(".productNumberSetting").val(num);
         });
 
+        /*加入购物车按钮的逻辑*/
         $(".addCartButton").removeAttr("disabled");
         $(".addCartLink").click(function () {
-            var page = "${pageContext.request.contextPath}/forecheckLogin";
-            $.get(
-                page,
-                function (result) {
-                    if ("success" == result) {
-                        var pid = ${productVo.product.id};
-                        var num = $(".productNumberSetting").val();
-                        var addCartpage = "${pageContext.request.contextPath}/foreaddCart";
-                        $.get(
-                            addCartpage,
-                            {"pid": pid, "num": num},
-                            function (result) {
-                                if ("success" == result) {
-                                    $(".addCartButton").html("已加入购物车");
-                                    $(".addCartButton").attr("disabled", "disabled");
-                                    $(".addCartButton").css("background-color", "lightgray")
-                                    $(".addCartButton").css("border-color", "lightgray")
-                                    $(".addCartButton").css("color", "black")
+                <c:if test="${not empty user}">
 
-                                }
-                                else {
+                var pid = ${productVo.product.id};
+                var num = $(".productNumberSetting").val();
+                var userId = ${user.id};
+                var addCartpage = "${pageContext.request.contextPath}/cart/add";
+                $.get(
+                    addCartpage,
+                    {"pid": pid, "num": num},
+                    function (result) {
+                        if ("success" == result) {
+                            $(".addCartButton").html("已加入购物车");
+                            $(".addCartButton").attr("disabled", "disabled");
+                            $(".addCartButton").css("background-color", "lightgray");
+                            $(".addCartButton").css("border-color", "lightgray");
+                            $(".addCartButton").css("color", "black");
 
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        $("#loginModal").modal('show');
-                    }
-                }
-            );
-            return false;
-        });
-        $(".buyLink").click(function () {
-            if (!isLogin) {
-                $("#loginModal").modal('show');
-                return false;
-            }
-            return true
-        });
+                        }
+                        else {
 
-        $("button.loginSubmitButton").click(function () {
-            var username = $("#username").val();
-            var password = $("#password").val();
+                        }
+                    })
+                </c:if>
+                <c:if test="${empty user}">
 
-            if (0 == username.length || 0 == password.length) {
-                $("span.errorMessage").html("请输入账号密码");
-                $("div.loginErrorMessageDiv").show();
-                return false;
-            }
-
-            var page = "${pageContext.request.contextPath}/login";
-
-            return true;
-        });
-
-        $("img.smallImage").mouseenter(function () {
-            var bigImageURL = $(this).attr("bigImageURL");
-            $("img.bigImg").attr("src", bigImageURL);
-        });
-
-        $("img.bigImg").load(
-            function () {
-                $("img.smallImage").each(function () {
-                    var bigImageURL = $(this).attr("bigImageURL");
-                    img = new Image();
-                    img.src = bigImageURL;
-
-                    img.onload = function () {
-                        $("div.img4load").append($(img));
-                    };
-                });
+                location.href = "${pageContext.request.contextPath}/login";
+                // $("#loginModal").modal('show');
+                </c:if>
             }
         );
+        return false;
     });
+    $(".buyLink").click(function () {
+        if (!isLogin) {
+            $("#loginModal").modal('show');
+            return false;
+        }
+        return true
+    });
+
+    $("button.loginSubmitButton").click(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        if (0 == username.length || 0 == password.length) {
+            $("span.errorMessage").html("请输入账号密码");
+            $("div.loginErrorMessageDiv").show();
+            return false;
+        }
+
+        var page = "${pageContext.request.contextPath}/login";
+
+        return true;
+    });
+
+    $("img.smallImage").mouseenter(function () {
+        var bigImageURL = $(this).attr("bigImageURL");
+        $("img.bigImg").attr("src", bigImageURL);
+    });
+
+    $("img.bigImg").load(
+        function () {
+            $("img.smallImage").each(function () {
+                var bigImageURL = $(this).attr("bigImageURL");
+                img = new Image();
+                img.src = bigImageURL;
+
+                img.onload = function () {
+                    $("div.img4load").append($(img));
+                };
+            });
+        }
+    );
+
 
 </script>
 
 <div class="imgAndInfo">
 
     <div class="imgInimgAndInfo">
-        <img src="${productVo.firstImageUrls}" class="bigImg">
+        <img src="${productVo.firstImageUrl}" class="bigImg">
         <div class="smallImageDiv">
             <c:forEach items="${productVo.imagesUrls}" var="pi">
                 <img src="${pi}" bigImageURL="${pi}"
@@ -135,10 +143,6 @@
         <br>
 
         <div class="productPrice">
-            <%--<div class="juhuasuan">--%>
-            <%--<span class="juhuasuanBig" >聚划算</span>--%>
-            <%--<span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>--%>
-            <%--</div>--%>
             <div class="productPriceDiv">
                 <div class="originalDiv">
                     <span class="originalPriceDesc">价格</span>

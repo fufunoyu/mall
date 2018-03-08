@@ -18,6 +18,11 @@ public interface CategoryDao {
 
     int add(Category category);
 
-
-    Category findById(Long categoryId);
+    /**
+     * 根据id查找分类
+     *
+     * @param id
+     * @return
+     */
+    Category findById(Long id);
 }

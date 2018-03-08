@@ -25,10 +25,9 @@
         (name, parent_id)
         VALUE (#{name},#{parentId})
     </insert>
-
     <select id="findById" parameterType="Long" resultType="Category">
         SELECT *
         FROM category
-        WHERE id = #{categoryId}
+        WHERE id = #{id}
     </select>
 </mapper>
