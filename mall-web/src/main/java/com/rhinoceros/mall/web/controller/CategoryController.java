@@ -32,22 +32,18 @@ public class CategoryController {
     /**
      * 获取商品分类下的商品列表
      *
-     * @param cid    商品id
-     * @param page   第几页
-     * @param pageQuery 以什么字段进行排序
-     *               field,DESC:按照field降序
-     *               field,ASC:按照field升序排序
+     * @param cid
+     * @param pageQuery
      * @param model
      * @return
      */
     @RequestMapping("/category")
     public String list(@RequestParam("cid") Long cid,
-                       @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                       @PageDefault PageQuery pageQuery,
+                       @PageDefault(required = false) PageQuery pageQuery,
                        Model model) {
 
 
-        List<Product> products = productService.findByCategoryId(cid, new PageQuery(page, 10));
+        List<Product> products = productService.findByCategoryId(cid, pageQuery);
 
         List<ProductVo> productVos = new LinkedList<ProductVo>();
         for (Product p : products) {
