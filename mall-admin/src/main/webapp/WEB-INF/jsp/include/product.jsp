@@ -7,7 +7,7 @@
 
 <%--图片大小--%>
 <style>
-    .photo{
+    .photo {
         width: 70px;
         height: 70px;
         margin: 10px;
@@ -33,6 +33,7 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
+
     /**
      * 新增分类
      */
@@ -110,10 +111,10 @@
      */
     function onTableClickRow(index, row) {
         $.ajax({
-            url:'${pageContext.request.contextPath}/category?id='+row.categoryId,
-            method:'get',
-            success:function(category){
-                $("#productCategory").textbox('setText',category.name)
+            url: '${pageContext.request.contextPath}/category?id=' + row.categoryId,
+            method: 'get',
+            success: function (category) {
+                $("#productCategory").textbox('setText', category.name)
             }
         })
         $("#productName").textbox('setText', row.name)
@@ -123,21 +124,21 @@
         $("#productSaleNum").textbox('setText', row.saleNum)
         $("#productCommentNum").textbox('setText', row.commentNum)
         var status
-        if(row.status=="ON_SHELF")
-            status="上架"
+        if (row.status == "ON_SHELF")
+            status = "上架"
         else
-            status="下架"
+            status = "下架"
         $("#productStatus").textbox('setText', status)
         var date = row.saleDate
         $("#productSaleDate").textbox('setText', new Date(date).Format("yyyy/MM/dd HH:mm:ss"))
         var images = row.imageUrls.split(";")
         $("#image").empty()
-        for(var i=0;i<images.length;i++){
+        for (var i = 0; i < images.length; i++) {
             var url = images[i]
-            var photo = $('<img class="photo" src="'+url+'"/>')
-            photo.bind('contextmenu',function(e){
+            var photo = $('<img class="photo" src="' + url + '"/>')
+            photo.bind('contextmenu', function (e) {
                 e.preventDefault();
-                $('#product_image_menu').menu('show',{
+                $('#product_image_menu').menu('show', {
                     left: e.pageX,
                     top: e.pageY
                 });
@@ -147,7 +148,7 @@
         // var upload = $('<input class="easyui-filebox" label="File1:" labelPosition="top" data-options="prompt:\'Choose a file...\'" style="width:100%">')
         // $("#image").append(upload)
         $("#product_win").window("open")
-        }
+    }
 
     /**
      * 上传图片
@@ -156,7 +157,7 @@
     var photoImgUrl = '';
     $(function () {
         //file change event
-        $('input[type="file"]').change(function(e){
+        $('input[type="file"]').change(function (e) {
             // $('#img').attr('src',$("#tmpfile").val());
 
             var file = this.files[0];
@@ -167,7 +168,7 @@
                 reader.onloadend = function (e) {
                     // $("#img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
                     var url = e.target.result;
-                    var photo = $('<img class="photo" src="'+url+'"/>')
+                    var photo = $('<img class="photo" src="' + url + '"/>')
                     $("#image").append(photo)
                     // photoImgUrl+=
                 };
@@ -202,7 +203,8 @@
                    data-options="label:'优惠价:',required:true">
         </div>
         <div style="margin-bottom:20px">
-            <select class="easyui-combobox" name="state" label="商品状态:" labelPosition="left" style="width:100%;" panelHeight="50">
+            <select class="easyui-combobox" name="state" label="商品状态:" labelPosition="left" style="width:100%;"
+                    panelHeight="50">
                 <option value="ON_SHELF">上架</option>
                 <option value=" LEAVE_SHELF">下架</option>
             </select>
@@ -213,7 +215,8 @@
         </div>
         <div style="margin-bottom:20px">
             <input id="productCategory" class="easyui-combotree" name="category" value="122"
-                   data-options="url:'${pageContext.request.contextPath}/category',method:'get',label:'商品分类:',labelPosition:'left'" style="width:100%" >
+                   data-options="url:'${pageContext.request.contextPath}/category',method:'get',label:'商品分类:',labelPosition:'left'"
+                   style="width:100%">
         </div>
         <div style="margin-bottom:20px">
             <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
@@ -234,6 +237,10 @@
     <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
     <a href="javascript:void(0)" class="icon-edit" onclick="edit()" style="margin-right: 10px"></a>
 </div>
+<div id="category_tool2">
+    <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
+    <a href="javascript:void(0)" class="icon-remove" onclick="removeit()" style="margin-right: 10px"></a>
+</div>
 
 <div id="product_image_menu" class="easyui-menu" style="width:120px;">
     <div onclick="remove()" data-options="iconCls:'icon-remove'">删除</div>
@@ -246,8 +253,8 @@
 <%--商品分类菜单栏--%>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
     <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
-        <div class="easyui-panel" title="商品分类" data-options="tools:'#category_tool'" style="width:250px;"
-             border="false">
+        <div class="easyui-panel" title="商品分类" data-options="tools:'#category_tool'"
+             border="false" >
             <ul id="category_list" class="easyui-tree" data-options="{
                  url:'${pageContext.request.contextPath}/category/list',
                  method:'get',
@@ -310,31 +317,33 @@
     </div>
     <%--商品表单--%>
     <div data-options="region:'center'">
-        <table class="easyui-datagrid" id="product_table" style="width:auto;height:auto;border:1px solid #ccc;"
-               data-options="{
+        <div class="easyui-panel" title="商品列表" data-options="tools:'#category_tool2'" style="width: 100%">
+            <table class="easyui-datagrid" id="product_table" style="width:auto;height:auto;border:1px solid #ccc;"
+                   data-options="{
                                     singleSelect:true,
                                     collapsible:true,
                                     onDblClickRow:onTableClickRow
                                 }">
-            <thead>
-            <%--表格显示项目--%>
-            <tr>
-                <%--<th data-options="field:'id'">商品ID</th>--%>
-                <th data-options="field:'name'">商品名</th>
-                <th data-options="field:'price',align:'right'">商品价格</th>
-                <th data-options="field:'discount',align:'right'">优惠价</th>
-                <%--<th data-options="field:'status'">商品状态</th>--%>
-                <%--<th data-options="field:'saleDate'">上架时间</th>--%>
-                <%--<th data-options="field:'categoryId'">商品分类ID</th>--%>
-                <th data-options="field:'storeNum'">商品库存总量</th>
-                <th data-options="field:'saleNum'">商品销售总量</th>
-                <%--<th data-options="field:'imageUrls',width:150,formatter:formatImage">商品图片</th>--%>
-                <th data-options="field:'commentNum'">总评论数</th>
-            </tr>
-            </thead>
-        </table>
-        <div>
+                <thead>
+                <%--表格显示项目--%>
+                <tr>
+                    <%--<th data-options="field:'id'">商品ID</th>--%>
+                    <th data-options="field:'name'">商品名</th>
+                    <th data-options="field:'price',align:'right'">商品价格</th>
+                    <th data-options="field:'discount',align:'right'">优惠价</th>
+                    <%--<th data-options="field:'status'">商品状态</th>--%>
+                    <%--<th data-options="field:'saleDate'">上架时间</th>--%>
+                    <%--<th data-options="field:'categoryId'">商品分类ID</th>--%>
+                    <th data-options="field:'storeNum'">商品库存总量</th>
+                    <th data-options="field:'saleNum'">商品销售总量</th>
+                    <%--<th data-options="field:'imageUrls',width:150,formatter:formatImage">商品图片</th>--%>
+                    <th data-options="field:'commentNum'">总评论数</th>
+                </tr>
+                </thead>
+            </table>
+            <div>
 
+            </div>
         </div>
     </div>
 </div>

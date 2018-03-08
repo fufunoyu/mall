@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/default/easyui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/icon.css">
     <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
         .button {
             text-decoration: none;
             color: inherit;
@@ -27,7 +31,7 @@
 </head>
 <body>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
-    <div data-options="region:'west',split:true" title="菜单栏" style="width:200px;">
+    <div data-options="region:'west',split:true" title="菜单栏" style="width:200px;height: 100%;">
         <ul id="menu" class="easyui-tree" data-options="{
                  onClick:function (node) {
                     if(node.attributes&&node.attributes.url){
@@ -92,7 +96,7 @@
         </ul>
     </div>
     <div data-options="region:'center'" style="height: 100%;">
-        <div id="tt" class="easyui-tabs" style="width:100%;height: auto;">
+        <div id="tt" class="easyui-tabs" style="width:100%;height: 100%;">
         </div>
     </div>
 </div>
