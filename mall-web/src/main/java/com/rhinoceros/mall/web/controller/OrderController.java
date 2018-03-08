@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.web.controller;
 /* created at 4:27 PM 3/6/2018  */
 
+import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.service.service.OrderService;
@@ -19,24 +20,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    /*@RequestMapping("/order/list")
-    public String orderList(Model model, HttpSession session) {
-        User user = (User) session.getAttribute(LoginController.USERNAME);
-        if (user == null) {
-            return "redirect:/login";
-        }
 
-        List<OrderListVo> orderListVos= orderService.findOrderListVoByUserId(user.getId());
-        model.addAttribute("orderListVos",orderListVos);
-
-        return "bought";
-    }*/
 
     @RequestMapping("/order/list")
     public String orderList(Model model, HttpSession session,
                             @RequestParam(value = "status", required = false) String status,
                             @RequestParam(value = "page", required = false) Integer page) {
-        User user = (User) session.getAttribute(LoginController.USERNAME);
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
             return "redirect:/login";
         }

@@ -43,13 +43,12 @@ public class CategoryController {
                        Model model) {
 
 
-        List<Product> products = productService.findByCategoryId(cid, pageQuery);
+        List<Product> products = productService.findDeepByCategoryId(cid, pageQuery);
 
         List<ProductVo> productVos = new LinkedList<ProductVo>();
         for (Product p : products) {
             ProductVo productVo = new ProductVo();
             productVo.setProduct(p);
-//            productVo.setDescriptionImagesUrls(p.getDescriptionImageUrls().split(Product.IMAGE_SEPARATION));
             productVo.setImagesUrls(p.getImageUrls().split(Product.IMAGE_SEPARATION));
             productVo.setFirstImageUrl(productVo.getImagesUrls()[0]);
             productVos.add(productVo);
@@ -59,7 +58,6 @@ public class CategoryController {
 
         Category category = categoryService.findById(cid);
         model.addAttribute("category", category);
-
         return "category";
     }
 }
