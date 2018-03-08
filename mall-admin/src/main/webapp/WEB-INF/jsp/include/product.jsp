@@ -118,7 +118,30 @@
         // var upload = $('<input class="easyui-filebox" label="File1:" labelPosition="top" data-options="prompt:\'Choose a file...\'" style="width:100%">')
         // $("#image").append(upload)
         $("#product_win").window("open")
-    }
+        }
+
+    var photoImgUrl = '';
+    $(function () {
+        //file change event
+        $('input[type="file"]').change(function(e){
+            // $('#img').attr('src',$("#tmpfile").val());
+
+            var file = this.files[0];
+            if (window.FileReader) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                //监听文件读取结束后事件
+                reader.onloadend = function (e) {
+                    // $("#img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+                    var url = e.target.result;
+                    var photo = $('<img class="photo" src="'+url+'"/>')
+                    $("#image").append(photo)
+                    photoImgUrl+=photo
+                };
+                $('#selectImage').empty();
+            }
+        })
+    });
 
 </script>
 <%--参数窗口--%>
@@ -132,6 +155,11 @@
         <div id="image" style="margin-bottom:20px">
 
         </div>
+        <div id="imageUpload" style="margin-bottom:20px">
+
+            <input type="file" id="selectImage">
+        </div>
+
         <div style="margin-bottom:20px">
             <input id="productPrice" class="easyui-textbox" name="price" style="width:100%"
                    data-options="label:'商品价格:',required:true">
