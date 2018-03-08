@@ -50,12 +50,9 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
         if (sizeStr != null) {
             sizeStr = URLDecoder.decode(sizeStr, "UTF-8");
         }
-        String[] sortStrArr = nativeWebRequest.getParameterValues(SORT_PARAM);
-        
+
         Integer page = null;
         Integer size = null;
-
-
 
         if (webDataBinderFactory != null) {
             //绑定page size参数
@@ -76,10 +73,12 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
         }
 
         List<Order> orders = new LinkedList<Order>();
+        String[] sortStrArr = nativeWebRequest.getParameterValues(SORT_PARAM);
         if(sortStrArr != null){
             for (int i = 0; i < sortStrArr.length; i++) {
                 sortStrArr[i] = URLDecoder.decode(sortStrArr[i], "UTF-8");
             }
+
             for (String sortStr : sortStrArr) {
                 String[] split = sortStr.split(",");
                 if (split.length != 2) {
