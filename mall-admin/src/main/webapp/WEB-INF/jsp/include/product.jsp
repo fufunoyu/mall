@@ -35,33 +35,80 @@
         return fmt;
     }
 
+    function onCategoryDblClick(node){
+        if(node.children&&node.children.length>0){
+            return
+        }
+        $.ajax({
+            url:node.id?'${pageContext.request.contextPath}/category/list?id='+node.id:'${pageContext.request.contextPath}/category/list',
+            method:'get',
+            success:function(data){
+                $('#category_list').tree('append',{
+                    parent:node.target,
+                    data:data
+                });
+            }
+        })
+    }
     /**
-     * 新增分类
+     * 菜单栏新增分类
      */
     function append() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('append', {
-            parent: (node ? node.target : null),
-            data: [{
-                id: -1,
-                text: '新的商品分类',
-                parentId: node ? node.id : null
-            }]
-        });
+        $("#category_dialog").dialog('open')
     }
 
     /**
-     * 删除分类
-     */
-    function removeit() {
+     * 菜单栏新增取消
+     * */
+    function cancelDialog(){
+        $("#category_dialog").dialog('close')
+        $("#category_name").textbox('setText',"")
+    }
+
+    /**
+     * 菜单栏新增提交
+     * */
+    function submitDialog() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('remove',node.target);
+        var categoryName = $("#category_name").textbox("getText")
+        $.ajax({
+            url:'${pageContext.request.contextPath}/category/add',
+            method:'post',
+            data:{
+                name:categoryName,
+                parentId:  node.id
+            },
+            success:function (data) {
+                if(!node.children||!node.children.length){
+                    onCategoryDblClick(node)
+                }else {
+                    $('#category_list').tree('append',{
+                        parent:node.target,
+                        data:[data]
+                    });
+                }
+
+
+                $("#category_dialog").dialog('close')
+                $("#category_name").textbox('setText',"")
+            }
+        })
     }
 
     /**
-     * 修改分类
+     * 菜单栏删除分类
+     */
+    function remove() {
+        var t = $('#category_list');
+        var node = t.tree('getSelected');
+        t.tree('remove', node.target);
+    }
+
+    /**
+     * 菜单栏修改分类
      */
     function edit() {
         var t = $('#category_list');
@@ -69,13 +116,16 @@
         t.tree('beginEdit', node.target);
     }
 
+    /**
+     * 取出菜单栏
+     * */
     function categoryFilter(data) {
         var arr = []
-        for(var i=0;i<data.length;i++){
+        for (var i = 0; i < data.length; i++) {
             arr.push({
-                id:data[i].id,
-                text:data[i].name,
-                parentId:data[i].parentId
+                id: data[i].id,
+                text: data[i].name,
+                parentId: data[i].parentId
             })
         }
         return arr
@@ -125,10 +175,10 @@
             }
         })
         $.ajax({
-            url:'${pageContext.request.contextPath}/product/description.json?id='+row.id,
+            url: '${pageContext.request.contextPath}/product/description.json?id=' + row.id,
             method: 'get',
             success: function (productDescription) {
-                $("#productDescription").texteditor('setValue',productDescription.description)
+                $("#productDescription").texteditor('setValue', productDescription.description)
             }
         })
         $("#productName").textbox('setText', row.name)
@@ -164,20 +214,24 @@
         // $("#image").append(upload)
         $("#product_win").window("open")
     }
-
+    /**
+     * 初始菜单栏
+     * */
+    $(function () {
+        setTimeout(function () {
+            $("#category_list").tree('loadData', [{
+                id: null,
+                name: '所有分类'
+            }])
+        },500)
     /**
      * 上传图片
      * @type {string}
      */
     var photoImgUrl = '';
-    $(function () {
-
-
-
         //file change event
         $('input[type="file"]').change(function (e) {
             // $('#img').attr('src',$("#tmpfile").val());
-
             var file = this.files[0];
             if (window.FileReader) {
                 var reader = new FileReader();
@@ -195,14 +249,11 @@
         })
 
 
-         $('#productDescription').texteditor({
-              //...
-          });
+        <%--商品描述框--%>
+        $('#productDescription').texteditor({
+            //...
+        });
     });
-
-    function test (){
-        $("#description_win").window("open")
-    }
 
 </script>
 <%--参数窗口--%>
@@ -241,9 +292,9 @@
                    data-options="label:'上架日期:',required:true" readonly>
         </div>
         <%--<div style="margin-bottom:20px">--%>
-            <%--<input id="productCategory" class="easyui-combotree" name="category" value="122"--%>
-                   <%--data-options="url:'${pageContext.request.contextPath}/category',method:'get',--%>
-                   <%--label:'商品分类:',labelPosition:'left'" style="width:100%">--%>
+        <%--<input id="productCategory" class="easyui-combotree" name="category" value="122"--%>
+        <%--data-options="url:'${pageContext.request.contextPath}/category',method:'get',--%>
+        <%--label:'商品分类:',labelPosition:'left'" style="width:100%">--%>
         <%--</div>--%>
         <div style="margin-bottom:20px">
             <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
@@ -257,30 +308,37 @@
             <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
                    data-options="label:'评论总数:',required:true" readonly>
         </div>
-        <div id="productDescription" class=" easyui-texteditor"  data-options=label:'商品信息' style="height: 300px" >
+        <div id="productDescription" class=" easyui-texteditor" data-options=label:'商品信息' style="height: 300px">
         </div>
     </form>
 </div>
-
+<%--商品分类栏新增窗口--%>
+<div id="category_dialog" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:400px;height:200px;padding:10px">
+    <input id="category_name" class="easyui-textbox" name="name" style="width:100%"
+           data-options="label:'商品名称:',required:true">
+    <button onclick="submitDialog()">提交</button>
+    <button onclick="cancelDialog()">取消</button>
+</div>
 
 <%--&lt;%&ndash;副文本&ndash;%&gt;--%>
 <%--<div id="#description_win" class="easyui-window" title="aa" data-options="closed:true"--%>
-     <%--style="width:700px;height:300px;padding:20px">--%>
-    <%--<div id="tt1" class="easyui-texteditor"   style="width:600px;height:200px;padding:20px" >--%>
-    <%--</div>--%>
+<%--style="width:700px;height:300px;padding:20px">--%>
+<%--<div id="tt1" class="easyui-texteditor"   style="width:600px;height:200px;padding:20px" >--%>
+<%--</div>--%>
 <%--</div>--%>
 
 <%--商品分类用户工具栏--%>
 <div id="category_tool">
     <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
+    <a href="javascript:void(0)" class="icon-remove" onclick="remove()" style="margin-right: 10px"></a>
     <a href="javascript:void(0)" class="icon-edit" onclick="edit()" style="margin-right: 10px"></a>
 </div>
 <%--商品列表用户工具栏--%>
-<div id="category_tool2">
+<div id="product_tool">
     <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
     <a href="javascript:void(0)" class="icon-remove" onclick="removeit()" style="margin-right: 10px"></a>
 </div>
-
+<%--图片删除--%>
 <div id="product_image_menu" class="easyui-menu" style="width:120px;">
     <div onclick="remove()" data-options="iconCls:'icon-remove'">删除</div>
 </div>
@@ -293,10 +351,8 @@
 <div class="easyui-layout" style="width: 100%;height: 100%;">
     <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
         <div class="easyui-panel" title="商品分类" data-options="tools:'#category_tool'"
-             border="false" >
+             border="false">
             <ul id="category_list" class="easyui-tree" data-options="{
-                 url:'${pageContext.request.contextPath}/category/list',
-                 method:'get',
                  loadFilter: categoryFilter,
                  onContextMenu: function(e,node){
                     e.preventDefault();
@@ -318,21 +374,7 @@
                          })
                     }
                 },
-                onDblClick: function(node){
-                    if(node.children&&node.children.length>0){
-                        return
-                    }
-                    $.ajax({
-                        url:'${pageContext.request.contextPath}/category/list?id='+node.id,
-                        method:'get',
-                        success:function(data){
-                            $('#category_list').tree('append',{
-                                parent:node.target,
-                                data:data
-                            });
-                        }
-                    })
-                },
+                onDblClick: onCategoryDblClick,
                 onAfterEdit: function(node){
                     if(node.id && node.id>0){
                         $.ajax({
@@ -399,7 +441,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 </html>
