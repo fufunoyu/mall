@@ -1,5 +1,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%@page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
+<%@ page import="com.rhinoceros.mall.core.pojo.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 
@@ -120,6 +122,8 @@
         });
     });
 
+
+
 </script>
 
 <div class="boughtDiv">
@@ -218,10 +222,9 @@
                             <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
-                                    <button class="orderListItemConfirm">确认收货</button>
-                                    <%--<a href="foreconfirmPay?oid=${o.id}">
+                                    <a href="${pageContext.request.contextPath}/order/confirmPayPage">
                                         <button class="orderListItemConfirm">确认收货</button>
-                                    </a>--%>
+                                    </a>
                                 </c:if>
                                 <c:if test="${o.order.status=='WAIT_PAY' }">
 

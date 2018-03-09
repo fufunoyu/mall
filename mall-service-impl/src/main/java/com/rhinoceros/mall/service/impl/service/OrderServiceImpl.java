@@ -54,10 +54,7 @@ public class OrderServiceImpl implements OrderService {
             List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
             for (OrderProduct orderProduct : orderProducts) {
                 Product product = productDao.findById(orderProduct.getProductId());
-                ProductVo productVo = new ProductVo();
-                //获取商品图片url数组
-                productVo.setImagesUrls(product.getImageUrls().split(Product.IMAGE_SEPARATION));
-                productVo.setFirstImageUrl(productVo.getImagesUrls()[0]);
+                ProductVo productVo = new ProductVo(product);
                 productVo.setProduct(product);
                 //创建OrderProductVo对象以便填充
                 OrderProductVo orderProductVo = new OrderProductVo();
@@ -106,6 +103,15 @@ public class OrderServiceImpl implements OrderService {
     public Integer findOrderNumByUserIdAndStatus(Long userId, String status) {
         Integer num = orderDao.findOrderNumByUserIdAndStatus(userId,status);
         return num;
+    }
+
+    /**
+     * 根据订单id更新订单信息
+     * @param order
+     */
+    @Override
+    public void updateSelectionById(Order order) {
+        orderDao.updateSelectionById(order);
     }
 
 

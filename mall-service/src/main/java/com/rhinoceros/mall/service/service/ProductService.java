@@ -18,7 +18,7 @@ public interface ProductService {
      * @param id 商品id号
      * @return 商品信息
      */
-    ProductVo findProductVoById(Long id);
+    Product findById(Long id);
 
     /**
      * 根据分类id和分页条件查找该分类下及其子分类下的所有产品

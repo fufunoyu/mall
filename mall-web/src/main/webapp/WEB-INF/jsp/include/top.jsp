@@ -24,7 +24,7 @@
 			<a href="${pageContext.request.contextPath}/order/list">我的订单</a>
 			<a href="${pageContext.request.contextPath}/cart/list">
 			<span style="color:#C40000;margin:0px" class=" glyphicon glyphicon-shopping-cart redColor"></span>
-			购物车
+			购物车</a>
     </span>
 
 

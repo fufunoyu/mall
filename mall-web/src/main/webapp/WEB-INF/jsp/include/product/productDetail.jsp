@@ -10,7 +10,7 @@
 	</div>
 	
 	<div>
-        ${productVo.description}
+        ${productVo.productDescription.description}
     </div>
 
 	<%--<div class="productParamterPart">
