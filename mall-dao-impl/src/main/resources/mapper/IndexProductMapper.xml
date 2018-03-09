@@ -60,7 +60,7 @@
     <delete id="deleteById" parameterType="Long">
         DELETE
         FROM index_product
-        WHERE id = #{indexProductId}
+        WHERE product_id = #{indexProductId}
     </delete>
 
     <!-- 添加主页展示商品 -->

@@ -18,10 +18,26 @@
         $("#index_product_list").datagrid('loadData', products)
 
     }
-    
+
+    function getProductId() {
+        var pro = []
+        $.ajax({
+            url: '${pageContext.request.contextPath}/home/list.json',
+            method: 'get',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    for (var j = 0;j < data[i].products.length;j++) {
+                        pro.push( data[i].products[j].id)
+                    }
+                }
+            }
+        })
+        return pro
+    }
+
     (function () {
         $.ajax({
-            url: '${pageContext.request.contextPath}/home/list',
+            url: '${pageContext.request.contextPath}/home/list.json',
             method: 'get',
             success: function (data) {
                 var arr = []
@@ -47,6 +63,7 @@
         }
         return arr
     }
+
 </script>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
     <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
@@ -81,7 +98,7 @@
                 for(var i in sels){
                     ids.push(sels[i].id);
                 }
-                ids = ids.join(",");
+//                ids = ids.join(",");
                 return ids;
             }
 
@@ -102,14 +119,25 @@
                     }
                     $.messager.confirm('确认','确定删除ID为'+ids+'的商品吗？',function (r) {
                         if(r){
-                            var params = {"ids":ids};
-                            $.post("${pageContext.request.contextPath}/home/deleteproduct",params, function(data){
-                                if(data.status == 200){
-                                    $.messager.alert('提示','删除商品成功!',undefined,function(){
-                                        $("#index_product_list").datagrid("reload");
-                                    });
+//                            var params = {"ids":ids};
+                            $.ajax({
+                                url:'${pageContext.request.contextPath}/home/deleteproduct.json',
+                                method:'post',
+                                data:{
+                                    'ids':ids
+                                },
+                                success:function (data) {
+                                    if(data.result==='success'){
+                                        $.messager.alert('提示','删除商品成功!',undefined,function() {
+                                            var sels = $("#index_product_list").datagrid("getSelections");
+                                            for (var index in sels){
+                                                var row_index = $("#index_product_list").datagrid("getRowIndex",sels[index])
+                                                $("#index_product_list").datagrid('deleteRow',row_index);
+                                            }
+                                        })
+                                    }
                                 }
-                            });
+                            })
                         }
                     })
                 }
@@ -124,7 +152,7 @@
     <div class="easyui-layout" style="width: 100%;height: 100%;">
         <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
             <ul id="category_tree" class="easyui-tree" data-options="{
-                 url:'${pageContext.request.contextPath}/category/list',
+                 url:'${pageContext.request.contextPath}/category/list.json',
                  method:'get',
                  onContextMenu: function(e,node){
                     e.preventDefault();
@@ -148,13 +176,27 @@
                     })
                 },
                 onClick:function(node){
+                    var ids = getProductId()
                     var table = $('#choose_list')
                     if(node.id>0){
                         $.ajax({
                             url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id,
                             method:'get',
                             success:function(data){
-                                table.datagrid('loadData',data)
+                                var arr = []
+                                for(var i=0;i<data.length;i++){
+                                    var j =0;
+                                    for(;j<ids.length;j++){
+                                        if(data[i].id == ids[j]){
+                                            break;
+                                        }
+                                    }
+                                    if(j>=ids.length){
+                                        arr.push(data[i])
+                                    }
+                                }
+
+                                table.datagrid('loadData',arr)
                             }
                          })
                     }
@@ -190,7 +232,7 @@
                     for(var i in sels){
                         ids.push(sels[i].id);
                     }
-                    ids = ids.join(",");
+//                    ids = ids.join(",");
                     return ids;
                 }
                 function addProduct() {
@@ -201,20 +243,28 @@
                     }
                     $.messager.confirm('确认','确定添加ID为'+ids+'的商品吗？',function (r) {
                         if(r){
-                            var params = {"ids":ids};
-                            $.post("${pageContext.request.contextPath}/home/addproduct",params, function(data){
-                                if(data.status == 200){
-                                    $.messager.alert('提示','添加商品成功!',undefined,function(){
-                                        $("#choose_list").datagrid("load");
-                                    });
+                            $.ajax({
+                                url:'${pageContext.request.contextPath}/home/addproduct.json',
+                                method:'post',
+                                data:{
+                                    'ids':ids
+                                },
+                                success:function (data) {
+                                    if(data.length == ids.length){
+                                        $.messager.alert('提示','添加商品成功!',undefined,function() {
+                                            $('#index_product_list').datalist('loadData', data)
+                                        })
+                                    }
                                 }
-                            });
+                            })
                         }
                     })
                 }
                 function cancelChoose() {
                     alert("取消选项！")
-                    closeWin = $("#add_product_window").window('close');
+                    var itemList = $("#choose_list");
+                    itemList.datagrid("clearSelections");
+//                    closeWin = $("#add_product_window").window('close');
                 }
             </script>
         </div>

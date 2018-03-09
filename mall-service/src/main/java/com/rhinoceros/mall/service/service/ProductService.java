@@ -31,7 +31,5 @@ public interface ProductService {
 
     List<Product> findAll(PageQuery pageQuery);
 
-    List<Product> findProduct(PageQuery pageQuery);
-
 
 }

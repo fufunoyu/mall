@@ -14,11 +14,6 @@
         WHERE category_id = #{categoryId}
         ${page.queryString}
     </select>
-    <select id="findProductNoPQ" resultType="Product">
-        SELECT *
-        FROM product
-    </select>
-    <select id="findProduct" resultType="Product">
     <select id="findAll" resultType="Product">
         SELECT *
         FROM product

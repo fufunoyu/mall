@@ -22,7 +22,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @ResponseBody
-    @RequestMapping("/list")
+    @RequestMapping("/list.json")
     public List<Category> getList(@RequestParam(value = "id", required = false) Long id) {
         List<Category> categories;
         if (id == null) {

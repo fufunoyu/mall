@@ -9,11 +9,14 @@ import com.rhinoceros.mall.service.service.IndexProductService;
 import com.rhinoceros.mall.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 创建首页分类展示商品控制器
@@ -36,7 +39,7 @@ public class IndexProductController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/list")
+    @RequestMapping("/list.json")
     public List<CategoryWithProductsVo> getCategoryList(){
         List<CategoryWithProducts> categoryWithProductsList = indexProductService.findAll();
         List<CategoryWithProductsVo> categoryWithProductsVo = new LinkedList<CategoryWithProductsVo>();
@@ -61,36 +64,34 @@ public class IndexProductController {
     /**
      * 添加商品
      * @param productIds
+     * @return
      */
-    @RequestMapping("/addproduct")
-    public void addProduct(List<Long> productIds){
+    @ResponseBody
+    @RequestMapping("/addproduct.json")
+    public List<Product> addProduct(@RequestParam("ids[]") List<Long> productIds){
+        List<Product> products = new LinkedList<Product>();
         for (Long productId : productIds) {
             IndexProduct indexProduct = new IndexProduct();
             indexProduct.setProductId(productId);
             indexProductService.add(indexProduct);
+            Product product = productService.findProductVoById(productId).getProduct();
+            products.add(product);
         }
+        return products;
     }
 
     /**
-     * 删除分类下的商品
+     *  删除分类下的商品
      * @param productIds
-     */
-    @RequestMapping("/deleteproduct")
-    public void deleteProduct(List<Long> productIds){
-        for (Long productId : productIds){
-            indexProductService.deleteById(productId);
-        }
-    }
-
-    /**
-     * 查找商品列表
      * @return
      */
     @ResponseBody
-    @RequestMapping("/chooselist")
-    public List<Product> getProductList(){
-        List<Product> products = productService.findAll();
-        return products;
+    @RequestMapping("/deleteproduct.json")
+    public String deleteProduct(@RequestParam("ids[]") List<Long> productIds){
+        for (Long productId : productIds){
+            indexProductService.deleteById(productId);
+        }
+        return "{\"result\":\"success\"}";
     }
 
 }

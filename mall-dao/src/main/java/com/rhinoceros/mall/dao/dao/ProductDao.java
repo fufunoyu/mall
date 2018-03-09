@@ -25,13 +25,6 @@ public interface ProductDao {
      */
     List<Product> findAll(@Param("page") PageQuery pageQuery);
 
-
-    /**
-     * 查找产品列表,无分类信息
-     * @return
-     */
-    List<Product> findProductNoPQ();
-
     /**
      * 查找指定分类列表下直接的产品
      *
