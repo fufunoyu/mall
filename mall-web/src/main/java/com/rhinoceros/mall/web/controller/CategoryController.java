@@ -54,6 +54,9 @@ public class CategoryController {
 
         model.addAttribute("products", productVos);
 
+        /**
+         * 通过id查询分类
+         */
         Category category = categoryService.findById(cid);
         model.addAttribute("category", category);
         return "category";
