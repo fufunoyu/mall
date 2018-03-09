@@ -128,7 +128,9 @@
         <div id="button_WAIT_PAY"><a orderStatus="WAIT_PAY" href="#nowhere">待付款</a></div>
         <div id="button_WAIT_SHIP"><a orderStatus="WAIT_SHIP" href="#nowhere">待发货</a></div>
         <div id="button_WAIT_RECEIVE"><a orderStatus="WAIT_RECEIVE" href="#nowhere">待收货</a></div>
-        <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere" class="noRightborder">待评价</a></div>
+        <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere">待评价</a></div>
+        <div id="button_COMPLETED"><a orderStatus="COMPLETED" href="#nowhere">已完成</a></div>
+        <div id="button_CANCEL"><a orderStatus="CANCEL" href="#nowhere" class="noRightborder">已取消</a></div>
         <div class="orderTypeLastOne"><a class="noRightborder">&nbsp;</a></div>
     </div>
     <div style="clear:both"></div>
@@ -162,9 +164,9 @@
 
                     </td>
                     <td class="orderItemDeleteTD">
-                        <%--<a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
+                        <a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
                             <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
-                        </a>--%>
+                        </a>
 
                     </td>
                 </tr>
