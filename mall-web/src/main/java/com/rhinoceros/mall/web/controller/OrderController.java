@@ -26,15 +26,16 @@ public class OrderController {
 
     /**
      * 订单显示页面
+     *
      * @param model
      * @param session
-     * @param status
+     * @param orderStatus
      * @param page
      * @return
      */
     @RequestMapping("/list")
     public String orderList(Model model, HttpSession session,
-                            @RequestParam(value = "status", required = false) String status,
+                            @RequestParam(value = "status", required = false) OrderStatus orderStatus,
                             @RequestParam(value = "page", required = false) Integer page) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
@@ -46,26 +47,21 @@ public class OrderController {
         List<OrderListVo> orderListVos;
         Integer orderNum;
         Integer pageSize = 2;
-        if (status == null || status.equals("ALL")) {
-            orderNum = orderService.findOrderNumByUserIdAndStatus(user.getId());
-            orderListVos = orderService.findOrderListVoByUserId(user.getId(), page, pageSize);
-            status = "ALL";
-        } else {
-            orderNum = orderService.findOrderNumByUserIdAndStatus(user.getId(), status);
-            orderListVos = orderService.findOrderListVoByUserId(user.getId(), status, page, pageSize);
-        }
+
+        orderNum = orderService.findOrderNumByUserIdAndStatus(user.getId(), orderStatus);
+        orderListVos = orderService.findOrderListVoByUserId(user.getId(), orderStatus, page, pageSize);
 
         model.addAttribute("orderListVos", orderListVos);
         model.addAttribute("orderNum", orderNum);
         model.addAttribute("nowPage", page);
         model.addAttribute("pageSize", pageSize);
-        model.addAttribute("orderStatus", status);
-
+        model.addAttribute("orderStatus", orderStatus==null?"ALL":orderStatus.name());
         return "bought";
     }
 
     /**
      * 改变订单状态
+     *
      * @param oid
      * @param status
      * @param session

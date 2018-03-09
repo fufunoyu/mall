@@ -60,7 +60,11 @@
 
             /*$("div.orderType div").removeClass("selectedOrderType");
             $(this).parent("div").addClass("selectedOrderType");*/
-            window.location.href = 'list' + '?page=' + 1 + '&status=' + orderStatus ;
+            if(orderStatus == "ALL"){
+                window.location.href = 'list' + '?page=' + 1 ;
+            }else{
+                window.location.href = 'list' + '?page=' + 1 + '&status=' + orderStatus ;
+            }
 
         });
         //判断订单状态
