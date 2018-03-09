@@ -3,10 +3,9 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.vo.CommentVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
-import com.rhinoceros.mall.service.service.CartProductService;
+import com.rhinoceros.mall.service.impl.service.ProductDescriptionServiceImpl;
 import com.rhinoceros.mall.service.service.CommentService;
 import com.rhinoceros.mall.service.service.ProductService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +26,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductDescriptionServiceImpl productDescriptionService;
 
-
+    /**
+     * 商品详情页展示
+     * @param id
+     * @param page
+     * @param model
+     * @return
+     */
     @RequestMapping({"/product"})
     public String index(
             @RequestParam("pid") Long id,
@@ -36,14 +43,13 @@ public class ProductController {
             Model model
     ) {
 
-
-
-
         model.addAttribute("isComment", page != null);
         if (page == null) {
             page = 1;
         }
-        ProductVo productVo = productService.findProductVoById(id);
+        ProductVo productVo = new ProductVo(productService.findById(id));
+        //获取商品详情
+        productVo.setProductDescription(productDescriptionService.findByProductId(id));
         model.addAttribute("productVo", productVo);
 
         List<CommentVo> comments = commentService.findByProductId(id, page, 10);

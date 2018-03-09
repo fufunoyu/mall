@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.service.impl.service;
 /* created at 8:11 PM 3/6/2018  */
 
+import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.pojo.Order;
 import com.rhinoceros.mall.core.pojo.OrderProduct;
 import com.rhinoceros.mall.core.pojo.Product;
@@ -39,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<OrderListVo> findOrderListVoByUserId(Long userId, String status, Integer page, Integer size) {
+    public List<OrderListVo> findOrderListVoByUserId(Long userId, OrderStatus status, Integer page, Integer size) {
         //选择排序方式
         com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
         //选择分页方式
@@ -54,10 +55,7 @@ public class OrderServiceImpl implements OrderService {
             List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
             for (OrderProduct orderProduct : orderProducts) {
                 Product product = productDao.findById(orderProduct.getProductId());
-                ProductVo productVo = new ProductVo();
-                //获取商品图片url数组
-                productVo.setImagesUrls(product.getImageUrls().split(Product.IMAGE_SEPARATION));
-                productVo.setFirstImageUrl(productVo.getImagesUrls()[0]);
+                ProductVo productVo = new ProductVo(product);
                 productVo.setProduct(product);
                 //创建OrderProductVo对象以便填充
                 OrderProductVo orderProductVo = new OrderProductVo();
@@ -72,29 +70,6 @@ public class OrderServiceImpl implements OrderService {
         return orderListVos;
     }
 
-    /**
-     * 根据userId找出所有符合条件的分页订单
-     * @param userId
-     * @param page
-     * @param size
-     * @return
-     */
-    @Override
-    public List<OrderListVo> findOrderListVoByUserId(Long userId, Integer page, Integer size) {
-        String status = null;
-        return findOrderListVoByUserId(userId, status, page, size);
-    }
-
-    /**
-     * 根据用户id找出符合条件的订单数量
-     * @param userId
-     * @return 订单数量
-     */
-    @Override
-    public Integer findOrderNumByUserIdAndStatus(Long userId) {
-        String status = null;
-        return findOrderNumByUserIdAndStatus(userId, status);
-    }
 
     /**
      * 根据用户id和状态找出符合条件的订单数量
@@ -103,9 +78,18 @@ public class OrderServiceImpl implements OrderService {
      * @return 订单数量
      */
     @Override
-    public Integer findOrderNumByUserIdAndStatus(Long userId, String status) {
+    public Integer findOrderNumByUserIdAndStatus(Long userId, OrderStatus status) {
         Integer num = orderDao.findOrderNumByUserIdAndStatus(userId,status);
         return num;
+    }
+
+    /**
+     * 根据订单id更新订单信息
+     * @param order
+     */
+    @Override
+    public void updateSelectionById(Order order) {
+        orderDao.updateSelectionById(order);
     }
 
 
