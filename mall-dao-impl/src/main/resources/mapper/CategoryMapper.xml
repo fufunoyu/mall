@@ -25,6 +25,12 @@
         (name, parent_id)
         VALUE (#{name},#{parentId})
     </insert>
+
+    <delete id="delete" parameterType="category">
+        DELETE FROM category
+        WHERE id=#{id}
+    </delete>
+
     <select id="findById" parameterType="Long" resultType="Category">
         SELECT *
         FROM category

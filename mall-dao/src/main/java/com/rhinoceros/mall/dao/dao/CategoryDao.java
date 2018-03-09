@@ -36,4 +36,6 @@ public interface CategoryDao {
      * @return
      */
     Category findById(Long id);
+
+    void delete(Category category);
 }
