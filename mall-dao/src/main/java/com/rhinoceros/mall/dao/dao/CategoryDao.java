@@ -38,4 +38,6 @@ public interface CategoryDao {
     Category findById(Long id);
 
     void delete(Category category);
+
+    int updateSelection(Category category);
 }

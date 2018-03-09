@@ -123,7 +123,18 @@
     function edit() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('beginEdit', node.target);
+        var categoryName = $("#category_name").textbox("getText")
+        $.ajax({
+            url: '${pageContext.request.contextPath}/category/update',
+            method: 'post',
+            data: {
+                name: categoryName,
+                id: node.id,
+            },
+            success: function () {
+                t.tree('beginEdit', node.target);
+            }
+        })
     }
 
     /**

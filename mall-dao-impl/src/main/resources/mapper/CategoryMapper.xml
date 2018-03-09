@@ -31,6 +31,19 @@
         WHERE id=#{id}
     </delete>
 
+    <update id="updateSelection" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        UPDATE  category
+       <set>
+           <if test="name!=null">
+               name = #{name},
+           </if>
+           <if test="parentId!=null">
+               parent_id = #{parentId},
+           </if>
+       </set>
+        WHERE id=#{id}
+    </update>
+
     <select id="findById" parameterType="Long" resultType="Category">
         SELECT *
         FROM category
