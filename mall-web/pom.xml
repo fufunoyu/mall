@@ -27,12 +27,6 @@
             <groupId>com.rhinoceros</groupId>
             <artifactId>mall-service-impl</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.rhinoceros</groupId>
-            <artifactId>mall-core</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.rhinoceros</groupId>
             <artifactId>mall-web-support</artifactId>
@@ -49,7 +43,6 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>javax.servlet</groupId>

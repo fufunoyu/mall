@@ -462,12 +462,14 @@ div.loginInput {
 
 div.loginInput input {
     display: inline-block;
-    border: 0px solid transparent;
+    border:none;
     width: 244px;
-    height: 30px;
+    height: 40px;
     position: relative;
-    left: 6px;
-    top: 6px;
+    outline: none;
+    background: #fff;
+    padding: 0;
+    margin: 0;
 }
 
 div.loginInput span, div.loginInput input {

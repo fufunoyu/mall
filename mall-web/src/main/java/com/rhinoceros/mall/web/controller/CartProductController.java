@@ -1,5 +1,6 @@
 package com.rhinoceros.mall.web.controller;
 
+import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.pojo.CartProduct;
 import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.core.vo.ProductVo;
@@ -30,11 +31,11 @@ public class CartProductController {
      * 浏览购物车商品信息
      */
     @RequestMapping("/cart/list")
-    public String cart(Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request){
-        User user = (User) session.getAttribute(LoginController.USERNAME);
-//        if (user == null) {
-//            return "redirect:/login?from=/cart/list";
-//        }
+    public String cart(Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/login?from=/cart/list";
+        }
         List<CartProduct> cartProducts = cartProductService.findByUserId(user.getId());
         List<ProductVo> products = new LinkedList<ProductVo>();
         for (int i = 0; i < cartProducts.size(); i++) {
@@ -48,20 +49,22 @@ public class CartProductController {
     }
 
     /**
-     *修改购物车商品数量
+     * 修改购物车商品数量
+     *
      * @param cartProduct
      * @param session
      * @return
      */
-    @RequestMapping("/cart/count")
+    @RequestMapping("/cart/update")
     @ResponseBody
-    public Integer countByCartProductId(CartProduct cartProduct ,HttpSession session) {
-        User user = (User) session.getAttribute(LoginController.USERNAME);
+    public Integer countByCartProductId(CartProduct cartProduct, HttpSession session) {
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
             return -1;
         }
         return cartProductService.updateSelectionById(cartProduct);
     }
+
     /**
      * 删除购物车商品信息
      *
@@ -77,6 +80,7 @@ public class CartProductController {
 
     /**
      * 添加购物车商品
+     *
      * @param pid
      * @param num
      * @param session
@@ -88,12 +92,13 @@ public class CartProductController {
             @RequestParam("pid") Long pid,
             @RequestParam("num") Integer num,
             HttpSession session
-    ){
-        User user = (User) session.getAttribute(LoginController.USERNAME);
-        if(user==null){
+    ) {
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
+        if (user == null) {
             return "redirect:/login";
         }
-        cartProductService.addProduct(pid,user.getId(),num);
+
+        cartProductService.add(pid, user.getId(), num);
         return "success";
     }
 

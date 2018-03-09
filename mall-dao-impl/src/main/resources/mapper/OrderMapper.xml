@@ -5,11 +5,33 @@
 <mapper namespace="com.rhinoceros.mall.dao.dao.OrderDao">
 
     <!--通过userId查找订单-->
-    <select id="findByUserId" resultType="Order" parameterType="Long" >
+    <select id="findByUserId" resultType="Order" parameterType="Long">
         SELECT *
         FROM `order`
         WHERE user_id = #{userId}
     </select>
 
+    <select id="findByUserIdAndStatus" resultType="Order">
+        SELECT *
+        FROM `order`
+        <if test="status==null">
+            WHERE user_id = #{userId}
+        </if>
+        <if test="status!=null">
+            WHERE user_id = #{userId} AND status = #{status}
+        </if>
+        ${page.queryString}
+    </select>
+
+    <select id="findOrderNumByUserIdAndStatus" resultType="Integer">
+        SELECT count(*)
+        FROM `order`
+        <if test="status==null">
+            WHERE user_id = #{userId}
+        </if>
+        <if test="status!=null">
+            WHERE user_id = #{userId} AND status = #{status}
+        </if>
+    </select>
 
 </mapper>

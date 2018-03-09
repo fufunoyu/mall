@@ -1,5 +1,6 @@
 package com.rhinoceros.mall.web.controller;
 
+import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
@@ -26,11 +27,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-    public static final String USERNAME = "user";
-    public static final String USERNAME_COOKIE = "userName";
-    public static final String USEPASSWORD_COOKIE = "userPsaaword";
-    public static final String FROM_URL = "from";
-
     public static final String SECRET = "secret";
 
     @Autowired
@@ -42,16 +38,16 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(@RequestParam(value = FROM_URL, required = false) String url, HttpSession session, Model model) {
+    public String login(@RequestParam(value = ConstantValue.CALLBACK_URL, required = false) String url, HttpSession session, Model model) {
         // 用户已登录，直接返回首页
-        if (session.getAttribute(USERNAME) != null) {
+        if (session.getAttribute(ConstantValue.CURRENT_USER) != null) {
             //判断到请求页面的URL是否为空
             if (url != null) {
                 return "redirect:" + url;
             }
             return "redirect:/index";
         }
-        model.addAttribute(FROM_URL, url);
+        model.addAttribute(ConstantValue.CALLBACK_URL, url);
         return "login";
     }
 
@@ -74,7 +70,7 @@ public class LoginController {
             return "login";
         }
         // 用户已登录，直接返回首页
-        if (session.getAttribute(USERNAME) != null) {
+        if (session.getAttribute(ConstantValue.CURRENT_USER) != null) {
             if (userDto.getFrom() != null) {
                 return "redirect:" + userDto.getFrom();
             }
@@ -84,8 +80,8 @@ public class LoginController {
         try {
             User user = userService.login(userDto);
             //创建Cookie
-            Cookie nameCookie = new Cookie(USERNAME_COOKIE, user.getUsername());
-            Cookie pswCookie = new Cookie(USEPASSWORD_COOKIE, user.getPassword());
+            Cookie nameCookie = new Cookie(ConstantValue.COOKIE_USERNAME, user.getUsername());
+            Cookie pswCookie = new Cookie(ConstantValue.COOKIE_PASSWORD, user.getPassword());
             //设置Cookie的父路径
             nameCookie.setPath(request.getContextPath() + "/");
             pswCookie.setPath(request.getContextPath() + "/");
@@ -103,8 +99,9 @@ public class LoginController {
             response.addCookie(pswCookie);
 
             //将用户信息放入session
-            session.setAttribute(USERNAME, user);
-            if (userDto.getFrom() != null&&!userDto.getFrom().trim().equals("")) {
+            session.setAttribute(ConstantValue.CURRENT_USER, user);
+
+            if (userDto.getFrom() != null && !userDto.getFrom().trim().equals("")) {
                 return "redirect:" + userDto.getFrom();
             }
             return "redirect:/index";
@@ -124,11 +121,11 @@ public class LoginController {
      */
     @RequestMapping("/logout")
     public String logout(HttpSession session, HttpServletResponse response) {
-        session.removeAttribute(USERNAME);
+        session.removeAttribute(ConstantValue.CURRENT_USER);
         //删除cookie
-        Cookie username = new Cookie(USERNAME_COOKIE, "");
+        Cookie username = new Cookie(ConstantValue.COOKIE_USERNAME, "");
         username.setMaxAge(-1);
-        Cookie password = new Cookie(USEPASSWORD_COOKIE, "");
+        Cookie password = new Cookie(ConstantValue.COOKIE_PASSWORD, "");
         password.setMaxAge(-1);
         response.addCookie(username);
         response.addCookie(password);
