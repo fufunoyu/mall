@@ -37,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Long id) {
         Product product = productDao.findById(id);
-
         return product;
 
     }

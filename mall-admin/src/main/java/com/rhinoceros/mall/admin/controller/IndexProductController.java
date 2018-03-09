@@ -27,6 +27,7 @@ public class IndexProductController {
     //定义要调用的逻辑业务对象
     @Autowired
     private IndexProductService indexProductService;
+    @Autowired
     private ProductService productService;
 
     @RequestMapping()
@@ -74,7 +75,7 @@ public class IndexProductController {
             IndexProduct indexProduct = new IndexProduct();
             indexProduct.setProductId(productId);
             indexProductService.add(indexProduct);
-            Product product = productService.findProductVoById(productId).getProduct();
+            Product product = productService.findById(productId);
             products.add(product);
         }
         return products;

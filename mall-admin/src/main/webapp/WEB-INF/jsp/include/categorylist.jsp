@@ -21,21 +21,17 @@
 
     function getProductId() {
         var pro = []
-        $.ajax({
-            url: '${pageContext.request.contextPath}/home/list.json',
-            method: 'get',
-            success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    for (var j = 0;j < data[i].products.length;j++) {
-                        pro.push( data[i].products[j].id)
-                    }
-                }
+        var data = $('#category_list').datalist('getRows')
+        for (var i = 0; i < data.length; i++) {
+            var j = 0
+            for (;j < data[i].products.length;j++) {
+                pro.push( data[i].products[j].id)
             }
-        })
+        }
         return pro
     }
 
-    (function () {
+    function loadIndexCategoryList() {
         $.ajax({
             url: '${pageContext.request.contextPath}/home/list.json',
             method: 'get',
@@ -48,9 +44,24 @@
                         products: data[i].products
                     })
                 }
+                var row = $("#category_list").datalist("getSelected")
                 $('#category_list').datalist('loadData', arr)
+                if(row){
+                    var rows = $("#category_list").datalist("getRows")
+                    for(var i=0;i<rows.length;i++){
+                        if(rows[i].id == row.id){
+                            var index = $("#category_list").datalist("getRowIndex",rows[i])
+                            $("#category_list").datalist("selectRow",index)
+                            break
+                        }
+                    }
+                }
             }
         })
+    }
+
+    (function () {
+        loadIndexCategoryList()
     })()
     function loadFilter(data) {
         var arr=[]
@@ -68,7 +79,7 @@
 <div class="easyui-layout" style="width: 100%;height: 100%;">
     <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
         <ul id="category_list" class="easyui-datalist" title="商品分类" lines="true" data-options="{
-            onClickRow:onCategoryClick
+            onSelect:onCategoryClick,
         }">
         </ul>
     </div>
@@ -106,7 +117,11 @@
                 text: '添加商品',
                 iconCls: 'icon-add',
                 handler:function(){
-                    addProductWin = $("#add_product_window").window('open');
+                    var node = $("#category_tree").tree("getSelected")
+                    if(node){
+                        node.target.click()
+                    }
+                    $("#add_product_window").window('open');
                 }
             },{
                 text:'删除商品',
@@ -127,6 +142,7 @@
                                     'ids':ids
                                 },
                                 success:function (data) {
+                                    loadIndexCategoryList()
                                     if(data.result==='success'){
                                         $.messager.alert('提示','删除商品成功!',undefined,function() {
                                             var sels = $("#index_product_list").datagrid("getSelections");
@@ -176,13 +192,14 @@
                     })
                 },
                 onClick:function(node){
-                    var ids = getProductId()
+
                     var table = $('#choose_list')
                     if(node.id>0){
                         $.ajax({
                             url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id,
                             method:'get',
                             success:function(data){
+                                var ids = getProductId()
                                 var arr = []
                                 for(var i=0;i<data.length;i++){
                                     var j =0;
@@ -250,11 +267,15 @@
                                     'ids':ids
                                 },
                                 success:function (data) {
+                                    loadIndexCategoryList()
+                                    $("#category_tree").tree('getSelected').target.click()
                                     if(data.length == ids.length){
                                         $.messager.alert('提示','添加商品成功!',undefined,function() {
-                                            $('#index_product_list').datalist('loadData', data)
+//                                            $("#index_product_list").datagrid('loadData', [])
                                         })
                                     }
+                                    var itemList = $("#choose_list");
+                                    itemList.datagrid("clearSelections");
                                 }
                             })
                         }
@@ -264,7 +285,7 @@
                     alert("取消选项！")
                     var itemList = $("#choose_list");
                     itemList.datagrid("clearSelections");
-//                    closeWin = $("#add_product_window").window('close');
+                    $("#add_product_window").window('close');
                 }
             </script>
         </div>
