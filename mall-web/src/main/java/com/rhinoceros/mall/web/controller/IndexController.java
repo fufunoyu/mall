@@ -27,7 +27,7 @@ public class IndexController {
 
     @RequestMapping({"/index", "/"})
     public String index(Model model, HttpServletRequest request) {
-        List<Category> categories = categoryService.findAll();
+        List<Category> categories = categoryService.findRootCategories();
         model.addAttribute("categories", categories);
         // 首页轮播图
         String path = request.getContextPath();

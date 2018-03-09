@@ -6,6 +6,9 @@
     function showProductsAsideCategorys(cid) {
         $("div.eachCategory[cid=" + cid + "]").css("background-color", "white");
         $("div.eachCategory[cid=" + cid + "] a").css("color", "#87CEFA");
+        $.ajax({
+            url:'${pageContext.request.contextPath}'
+        })
         $("div.productsAsideCategorys[cid=" + cid + "]").show();
     }
 
