@@ -35,5 +35,5 @@ public interface CartProductService {
      * @param userId
      * @param ProductNum
      */
-    void addProduct(Long productId, Long userId, Integer ProductNum);
+    void add(Long productId, Long userId, Integer ProductNum);
 }

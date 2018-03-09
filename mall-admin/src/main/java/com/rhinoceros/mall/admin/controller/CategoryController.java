@@ -28,7 +28,7 @@ public class CategoryController {
         if (id == null) {
             categories = categoryService.findRootCategories();
         } else {
-            categories = categoryService.findByParentId(id);
+            categories = categoryService.findChildrenById(id);
         }
 
         return categories;

@@ -54,7 +54,7 @@
             </div>
 
             <div class="login_acount_text">账户登录</div>
-            <input name="from" value="${from}" type="hidden">
+            <input name="from" value="${ConstantValue.CALLBACK_URL}" type="hidden">
             <div class="loginInput ">
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>
