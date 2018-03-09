@@ -2,6 +2,7 @@ package com.rhinoceros.mall.core.vo;
 /* created at 3:27 PM 2/28/2018  */
 
 import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.pojo.ProductDescription;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -31,15 +32,19 @@ public class ProductVo {
     /**
      * 商品详情
      */
-    private String description;
-//    /**
-//     * 此变量储存商品详情图片的url
-//     */
-//    private String[] descriptionImagesUrls;
-//
-//    /**
-//     * 配置信息
-//     */
-//    private Map<String, String> params = new HashMap<String, String>();
+    private ProductDescription productDescription;
+
+    public ProductVo(Product product){
+        this.product = product;
+        //获取商品图片url数组
+        imagesUrls = product.getImageUrls().split(Product.IMAGE_SEPARATION);
+        firstImageUrl = imagesUrls[0];
+    }
+
+
+    /**
+     * 分类名称
+     */
+    private String categoryName;
 
 }

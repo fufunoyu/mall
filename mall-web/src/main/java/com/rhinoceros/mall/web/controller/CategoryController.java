@@ -47,15 +47,15 @@ public class CategoryController {
 
         List<ProductVo> productVos = new LinkedList<ProductVo>();
         for (Product p : products) {
-            ProductVo productVo = new ProductVo();
-            productVo.setProduct(p);
-            productVo.setImagesUrls(p.getImageUrls().split(Product.IMAGE_SEPARATION));
-            productVo.setFirstImageUrl(productVo.getImagesUrls()[0]);
+            ProductVo productVo = new ProductVo(p);
             productVos.add(productVo);
         }
 
         model.addAttribute("products", productVos);
 
+        /**
+         * 通过id查询分类
+         */
         Category category = categoryService.findById(cid);
         model.addAttribute("category", category);
         return "category";
