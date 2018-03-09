@@ -47,10 +47,7 @@ public class CategoryController {
 
         List<ProductVo> productVos = new LinkedList<ProductVo>();
         for (Product p : products) {
-            ProductVo productVo = new ProductVo();
-            productVo.setProduct(p);
-            productVo.setImagesUrls(p.getImageUrls().split(Product.IMAGE_SEPARATION));
-            productVo.setFirstImageUrl(productVo.getImagesUrls()[0]);
+            ProductVo productVo = new ProductVo(p);
             productVos.add(productVo);
         }
 
