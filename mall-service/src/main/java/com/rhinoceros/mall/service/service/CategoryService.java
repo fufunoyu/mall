@@ -55,4 +55,7 @@ public interface CategoryService {
      */
     Category add(Category category);
 
+    void delete(Category category);
+
+    Category updateSelection(Category category);
 }

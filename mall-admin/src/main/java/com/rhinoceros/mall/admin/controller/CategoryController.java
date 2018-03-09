@@ -49,16 +49,30 @@ public class CategoryController {
         return categories;
     }
 
+    /**
+     * 插入分类
+     * @param category
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/add")
     public Category add(Category category) {
         return categoryService.add(category);
     }
 
-//    @ResponseBody
-//    @RequestMapping("/delete")
-//    public Category delete(Category category){
-//        return categoryService.fcategory);
-//    }
+    /**
+     * 删除分类
+     * @param category
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public void delete(Category category){
+       categoryService.delete(category);
+    }
 
+    @ResponseBody
+    @RequestMapping("/update")
+    public Category updateSelection(Category category) {
+        return categoryService.updateSelection(category);
+    }
 }

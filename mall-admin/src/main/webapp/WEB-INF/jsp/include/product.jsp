@@ -35,21 +35,22 @@
         return fmt;
     }
 
-    function onCategoryDblClick(node){
-        if(node.children&&node.children.length>0){
+    function onCategoryDblClick(node) {
+        if (node.children && node.children.length > 0) {
             return
         }
         $.ajax({
-            url:node.id?'${pageContext.request.contextPath}/category/list?id='+node.id:'${pageContext.request.contextPath}/category/list',
-            method:'get',
-            success:function(data){
-                $('#category_list').tree('append',{
-                    parent:node.target,
-                    data:data
+            url: node.id ? '${pageContext.request.contextPath}/category/list?id=' + node.id : '${pageContext.request.contextPath}/category/list',
+            method: 'get',
+            success: function (data) {
+                $('#category_list').tree('append', {
+                    parent: node.target,
+                    data: data
                 });
             }
         })
     }
+
     /**
      * 菜单栏新增分类
      */
@@ -62,9 +63,9 @@
     /**
      * 菜单栏新增取消
      * */
-    function cancelDialog(){
+    function cancelDialog() {
         $("#category_dialog").dialog('close')
-        $("#category_name").textbox('setText',"")
+        $("#category_name").textbox('setText', "")
     }
 
     /**
@@ -75,25 +76,23 @@
         var node = t.tree('getSelected');
         var categoryName = $("#category_name").textbox("getText")
         $.ajax({
-            url:'${pageContext.request.contextPath}/category/add',
-            method:'post',
-            data:{
-                name:categoryName,
-                parentId:  node.id
+            url: '${pageContext.request.contextPath}/category/add',
+            method: 'post',
+            data: {
+                name: categoryName,
+                parentId: node.id
             },
-            success:function (data) {
-                if(!node.children||!node.children.length){
+            success: function (data) {
+                if (!node.children || !node.children.length) {
                     onCategoryDblClick(node)
-                }else {
-                    $('#category_list').tree('append',{
-                        parent:node.target,
-                        data:[data]
+                } else {
+                    $('#category_list').tree('append', {
+                        parent: node.target,
+                        data: [data]
                     });
                 }
-
-
                 $("#category_dialog").dialog('close')
-                $("#category_name").textbox('setText',"")
+                $("#category_name").textbox('setText', "")
             }
         })
     }
@@ -104,7 +103,18 @@
     function remove() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('remove', node.target);
+        var categoryName = $("#category_name").textbox("getText")
+        $.ajax({
+            url: '${pageContext.request.contextPath}/category/delete',
+            method: 'post',
+            data: {
+                name: categoryName,
+                id: node.id
+            },
+            success: function () {
+                t.tree('remove', node.target);
+            }
+        })
     }
 
     /**
@@ -113,7 +123,18 @@
     function edit() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('beginEdit', node.target);
+        var categoryName = $("#category_name").textbox("getText")
+        $.ajax({
+            url: '${pageContext.request.contextPath}/category/update',
+            method: 'post',
+            data: {
+                name: categoryName,
+                id: node.id,
+            },
+            success: function () {
+                t.tree('beginEdit', node.target);
+            }
+        })
     }
 
     /**
@@ -214,6 +235,7 @@
         // $("#image").append(upload)
         $("#product_win").window("open")
     }
+
     /**
      * 初始菜单栏
      * */
@@ -223,12 +245,12 @@
                 id: null,
                 name: '所有分类'
             }])
-        },500)
-    /**
-     * 上传图片
-     * @type {string}
-     */
-    var photoImgUrl = '';
+        }, 500)
+        /**
+         * 上传图片
+         * @type {string}
+         */
+        var photoImgUrl = '';
         //file change event
         $('input[type="file"]').change(function (e) {
             // $('#img').attr('src',$("#tmpfile").val());
@@ -313,7 +335,8 @@
     </form>
 </div>
 <%--商品分类栏新增窗口--%>
-<div id="category_dialog" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:400px;height:200px;padding:10px">
+<div id="category_dialog" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true"
+     style="width:400px;height:200px;padding:10px">
     <input id="category_name" class="easyui-textbox" name="name" style="width:100%"
            data-options="label:'商品名称:',required:true">
     <button onclick="submitDialog()">提交</button>
