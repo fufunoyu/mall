@@ -3,6 +3,7 @@ package com.rhinoceros.mall.service.service;
 
 
 import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.pojo.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.ProductVo;
 
@@ -30,4 +31,10 @@ public interface ProductService {
 
     List<Product> findAll(PageQuery pageQuery);
 
+    /**
+     * 通过id找寻商品描述
+     * @param id
+     * @return
+     */
+    ProductDescription findDescriptionById(Long id);
 }

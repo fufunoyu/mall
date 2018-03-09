@@ -11,6 +11,8 @@
     <title>后台管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/default/easyui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/icon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery-easyui-texteditor/texteditor.css">
+
     <style>
         html,body{
             margin: 0;
@@ -25,6 +27,9 @@
             src="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery.min.js"></script>
     <script type="application/javascript"
             src="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery.easyui.min.js"></script>
+    <script type="application/javascript"
+            src="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery-easyui-texteditor/jquery.texteditor.js"></script>
+
     <script type="application/javascript">
 
     </script>

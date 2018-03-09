@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.pojo.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
@@ -24,9 +25,10 @@ public class ProductController {
     private ProductService productService;
 
     /**
-     * 定义方法找到商品并转换为json格式返回
+     *定义方法找到商品并转换为json格式返回
      * ?page=1&size=10&sort=saleNum,DESC/ASC&sort=price,DESC
-     * @param page
+     * @param pageQuery
+     * @param categoryId
      * @return
      */
     @ResponseBody
@@ -44,6 +46,15 @@ public class ProductController {
     @RequestMapping
     public String showProduct() {
         return "include/product";
+    }
+
+    /**
+     * 通过回传的id查找商品描述信息
+     */
+    @ResponseBody
+    @RequestMapping("/description.json")
+    public ProductDescription findDescriptionById(@RequestParam(value="id") Long id){
+        return productService.findDescriptionById(id);
     }
 
 }

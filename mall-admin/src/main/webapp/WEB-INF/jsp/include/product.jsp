@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
 </head>
 <body>
 
@@ -56,13 +57,7 @@
     function removeit() {
         var t = $('#category_list');
         var node = t.tree('getSelected');
-        t.tree('remove', {
-            parent: null,
-            data: [{
-                id: -1,
-                parentId: null
-            }]
-        });
+        t.tree('remove',node.target);
     }
 
     /**
@@ -72,6 +67,18 @@
         var t = $('#category_list');
         var node = t.tree('getSelected');
         t.tree('beginEdit', node.target);
+    }
+
+    function categoryFilter(data) {
+        var arr = []
+        for(var i=0;i<data.length;i++){
+            arr.push({
+                id:data[i].id,
+                text:data[i].name,
+                parentId:data[i].parentId
+            })
+        }
+        return arr
     }
 
     // /**
@@ -117,6 +124,13 @@
                 $("#productCategory").textbox('setText', category.name)
             }
         })
+        $.ajax({
+            url:'${pageContext.request.contextPath}/product/description.json?id='+row.id,
+            method: 'get',
+            success: function (productDescription) {
+                $("#productDescription").texteditor('setValue',productDescription.description)
+            }
+        })
         $("#productName").textbox('setText', row.name)
         $("#productPrice").textbox('setText', row.price)
         $("#productDiscount").textbox('setText', row.discount)
@@ -138,6 +152,7 @@
             var photo = $('<img class="photo" src="' + url + '"/>')
             photo.bind('contextmenu', function (e) {
                 e.preventDefault();
+                console.log(url)
                 $('#product_image_menu').menu('show', {
                     left: e.pageX,
                     top: e.pageY
@@ -156,6 +171,9 @@
      */
     var photoImgUrl = '';
     $(function () {
+
+
+
         //file change event
         $('input[type="file"]').change(function (e) {
             // $('#img').attr('src',$("#tmpfile").val());
@@ -175,12 +193,21 @@
                 $('#selectImage').empty();
             }
         })
+
+
+         $('#productDescription').texteditor({
+              //...
+          });
     });
+
+    function test (){
+        $("#description_win").window("open")
+    }
 
 </script>
 <%--参数窗口--%>
 <div id="product_win" class="easyui-window" title="详细参数" data-options="iconCls:'icon-save',closed:true,modal:true"
-     style="padding:10px;width: 500px;">
+     style="padding:10px;width: 500px;height: 100%">
     <form id="ff" action="product.jsp" method="post">
         <div style="margin-bottom:20px">
             <input id="productName" class="easyui-textbox" name="name" style="width:100%"
@@ -213,11 +240,11 @@
             <input id="productSaleDate" class="easyui-textbox" name="saleDate" style="width:100%"
                    data-options="label:'上架日期:',required:true" readonly>
         </div>
-        <div style="margin-bottom:20px">
-            <input id="productCategory" class="easyui-combotree" name="category" value="122"
-                   data-options="url:'${pageContext.request.contextPath}/category',method:'get',label:'商品分类:',labelPosition:'left'"
-                   style="width:100%">
-        </div>
+        <%--<div style="margin-bottom:20px">--%>
+            <%--<input id="productCategory" class="easyui-combotree" name="category" value="122"--%>
+                   <%--data-options="url:'${pageContext.request.contextPath}/category',method:'get',--%>
+                   <%--label:'商品分类:',labelPosition:'left'" style="width:100%">--%>
+        <%--</div>--%>
         <div style="margin-bottom:20px">
             <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
                    data-options="label:'商品库存总量:',required:true">
@@ -230,8 +257,19 @@
             <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
                    data-options="label:'评论总数:',required:true" readonly>
         </div>
+        <div id="productDescription" class=" easyui-texteditor"  data-options=label:'商品信息' style="height: 300px" >
+        </div>
     </form>
 </div>
+
+
+<%--&lt;%&ndash;副文本&ndash;%&gt;--%>
+<%--<div id="#description_win" class="easyui-window" title="aa" data-options="closed:true"--%>
+     <%--style="width:700px;height:300px;padding:20px">--%>
+    <%--<div id="tt1" class="easyui-texteditor"   style="width:600px;height:200px;padding:20px" >--%>
+    <%--</div>--%>
+<%--</div>--%>
+
 <%--商品分类用户工具栏--%>
 <div id="category_tool">
     <a href="javascript:void(0)" class="icon-add" onclick="append()"></a>
@@ -259,6 +297,7 @@
             <ul id="category_list" class="easyui-tree" data-options="{
                  url:'${pageContext.request.contextPath}/category/list',
                  method:'get',
+                 loadFilter: categoryFilter,
                  onContextMenu: function(e,node){
                     e.preventDefault();
                     $(this).tree('select',node.target);
@@ -280,7 +319,19 @@
                     }
                 },
                 onDblClick: function(node){
-                    $(this).tree('beginEdit',node.target);
+                    if(node.children&&node.children.length>0){
+                        return
+                    }
+                    $.ajax({
+                        url:'${pageContext.request.contextPath}/category/list?id='+node.id,
+                        method:'get',
+                        success:function(data){
+                            $('#category_list').tree('append',{
+                                parent:node.target,
+                                data:data
+                            });
+                        }
+                    })
                 },
                 onAfterEdit: function(node){
                     if(node.id && node.id>0){
