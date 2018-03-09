@@ -10,6 +10,14 @@
         FROM order_product
         WHERE order_id = #{orderId}
     </select>
-
-
+    <!--购买形成订单-->
+    <insert id="addOrderProduct" parameterType="OrderProduct" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order
+        (product_id,order_id,product_num)
+        VALUE (
+        #{productId},
+        #{orderId},
+        #{productNum}
+        )
+    </insert>
 </mapper>

@@ -14,4 +14,10 @@ public interface OrderProductDao {
      * @return
      */
     List<OrderProduct> findByOrderId(Long orderId);
+    /**
+     * 形成订单
+     * @param orderProduct
+     * @return
+     */
+    int addOrderProduct(OrderProduct orderProduct);
 }

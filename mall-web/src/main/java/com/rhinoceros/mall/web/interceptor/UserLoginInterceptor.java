@@ -1,4 +1,5 @@
 package com.rhinoceros.mall.web.interceptor;
+import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.service.service.UserService;
 import com.rhinoceros.mall.web.controller.LoginController;
 import lombok.extern.slf4j.Slf4j;
@@ -50,8 +51,9 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
         //session中没有信息，说明用户从未登录过，直接返回true进行登录
         HttpSession session = request.getSession();
         String requestURI = request.getRequestURI();
-        if (session.getAttribute(LoginController.USERNAME) == null) {
-            response.sendRedirect("/login?from=".concat(requestURI));
+        if (session.getAttribute(ConstantValue.CURRENT_USER) == null) {
+            response.sendRedirect("/login?"+ConstantValue.CALLBACK_URL+"="+requestURI+"?"+request.getQueryString());
+
             return false;
         }
         return true;

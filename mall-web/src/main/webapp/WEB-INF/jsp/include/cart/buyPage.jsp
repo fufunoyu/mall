@@ -1,15 +1,11 @@
-<!-- 模仿天猫整站j2ee 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <div class="buyPageDiv">
   <form action="forecreateOrder" method="post">
   
 	<div class="buyFlow">
-		<img class="pull-left" src="img/site/simpleLogo.png">
-		<img class="pull-right" src="img/site/buyflow.png">
+		<img class="pull-left" src="${pageContext.request.contextPath}/static/img/site/simpleLogo.png">
+		<img class="pull-right" src="${pageContext.request.contextPath}/static/img/site/buyflow.png">
 		<div style="clear:both"></div>
 	</div>
 	<div class="address">
@@ -54,7 +50,7 @@
 			<thead>
 				<tr>
 					<th colspan="2" class="productListTableFirstColumn">
-						<img class="tmallbuy" src="img/site/tmallbuy.png">
+						<img class="tmallbuy" src="${pageContext.request.contextPath}/static/img/site/tmallbuy.png">
 						<a class="marketLink" href="#nowhere">店铺</a>
 						<a class="wangwanglink" href="#nowhere"> <span class="wangwangGif"></span> </a>
 					</th>
@@ -74,16 +70,16 @@
 			<tbody class="productListTableTbody">
 				<c:forEach items="${ois}" var="oi" varStatus="st" >
 					<tr class="orderItemTR">
-						<td class="orderItemFirstTD"><img class="orderItemImg" src="img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
+						<td class="orderItemFirstTD"><img class="orderItemImg" src="${pageContext.request.contextPath}/static/img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
 						<td class="orderItemProductInfo">
-						<a  href="foreproduct?pid=${oi.product.id}" class="orderItemProductLink">
-							${oi.product.name}
+						<a  href="foreproduct?pid=${oi.productVo.product.id}" class="orderItemProductLink">
+							${oi.productVo.product.name}
 						</a>
 						
 						
-							<img src="img/site/creditcard.png" title="支持信用卡支付">
-							<img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
-							<img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
+							<img src="${pageContext.request.contextPath}/static/img/site/creditcard.png" title="支持信用卡支付">
+							<img src="${pageContext.request.contextPath}/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">
+							<img src="${pageContext.request.contextPath}/static/img/site/promise.png" title="消费者保障服务,承诺如实描述">
 						
 						</td>
 						<td>
@@ -120,7 +116,7 @@
 			<div class="pull-left">
 				<span class="leaveMessageText">给卖家留言:</span>
 				<span>
-					<img class="leaveMessageImg" src="img/site/leaveMessage.png">
+					<img class="leaveMessageImg" src="${pageContext.request.contextPath}/static/img/site/leaveMessage.png">
 				</span>
 				<span class="leaveMessageTextareaSpan">
 					<textarea name="userMessage" class="leaveMessageTextarea"></textarea>

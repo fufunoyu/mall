@@ -72,9 +72,9 @@
         );
         return false;
     });
-    /*立即购买商品生成订单的逻辑*/
+/*    /!*立即购买商品生成订单的逻辑*!/
     $(".buyLink").click(function () {
-        <c:if test="${not empty user}">
+        <c:if test="${not empty sessionScope[ConstantValue.CURRENT_USER]}">
         var pid = ${productVo.product.id};
         var num = $(".productNumberSetting").val();
         var userId = ${user.id};
@@ -83,7 +83,7 @@
 
         return true
 
-    });
+    });*/
 
     $("button.loginSubmitButton").click(function () {
         var username = $("#username").val();
@@ -202,13 +202,37 @@
         </div>
 
         <div class="buyDiv">
-            <a class="buyLink" href="${pageContext.request.contextPath}/forebuyone?pid=${productVo.product.id}">
+
+            <a class="buyLink" href="javascript:void(0)">
                 <button class="buyButton">立即购买</button>
             </a>
             <a href="#nowhere" class="addCartLink">
                 <button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
             </a>
         </div>
+
+        <script>
+            $(".buyButton").click(function () {
+                <c:if test="${not empty sessionScope[ConstantValue.CURRENT_USER]}">
+                var pid = ${productVo.product.id};
+                var num = $(".productNumberSetting").val();
+                var addOrderpage = "${pageContext.request.contextPath}/add/order";
+                alert("走到这里了")
+                $.get(
+                    addOrderpage,
+                    function () {
+                        alert(pid);
+                        alert(num);
+                    }
+                )
+                </c:if>
+                <c:if test="${empty sessionScope[ConstantValue.CURRENT_USER]}">
+                location.href = "${pageContext.request.contextPath}/login";
+                </c:if>
+                return false;
+            });
+
+        </script>
     </div>
 
     <div style="clear:both"></div>
