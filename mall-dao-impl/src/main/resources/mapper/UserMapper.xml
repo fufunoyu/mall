@@ -91,14 +91,5 @@
         WHERE id = #{id}
     </select>
 
-    <update id="updateSelectionById" parameterType="User">
-        UPDATE `user`
-        <set>
-            <if test="password!=null">
-                password = #{password},
-            </if>
-        </set>
-        WHERE id=#{id}
-    </update>
 
 </mapper>
