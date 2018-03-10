@@ -3,25 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.rhinoceros.mall.dao.dao.CartProductDao">
+
     <!-- 找到购物车-->
     <select id="findByUserId" resultType="CartProduct" parameterType="Long">
         SELECT *
-        FROM cart_product
+        FROM `cart_product`
         WHERE user_id = #{userId}
     </select>
 
-
+    <select id="findById" parameterType="Long" resultType="CartProduct">
+        SELECT *
+        FROM `cart_product`
+        WHERE id = #{id}
+    </select>
 
     <!--删除商品消息-->
-    <delete id="deleteById"  parameterType="Long">
+    <delete id="deleteById" parameterType="Long">
         DELETE
-        FROM cart_product
+        FROM `cart_product`
         WHERE id = #{cartProductId}
     </delete>
 
-    <!-- 修改购物车中每个商品的购买数量，增加一个判断，当参数不符合要求的时候，我们可以不去判断此查询条件-->
+    <!-- 修改购物车中部位null的字段-->
     <update id="updateSelectionById" parameterType="CartProduct">
-        UPDATE cart_product
+        UPDATE `cart_product`
         <set>
             <if test="productId!=null">
                 product_id = #{productId},
@@ -38,18 +43,18 @@
 
     <!-- 添加商品 -->
     <insert id="add" parameterType="CartProduct">
-        INSERT INTO cart_product(product_id,user_id,product_num)
-        VALUE (
-        #{productId},
-        #{userId},
-        #{productNum}
+        INSERT INTO `cart_product` (product_id, user_id, product_num)
+            VALUE (
+            #{productId},
+            #{userId},
+            #{productNum}
         )
     </insert>
 
     <!--查找购物车中商品-->
     <select id="findByUserIdAndProductId" resultType="CartProduct">
         SELECT *
-        FROM cart_product
+        FROM `cart_product`
         WHERE user_id = #{userId} AND product_id = #{productId}
     </select>
 

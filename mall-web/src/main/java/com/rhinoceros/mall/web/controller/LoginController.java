@@ -4,11 +4,11 @@ import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
-import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.utils.SecurityUtils;
-import com.rhinoceros.mall.service.impl.exception.EmailHasFoundException;
-import com.rhinoceros.mall.service.impl.exception.UserException;
-import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
+import com.rhinoceros.mall.service.impl.exception.user.EmailHasFoundException;
+import com.rhinoceros.mall.service.impl.exception.user.UserException;
+import com.rhinoceros.mall.service.impl.exception.user.UserHasFoundException;
 import com.rhinoceros.mall.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,7 +63,6 @@ public class LoginController {
     @RequestMapping("/loginSubmit")
     public String login(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
 
-
         // 检查用户输入是否规范，不规范则返回到登录页面
         if (br.hasErrors()) {
             model.addAttribute("error", br.getFieldError().getDefaultMessage());
@@ -76,6 +75,12 @@ public class LoginController {
             }
             return "redirect:/index";
         }
+
+        //设置登陆ip
+        //TODO 并不能获得真实的ip，可能只是代理IP
+        String ip = request.getRemoteAddr();
+        userDto.setIp(ip);
+
         //检查输入的用户是否存在，存在则跳转到到主页面，不存在则返回到登录页面
         try {
             User user = userService.login(userDto);

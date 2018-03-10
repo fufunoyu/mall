@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.core.pojo;
+package com.rhinoceros.mall.core.po;
 /* created at 1:39 PM 3/6/2018  */
 
 import lombok.AllArgsConstructor;

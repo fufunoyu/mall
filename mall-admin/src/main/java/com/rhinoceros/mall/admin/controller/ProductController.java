@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.admin.controller;
 
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.ProductDescription;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;

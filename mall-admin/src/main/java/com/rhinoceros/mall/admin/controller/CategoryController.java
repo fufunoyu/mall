@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.admin.controller;
 
-import com.rhinoceros.mall.core.pojo.Category;
+import com.rhinoceros.mall.core.po.Category;
 import com.rhinoceros.mall.service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,34 +23,31 @@ public class CategoryController {
 
     /**
      * 通过id查询商品分类
+     *
      * @param id
      * @return
      */
     @RequestMapping
     @ResponseBody
-    public Category findById(@RequestParam(value = "id") Long id){
+    public Category findById(@RequestParam(value = "id") Long id) {
         return categoryService.findById(id);
     }
+
     /**
      * 获取所有商品分类列表的方法
+     *
      * @param id
      * @return
      */
     @ResponseBody
     @RequestMapping("/list.json")
     public List<Category> getList(@RequestParam(value = "id", required = false) Long id) {
-        List<Category> categories=null;
-        if (id == null) {
-            categories = categoryService.findRootCategories();
-        } else {
-            categories = categoryService.findChildrenById(id);
-        }
-
-        return categories;
+        return categoryService.findChildrenById(id);
     }
 
     /**
      * 插入分类
+     *
      * @param category
      * @return
      */
@@ -62,12 +59,13 @@ public class CategoryController {
 
     /**
      * 删除分类
+     *
      * @param category
      */
     @ResponseBody
     @RequestMapping("/delete")
-    public void delete(Category category){
-       categoryService.delete(category);
+    public void delete(Category category) {
+        categoryService.deleteById(category.getId());
     }
 
     @ResponseBody

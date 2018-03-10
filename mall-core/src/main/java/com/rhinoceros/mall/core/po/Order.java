@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.core.pojo;
+package com.rhinoceros.mall.core.po;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import lombok.Data;

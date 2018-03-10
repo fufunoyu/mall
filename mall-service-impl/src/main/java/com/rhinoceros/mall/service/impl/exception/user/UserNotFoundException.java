@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.service.impl.exception;
+package com.rhinoceros.mall.service.impl.exception.user;
 
 /**
  * 用户名不存在异常

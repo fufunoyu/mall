@@ -1,7 +1,6 @@
 package com.rhinoceros.mall.dao.dao;
 
-import com.rhinoceros.mall.core.pojo.User;
-import org.apache.ibatis.annotations.Param;
+import com.rhinoceros.mall.core.po.User;
 
 public interface UserDao {
 
@@ -23,14 +22,25 @@ public interface UserDao {
 
     /**
      * 根据id查找用户
+     *
      * @param id
      * @return
      */
-    User findById(@Param("id")Long id);
+    User findById(Long id);
 
-    //修改用户信息
-    int update(User user);
-
-    //通过写入的邮箱在数据库中查找
+    /**
+     * 通过写入的邮箱在数据库中查找
+     *
+     * @param email
+     * @return
+     */
     User findByEmail(String email);
+
+    /**
+     * 更新用户中不为null的字段
+     *
+     * @param user
+     * @return
+     */
+    int updateSelectionById(User user);
 }
