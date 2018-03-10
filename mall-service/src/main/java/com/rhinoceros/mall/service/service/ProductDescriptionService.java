@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.service.service;
 /* created at 3:28 PM 3/9/2018  */
 
-import com.rhinoceros.mall.core.pojo.ProductDescription;
+import com.rhinoceros.mall.core.po.ProductDescription;
 
 public interface ProductDescriptionService {
 

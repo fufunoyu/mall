@@ -4,8 +4,8 @@ import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
 import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
-import com.rhinoceros.mall.core.pojo.User;
-import com.sun.org.glassfish.external.statistics.annotations.Reset;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.User;
 
 /**
  * 用户业务逻辑接口
@@ -34,4 +34,11 @@ public interface UserService {
     void retrievePassword(RetrievePasswordDto retrievePasswordDto);
 
     void resetPassword(ResetPasswordDto resetPasswordDto);
+
+    /**
+     * 根据id获取用户
+     * @param userId
+     * @return
+     */
+    User findById(Long userId);
 }

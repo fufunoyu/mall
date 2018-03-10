@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.web.controller;
 
-import com.rhinoceros.mall.core.pojo.Category;
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Category;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.CategoryWithProductsVo;

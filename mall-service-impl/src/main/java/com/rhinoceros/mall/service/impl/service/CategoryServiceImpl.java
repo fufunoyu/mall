@@ -1,20 +1,25 @@
 package com.rhinoceros.mall.service.impl.service;
 
-import com.rhinoceros.mall.core.pojo.Category;
+import com.rhinoceros.mall.core.po.Category;
 import com.rhinoceros.mall.dao.dao.CategoryDao;
+import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryDao categoryDao;
 
+    @Override
     public List<Category> findAll() {
         return categoryDao.findAll();
     }
@@ -39,20 +44,45 @@ public class CategoryServiceImpl implements CategoryService {
         return list;
     }
 
+    @Transactional
     @Override
     public Category add(Category category) {
+        Category parent = categoryDao.findById(category.getParentId());
+        if (parent == null) {
+            log.info("不存在指定父分类");
+            throw new EntityNotExistException("不存在指定父分类");
+        }
         categoryDao.add(category);
         return category;
     }
 
+    @Transactional
     @Override
-    public void delete(Category category) {
-        categoryDao.delete(category);
+    public void deleteById(Long id) {
+        Category category = categoryDao.findById(id);
+        if (category == null) {
+            log.info("分类不存在");
+            throw new EntityNotExistException("分类不存在");
+        }
+        categoryDao.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Category updateSelection(Category category) {
-        categoryDao.updateSelection(category);
+        Category old = categoryDao.findById(category.getId());
+        if (old == null) {
+            log.info("分类不存在");
+            throw new EntityNotExistException("分类不存在");
+        }
+        if (category.getParentId() != null) {
+            Category parent = categoryDao.findById(category.getParentId());
+            if (parent == null) {
+                log.info("父分类不存在");
+                throw new EntityNotExistException("父分类不存在");
+            }
+        }
+        categoryDao.updateSelectionById(category);
         return category;
     }
 

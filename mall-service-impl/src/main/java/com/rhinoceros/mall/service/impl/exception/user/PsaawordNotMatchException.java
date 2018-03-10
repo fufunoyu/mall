@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.service.impl.exception;
+package com.rhinoceros.mall.service.impl.exception.user;
 /**
  * 密码不匹配异常
  */

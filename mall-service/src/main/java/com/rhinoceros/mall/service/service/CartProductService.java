@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.service.service;
 
 
-import com.rhinoceros.mall.core.pojo.CartProduct;
+import com.rhinoceros.mall.core.po.CartProduct;
 
 import java.util.List;
 

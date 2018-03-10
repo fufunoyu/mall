@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.dao.dao;
 /* created at 2:28 PM 3/6/2018  */
 
-import com.rhinoceros.mall.core.pojo.Address;
+import com.rhinoceros.mall.core.po.Address;
 
 public interface AddressDao {
 
@@ -11,6 +11,4 @@ public interface AddressDao {
      * @return
      */
     int add(Address address);
-
-
 }

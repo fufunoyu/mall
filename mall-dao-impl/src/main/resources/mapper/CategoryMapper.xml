@@ -23,24 +23,24 @@
     <insert id="add" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO category
         (name, parent_id)
-        VALUE (#{name},#{parentId})
+            VALUE (#{name}, #{parentId})
     </insert>
 
-    <delete id="delete" parameterType="category">
+    <delete id="deleteById" parameterType="Long">
         DELETE FROM category
-        WHERE id=#{id}
+        WHERE id = #{id}
     </delete>
 
-    <update id="updateSelection" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
-        UPDATE  category
-       <set>
-           <if test="name!=null">
-               name = #{name},
-           </if>
-           <if test="parentId!=null">
-               parent_id = #{parentId},
-           </if>
-       </set>
+    <update id="updateSelectionById" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        UPDATE category
+        <set>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="parentId!=null">
+                parent_id = #{parentId},
+            </if>
+        </set>
         WHERE id=#{id}
     </update>
 
