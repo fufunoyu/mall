@@ -2,10 +2,9 @@ package com.rhinoceros.mall.service.service;
 /* created at 4:11 PM 2/28/2018  */
 
 
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.ProductDescription;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.vo.ProductVo;
 
 import java.util.List;
 

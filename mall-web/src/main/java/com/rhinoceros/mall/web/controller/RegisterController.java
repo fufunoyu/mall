@@ -1,8 +1,7 @@
 package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
-import com.rhinoceros.mall.service.impl.exception.UserException;
-import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
+import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

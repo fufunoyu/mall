@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.service.service;
 
-import com.rhinoceros.mall.core.pojo.Category;
+import com.rhinoceros.mall.core.po.Category;
 
 import java.util.List;
 
@@ -25,16 +25,9 @@ public interface CategoryService {
     Category findById(Long id);
 
     /**
-     * 查询根分类
-     *
-     * @return
-     */
-    List<Category> findRootCategories();
-
-    /**
      * 根据分类id查询直接子分类列表
      *
-     * @param id
+     * @param id id为null返回根目录
      * @return
      */
     List<Category> findChildrenById(Long id);
@@ -55,7 +48,12 @@ public interface CategoryService {
      */
     Category add(Category category);
 
-    void delete(Category category);
+    /**
+     * 根据id删除分类
+     *
+     * @param id
+     */
+    void deleteById(Long id);
 
     Category updateSelection(Category category);
 }

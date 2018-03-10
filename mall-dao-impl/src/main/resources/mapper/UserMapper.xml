@@ -5,47 +5,90 @@
 <mapper namespace="com.rhinoceros.mall.dao.dao.UserDao">
     <select id="select" resultType="User">
         SELECT *
-        FROM user
+        FROM `user`
     </select>
 
     <!--查寻注册用户是否已存在-->
     <select id="findByUsername" resultType="User" parameterType="String">
         SELECT *
-        FROM USER
+        FROM `user`
         WHERE username = #{username}
     </select>
 
     <!--查寻注册邮箱是否已存在-->
     <select id="findByEmail" resultType="User" parameterType="String">
         SELECT *
-        FROM USER
+        FROM `user`
         WHERE email = #{email}
     </select>
 
     <!--录入注册用户-->
-    <insert id="add" parameterType="User">
-        INSERT INTO USER(username,password,email,nickname,gender,telephone,birthday,
-        avatar,create_at,last_login_at,last_login_ip,status)
-        VALUE (
-        #{username},
-        #{password},
-        #{email},
-        #{nickname},
-        #{gender},
-        #{telephone},
-        #{birthday},
-        #{avatar},
-        #{createAt},
-        #{lastLoginAt},
-        #{lastLoginIp},
-        #{status}
+    <insert id="add" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO `user` (username, password, email, nickname, gender, telephone, birthday, avatar, create_at,
+                            last_login_at, last_login_ip, status)
+            VALUE (
+            #{username},
+            #{password},
+            #{email},
+            #{nickname},
+            #{gender},
+            #{telephone},
+            #{birthday},
+            #{avatar},
+            #{createAt},
+            #{lastLoginAt},
+            #{lastLoginIp},
+            #{status}
         )
     </insert>
 
+    <update id="updateSelectionById" parameterType="User">
+        UPDATE `user`
+        <set>
+            <if test="username!=null">
+                username = #{username},
+            </if>
+            <if test="password!=null">
+                password = #{password},
+            </if>
+            <if test="email!=null">
+                email = #{email},
+            </if>
+            <if test="nickname!=null">
+                nickname = #{nickname},
+            </if>
+            <if test="gender!=null">
+                gender = #{gender},
+            </if>
+            <if test="telephone!=null">
+                telephone = #{telephone},
+            </if>
+            <if test="birthday!=null">
+                birthday = #{birthday},
+            </if>
+            <if test="avatar!=null">
+                avatar = #{avatar},
+            </if>
+            <if test="createAt!=null">
+                create_at = #{createAt},
+            </if>
+            <if test="lastLoginAt!=null">
+                last_login_at = #{lastLoginAt},
+            </if>
+            <if test="lastLoginIp!=null">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
     <select id="findById" resultType="User" parameterType="Long">
         SELECT *
-        FROM USER
-        WHERE id=#{id}
+        FROM `user`
+        WHERE id = #{id}
     </select>
 
 </mapper>

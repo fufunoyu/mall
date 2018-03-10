@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.manager.manager;
 
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface ProductManager {
     /**
      * 查询在某个分类及其子分类下的所有商品
      *
-     * @param categoryId 分类id
+     * @param categoryId 分类id 为null时可以查询所有的商品
      * @param pageQuery  分页条件
      * @return
      */

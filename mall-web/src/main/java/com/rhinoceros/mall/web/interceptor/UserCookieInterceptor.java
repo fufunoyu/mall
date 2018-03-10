@@ -2,8 +2,8 @@ package com.rhinoceros.mall.web.interceptor;
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
-import com.rhinoceros.mall.core.pojo.User;
-import com.rhinoceros.mall.service.impl.exception.UserException;
+import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 用户拦截器
+ * 用户自动登陆拦截器
  */
 @Slf4j
 public class UserCookieInterceptor extends HandlerInterceptorAdapter {
@@ -54,6 +54,9 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
          * cookie中的用户信息与数据库用户信息对比
          */
         LoginUserDto dto = new LoginUserDto();
+
+        //TODO 并不能获得真实的ip，可能只是代理IP
+        dto.setIp(request.getRemoteAddr());
         dto.setUsername(username);
         dto.setPassword(password);
         try {

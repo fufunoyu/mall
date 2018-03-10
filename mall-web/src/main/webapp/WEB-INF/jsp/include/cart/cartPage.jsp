@@ -132,7 +132,7 @@ $(function(){
 			}
 		});
 		params = params.substring(1);
-		location.href="forebuy?"+params;
+		location.href="${pageContext.request.contextPath}/order/add";
 	});
 	
 	
