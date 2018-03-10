@@ -35,11 +35,12 @@ public class IndexProductController {
 
     /**
      * 获取所有首页分类展示商品列表
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/list.json")
-    public List<CategoryWithProductsVo> getCategoryList(){
+    public List<CategoryWithProductsVo> getCategoryList() {
         List<CategoryWithProducts> categoryWithProductsList = indexProductService.findAll();
         List<CategoryWithProductsVo> categoryWithProductsVo = new LinkedList<CategoryWithProductsVo>();
 
@@ -62,12 +63,13 @@ public class IndexProductController {
 
     /**
      * 添加商品
+     *
      * @param productIds
      * @return
      */
     @ResponseBody
     @RequestMapping("/addproduct.json")
-    public List<Product> addProduct(@RequestParam("ids[]") List<Long> productIds){
+    public List<Product> addProduct(@RequestParam("ids[]") List<Long> productIds) {
         List<Product> products = new LinkedList<Product>();
         for (Long productId : productIds) {
             IndexProduct indexProduct = new IndexProduct();
@@ -80,14 +82,15 @@ public class IndexProductController {
     }
 
     /**
-     *  删除分类下的商品
+     * 删除分类下的商品
+     *
      * @param productIds
      * @return
      */
     @ResponseBody
     @RequestMapping("/deleteproduct.json")
-    public String deleteProduct(@RequestParam("ids[]") List<Long> productIds){
-        for (Long productId : productIds){
+    public String deleteProduct(@RequestParam("ids[]") List<Long> productIds) {
+        for (Long productId : productIds) {
             indexProductService.deleteById(productId);
         }
         return "{\"result\":\"success\"}";

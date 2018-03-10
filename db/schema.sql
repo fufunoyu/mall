@@ -197,8 +197,8 @@ CREATE TABLE `cart_product` (
   product_num INT(5)  NOT NULL
   COMMENT '商品数量',
   PRIMARY KEY (`id`),
-  KEY `product_id`(`product_id`),
-  KEY `cart_id`(`user_id`)
+  KEY `cart_id`(`user_id`),
+  KEY `product_id`(`product_id`)
 )
   COMMENT '购物车商品关系表';
 
@@ -240,16 +240,17 @@ CREATE TABLE `product_description` (
   COMMENT '商品id',
   description TEXT    NOT NULL
   COMMENT '商品详情',
-  KEY `product_id`(`product_id`)
+  KEY `product_id`(`product_id`),
   PRIMARY KEY `product_id`(`product_id`)
-)COMMENT '商品评论信息表';
+)
+  COMMENT '商品评论信息表';
 
 
-CREATE TABLE `index_product`(
+CREATE TABLE `index_product` (
 
-  id          INT(20)        NOT NULL AUTO_INCREMENT
+  id         INT(20) NOT NULL AUTO_INCREMENT
   COMMENT 'id',
-  product_id  INT(20) NOT NULL
+  product_id INT(20) NOT NULL
   COMMENT '商品id',
   PRIMARY KEY `id`(`id`),
   KEY `product_id`(`product_id`)

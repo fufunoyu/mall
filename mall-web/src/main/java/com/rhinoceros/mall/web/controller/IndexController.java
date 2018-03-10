@@ -7,6 +7,7 @@ import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.CategoryWithProductsVo;
 import com.rhinoceros.mall.service.service.CategoryService;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.web.support.web.annotation.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

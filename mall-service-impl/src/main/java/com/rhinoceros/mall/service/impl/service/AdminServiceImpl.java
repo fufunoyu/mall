@@ -3,6 +3,7 @@ package com.rhinoceros.mall.service.impl.service;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.po.Admin;
 import com.rhinoceros.mall.dao.dao.AdminDao;
+import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.impl.exception.user.PsaawordNotMatchException;
 import com.rhinoceros.mall.service.impl.exception.user.UserNotFoundException;
 import com.rhinoceros.mall.service.service.AdminService;
@@ -27,7 +28,12 @@ public class AdminServiceImpl implements AdminService {
      */
     @Transactional
     public Admin login(LoginUserDto userDto) {
-
+        //设置变量获取注册时输入的用户名
+        String username = userDto.getUsername();
+        if (username == null) {
+            log.info("用户名不能为null");
+            throw new ParameterIsNullException("用户名不能为null");
+        }
         //根据用户名从dao中查询用户信息
         Admin admin = adminDao.findByUsername(userDto.getUsername());
         //判断用户是否存在,不存在则返回null
