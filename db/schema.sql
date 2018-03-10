@@ -257,3 +257,17 @@ CREATE TABLE `index_product` (
 )
 
   COMMENT '主页分类展示商品表';
+
+CREATE TABLE `index_slideshow` (
+
+	`id` INT(20) NOT NULL AUTO_INCREMENT
+	COMMENT 'id',
+	`title` VARCHAR (32)
+	COMMENT '图片标题',
+	`image_url` VARCHAR (512) NOT NULL
+	COMMENT '轮播图url',
+	`jump_url` VARCHAR (512)
+	COMMENT '跳转url',
+	PRIMARY KEY `id`(`id`)
+)
+COMMENT '主页轮播图表';
