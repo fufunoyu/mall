@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.web.controller;
 
-import com.rhinoceros.mall.core.pojo.Category;
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Category;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CategoryService;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class CategoryController {
 
         List<Product> products = productService.findDeepByCategoryId(cid, pageQuery);
 
-        List<ProductVo> productVos = new LinkedList<ProductVo>();
+        List<ProductVo> productVos = new LinkedList<>();
         for (Product p : products) {
             ProductVo productVo = new ProductVo(p);
             productVos.add(productVo);
@@ -59,5 +60,16 @@ public class CategoryController {
         Category category = categoryService.findById(cid);
         model.addAttribute("category", category);
         return "category";
+    }
+
+    /**
+     * 根据id获取子分类
+     * @param id
+     * @return
+     */
+    @RequestMapping("/category/list.json")
+    @ResponseBody
+    public List<Category> getById(@RequestParam("parentId") Long id) {
+        return categoryService.findChildrenById(id);
     }
 }

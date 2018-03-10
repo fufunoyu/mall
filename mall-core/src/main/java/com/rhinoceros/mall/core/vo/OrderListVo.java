@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.core.vo;
 /* created at 4:40 PM 3/6/2018  */
 
-import com.rhinoceros.mall.core.pojo.Order;
+import com.rhinoceros.mall.core.po.Order;
 import lombok.Data;
 
 import java.util.List;
