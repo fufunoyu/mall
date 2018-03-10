@@ -11,6 +11,11 @@ import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.impl.exception.user.UserHasFoundException;
 import com.rhinoceros.mall.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -173,8 +178,9 @@ public class LoginController {
             userService.retrievePassword(retrievePasswordDto);
             String encodeStr = SecurityUtils.encode(retrievePasswordDto.getEmail());
             String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-            //TODO 发送邮件
-            System.out.println(basePath + "/resetPassword?" + SECRET + "=" + encodeStr);
+            //发送邮件
+            String emailText = basePath + "/resetPassword?" + SECRET + "=" + encodeStr ;
+            userService.sendSimpleEmail(emailText);
             return "sendEmailSuccess";
         } catch (UserHasFoundException | EmailHasFoundException e) {
             model.addAttribute("msg", e.getMessage());
@@ -228,4 +234,6 @@ public class LoginController {
         }
         return "resetPasswordSuccess";
     }
+
+
 }
