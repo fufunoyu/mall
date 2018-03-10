@@ -98,23 +98,25 @@ public class CartProductServiceImpl implements CartProductService {
             cartProduct = new CartProduct();
             cartProduct.setProductId(productId);
             cartProduct.setProductNum(productNum);
+            cartProduct.setUserId(userId);
             cartProductDao.add(cartProduct);
         }
     }
 
     /**
      * 购物车结算到订单确认页面
+     *
      * @param ids
      * @param userId
      * @return
      */
     @Override
-    public List<CartProduct> findCartProducts(List<Long>ids, Long userId){
-        if(userId==null){
+    public List<CartProduct> findCartProducts(List<Long> ids, Long userId) {
+        if (userId == null) {
             log.info("用户Id不存在");
             throw new EntityNotExistException("用户Id不存在");
         }
-        List<CartProduct>cartProductsTemps = new LinkedList<>();
+        List<CartProduct> cartProductsTemps = new LinkedList<>();
         List<CartProduct> cartProducts = cartProductDao.findByUserId(userId);
         for (int i = 0; i < cartProducts.size(); i++) {
             for (int j = 0; j < ids.size(); j++) {
