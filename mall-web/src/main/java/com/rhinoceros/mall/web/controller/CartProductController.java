@@ -53,17 +53,12 @@ public class CartProductController {
      * 修改购物车商品数量
      *
      * @param cartProduct
-     * @param session
      * @return
      */
     @Authentication
     @RequestMapping("/cart/update")
     @ResponseBody
-    public Integer countByCartProductId(CartProduct cartProduct, HttpSession session) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return -1;
-        }
+    public Integer countByCartProductId(CartProduct cartProduct) {
         return cartProductService.updateSelectionById(cartProduct);
     }
 
@@ -98,10 +93,6 @@ public class CartProductController {
             HttpSession session
     ) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-
         cartProductService.add(pid, user.getId(), num);
         return "success";
     }
