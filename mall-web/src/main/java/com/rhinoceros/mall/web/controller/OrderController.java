@@ -4,9 +4,16 @@ package com.rhinoceros.mall.web.controller;
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.pojo.Order;
+import com.rhinoceros.mall.core.pojo.OrderProduct;
+import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderListVo;
+import com.rhinoceros.mall.core.vo.OrderProductVo;
+import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.OrderService;
+import com.rhinoceros.mall.service.service.ProductDescriptionService;
+import com.rhinoceros.mall.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -23,6 +31,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ProductService productService;
 
     /**
      * 订单显示页面
@@ -44,12 +54,35 @@ public class OrderController {
         if (page == null) {
             page = 1;
         }
-        List<OrderListVo> orderListVos;
         Integer orderNum;
         Integer pageSize = 2;
 
         orderNum = orderService.findOrderNumByUserIdAndStatus(user.getId(), orderStatus);
-        orderListVos = orderService.findOrderListVoByUserId(user.getId(), orderStatus, page, pageSize);
+        //选择排序方式
+        com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
+        //选择分页方式
+        PageQuery pageQuery = new PageQuery(page, pageSize, queryOrder);
+
+        List<Order> orders = orderService.findByUserIdAndStatus(user.getId(), orderStatus, pageQuery);
+        List<OrderListVo> orderListVos = new LinkedList<OrderListVo>();
+        for (Order order : orders) {
+            OrderListVo orderListVo = new OrderListVo();
+            orderListVo.setOrder(order);
+            List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
+            List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
+            for (OrderProduct orderProduct : orderProducts) {
+                Product product = productService.findById(orderProduct.getProductId());
+                ProductVo productVo = new ProductVo(product);
+                productVo.setProduct(product);
+                //创建OrderProductVo对象以便填充
+                OrderProductVo orderProductVo = new OrderProductVo();
+                orderProductVo.setNum(orderProduct.getProductNum());
+                orderProductVo.setProductVo(productVo);
+                orderProductVos.add(orderProductVo);
+            }
+            orderListVo.setOrderProductVos(orderProductVos);
+            orderListVos.add(orderListVo);
+        }
 
         model.addAttribute("orderListVos", orderListVos);
         model.addAttribute("orderNum", orderNum);
@@ -86,14 +119,18 @@ public class OrderController {
     }
 
     @RequestMapping({"/confirmPayPage"})
-    public String confirmReceive(HttpSession session) {
+    public String confirmReceive(HttpSession session,
+                                 @RequestParam("oid") Long oid,
+                                 Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
             return "redirect:/login";
         }
-        Order order = new Order();
+        Order order = orderService.findById(oid);
+        model.addAttribute("order", order);
 
-        return "orderConfirmed";
+
+        return "confirmPay";
     }
 
 }

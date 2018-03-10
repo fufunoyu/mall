@@ -3,6 +3,8 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.pojo.Order;
+import com.rhinoceros.mall.core.pojo.OrderProduct;
+import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 
 import java.util.List;
@@ -14,11 +16,10 @@ public interface OrderService {
      * 根据userId和订单状态找出所有符合条件的分页订单
      * @param userId
      * @param status
-     * @param page
-     * @param size
+     * @param pageQuery
      * @return
      */
-    List<OrderListVo> findOrderListVoByUserId(Long userId, OrderStatus status,Integer page,Integer size);
+    List<Order> findByUserIdAndStatus(Long userId, OrderStatus status, PageQuery pageQuery);
 
 
     /**
@@ -34,4 +35,20 @@ public interface OrderService {
      * @param order
      */
     void updateSelectionById(Order order);
+
+    /**
+     * 根据订单id查找订单
+     * @param id
+     * @return
+     */
+    Order findById(Long id);
+
+    /**
+     * 通过orderId查找订单与商品的关系
+     * @param orderId
+     * @return
+     */
+    List<OrderProduct> findProductIdByOrderId(Long orderId);
+
+
 }

@@ -4,70 +4,32 @@ package com.rhinoceros.mall.service.impl.service;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.pojo.Order;
 import com.rhinoceros.mall.core.pojo.OrderProduct;
-import com.rhinoceros.mall.core.pojo.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.vo.OrderListVo;
-import com.rhinoceros.mall.core.vo.OrderProductVo;
-import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.dao.dao.OrderDao;
-import com.rhinoceros.mall.dao.dao.OrderProductDao;
-import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private OrderProductDao orderProductDao;
-
-    @Autowired
     private OrderDao orderDao;
 
-    @Autowired
-    private ProductDao productDao;
+
 
     /**
      * 根据userId和订单状态找出所有符合条件的分页订单
      * @param userId
      * @param status
-     * @param page
-     * @param size
+     * @param pageQuery
      * @return
      */
     @Override
-    public List<OrderListVo> findOrderListVoByUserId(Long userId, OrderStatus status, Integer page, Integer size) {
-        //选择排序方式
-        com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
-        //选择分页方式
-        PageQuery pageQuery = new PageQuery(page, size, queryOrder);
-
-        List<Order> orders = orderDao.findByUserIdAndStatus(userId, status, pageQuery);
-        List<OrderListVo> orderListVos = new LinkedList<OrderListVo>();
-        for (Order order : orders) {
-            OrderListVo orderListVo = new OrderListVo();
-            orderListVo.setOrder(order);
-            List<OrderProduct> orderProducts = orderProductDao.findByOrderId(order.getId());
-            List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
-            for (OrderProduct orderProduct : orderProducts) {
-                Product product = productDao.findById(orderProduct.getProductId());
-                ProductVo productVo = new ProductVo(product);
-                productVo.setProduct(product);
-                //创建OrderProductVo对象以便填充
-                OrderProductVo orderProductVo = new OrderProductVo();
-                orderProductVo.setNum(orderProduct.getProductNum());
-                orderProductVo.setProductVo(productVo);
-                orderProductVos.add(orderProductVo);
-            }
-            orderListVo.setOrderProductVos(orderProductVos);
-            orderListVos.add(orderListVo);
-        }
-
-        return orderListVos;
+    public List<Order> findByUserIdAndStatus(Long userId, OrderStatus status, PageQuery pageQuery) {
+        return orderDao.findByUserIdAndStatus(userId, status, pageQuery);
     }
 
 
@@ -90,6 +52,26 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateSelectionById(Order order) {
         orderDao.updateSelectionById(order);
+    }
+
+    /**
+     * 根据订单id查找订单
+     * @param id
+     * @return
+     */
+    @Override
+    public Order findById(Long id) {
+        return orderDao.findById(id);
+    }
+
+    /**
+     * 通过orderId查找订单与商品的关系
+     * @param orderId
+     * @return
+     */
+    @Override
+    public List<OrderProduct> findProductIdByOrderId(Long orderId) {
+        return orderDao.findProductIdByOrderId(orderId);
     }
 
 

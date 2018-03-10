@@ -44,7 +44,7 @@
 
                 var pid = ${productVo.product.id};
                 var num = $(".productNumberSetting").val();
-                var userId = ${user.id};
+                var userId = ${sessionScope[ConstantValue.CURRENT_USER].id};
                 var addCartpage = "${pageContext.request.contextPath}/cart/add";
                 $.get(
                     addCartpage,

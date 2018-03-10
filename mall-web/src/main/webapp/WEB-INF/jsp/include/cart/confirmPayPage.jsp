@@ -6,10 +6,10 @@
 	<div class="confirmPayImageDiv">
 		<img src="img/site/comformPayFlow.png">
 		<div  class="confirmPayTime1">
-			<fmt:formatDate value="${o.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+			<fmt:formatDate value="${order.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		<div  class="confirmPayTime2">
-			<fmt:formatDate value="${o.payDate}" pattern="yyyy-MM-dd HH:mm:ss"/> 
+			<fmt:formatDate value="${order.payDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		<div class="confirmPayTime3">
 			yyyy-MM-dd HH:mm:ss 
