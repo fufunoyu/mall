@@ -14,24 +14,61 @@
     <select id="findByUserIdAndStatus" resultType="Order">
         SELECT *
         FROM `order`
-        <if test="status==null">
-            WHERE user_id = #{userId}
-        </if>
-        <if test="status!=null">
-            WHERE user_id = #{userId} AND status = #{status}
-        </if>
+        <where>
+            user_id = #{userId}
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </where>
         ${page.queryString}
     </select>
 
-    <select id="findOrderNumByUserIdAndStatus" resultType="Integer">
+    <select id="countByUserIdAndStatus" resultType="Integer">
         SELECT count(*)
         FROM `order`
-        <if test="status==null">
-            WHERE user_id = #{userId}
-        </if>
-        <if test="status!=null">
-            WHERE user_id = #{userId} AND status = #{status}
-        </if>
+        <where>
+            user_id = #{userId}
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </where>
     </select>
 
+    <update id="updateSelectionById" parameterType="Order">
+        UPDATE `order`
+        <set>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="createAt!=null">
+                create_at = #{createAt},
+            </if>
+            <if test="payAt!=null">
+                pay_at = #{payAt},
+            </if>
+            <if test="deliverAt!=null">
+                deliver_at = #{deliverAt},
+            </if>
+            <if test="finishAt!=null">
+                finish_at = #{finishAt},
+            </if>
+            <if test="totalPrice!=null">
+                total_price = #{totalPrice},
+            </if>
+            <if test="expressNum!=null">
+                express_num = #{expressNum},
+            </if>
+            <if test="addressId!=null">
+                address_id = #{addressId},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--通过orderId查找订单与商品的关系-->
+    <select id="findOrderProductById" resultType="OrderProduct" parameterType="Long">
+        SELECT *
+        FROM order_product
+        WHERE order_id = #{orderId}
+    </select>
 </mapper>

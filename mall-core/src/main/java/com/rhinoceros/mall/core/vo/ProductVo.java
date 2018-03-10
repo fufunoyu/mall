@@ -1,11 +1,9 @@
 package com.rhinoceros.mall.core.vo;
 /* created at 3:27 PM 2/28/2018  */
 
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.ProductDescription;
 import lombok.Data;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 这个类封装商品展示信息
@@ -31,6 +29,20 @@ public class ProductVo {
     /**
      * 商品详情
      */
+    private ProductDescription productDescription;
+
+    public ProductVo(Product product){
+        this.product = product;
+        //获取商品图片url数组
+        imagesUrls = product.getImageUrls().split(Product.IMAGE_SEPARATION);
+        firstImageUrl = imagesUrls[0];
+    }
+
+
+    /**
+     * 分类名称
+     */
+    private String categoryName;
     private String description;
 
 //    /**

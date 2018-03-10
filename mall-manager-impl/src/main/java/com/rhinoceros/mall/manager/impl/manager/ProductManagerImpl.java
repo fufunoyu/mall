@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.manager.impl.manager;
 
-import com.rhinoceros.mall.core.pojo.Category;
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Category;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.dao.dao.CategoryDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;

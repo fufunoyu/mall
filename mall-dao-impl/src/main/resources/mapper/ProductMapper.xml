@@ -29,4 +29,12 @@
         </foreach>
         ${page.queryString}
     </select>
+
+    <!--查找商品详情-->
+    <select id="findDescriptionById" resultType="ProductDescription" parameterType="Long" >
+        SELECT *
+        FROM product_description
+        WHERE product_id = #{productId}
+    </select>
+
 </mapper>

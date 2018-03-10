@@ -2,8 +2,8 @@ package com.rhinoceros.mall.web.interceptor;
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
-import com.rhinoceros.mall.core.pojo.User;
-import com.rhinoceros.mall.service.impl.exception.UserException;
+import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

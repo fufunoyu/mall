@@ -1,8 +1,9 @@
 package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
-import com.rhinoceros.mall.core.pojo.CartProduct;
-import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.po.CartProduct;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CartProductService;
 import com.rhinoceros.mall.service.service.ProductService;
@@ -40,8 +41,9 @@ public class CartProductController {
         List<ProductVo> products = new LinkedList<ProductVo>();
         for (int i = 0; i < cartProducts.size(); i++) {
             Long tempID = cartProducts.get(i).getProductId();
-            ProductVo product = productService.findProductVoById(tempID);
-            products.add(product);
+            Product product = productService.findById(tempID);
+            ProductVo productVo = new ProductVo(product);
+            products.add(productVo);
         }
         model.addAttribute("products", products);
         model.addAttribute("cartProducts", cartProducts);

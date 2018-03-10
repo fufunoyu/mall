@@ -1,5 +1,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%@page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
+<%@ page import="com.rhinoceros.mall.core.po.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 
@@ -58,7 +60,11 @@
 
             /*$("div.orderType div").removeClass("selectedOrderType");
             $(this).parent("div").addClass("selectedOrderType");*/
-            window.location.href = 'list' + '?page=' + 1 + '&status=' + orderStatus ;
+            if(orderStatus == "ALL"){
+                window.location.href = 'list' + '?page=' + 1 ;
+            }else{
+                window.location.href = 'list' + '?page=' + 1 + '&status=' + orderStatus ;
+            }
 
         });
         //判断订单状态
@@ -120,6 +126,8 @@
         });
     });
 
+
+
 </script>
 
 <div class="boughtDiv">
@@ -128,7 +136,9 @@
         <div id="button_WAIT_PAY"><a orderStatus="WAIT_PAY" href="#nowhere">待付款</a></div>
         <div id="button_WAIT_SHIP"><a orderStatus="WAIT_SHIP" href="#nowhere">待发货</a></div>
         <div id="button_WAIT_RECEIVE"><a orderStatus="WAIT_RECEIVE" href="#nowhere">待收货</a></div>
-        <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere" class="noRightborder">待评价</a></div>
+        <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere">待评价</a></div>
+        <div id="button_COMPLETED"><a orderStatus="COMPLETED" href="#nowhere">已完成</a></div>
+        <div id="button_CANCEL"><a orderStatus="CANCEL" href="#nowhere" class="noRightborder">已取消</a></div>
         <div class="orderTypeLastOne"><a class="noRightborder">&nbsp;</a></div>
     </div>
     <div style="clear:both"></div>
@@ -162,9 +172,9 @@
 
                     </td>
                     <td class="orderItemDeleteTD">
-                        <%--<a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
+                        <a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
                             <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
-                        </a>--%>
+                        </a>
 
                     </td>
                 </tr>
@@ -216,10 +226,9 @@
                             <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
-                                    <button class="orderListItemConfirm">确认收货</button>
-                                    <%--<a href="foreconfirmPay?oid=${o.id}">
+                                    <a href="${pageContext.request.contextPath}/order/confirmPayPage">
                                         <button class="orderListItemConfirm">确认收货</button>
-                                    </a>--%>
+                                    </a>
                                 </c:if>
                                 <c:if test="${o.order.status=='WAIT_PAY' }">
 

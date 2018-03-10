@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.manager.manager;
 
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 
 import java.util.List;

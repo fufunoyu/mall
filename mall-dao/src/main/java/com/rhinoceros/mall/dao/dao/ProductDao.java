@@ -1,7 +1,8 @@
 package com.rhinoceros.mall.dao.dao;
 /* created at 3:37 PM 2/28/2018  */
 
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,4 +35,13 @@ public interface ProductDao {
      * @return
      */
     List<Product> findByCategoryIdIn(@Param("categoryIds") List<Long> categoryIds, @Param("page") PageQuery pageQuery);
+
+
+    /**
+     * 根据产品id查找产品详情
+     *
+     * @param productId
+     * @return
+     */
+    ProductDescription findDescriptionById(Long productId);
 }
