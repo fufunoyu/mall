@@ -1,8 +1,8 @@
 package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
-import com.rhinoceros.mall.core.pojo.Admin;
-import com.rhinoceros.mall.service.impl.exception.UserException;
+import com.rhinoceros.mall.core.po.Admin;
+import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

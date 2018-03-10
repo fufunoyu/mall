@@ -1,6 +1,5 @@
 package com.rhinoceros.mall.service.service;
-import com.rhinoceros.mall.core.pojo.Order;
-import com.rhinoceros.mall.core.pojo.OrderProduct;
+
 
 public interface OrderProductService {
     /**

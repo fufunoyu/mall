@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.dao.dao;
 
-import com.rhinoceros.mall.core.pojo.CategoryWithProducts;
-import com.rhinoceros.mall.core.pojo.IndexProduct;
+import com.rhinoceros.mall.core.po.CategoryWithProducts;
+import com.rhinoceros.mall.core.po.IndexProduct;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

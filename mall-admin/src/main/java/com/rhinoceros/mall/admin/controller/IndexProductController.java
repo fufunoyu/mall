@@ -1,22 +1,20 @@
 package com.rhinoceros.mall.admin.controller;
 
-import com.rhinoceros.mall.core.pojo.Category;
-import com.rhinoceros.mall.core.pojo.CategoryWithProducts;
-import com.rhinoceros.mall.core.pojo.IndexProduct;
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Category;
+import com.rhinoceros.mall.core.po.CategoryWithProducts;
+import com.rhinoceros.mall.core.po.IndexProduct;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.vo.CategoryWithProductsVo;
 import com.rhinoceros.mall.service.service.IndexProductService;
 import com.rhinoceros.mall.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 创建首页分类展示商品控制器
