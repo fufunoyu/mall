@@ -59,7 +59,13 @@
      * */
     function productAppend() {
         <%--打开新增商品页面--%>
+        //TODO
         $("#product_insert_win").window("open")
+    }
+
+    function productRemove() {
+        <%--删除商品--%>
+        //TODO
     }
 
     /**
@@ -293,7 +299,7 @@
 <%--参数窗口--%>
 <div id="product_win" class="easyui-window" title="详细参数" data-options="iconCls:'icon-save',closed:true,modal:true"
      style="padding:10px;width: 500px;height: 100%">
-    <form id="ff" action="product.jsp" method="post">
+    <form id="product_description" action="product.jsp" method="post">
         <div style="margin-bottom:20px">
             <input id="productName" class="easyui-textbox" name="name" style="width:100%"
                    data-options="label:'商品名称:',required:true">
@@ -349,7 +355,7 @@
 <%--录入商品--%>
 <div id="product_insert_win" class="easyui-window" title="录入商品" data-options="iconCls:'icon-save',closed:true,modal:true"
      style="padding:10px;width: 500px;height: 100%">
-    <form id="ff1" action="product.jsp" method="post">
+    <form id="product_description1" action="product.jsp" method="post">
         <div style="margin-bottom:20px">
             <input id="productName1" class="easyui-textbox" name="name" style="width:100%"
                    data-options="label:'商品名称:',required:true">
