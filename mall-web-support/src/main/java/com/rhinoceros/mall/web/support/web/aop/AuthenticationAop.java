@@ -27,14 +27,14 @@ public class AuthenticationAop {
     }
 
     @Around("pointcut()")
-    public void before(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object before(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取session
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
             throw new AuthenticationException("用户未登录");
         }
-        joinPoint.proceed();
+        return joinPoint.proceed();
     }
 
 }
