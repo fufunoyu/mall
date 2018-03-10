@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
      * @param userDto
      */
     @Transactional
+    @Override
     public void register(RegisterUserDto userDto) {
         //设置变量获取注册时输入的用户名
         String username = userDto.getUsername();
@@ -101,6 +102,7 @@ public class UserServiceImpl implements UserService {
      * @return user 登录成功返回的用户信息
      */
     @Transactional
+    @Override
     public User login(LoginUserDto userDto) {
         String username = userDto.getUsername();
         if (username == null) {

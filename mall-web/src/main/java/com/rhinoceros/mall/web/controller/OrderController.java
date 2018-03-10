@@ -2,18 +2,21 @@ package com.rhinoceros.mall.web.controller;
 /* created at 4:27 PM 3/6/2018  */
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
-import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.web.support.web.annotation.Authentication;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -44,6 +49,7 @@ public class OrderController {
      * @param model
      * @return
      */
+    @Authentication
     @RequestMapping("/add")
     public String showOrderConfirm(OrderDto orderDto, Model model) {
         //获取商品的id
@@ -62,14 +68,12 @@ public class OrderController {
 
     }
 
+    @Authentication
     @RequestMapping("/list")
     public String orderList(Model model, HttpSession session,
                             @RequestParam(value = "status", required = false) OrderStatus orderStatus,
                             @RequestParam(value = "page", required = false) Integer page) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
         if (page == null) {
             page = 1;
         }
@@ -111,6 +115,7 @@ public class OrderController {
      * @param session
      * @return
      */
+    @Authentication
     @ResponseBody
     @RequestMapping({"/status"})
     public String addToCartProduct(
@@ -119,9 +124,6 @@ public class OrderController {
             HttpSession session
     ) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
         Order order = new Order();
         order.setId(oid);
         order.setStatus(status);
@@ -129,14 +131,9 @@ public class OrderController {
         return "success";
     }
 
+    @Authentication
     @RequestMapping({"/confirmPayPage"})
-    public String confirmReceive(HttpSession session) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-        Order order = new Order();
-
+    public String confirmReceive() {
         return "orderConfirmed";
     }
 
