@@ -10,6 +10,7 @@ import com.rhinoceros.mall.service.impl.exception.user.EmailHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.impl.exception.user.UserHasFoundException;
 import com.rhinoceros.mall.service.service.UserService;
+import com.rhinoceros.mall.web.support.web.annotation.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
