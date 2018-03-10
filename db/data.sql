@@ -98,3 +98,14 @@ insert  into `user`(`id`,`username`,`password`,`email`,`nickname`,`gender`,`tele
 INSERT  INTO `address`(`postal_code`,`delivery_address`,`delivery_name`,`phone`,`user_id`) VALUES ('123123','slkdfjiwniwaenf','zhb','13888881113',1);
 INSERT  INTO `address`(`postal_code`,`delivery_address`,`delivery_name`,`phone`,`user_id`) VALUES ('342362','rtsdheag','zhb','13888881113',1);
 
+
+insert into `admin` (`id`, `username`, `password`) values('1','zhangsanfeng','111111');
+insert into `admin` (`id`, `username`, `password`) values('2','liubeibei','111111');
+
+
+insert into `index_product` (`id`, `product_id`) values('1','1');
+insert into `index_product` (`id`, `product_id`) values('2','2');
+insert into `index_product` (`id`, `product_id`) values('3','3');
+insert into `index_product` (`id`, `product_id`) values('4','4');
+insert into `index_product` (`id`, `product_id`) values('5','5');
+
