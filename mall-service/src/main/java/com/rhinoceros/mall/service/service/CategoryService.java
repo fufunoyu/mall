@@ -25,16 +25,9 @@ public interface CategoryService {
     Category findById(Long id);
 
     /**
-     * 查询根分类
-     *
-     * @return
-     */
-    List<Category> findRootCategories();
-
-    /**
      * 根据分类id查询直接子分类列表
      *
-     * @param id
+     * @param id id为null返回根目录
      * @return
      */
     List<Category> findChildrenById(Long id);

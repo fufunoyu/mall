@@ -6,8 +6,9 @@ import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.dao.dao.OrderDao;
-import com.rhinoceros.mall.dao.dao.ProductDao;
+import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDao orderDao;
-
-    @Autowired
-    private ProductDao productDao;
 
     /**
      * 根据userId和订单状态找出所有符合条件的分页订单
@@ -57,12 +56,17 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public void updateSelectionById(Order order) {
+        if (order.getId() == null) {
+            log.info("id不能为空");
+            throw new ParameterIsNullException("id不能为空");
+        }
         orderDao.updateSelectionById(order);
     }
 
 
     /**
      * 通过orderId查找订单与商品的关系
+     *
      * @param orderId
      * @return
      */

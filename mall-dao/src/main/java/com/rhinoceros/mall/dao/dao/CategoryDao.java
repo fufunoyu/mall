@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.dao.dao;
 
 import com.rhinoceros.mall.core.po.Category;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,20 +13,14 @@ public interface CategoryDao {
      */
     List<Category> findAll();
 
-    /**
-     * 查找根分类
-     *
-     * @return
-     */
-    List<Category> findRootCategories();
 
     /**
      * 根据分类id查找一级子分类
      *
-     * @param id
+     * @param id 当id为null时，返回根分类
      * @return
      */
-    List<Category> findChildrenById(Long id);
+    List<Category> findChildrenById(@Param("id") Long id);
 
     /**
      * 添加分类
