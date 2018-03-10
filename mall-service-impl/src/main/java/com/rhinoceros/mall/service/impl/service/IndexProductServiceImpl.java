@@ -1,19 +1,29 @@
 package com.rhinoceros.mall.service.impl.service;
 
-import com.rhinoceros.mall.core.pojo.CategoryWithProducts;
-import com.rhinoceros.mall.core.pojo.IndexProduct;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.CategoryWithProducts;
+import com.rhinoceros.mall.core.po.IndexProduct;
 import com.rhinoceros.mall.dao.dao.IndexProductDao;
+import com.rhinoceros.mall.dao.dao.ProductDao;
+import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
+import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.service.IndexProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class IndexProductServiceImpl implements IndexProductService{
+@Slf4j
+public class IndexProductServiceImpl implements IndexProductService {
 
     @Autowired
     private IndexProductDao indexProductDao;
+
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public List<CategoryWithProducts> findAll() {
@@ -25,14 +35,31 @@ public class IndexProductServiceImpl implements IndexProductService{
         return indexProductDao.findByCategoryId(categoryId);
     }
 
+    @Transactional
     @Override
     public IndexProduct add(IndexProduct indexProduct) {
+        Long productId = indexProduct.getProductId();
+        if (productId == null) {
+            log.info("id不能为空");
+            throw new ParameterIsNullException("id不能为空");
+        }
+        Product product = productDao.findById(productId);
+        if (product == null) {
+            log.info("商品不存在");
+            throw new EntityNotExistException("商品不存在");
+        }
         indexProductDao.add(indexProduct);
         return indexProduct;
     }
 
+    @Transactional
     @Override
     public void deleteById(Long indexProductId) {
+        IndexProduct indexProduct = indexProductDao.findById(indexProductId);
+        if (indexProduct == null) {
+            log.info("指定在首页展示的商品不存在");
+            throw new EntityNotExistException("指定在首页展示的商品不存在");
+        }
         indexProductDao.deleteById(indexProductId);
     }
 }

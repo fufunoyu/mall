@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.dao.dao;
 
-import com.rhinoceros.mall.core.pojo.CategoryWithProducts;
-import com.rhinoceros.mall.core.pojo.IndexProduct;
+import com.rhinoceros.mall.core.po.CategoryWithProducts;
+import com.rhinoceros.mall.core.po.IndexProduct;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,12 +10,14 @@ public interface IndexProductDao {
 
     /**
      * 查找全部主页展示的商品
+     *
      * @return
      */
     List<CategoryWithProducts> findAll();
 
     /**
      * 根据根分类ID查找主页展示商品
+     *
      * @param categoryId
      * @return
      */
@@ -23,6 +25,7 @@ public interface IndexProductDao {
 
     /**
      * 添加主页展示商品
+     *
      * @param indexProduct
      * @return
      */
@@ -30,8 +33,16 @@ public interface IndexProductDao {
 
     /**
      * 删除主页展示商品
+     *
      * @param indexProductId
      */
     void deleteById(Long indexProductId);
 
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    IndexProduct findById(Long id);
 }

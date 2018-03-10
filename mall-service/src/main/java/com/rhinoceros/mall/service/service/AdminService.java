@@ -1,7 +1,7 @@
 package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.dto.LoginUserDto;
-import com.rhinoceros.mall.core.pojo.Admin;
+import com.rhinoceros.mall.core.po.Admin;
 
 /**
  * 用户业务逻辑接口

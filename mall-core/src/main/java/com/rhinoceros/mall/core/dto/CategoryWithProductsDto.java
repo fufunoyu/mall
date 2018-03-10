@@ -1,11 +1,12 @@
 package com.rhinoceros.mall.core.dto;
 
-import com.rhinoceros.mall.core.pojo.Category;
-import com.rhinoceros.mall.core.pojo.Product;
+import com.rhinoceros.mall.core.po.Category;
+import com.rhinoceros.mall.core.po.Product;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
 @Getter
 @Setter
 public class CategoryWithProductsDto {

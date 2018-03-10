@@ -61,7 +61,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/loginSubmit")
-    public String login(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
+    public String loginSubmit(@Validated @ModelAttribute("loginUser") LoginUserDto userDto, BindingResult br, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
 
         // 检查用户输入是否规范，不规范则返回到登录页面
         if (br.hasErrors()) {
