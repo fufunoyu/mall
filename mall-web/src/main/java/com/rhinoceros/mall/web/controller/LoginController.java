@@ -125,6 +125,7 @@ public class LoginController {
      * @param session
      * @return
      */
+    @Authentication
     @RequestMapping("/logout")
     public String logout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute(ConstantValue.CURRENT_USER);

@@ -15,6 +15,7 @@ import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.web.support.web.annotation.Authentication;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,7 @@ public class OrderController {
      * @param model
      * @return
      */
+    @Authentication
     @RequestMapping("/add")
     public String showOrderConfirm(OrderDto orderDto ,Model model){
         //获取商品的id
@@ -65,6 +67,7 @@ public class OrderController {
 
     }
 
+    @Authentication
     @RequestMapping("/list")
     public String orderList(Model model, HttpSession session,
                             @RequestParam(value = "status", required = false) OrderStatus orderStatus,
@@ -114,6 +117,7 @@ public class OrderController {
      * @param session
      * @return
      */
+    @Authentication
     @ResponseBody
     @RequestMapping({"/status"})
     public String addToCartProduct(
@@ -132,6 +136,7 @@ public class OrderController {
         return "success";
     }
 
+    @Authentication
     @RequestMapping({"/confirmPayPage"})
     public String confirmReceive(HttpSession session) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
