@@ -6,10 +6,10 @@
 	<div class="confirmPayImageDiv">
 		<img src="img/site/comformPayFlow.png">
 		<div  class="confirmPayTime1">
-			<fmt:formatDate value="${order.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+			<fmt:formatDate value="${orderListVo.order.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		<div  class="confirmPayTime2">
-			<fmt:formatDate value="${order.payDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+			<fmt:formatDate value="${orderListVo.order.payDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		<div class="confirmPayTime3">
 			yyyy-MM-dd HH:mm:ss 
@@ -30,22 +30,22 @@
 				<th width="120px">商品总价 </th>		
 				<th width="120px">运费</th>		
 			</thead>
-			<c:forEach items="${o.orderItems}" var="oi">
+			<c:forEach items="${orderListVo.orderProductVos}" var="oi">
 				<tr>
-					<td><img width="50px" src="img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
+					<td><img width="50px" src="${oi.productVo.firstImageUrl}"></td>
 					<td class="confirmPayOrderItemProductLink">
-						<a href="#nowhere">${oi.product.name}</a>
+						<a href="#nowhere">${oi.productVo.product.name}</a>
 					</td>
-					<td>￥<fmt:formatNumber type="number" value="${oi.product.orignalPrice}" minFractionDigits="2"/></td>
+					<td>￥<fmt:formatNumber type="number" value="${oi.productVo.product.price}" minFractionDigits="2"/></td>
 					<td>1</td>
-					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${oi.product.promotePrice}" minFractionDigits="2"/></span></td>
+					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${oi.productVo.product.discount}" minFractionDigits="2"/></span></td>
 					<td><span>快递 ： 0.00 </span></td>
 				</tr>
 			</c:forEach>
 		</table>
 		
 		<div class="confirmPayOrderItemText pull-right">
-			实付款： <span class="confirmPayOrderItemSumPrice">￥<fmt:formatNumber type="number" value="${o.total}" minFractionDigits="2"/></span>
+			实付款： <span class="confirmPayOrderItemSumPrice">￥<fmt:formatNumber type="number" value="${orderListVo.order.totalPrice}" minFractionDigits="2"/></span>
 		</div>
 		
 		
@@ -55,7 +55,7 @@
 		<table class="confirmPayOrderDetailTable">
 			<tr>
 				<td>订单编号：</td>
-				<td>${o.orderCode} <img width="23px" src="img/site/confirmOrderTmall.png"></td>
+				<td>${orderListVo.order.identifier} <img width="23px" src="img/site/confirmOrderTmall.png"></td>
 			</tr>
 			<tr>
 				<td>卖家昵称：</td>

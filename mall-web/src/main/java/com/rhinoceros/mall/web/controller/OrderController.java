@@ -70,16 +70,8 @@ public class OrderController {
             orderListVo.setOrder(order);
             List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
             List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
-            for (OrderProduct orderProduct : orderProducts) {
-                Product product = productService.findById(orderProduct.getProductId());
-                ProductVo productVo = new ProductVo(product);
-                productVo.setProduct(product);
-                //创建OrderProductVo对象以便填充
-                OrderProductVo orderProductVo = new OrderProductVo();
-                orderProductVo.setNum(orderProduct.getProductNum());
-                orderProductVo.setProductVo(productVo);
-                orderProductVos.add(orderProductVo);
-            }
+
+            setOrderProductVos(orderProducts, orderProductVos);
             orderListVo.setOrderProductVos(orderProductVos);
             orderListVos.add(orderListVo);
         }
@@ -118,6 +110,13 @@ public class OrderController {
         return "success";
     }
 
+    /**
+     * 跳转到确认收货页面
+     * @param session
+     * @param oid
+     * @param model
+     * @return
+     */
     @RequestMapping({"/confirmPayPage"})
     public String confirmReceive(HttpSession session,
                                  @RequestParam("oid") Long oid,
@@ -129,8 +128,29 @@ public class OrderController {
         Order order = orderService.findById(oid);
         model.addAttribute("order", order);
 
+        OrderListVo orderListVo = new OrderListVo();
+        orderListVo.setOrder(order);
+        List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
+        List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
+
+        setOrderProductVos(orderProducts, orderProductVos);
+        orderListVo.setOrderProductVos(orderProductVos);
+        model.addAttribute("orderListVo", orderListVo);
 
         return "confirmPay";
+    }
+
+    private void setOrderProductVos(List<OrderProduct> orderProducts, List<OrderProductVo> orderProductVos) {
+        for (OrderProduct orderProduct : orderProducts) {
+            Product product = productService.findById(orderProduct.getProductId());
+            ProductVo productVo = new ProductVo(product);
+            productVo.setProduct(product);
+            //创建OrderProductVo对象以便填充
+            OrderProductVo orderProductVo = new OrderProductVo();
+            orderProductVo.setNum(orderProduct.getProductNum());
+            orderProductVo.setProductVo(productVo);
+            orderProductVos.add(orderProductVo);
+        }
     }
 
 }
