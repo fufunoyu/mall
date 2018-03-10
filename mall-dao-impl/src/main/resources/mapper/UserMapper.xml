@@ -70,13 +70,13 @@
                 avatar = #{avatar},
             </if>
             <if test="createAt!=null">
-                createAt = #{createAt},
+                create_at = #{createAt},
             </if>
             <if test="lastLoginAt!=null">
-                lastLoginAt = #{lastLoginAt},
+                last_login_at = #{lastLoginAt},
             </if>
             <if test="lastLoginIp!=null">
-                lastLoginIp = #{lastLoginIp},
+                last_login_ip = #{lastLoginIp},
             </if>
             <if test="status!=null">
                 status = #{status},
