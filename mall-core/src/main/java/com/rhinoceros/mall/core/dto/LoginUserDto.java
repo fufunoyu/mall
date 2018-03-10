@@ -22,4 +22,8 @@ public class LoginUserDto {
     @Size(min = 6, max = 20, message = "密码长度在6-20位之间")
     private String password;
     private Boolean rememberMe = false;
+    /**
+     * 登陆ip
+     */
+    private String ip;
 }

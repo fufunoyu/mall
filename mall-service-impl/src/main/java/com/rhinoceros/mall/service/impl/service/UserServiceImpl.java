@@ -67,8 +67,8 @@ public class UserServiceImpl implements UserService {
 
         //录入用户名
         u.setUsername(username);
-        //录入登陆密码
-        u.setPassword(userDto.getPassword());
+        //录入登陆密码(加密)
+        u.setPassword(SecurityUtils.encrypt(userDto.getPassword()));
         //初始邮件设置为空
         u.setEmail(userDto.getEmail());
         //注册时昵称默认使用用户名
@@ -119,6 +119,18 @@ public class UserServiceImpl implements UserService {
             log.info("密码输入错误");
             throw new PsaawordNotMatchException("密码输入错误");
         }
+
+        //更新用户登陆信息
+        Date date = new Date();
+        User u = new User();
+        u.setId(user.getId());
+        u.setLastLoginIp(userDto.getIp());
+        u.setLastLoginAt(date);
+        //保存到数据库
+        userDao.updateSelectionById(u);
+
+        user.setLastLoginAt(date);
+        user.setLastLoginIp(userDto.getIp());
         //返回用户信息
         return user;
     }
