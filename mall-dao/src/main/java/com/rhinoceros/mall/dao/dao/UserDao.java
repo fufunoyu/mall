@@ -40,6 +40,7 @@ public interface UserDao {
      * 更新用户中不为null的字段
      *
      * @param user
+     * @return
      */
-    void updateSelectionById(User user);
+    int updateSelectionById(User user);
 }

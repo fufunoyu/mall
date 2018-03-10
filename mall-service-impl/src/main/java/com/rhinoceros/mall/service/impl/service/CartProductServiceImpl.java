@@ -7,6 +7,7 @@ import com.rhinoceros.mall.dao.dao.CartProductDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.dao.dao.UserDao;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
+import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.service.CartProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,10 @@ public class CartProductServiceImpl implements CartProductService {
     @Transactional
     @Override
     public void deleteById(Long id) {
+        if (id == null) {
+            log.info("id不能为空");
+            throw new ParameterIsNullException("id不能为空");
+        }
         CartProduct cartProduct = cartProductDao.findById(id);
         if (cartProduct == null) {
             log.info("指定id的商品购车不存在");
@@ -63,10 +68,18 @@ public class CartProductServiceImpl implements CartProductService {
     @Transactional
     @Override
     public void add(Long productId, Long userId, Integer productNum) {
+        if (productId == null) {
+            log.info("商品id不能为空");
+            throw new ParameterIsNullException("商品id不能为空");
+        }
         Product product = productDao.findById(productId);
         if (product == null) {
             log.info("商品不存在");
             throw new EntityNotExistException("商品不存在");
+        }
+        if (userId == null) {
+            log.info("用户id不能为空");
+            throw new ParameterIsNullException("用户id不能为空");
         }
         User user = userDao.findById(userId);
         if (user == null) {
@@ -96,7 +109,12 @@ public class CartProductServiceImpl implements CartProductService {
     @Transactional
     @Override
     public Integer updateSelectionById(CartProduct cartProduct) {
-        CartProduct old = cartProductDao.findById(cartProduct.getId());
+        Long cartId = cartProduct.getId();
+        if (cartId == null) {
+            log.info("购物车id不能为空");
+            throw new ParameterIsNullException("购物车id不能为空");
+        }
+        CartProduct old = cartProductDao.findById(cartId);
         if (old == null) {
             log.info("购物车不存在");
             throw new EntityNotExistException("购物车不存在");

@@ -43,7 +43,7 @@
             return
         }
         $.ajax({
-            url: node.id ? '${pageContext.request.contextPath}/category/list?id=' + node.id : '${pageContext.request.contextPath}/category/list',
+            url: node.id ? '${pageContext.request.contextPath}/category/list.json?id=' + node.id : '${pageContext.request.contextPath}/category/list.json',
             method: 'get',
             success: function (data) {
                 $('#category_list').tree('append', {

@@ -6,13 +6,13 @@
 
     <!--添加地址-->
     <insert id="add" parameterType="Address">
-        INSERT INTO address(postal_code, delivery_address, delivery_name, phone, user_id)
-        VALUE (
-        #{postalCode},
-        #{deliveryAddress},
-        #{deliveryName},
-        #{phone},
-        #{userId}
+        INSERT INTO `address` (postal_code, delivery_address, delivery_name, phone, user_id)
+            VALUE (
+            #{postalCode},
+            #{deliveryAddress},
+            #{deliveryName},
+            #{phone},
+            #{userId}
         )
     </insert>
 

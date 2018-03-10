@@ -34,6 +34,10 @@ public interface UserService {
      */
     void retrievePassword(RetrievePasswordDto retrievePasswordDto);
 
+    /**
+     * 重置密码
+     * @param resetPasswordDto
+     */
     void resetPassword(ResetPasswordDto resetPasswordDto);
 
     /**
