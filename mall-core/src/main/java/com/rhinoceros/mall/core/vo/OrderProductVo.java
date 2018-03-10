@@ -19,8 +19,4 @@ public class OrderProductVo {
      * 商品数目
      */
     private Integer num;
-    /**
-     * 订单总价
-     */
-    private BigDecimal total;
 }

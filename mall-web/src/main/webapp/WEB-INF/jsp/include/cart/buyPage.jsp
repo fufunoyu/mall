@@ -2,15 +2,16 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <script>
+
+/*$(function(){
     var total = 0;
-$(function(){
-	var singleSum = $(".orderItemUnitSum").attr("value");
-	if(singleSum!=null){
-        alert(singleSum);
-        total = total+singleSum;
+	var all = $(".orderItemUnitSum")
+	for(var i=0;i<all.length;i++){
+	    var numStr = all[i].text;
+		num = Number(numStr);
+		total = total+num;
 	}
-	return total;
-})
+})*/
 </script>
 <div class="buyPageDiv">
   <form action="${pageContext.request.contextPath}/order/confirm" method="post">
@@ -75,7 +76,7 @@ $(function(){
 			<tbody class="productListTableTbody">
 				<c:forEach items="${orderProducts}" var="orderProduct" varStatus="st" >
 					<tr class="orderItemTR">
-						<td class="orderItemFirstTD"><img class="orderItemImg" src="${pageContext.request.contextPath}/static/img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
+						<td class="orderItemFirstTD"><img class="orderItemImg" src="${orderProduct.productVo.firstImageUrl}"></td>
 						<td class="orderItemProductInfo">
 						<a  href="foreproduct?pid=${orderProduct.productVo.product.id}" class="orderItemProductLink">
 							${orderProduct.productVo.product.name}
@@ -94,8 +95,8 @@ $(function(){
 						<td>
 						<span class="orderItemProductNumber">${orderProduct.num}</span>
 						</td>
-						<td><span class="orderItemUnitSum">
-						￥<fmt:formatNumber type="number" value="${orderProduct.num*orderProduct.productVo.product.price}" minFractionDigits="2"/>
+						<td>￥<span class="orderItemUnitSum">
+						<fmt:formatNumber type="number" value="${orderProduct.num*orderProduct.productVo.product.price}" minFractionDigits="2"/>
 						</span></td>
 						<c:if test="${st.count==1}">
 						<td rowspan="5"  class="orderItemLastTD">

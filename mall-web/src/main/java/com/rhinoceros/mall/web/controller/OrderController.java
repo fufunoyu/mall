@@ -9,9 +9,6 @@ import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.dto.OrderDto;
-import com.rhinoceros.mall.core.pojo.OrderProduct;
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
@@ -43,32 +40,29 @@ public class OrderController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private ProductService productService;
 
     /**
      * 订单显示页面
-     *
+     * @param orderDto
      * @param model
-     * @param session
-     * @param orderStatus
-     * @param page
      * @return
      */
-    @RequestMapping("/list")
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto , HttpServletRequest request, Model model){
+    public String showOrderConfirm(OrderDto orderDto ,Model model){
         //获取商品的id
         Long pid = orderDto.getProductId();
         //根据商品id获取商品信息
         OrderProductVo orderProductVo = new OrderProductVo();
-        ProductVo product = productService.findProductVoById(pid);
-        orderProductVo.setProductVo(product);
-        orderProductVo.setNum(orderDto.getProductNum());
-        orderProductVo.setTotal(calculate(orderDto));
-       // orderProductVo.setTotal();
-        model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
-        return "buy";
+        ProductVo productVo = new ProductVo(productService.findById(pid));
+        if(productVo!=null){
+            orderProductVo.setProductVo(productVo);
+            orderProductVo.setNum(orderDto.getProductNum());
+            model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
+            model.addAttribute("total", calculate(orderDto));
+            return "buy";
+        }
+        return "product";
+
     }
 
     @RequestMapping("/list")
@@ -162,15 +156,19 @@ public class OrderController {
         }
     }
 
+    /**
+     * 计算商品总额
+     * @param orderDto
+     * @return
+     */
     private BigDecimal calculate(OrderDto orderDto){
         int num = orderDto.getProductNum();
-        OrderProductVo orderProductVo = new OrderProductVo();
-        ProductVo product = productService.findProductVoById(orderDto.getProductId());
+        Product product = productService.findById(orderDto.getProductId());
         BigDecimal totalPrice;
-        if(product.getProduct().getDiscount()==null){
-            totalPrice = product.getProduct().getPrice().multiply(BigDecimal.valueOf(num));
+        if(product.getDiscount()==null){
+            totalPrice = product.getPrice().multiply(BigDecimal.valueOf(num));
         }else{
-            totalPrice = product.getProduct().getPrice().multiply(BigDecimal.valueOf(num)).multiply(product.getProduct().getDiscount());
+            totalPrice = product.getPrice().multiply(BigDecimal.valueOf(num)).multiply(product.getDiscount());
         }
        return  totalPrice;
     }
