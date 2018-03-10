@@ -2,23 +2,18 @@ package com.rhinoceros.mall.web.controller;
 /* created at 4:27 PM 3/6/2018  */
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.dto.OrderDto;
-import com.rhinoceros.mall.core.pojo.OrderProduct;
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.User;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
-import com.rhinoceros.mall.service.service.ProductService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.LinkedList;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -46,18 +39,19 @@ public class OrderController {
 
     /**
      * 订单显示页面
+     *
      * @param orderDto
      * @param model
      * @return
      */
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto ,Model model){
+    public String showOrderConfirm(OrderDto orderDto, Model model) {
         //获取商品的id
         Long pid = orderDto.getProductId();
         //根据商品id获取商品信息
         OrderProductVo orderProductVo = new OrderProductVo();
         ProductVo productVo = new ProductVo(productService.findById(pid));
-        if(productVo!=null){
+        if (productVo != null) {
             orderProductVo.setProductVo(productVo);
             orderProductVo.setNum(orderDto.getProductNum());
             model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
@@ -161,18 +155,19 @@ public class OrderController {
 
     /**
      * 计算商品总额
+     *
      * @param orderDto
      * @return
      */
-    private BigDecimal calculate(OrderDto orderDto){
+    private BigDecimal calculate(OrderDto orderDto) {
         int num = orderDto.getProductNum();
         Product product = productService.findById(orderDto.getProductId());
         BigDecimal totalPrice;
-        if(product.getDiscount()==null){
+        if (product.getDiscount() == null) {
             totalPrice = product.getPrice().multiply(BigDecimal.valueOf(num));
-        }else{
+        } else {
             totalPrice = product.getPrice().multiply(BigDecimal.valueOf(num)).multiply(product.getDiscount());
         }
-       return  totalPrice;
+        return totalPrice;
     }
 }
