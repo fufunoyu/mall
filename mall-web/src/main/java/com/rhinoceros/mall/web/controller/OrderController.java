@@ -73,9 +73,6 @@ public class OrderController {
                             @RequestParam(value = "status", required = false) OrderStatus orderStatus,
                             @RequestParam(value = "page", required = false) Integer page) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
         if (page == null) {
             page = 1;
         }
@@ -126,9 +123,6 @@ public class OrderController {
             HttpSession session
     ) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
         Order order = new Order();
         order.setId(oid);
         order.setStatus(status);
@@ -138,13 +132,7 @@ public class OrderController {
 
     @Authentication
     @RequestMapping({"/confirmPayPage"})
-    public String confirmReceive(HttpSession session) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-        Order order = new Order();
-
+    public String confirmReceive() {
         return "orderConfirmed";
     }
 
