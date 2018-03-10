@@ -4,7 +4,7 @@
 
 <mapper namespace="com.rhinoceros.mall.dao.dao.CommentDao">
     <select id="findByProductId" resultType="Comment">
-        SELECT * FROM COMMENT c
+        SELECT * FROM `comment` c
         WHERE c.`product_id` = #{productId}
         ${page.queryString}
     </select>

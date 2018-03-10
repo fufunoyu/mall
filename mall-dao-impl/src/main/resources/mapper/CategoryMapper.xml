@@ -5,34 +5,36 @@
 <mapper namespace="com.rhinoceros.mall.dao.dao.CategoryDao">
     <select id="findAll" resultType="Category">
         SELECT *
-        FROM category
-    </select>
-
-    <select id="findRootCategories" resultType="Category">
-        SELECT *
-        FROM category
-        WHERE parent_id IS NULL
+        FROM `category`
     </select>
 
     <select id="findChildrenById" parameterType="Long" resultType="Category">
         SELECT *
-        FROM category
-        WHERE parent_id = #{id}
+        FROM `category`
+        WHERE
+        <choose>
+            <when test="id==null">
+                parent_id IS NULL
+            </when>
+            <otherwise>
+                parent_id = ${id}
+            </otherwise>
+        </choose>
     </select>
 
     <insert id="add" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO category
+        INSERT INTO `category`
         (name, parent_id)
             VALUE (#{name}, #{parentId})
     </insert>
 
     <delete id="deleteById" parameterType="Long">
-        DELETE FROM category
+        DELETE FROM `category`
         WHERE id = #{id}
     </delete>
 
     <update id="updateSelectionById" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
-        UPDATE category
+        UPDATE `category`
         <set>
             <if test="name!=null">
                 name = #{name},
@@ -46,7 +48,7 @@
 
     <select id="findById" parameterType="Long" resultType="Category">
         SELECT *
-        FROM category
+        FROM `category`
         WHERE id = #{id}
     </select>
 </mapper>

@@ -5,47 +5,47 @@
 <mapper namespace="com.rhinoceros.mall.dao.dao.UserDao">
     <select id="select" resultType="User">
         SELECT *
-        FROM user
+        FROM `user`
     </select>
 
     <!--查寻注册用户是否已存在-->
     <select id="findByUsername" resultType="User" parameterType="String">
         SELECT *
-        FROM USER
+        FROM `user`
         WHERE username = #{username}
     </select>
 
     <!--查寻注册邮箱是否已存在-->
     <select id="findByEmail" resultType="User" parameterType="String">
         SELECT *
-        FROM USER
+        FROM `user`
         WHERE email = #{email}
     </select>
 
     <!--录入注册用户-->
     <insert id="add" parameterType="User">
-        INSERT INTO USER(username,password,email,nickname,gender,telephone,birthday,
-        avatar,create_at,last_login_at,last_login_ip,status)
-        VALUE (
-        #{username},
-        #{password},
-        #{email},
-        #{nickname},
-        #{gender},
-        #{telephone},
-        #{birthday},
-        #{avatar},
-        #{createAt},
-        #{lastLoginAt},
-        #{lastLoginIp},
-        #{status}
+        INSERT INTO `user` (username, password, email, nickname, gender, telephone, birthday, avatar, create_at,
+                          last_login_at, last_login_ip, status)
+            VALUE (
+            #{username},
+            #{password},
+            #{email},
+            #{nickname},
+            #{gender},
+            #{telephone},
+            #{birthday},
+            #{avatar},
+            #{createAt},
+            #{lastLoginAt},
+            #{lastLoginIp},
+            #{status}
         )
     </insert>
 
     <select id="findById" resultType="User" parameterType="Long">
         SELECT *
-        FROM USER
-        WHERE id=#{id}
+        FROM `user`
+        WHERE id = #{id}
     </select>
 
 </mapper>

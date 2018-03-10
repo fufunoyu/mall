@@ -7,7 +7,9 @@ import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.core.utils.SecurityUtils;
 import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,10 @@ public class UserServiceImpl implements UserService {
         //设置变量获取注册时输入的邮箱
         String email = userDto.getEmail();
 
+        if (username == null) {
+            log.info("用户名不能为null");
+            throw new ParameterIsNullException("用户名不能为null");
+        }
         //通过输入的用户名查询数据库
         User user = userDao.findByUsername(username);
         //如果用户已存在，程序抛出异常
@@ -44,6 +50,10 @@ public class UserServiceImpl implements UserService {
             throw new UserHasFoundException("用户已经存在");
         }
 
+        if (email == null) {
+            log.info("邮箱不能为null");
+            throw new ParameterIsNullException("邮箱不能为null");
+        }
         //通过输入的邮箱查询数据库
         user = userDao.findByEmail(email);
         //如果用户已存在，程序抛出异常
@@ -92,15 +102,20 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     public User login(LoginUserDto userDto) {
+        String username = userDto.getUsername();
+        if (username == null) {
+            log.info("用户名不能为null");
+            throw new ParameterIsNullException("用户名不能为null");
+        }
         //根据用户名从dao中查询用户信息
-        User user = userDao.findByUsername(userDto.getUsername());
+        User user = userDao.findByUsername(username);
         //判断用户是否存在,不存在则返回null
         if (user == null) {
             log.info("用户不存在");
             throw new UserNotFoundException("用户不存在");
         }
         // 用户存在，比较密码是否匹配，如果不匹配，则抛出异常
-        if (!user.getPassword().equals(userDto.getPassword())) {
+        if (!user.getPassword().equals(SecurityUtils.encrypt(userDto.getPassword()))) {
             log.info("密码输入错误");
             throw new PsaawordNotMatchException("密码输入错误");
         }
@@ -111,9 +126,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void retrievePassword(RetrievePasswordDto retrievePasswordDto) {
         //通过输入的邮箱查询数据库
-        //TODO CCCC
         User user = userDao.findByEmail(retrievePasswordDto.getEmail());
-        //如果用户已存在，程序抛出异常
+        //如果用户不存在，程序抛出异常
         if (user == null) {
             log.info("该邮箱还未注册");
             throw new EmailHasFoundException("该邮箱还未注册");
