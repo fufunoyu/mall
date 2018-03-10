@@ -2,20 +2,19 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <script>
-
-/*$(function(){
     var total = 0;
-	var all = $(".orderItemUnitSum")
-	for(var i=0;i<all.length;i++){
-	    var numStr = all[i].text;
-		num = Number(numStr);
-		total = total+num;
+$(function(){
+	var singleSum = $(".orderItemUnitSum").attr("value");
+	if(singleSum!=null){
+        alert(singleSum);
+        total = total+singleSum;
 	}
-})*/
+	return total;
+})
 </script>
 <div class="buyPageDiv">
   <form action="${pageContext.request.contextPath}/order/confirm" method="post">
-  
+
 	<div class="buyFlow">
 		<img class="pull-left" src="${pageContext.request.contextPath}/static/img/site/simpleLogo.png">
 		<img class="pull-right" src="${pageContext.request.contextPath}/static/img/site/buyflow.png">
@@ -24,11 +23,11 @@
 	<div class="address">
 		<div class="addressTip">输入收货地址</div>
 		<div>
-		
+
 			<table class="addressTable">
 				<tr>
 					<td class="firstColumn">详细地址<span class="redStar">*</span></td>
-					
+
 					<td><textarea name="address" placeholder="建议您如实填写详细收货地址，例如接到名称，门牌好吗，楼层和房间号等信息"></textarea></td>
 				</tr>
 				<tr>
@@ -44,7 +43,7 @@
 					<td><input name="mobile"  placeholder="请输入11位手机号码" type="text"></td>
 				</tr>
 			</table>
-			
+
 		</div>
 
 	</div>
@@ -81,22 +80,22 @@
 						<a  href="foreproduct?pid=${orderProduct.productVo.product.id}" class="orderItemProductLink">
 							${orderProduct.productVo.product.name}
 						</a>
-						
-						
+
+
 							<img src="${pageContext.request.contextPath}/static/img/site/creditcard.png" title="支持信用卡支付">
 							<img src="${pageContext.request.contextPath}/static/img/site/7day.png" title="消费者保障服务,承诺7天退货">
 							<img src="${pageContext.request.contextPath}/static/img/site/promise.png" title="消费者保障服务,承诺如实描述">
-						
+
 						</td>
 						<td>
-						
-						<span class="orderItemProductPrice">￥<fmt:formatNumber type="number" value="${orderProduct.productVo.product.price}" minFractionDigits="2"/></span>
+
+						<span class="orderItemProductPrice">￥<fmt:formatNumber type="number" value="${orderProduct.productVo.product.discount==null?orderProduct.productVo.product.price:orderProduct.productVo.product.discount}" minFractionDigits="2"/></span>
 						</td>
 						<td>
 						<span class="orderItemProductNumber">${orderProduct.num}</span>
 						</td>
-						<td>￥<span class="orderItemUnitSum">
-						<fmt:formatNumber type="number" value="${orderProduct.num*orderProduct.productVo.product.price}" minFractionDigits="2"/>
+						<td><span class="orderItemUnitSum">
+						￥<fmt:formatNumber type="number" value="${orderProduct.num*(orderProduct.productVo.product.discount==null?orderProduct.productVo.product.price:orderProduct.productVo.product.discount)}" minFractionDigits="2"/>
 						</span></td>
 						<c:if test="${st.count==1}">
 						<td rowspan="5"  class="orderItemLastTD">
@@ -104,19 +103,19 @@
 							<input type="radio" value="" checked="checked">
 							普通配送
 						</label>
-						
+
 						<select class="orderItemDeliverySelect" class="form-control">
 							<option>快递 免邮费</option>
 						</select>
 
 						</td>
 						</c:if>
-						
+
 					</tr>
-				</c:forEach>				
-				
+				</c:forEach>
+
 			</tbody>
-			
+
 		</table>
 		<div class="orderItemSumDiv">
 			<div class="pull-left">
@@ -131,7 +130,7 @@
 					</div>
 				</span>
 			</div>
-			
+
 			<span class="pull-right">店铺合计(含运费): ￥<fmt:formatNumber type="number" value="${total}" minFractionDigits="2"/></span>
 		</div>
 
@@ -141,14 +140,14 @@
 	</div>
 
 	<div class="orderItemTotalSumDiv">
-		<div class="pull-right"> 
+		<div class="pull-right">
 			<span>实付款：</span>
 			<span class="orderItemTotalSumSpan">￥<fmt:formatNumber type="number" value="${total}" minFractionDigits="2"/></span>
 		</div>
 	</div>
-	
+
 	<div class="submitOrderDiv">
 			<button type="submit" class="submitOrderButton">提交订单</button>
 	</div>
-  </form>		
+  </form>
 </div>
