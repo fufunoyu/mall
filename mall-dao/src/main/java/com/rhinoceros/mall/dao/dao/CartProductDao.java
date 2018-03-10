@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.dao.dao;
 
-import com.rhinoceros.mall.core.pojo.CartProduct;
+import com.rhinoceros.mall.core.po.CartProduct;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -45,4 +45,12 @@ public interface CartProductDao {
      * @return
      */
     CartProduct findByUserIdAndProductId(@Param("userId") Long userId, @Param("productId") Long productId);
+
+    /**
+     * 根据id查询购物车，不存在返回null
+     *
+     * @param id
+     * @return
+     */
+    CartProduct findById(Long id);
 }

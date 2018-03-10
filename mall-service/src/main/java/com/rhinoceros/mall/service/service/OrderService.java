@@ -2,8 +2,8 @@ package com.rhinoceros.mall.service.service;
 /* created at 8:10 PM 3/6/2018  */
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
-import com.rhinoceros.mall.core.pojo.Order;
-import com.rhinoceros.mall.core.pojo.OrderProduct;
+import com.rhinoceros.mall.core.po.Order;
+import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 
@@ -28,7 +28,7 @@ public interface OrderService {
      * @param status
      * @return 订单数量
      */
-    Integer findOrderNumByUserIdAndStatus(Long userId, OrderStatus status);
+    Integer countByUserIdAndStatus(Long userId, OrderStatus status);
 
     /**
      * 根据订单id更新订单信息

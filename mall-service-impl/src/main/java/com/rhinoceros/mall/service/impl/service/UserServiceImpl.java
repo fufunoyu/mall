@@ -6,12 +6,9 @@ import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
-import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.dao.dao.UserDao;
-import com.rhinoceros.mall.service.impl.exception.EmailHasFoundException;
-import com.rhinoceros.mall.service.impl.exception.PsaawordNotMatchException;
-import com.rhinoceros.mall.service.impl.exception.UserHasFoundException;
-import com.rhinoceros.mall.service.impl.exception.UserNotFoundException;
+import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     /**
-     * 用户注册，注册失败抛出{@link com.rhinoceros.mall.service.impl.exception.UserException}
+     * 用户注册，注册失败抛出{@link UserException}
      *
      * @param userDto
      */
@@ -37,7 +34,7 @@ public class UserServiceImpl implements UserService {
         //设置变量获取注册时输入的用户名
         String username = userDto.getUsername();
         //设置变量获取注册时输入的邮箱
-        String email=userDto.getEmail();
+        String email = userDto.getEmail();
 
         //通过输入的用户名查询数据库
         User user = userDao.findByUsername(username);
@@ -88,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * 用户登录，登录失败抛出{@link com.rhinoceros.mall.service.impl.exception.UserException}
+     * 用户登录，登录失败抛出{@link UserException}
      *
      * @param userDto
      * @return user 登录成功返回的用户信息
@@ -123,7 +120,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void resetPassword(ResetPasswordDto resetPasswordDto){
+    public void resetPassword(ResetPasswordDto resetPasswordDto) {
 
+    }
+
+    @Override
+    public User findById(Long userId) {
+        return userDao.findById(userId);
     }
 }

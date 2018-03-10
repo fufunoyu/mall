@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" isELIgnored="false" %>
 
 <%@page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
-<%@ page import="com.rhinoceros.mall.core.pojo.User" %>
+<%@ page import="com.rhinoceros.mall.core.po.User" %>
 
 <script>
 

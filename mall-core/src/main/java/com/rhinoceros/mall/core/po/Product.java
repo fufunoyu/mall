@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.core.pojo;
+package com.rhinoceros.mall.core.po;
 
 import com.rhinoceros.mall.core.enumeration.ProductStatus;
 import lombok.Data;
@@ -42,10 +42,6 @@ public class Product {
      */
     private Long categoryId;
 
-    /**
-     * 商品分类id
-     */
-    private Long rootCategoryId;
 
     /**
      * 商品库存总量

@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.service.service;
 
-import com.rhinoceros.mall.core.pojo.Category;
+import com.rhinoceros.mall.core.po.Category;
 
 import java.util.List;
 
@@ -55,7 +55,12 @@ public interface CategoryService {
      */
     Category add(Category category);
 
-    void delete(Category category);
+    /**
+     * 根据id删除分类
+     *
+     * @param id
+     */
+    void deleteById(Long id);
 
     Category updateSelection(Category category);
 }

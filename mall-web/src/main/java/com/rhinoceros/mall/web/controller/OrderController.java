@@ -3,16 +3,15 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
-import com.rhinoceros.mall.core.pojo.Order;
-import com.rhinoceros.mall.core.pojo.OrderProduct;
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.po.Order;
+import com.rhinoceros.mall.core.po.OrderProduct;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.OrderService;
-import com.rhinoceros.mall.service.service.ProductDescriptionService;
 import com.rhinoceros.mall.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +56,7 @@ public class OrderController {
         Integer orderNum;
         Integer pageSize = 2;
 
-        orderNum = orderService.findOrderNumByUserIdAndStatus(user.getId(), orderStatus);
+        orderNum = orderService.countByUserIdAndStatus(user.getId(), orderStatus);
         //选择排序方式
         com.rhinoceros.mall.core.query.Order queryOrder = new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC);
         //选择分页方式
@@ -68,7 +67,7 @@ public class OrderController {
         for (Order order : orders) {
             OrderListVo orderListVo = new OrderListVo();
             orderListVo.setOrder(order);
-            List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
+            List<OrderProduct> orderProducts = orderService.findOrderProductById(order.getId());
             List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
 
             setOrderProductVos(orderProducts, orderProductVos);
@@ -80,7 +79,7 @@ public class OrderController {
         model.addAttribute("orderNum", orderNum);
         model.addAttribute("nowPage", page);
         model.addAttribute("pageSize", pageSize);
-        model.addAttribute("orderStatus", orderStatus==null?"ALL":orderStatus.name());
+        model.addAttribute("orderStatus", orderStatus == null ? "ALL" : orderStatus.name());
         return "bought";
     }
 

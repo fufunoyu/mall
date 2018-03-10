@@ -1,10 +1,9 @@
 package com.rhinoceros.mall.service.impl.service;
 
 
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.ProductDescription;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.dao.dao.ProductDescriptionDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.manager.manager.ProductManager;
 import com.rhinoceros.mall.service.service.ProductService;
@@ -22,8 +21,6 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
-    @Autowired
-    private ProductDescriptionDao productDescriptionDao;
 
     @Autowired
     private ProductManager productManager;
@@ -36,10 +33,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product findById(Long id) {
-        Product product = productDao.findById(id);
-
-        return product;
-
+        return productDao.findById(id);
     }
 
     @Override

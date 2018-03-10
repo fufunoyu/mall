@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.dao.dao;
 
-import com.rhinoceros.mall.core.pojo.Category;
+import com.rhinoceros.mall.core.po.Category;
 
 import java.util.List;
 
@@ -27,6 +27,12 @@ public interface CategoryDao {
      */
     List<Category> findChildrenById(Long id);
 
+    /**
+     * 添加分类
+     *
+     * @param category
+     * @return
+     */
     int add(Category category);
 
     /**
@@ -37,7 +43,18 @@ public interface CategoryDao {
      */
     Category findById(Long id);
 
-    void delete(Category category);
+    /**
+     * 根据id删除分类
+     *
+     * @param id
+     */
+    void deleteById(Long id);
 
-    int updateSelection(Category category);
+    /**
+     * 根据id更新分类中不为null的字段
+     *
+     * @param category
+     * @return
+     */
+    int updateSelectionById(Category category);
 }

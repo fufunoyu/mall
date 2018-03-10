@@ -2,14 +2,19 @@ package com.rhinoceros.mall.service.impl.service;
 /* created at 8:11 PM 3/6/2018  */
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
-import com.rhinoceros.mall.core.pojo.Order;
-import com.rhinoceros.mall.core.pojo.OrderProduct;
+import com.rhinoceros.mall.core.po.Order;
+import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.OrderListVo;
+import com.rhinoceros.mall.core.vo.OrderProductVo;
+import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.dao.dao.OrderDao;
+import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -40,9 +45,8 @@ public class OrderServiceImpl implements OrderService {
      * @return 订单数量
      */
     @Override
-    public Integer findOrderNumByUserIdAndStatus(Long userId, OrderStatus status) {
-        Integer num = orderDao.findOrderNumByUserIdAndStatus(userId,status);
-        return num;
+    public Integer countByUserIdAndStatus(Long userId, OrderStatus status) {
+        return orderDao.countByUserIdAndStatus(userId, status);
     }
 
     /**

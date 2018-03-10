@@ -1,9 +1,9 @@
 package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
-import com.rhinoceros.mall.core.pojo.CartProduct;
-import com.rhinoceros.mall.core.pojo.Product;
-import com.rhinoceros.mall.core.pojo.User;
+import com.rhinoceros.mall.core.po.CartProduct;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CartProductService;
 import com.rhinoceros.mall.service.service.ProductService;
