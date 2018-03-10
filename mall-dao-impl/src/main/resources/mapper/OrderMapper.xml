@@ -65,10 +65,17 @@
         WHERE id = #{id}
     </update>
 
+    <select id="findById" resultType="Order" parameterType="Long">
+        SELECT *
+        FROM `order`
+        WHERE id = #{id}
+    </select>
+
     <!--通过orderId查找订单与商品的关系-->
-    <select id="findOrderProductById" resultType="OrderProduct" parameterType="Long">
+    <select id="findProductIdByOrderId" resultType="OrderProduct" parameterType="Long" >
         SELECT *
         FROM `order_product`
         WHERE order_id = #{orderId}
     </select>
+
 </mapper>

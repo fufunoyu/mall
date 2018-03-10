@@ -24,7 +24,6 @@ public interface OrderService {
 
     /**
      * 根据用户id和状态找出符合条件的订单数量
-     *
      * @param userId
      * @param status
      * @return 订单数量
@@ -33,15 +32,22 @@ public interface OrderService {
 
     /**
      * 根据订单id更新订单信息
-     *
      * @param order
      */
     void updateSelectionById(Order order);
+
+    /**
+     * 根据订单id查找订单
+     * @param id
+     * @return
+     */
+    Order findById(Long id);
 
     /**
      * 通过orderId查找订单与商品的关系
      * @param orderId
      * @return
      */
-    List<OrderProduct> findOrderProductById(Long orderId);
+    List<OrderProduct> findProductIdByOrderId(Long orderId);
+
 }

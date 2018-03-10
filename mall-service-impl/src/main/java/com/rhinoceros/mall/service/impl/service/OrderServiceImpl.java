@@ -63,26 +63,25 @@ public class OrderServiceImpl implements OrderService {
         orderDao.updateSelectionById(order);
     }
 
+    /**
+     * 根据订单id查找订单
+     * @param id
+     * @return
+     */
+    @Override
+    public Order findById(Long id) {
+        return orderDao.findById(id);
+    }
 
     /**
      * 通过orderId查找订单与商品的关系
-     *
      * @param orderId
      * @return
      */
     @Override
-    public List<OrderProduct> findOrderProductById(Long orderId) {
-        return orderDao.findOrderProductById(orderId);
+    public List<OrderProduct> findProductIdByOrderId(Long orderId) {
+        return orderDao.findProductIdByOrderId(orderId);
     }
-
-
-
-//    @Override
-//    public void addOrder() {
-//        Order order = new Order();
-//
-//    }
-
 
 
 }
