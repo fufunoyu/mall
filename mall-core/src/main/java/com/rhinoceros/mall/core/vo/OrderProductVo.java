@@ -4,6 +4,8 @@ package com.rhinoceros.mall.core.vo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class OrderProductVo {
 
@@ -17,4 +19,8 @@ public class OrderProductVo {
      * 商品数目
      */
     private Integer num;
+    /**
+     * 订单总价
+     */
+    private BigDecimal total;
 }
