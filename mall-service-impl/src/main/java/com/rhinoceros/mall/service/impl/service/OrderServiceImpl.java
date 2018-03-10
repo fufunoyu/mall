@@ -5,16 +5,11 @@ import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.vo.OrderListVo;
-import com.rhinoceros.mall.core.vo.OrderProductVo;
-import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.dao.dao.OrderDao;
-import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service

@@ -3,18 +3,17 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
-import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
-import com.rhinoceros.mall.core.po.Product;
-import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
+import com.rhinoceros.mall.service.service.AddressService;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +31,8 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private AddressService addressService;
 
     /**
      * 订单显示页面
@@ -67,7 +68,7 @@ public class OrderController {
         for (Order order : orders) {
             OrderListVo orderListVo = new OrderListVo();
             orderListVo.setOrder(order);
-            List<OrderProduct> orderProducts = orderService.findOrderProductById(order.getId());
+            List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
             List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
 
             setOrderProductVos(orderProducts, orderProductVos);
@@ -111,13 +112,14 @@ public class OrderController {
 
     /**
      * 跳转到确认收货页面
+     *
      * @param session
      * @param oid
      * @param model
      * @return
      */
     @RequestMapping({"/confirmPayPage"})
-    public String confirmReceive(HttpSession session,
+    public String confirmReceiveButton(HttpSession session,
                                  @RequestParam("oid") Long oid,
                                  Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
@@ -135,8 +137,37 @@ public class OrderController {
         setOrderProductVos(orderProducts, orderProductVos);
         orderListVo.setOrderProductVos(orderProductVos);
         model.addAttribute("orderListVo", orderListVo);
-
+        Address orderAddress = addressService.findById(orderListVo.getOrder().getAddressId());
+        model.addAttribute("orderAddress", orderAddress);
         return "confirmPay";
+    }
+
+    @RequestMapping({"/confiredPage"})
+    public String confirmReceive(HttpSession session,
+                                 Model model,
+                                 @RequestParam("oid") Long oid,
+                                 @RequestParam("status")OrderStatus status) {
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/login";
+        }
+        Order order = new Order();
+        order.setId(oid);
+        order.setStatus(status);
+        orderService.updateSelectionById(order);
+        return "orderConfirmed";
+    }
+
+    @RequestMapping({"/comment"})
+    public String OrderComment(HttpSession session,
+                               Model model,
+                               @RequestParam("oid") Long oid) {
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        return "review";
     }
 
     private void setOrderProductVos(List<OrderProduct> orderProducts, List<OrderProductVo> orderProductVos) {

@@ -230,7 +230,7 @@
                             <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
-                                    <a href="${pageContext.request.contextPath}/order/confirmPayPage?oid=${o.order.id}">
+                                    <a href="/order/confirmPayPage?oid=${o.order.id}">
                                         <button class="orderListItemConfirm">确认收货</button>
                                     </a>
                                 </c:if>
@@ -252,10 +252,9 @@
                                 </c:if>
 
                                 <c:if test="${o.order.status=='WAIT_COMMENT' }">
-                                    <button class="orderListItemReview">评价</button>
-                                    <%--<a href="forereview?oid=${o.id}">
+                                    <a href="${pageContext.request.contextPath}/order/comment?oid=${o.order.id}">
                                         <button class="orderListItemReview">评价</button>
-                                    </a>--%>
+                                    </a>
                                 </c:if>
 
                                 <c:if test="${o.order.status=='COMPLETED'}">
