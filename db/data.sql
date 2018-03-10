@@ -23,7 +23,7 @@ insert  into `category`(`name`,`parent_id`) values ('雪纺连衣裙',7);
 insert  into `category`(`name`,`parent_id`) values ('针织连衣裙',7);
 insert  into `category`(`name`,`parent_id`) values ('衬衫',8);
 insert  into `category`(`name`,`parent_id`) values ('卫衣',8);
-insert  into `category`(`name`,`parent_id`) values ('衬衫',8);
+insert  into `category`(`name`,`parent_id`) values ('T恤',8);
 
 
 

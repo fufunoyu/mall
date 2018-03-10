@@ -77,7 +77,7 @@ $(function(){
 					<tr class="orderItemTR">
 						<td class="orderItemFirstTD"><img class="orderItemImg" src="${orderProduct.productVo.firstImageUrl}"></td>
 						<td class="orderItemProductInfo">
-						<a  href="foreproduct?pid=${orderProduct.productVo.product.id}" class="orderItemProductLink">
+						<a  href="${pageContext.request.contextPath}/product?pid=${orderProduct.productVo.product.id}" class="orderItemProductLink">
 							${orderProduct.productVo.product.name}
 						</a>
 
