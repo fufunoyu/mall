@@ -47,7 +47,6 @@ public class Product {
      * 商品库存总量
      */
     private Integer storeNum;
-
     /**
      * 商品销售总量
      */

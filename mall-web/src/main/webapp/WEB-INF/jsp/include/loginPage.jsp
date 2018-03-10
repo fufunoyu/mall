@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
 <script>
     $(function () {
 
@@ -54,7 +55,7 @@
             </div>
 
             <div class="login_acount_text">账户登录</div>
-            <input name="from" value="${ConstantValue.CALLBACK_URL}" type="hidden">
+            <input name="${ConstantValue.CALLBACK_URL}" value="${requestScope[ConstantValue.CALLBACK_URL]}" type="hidden">
             <div class="loginInput ">
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>

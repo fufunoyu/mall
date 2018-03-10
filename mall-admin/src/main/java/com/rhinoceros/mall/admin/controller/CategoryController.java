@@ -40,16 +40,9 @@ public class CategoryController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/list")
+    @RequestMapping("/list.json")
     public List<Category> getList(@RequestParam(value = "id", required = false) Long id) {
-        List<Category> categories = null;
-        if (id == null) {
-            categories = categoryService.findRootCategories();
-        } else {
-            categories = categoryService.findChildrenById(id);
-        }
-
-        return categories;
+        return categoryService.findChildrenById(id);
     }
 
     /**

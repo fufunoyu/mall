@@ -72,13 +72,18 @@
         );
         return false;
     });
-    $(".buyLink").click(function () {
-        if (!isLogin) {
-            $("#loginModal").modal('show');
-            return false;
-        }
+    /*    /!*立即购买商品生成订单的逻辑*!/
+        $(".buyLink").click(function () {
+<c:if test="${not empty sessionScope[ConstantValue.CURRENT_USER]}">
+        var pid = ${productVo.product.id};
+        var num = $(".productNumberSetting").val();
+        var userId = ${user.id};
+        var addCartpage = "${pageContext.request.contextPath}/cart/add";
+        </c:if>
+
         return true
-    });
+
+    });*/
 
     $("button.loginSubmitButton").click(function () {
         var username = $("#username").val();
@@ -130,42 +135,44 @@
         <div class="img4load hidden"></div>
     </div>
 
-    <div class="infoInimgAndInfo">
+    <form action="${pageContext.request.contextPath}/order/add" method="post">
+        <div class="infoInimgAndInfo">
 
-        <div class="productTitle">
-            ${productVo.product.name}
-        </div>
-        <br>
+            <div class="productTitle">
+                ${productVo.product.name}
+            </div>
+            <br>
 
-        <div class="productPrice">
-            <div class="productPriceDiv">
-                <div class="originalDiv">
-                    <span class="originalPriceDesc">价格</span>
-                    <span class="originalPriceYuan">¥</span>
-                    <span class="originalPrice">
+            <div class="productPrice">
+                <div class="productPriceDiv">
+                    <div class="originalDiv">
+                        <span class="originalPriceDesc">价格</span>
+                        <span class="originalPriceYuan">¥</span>
+                        <span class="originalPrice">
                      
                         <fmt:formatNumber type="number" value="${productVo.product.price}" minFractionDigits="2"/>
                     </span>
-                </div>
-                <div class="promotionDiv">
-                    <span class="promotionPriceDesc">促销价 </span>
-                    <span class="promotionPriceYuan">¥</span>
-                    <span class="promotionPrice">
+                    </div>
+                    <div class="promotionDiv">
+                        <span class="promotionPriceDesc">促销价 </span>
+                        <span class="promotionPriceYuan">¥</span>
+                        <span class="promotionPrice">
                         <fmt:formatNumber type="number" value="${productVo.product.discount}" minFractionDigits="2"/>
                     </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="productSaleAndReviewNumber">
-            <div>销量 <span class="redColor boldWord"> ${productVo.product.saleNum }</span></div>
-            <div>累计评价 <span class="redColor boldWord"> ${productVo.product.commentNum}</span></div>
-        </div>
-        <div class="productNumber">
-            <span>数量</span>
-            <span>
+            <div class="productSaleAndReviewNumber">
+                <div>销量 <span class="redColor boldWord"> ${productVo.product.saleNum }</span></div>
+                <div>累计评价 <span class="redColor boldWord"> ${productVo.product.commentNum}</span></div>
+            </div>
+            <div class="productNumber">
+                <span>数量</span>
+                <span>
 
                 <span class="productNumberSettingSpan">
-                <input class="productNumberSetting" type="text" value="1">
+                    <input name="productId" type="hidden" value="${productVo.product.id}">
+                    <input class="productNumberSetting" name="productNum" type="text" value="1">
                 </span>
                 <span class="arrow">
                     <a href="#nowhere" class="increaseNumber">
@@ -184,28 +191,31 @@
                 </span>
                      
             件</span>
-            <span>库存${productVo.product.storeNum}件</span>
-        </div>
-        <div class="serviceCommitment">
-            <span class="serviceCommitmentDesc">服务承诺</span>
-            <span class="serviceCommitmentLink">
+                <span>库存${productVo.product.storeNum}件</span>
+            </div>
+            <div class="serviceCommitment">
+                <span class="serviceCommitmentDesc">服务承诺</span>
+                <span class="serviceCommitmentLink">
                 <a href="#nowhere">正品保证</a>
                 <a href="#nowhere">极速退款</a>
                 <a href="#nowhere">赠运费险</a>
                 <a href="#nowhere">七天无理由退换</a>
             </span>
-        </div>
+            </div>
 
-        <div class="buyDiv">
-            <a class="buyLink" href="${pageContext.request.contextPath}/forebuyone?pid=${productVo.product.id}">
-                <button class="buyButton">立即购买</button>
-            </a>
-            <a href="#nowhere" class="addCartLink">
-                <button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
-            </a>
-        </div>
-    </div>
+            <div class="buyDiv">
 
-    <div style="clear:both"></div>
+                <a class="buyLink" href="javascript:void(0)">
+                    <button class="buyButton" type="submit">立即购买</button>
+                </a>
+                <a href="#nowhere" class="addCartLink">
+                    <button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
+                </a>
+            </div>
+
+        </div>
+        <div style="clear:both"></div>
+    </form>
+
 
 </div>

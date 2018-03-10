@@ -7,6 +7,7 @@ import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CartProductService;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.web.support.web.annotation.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,12 +32,10 @@ public class CartProductController {
     /**
      * 浏览购物车商品信息
      */
+    @Authentication
     @RequestMapping("/cart/list")
     public String cart(Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login?from=/cart/list";
-        }
         List<CartProduct> cartProducts = cartProductService.findByUserId(user.getId());
         List<ProductVo> products = new LinkedList<ProductVo>();
         for (int i = 0; i < cartProducts.size(); i++) {
@@ -57,6 +56,7 @@ public class CartProductController {
      * @param session
      * @return
      */
+    @Authentication
     @RequestMapping("/cart/update")
     @ResponseBody
     public Integer countByCartProductId(CartProduct cartProduct, HttpSession session) {
@@ -72,6 +72,7 @@ public class CartProductController {
      *
      * @param cid
      */
+    @Authentication
     @ResponseBody
     @RequestMapping("/cart/delete")
     public String deleteCartProducts(@RequestParam("cid") Long cid) {
@@ -88,6 +89,7 @@ public class CartProductController {
      * @param session
      * @return
      */
+    @Authentication
     @ResponseBody
     @RequestMapping({"/cart/add"})
     public String addToCartProduct(

@@ -5,12 +5,16 @@ import com.rhinoceros.mall.core.constant.web.ConstantValue;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.AddressService;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.web.support.web.annotation.Authentication;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -19,7 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
+import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +44,31 @@ public class OrderController {
 
     /**
      * 订单显示页面
+     * @param orderDto
+     * @param model
+     * @return
+     */
+    @Authentication
+    @RequestMapping("/add")
+    public String showOrderConfirm(OrderDto orderDto ,Model model){
+        //获取商品的id
+        Long pid = orderDto.getProductId();
+        //根据商品id获取商品信息
+        OrderProductVo orderProductVo = new OrderProductVo();
+        ProductVo productVo = new ProductVo(productService.findById(pid));
+        if(productVo!=null){
+            orderProductVo.setProductVo(productVo);
+            orderProductVo.setNum(orderDto.getProductNum());
+            model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
+            model.addAttribute("total", calculate(orderDto));
+            return "buy";
+        }
+        return "product";
+
+    }
+
+    /**
+     * 订单显示页面
      *
      * @param model
      * @param session
@@ -43,6 +76,7 @@ public class OrderController {
      * @param page
      * @return
      */
+    @Authentication
     @RequestMapping("/list")
     public String orderList(Model model, HttpSession session,
                             @RequestParam(value = "status", required = false) OrderStatus orderStatus,
@@ -92,6 +126,7 @@ public class OrderController {
      * @param session
      * @return
      */
+    @Authentication
     @ResponseBody
     @RequestMapping({"/status"})
     public String addToCartProduct(
@@ -118,6 +153,7 @@ public class OrderController {
      * @param model
      * @return
      */
+    @Authentication
     @RequestMapping({"/confirmPayPage"})
     public String confirmReceiveButton(HttpSession session,
                                  @RequestParam("oid") Long oid,
@@ -183,4 +219,20 @@ public class OrderController {
         }
     }
 
+    /**
+     * 计算商品总额
+     * @param orderDto
+     * @return
+     */
+    private BigDecimal calculate(OrderDto orderDto){
+        int num = orderDto.getProductNum();
+        Product product = productService.findById(orderDto.getProductId());
+        BigDecimal totalPrice;
+        if(product.getDiscount()==null){
+            totalPrice = product.getPrice().multiply(BigDecimal.valueOf(num));
+        }else{
+            totalPrice = product.getPrice().multiply(BigDecimal.valueOf(num)).multiply(product.getDiscount());
+        }
+       return  totalPrice;
+    }
 }

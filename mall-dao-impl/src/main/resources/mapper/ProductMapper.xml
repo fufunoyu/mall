@@ -5,19 +5,19 @@
 <mapper namespace="com.rhinoceros.mall.dao.dao.ProductDao">
     <select id="findById" resultType="Product" parameterType="Long">
         SELECT *
-        FROM product
+        FROM `product`
         WHERE id = #{id}
     </select>
     <select id="findByCategoryId" resultType="Product">
         SELECT *
-        FROM product
+        FROM `product`
         WHERE category_id = #{categoryId}
         ${page.queryString}
     </select>
     <select id="findAll" resultType="Product">
         SELECT *
-        FROM product
-             ${page.queryString}
+        FROM `product`
+         ${page.queryString}
     </select>
 
     <select id="findByCategoryIdIn" resultType="Product">
@@ -31,9 +31,9 @@
     </select>
 
     <!--查找商品详情-->
-    <select id="findDescriptionById" resultType="ProductDescription" parameterType="Long" >
+    <select id="findDescriptionById" resultType="ProductDescription" parameterType="Long">
         SELECT *
-        FROM product_description
+        FROM `product_description`
         WHERE product_id = #{productId}
     </select>
 
