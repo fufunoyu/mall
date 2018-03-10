@@ -218,21 +218,24 @@ public class LoginController {
     @RequestMapping("/resetPasswordSubmit")
     public String resetPasswordSubmit(@Validated @ModelAttribute("resetPassword") ResetPasswordDto resetPasswordDto, BindingResult br, HttpSession session, Model model) {
         String email = SecurityUtils.decode(resetPasswordDto.getSecret());
-
+        String validateCode = (String) session.getAttribute("validateCode");
         if (br.hasErrors()) {
             model.addAttribute("msg", br.getFieldError().getDefaultMessage());
             return "resetPassword";
         }
-        String validateCode = (String) session.getAttribute("validateCode");
-        if (!(resetPasswordDto.getPassword().equals(resetPasswordDto.getRePassword()))) {
+        else if (!(resetPasswordDto.getPassword().equals(resetPasswordDto.getRePassword()))) {
             model.addAttribute("msg", "两次密码不一致");
             return "resetPassword";
         }
-        if (validateCode != null && !(validateCode.equals((resetPasswordDto.getCode())))) {
+        else if (validateCode != null && !(validateCode.equals((resetPasswordDto.getCode())))) {
             model.addAttribute("msg", "验证码错误");
             return "resetPassword";
         }
-        return "resetPasswordSuccess";
+        else {
+            userService.updateSelectionById(resetPasswordDto);
+            return "resetPasswordSuccess";
+        }
+
     }
 
 

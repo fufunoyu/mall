@@ -7,6 +7,7 @@ import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.core.utils.SecurityUtils;
 import com.rhinoceros.mall.dao.dao.UserDao;
 import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
@@ -143,6 +144,25 @@ public class UserServiceImpl implements UserService {
         }
         return mailSender;
     }
+
+    /**
+     * 根据用户名查找用户
+     * @param resetPasswordDto
+     */
+    @Transactional
+    @Override
+    public void updateSelectionById(ResetPasswordDto resetPasswordDto) {
+        String email = SecurityUtils.encode(resetPasswordDto.getSecret());
+        User user = userDao.findByEmail(email);
+        if(user == null){
+            log.info("用户名不存在");
+            throw new UserNotFoundException("用户名不存在");
+        }
+        String password = resetPasswordDto.getPassword();
+        user.setPassword(SecurityUtils.encrypt(password));
+        userDao.updateSelectionById(user);
+    }
+
     public void sendSimpleEmail(String text){
         System.out.println("邮件发送开始");
         SimpleMailMessage message = new SimpleMailMessage();//消息构造器

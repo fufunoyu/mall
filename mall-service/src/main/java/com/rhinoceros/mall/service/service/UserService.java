@@ -45,4 +45,6 @@ public interface UserService {
 
     void sendSimpleEmail(String emailText);
     MailSender getMailSender();
+
+    void updateSelectionById(ResetPasswordDto resetPasswordDto);
 }

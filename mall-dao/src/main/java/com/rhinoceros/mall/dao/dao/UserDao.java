@@ -30,8 +30,16 @@ public interface UserDao {
 
     /**
      * 通过写入的邮箱在数据库中查找
+     *
      * @param email
      * @return
      */
     User findByEmail(String email);
+
+    /**
+     * 更新用户中不为null的字段
+     *
+     * @param user
+     */
+    void updateSelectionById(User user);
 }
