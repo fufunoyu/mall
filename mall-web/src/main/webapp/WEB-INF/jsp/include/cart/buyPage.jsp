@@ -1,7 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+
+<script>
+    var total = 0;
+$(function(){
+	var singleSum = $(".orderItemUnitSum").attr("value");
+	if(singleSum!=null){
+        alert(singleSum);
+        total = total+singleSum;
+	}
+	return total;
+})
+</script>
 <div class="buyPageDiv">
-  <form action="forecreateOrder" method="post">
+  <form action="${pageContext.request.contextPath}/order/confirm" method="post">
   
 	<div class="buyFlow">
 		<img class="pull-left" src="${pageContext.request.contextPath}/static/img/site/simpleLogo.png">
@@ -34,18 +46,11 @@
 			
 		</div>
 
-
-
-
-		
-		
-		
-	
 	</div>
 	<div class="productList">
 		<div class="productListTip">确认订单信息</div>
-		
-		
+
+
 		<table class="productListTable">
 			<thead>
 				<tr>
@@ -68,12 +73,12 @@
 				</tr>
 			</thead>
 			<tbody class="productListTableTbody">
-				<c:forEach items="${ois}" var="oi" varStatus="st" >
+				<c:forEach items="${orderProducts}" var="orderProduct" varStatus="st" >
 					<tr class="orderItemTR">
 						<td class="orderItemFirstTD"><img class="orderItemImg" src="${pageContext.request.contextPath}/static/img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
 						<td class="orderItemProductInfo">
-						<a  href="foreproduct?pid=${oi.productVo.product.id}" class="orderItemProductLink">
-							${oi.productVo.product.name}
+						<a  href="foreproduct?pid=${orderProduct.productVo.product.id}" class="orderItemProductLink">
+							${orderProduct.productVo.product.name}
 						</a>
 						
 						
@@ -84,13 +89,13 @@
 						</td>
 						<td>
 						
-						<span class="orderItemProductPrice">￥<fmt:formatNumber type="number" value="${oi.product.promotePrice}" minFractionDigits="2"/></span>
+						<span class="orderItemProductPrice">￥<fmt:formatNumber type="number" value="${orderProduct.productVo.product.price}" minFractionDigits="2"/></span>
 						</td>
 						<td>
-						<span class="orderItemProductNumber">${oi.number}</span>
+						<span class="orderItemProductNumber">${orderProduct.num}</span>
 						</td>
 						<td><span class="orderItemUnitSum">
-						￥<fmt:formatNumber type="number" value="${oi.number*oi.product.promotePrice}" minFractionDigits="2"/>
+						￥<fmt:formatNumber type="number" value="${orderProduct.num*orderProduct.productVo.product.price}" minFractionDigits="2"/>
 						</span></td>
 						<c:if test="${st.count==1}">
 						<td rowspan="5"  class="orderItemLastTD">
@@ -128,10 +133,10 @@
 			
 			<span class="pull-right">店铺合计(含运费): ￥<fmt:formatNumber type="number" value="${total}" minFractionDigits="2"/></span>
 		</div>
-		
 
-				
-	
+
+
+
 	</div>
 
 	<div class="orderItemTotalSumDiv">

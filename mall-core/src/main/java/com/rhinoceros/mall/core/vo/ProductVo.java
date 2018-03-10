@@ -32,10 +32,7 @@ public class ProductVo {
      * 商品详情
      */
     private String description;
-    /**
-     * 商品数量
-     */
-    private  Integer num;
+
 //    /**
 //     * 此变量储存商品详情图片的url
 //     */
