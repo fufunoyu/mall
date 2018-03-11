@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rhinoceros.mall.dao.dao.SlideshowDao">
+    <!-- 找到所有主页面展示轮播图-->
+    <select id="findAll" resultType="Slideshow">
+        SELECT *
+        FROM index_slideshow
+    </select>
+
+    <!--删除主页展示轮播图-->
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM index_slideshow
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 添加主页展示轮播图 -->
+    <insert id="add" parameterType="Slideshow">
+       INSERT INTO index_slideshow
+        (title,image_url,jump_url)
+        VALUE (
+        #{title},
+        #{imageUrl},
+        #{jumpUrl}
+        )
+    </insert>
+
+
+</mapper>

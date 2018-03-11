@@ -87,8 +87,8 @@
             <li>
                 <span>首页管理</span>
                 <ul>
-                    <li>
-                        <span>首页广告管理</span>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/slideshow'}">
+                        <span>轮播图管理</span>
                     </li>
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/home'}">
                         <span>分类商品广告管理</span>

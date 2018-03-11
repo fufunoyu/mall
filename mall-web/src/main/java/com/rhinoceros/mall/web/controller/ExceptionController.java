@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionController {
 
     @ExceptionHandler({AuthenticationException.class})
-    public String handler(AuthenticationException e) {
-        return "redirect:/index";
+    public String authenticationExceptionHandler(AuthenticationException e) {
+        return "redirect:/login";
     }
 }

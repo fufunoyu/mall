@@ -209,7 +209,7 @@
                     <button class="buyButton" type="submit">立即购买</button>
                 </a>
                 <a href="#nowhere" class="addCartLink">
-                    <button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
+                    <button class="addCartButton" type="button"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
                 </a>
             </div>
 

@@ -36,4 +36,12 @@ public interface CartProductService {
      * @param ProductNum
      */
     void add(Long productId, Long userId, Integer ProductNum);
+
+    /**
+     * 购物车结算到订单确认页面
+     * @param ids
+     * @param userId
+     * @return
+     */
+    List<CartProduct> findCartProducts(List<Long>ids, Long userId);
 }

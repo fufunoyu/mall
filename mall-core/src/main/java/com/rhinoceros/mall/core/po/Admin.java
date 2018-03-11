@@ -1,8 +1,6 @@
 package com.rhinoceros.mall.core.po;
 
 import lombok.Data;
-import java.util.Date;
-
 /**
  * 管理员实体类
  */
