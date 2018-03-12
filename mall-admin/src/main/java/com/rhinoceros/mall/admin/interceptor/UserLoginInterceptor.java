@@ -28,8 +28,8 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         }
-        Admin admin = (Admin) request.getSession().getAttribute(ConstantValue.CURRENT_USER);
-        if (admin == null) {
+        Object object = request.getSession().getAttribute(ConstantValue.CURRENT_USER);
+        if (object == null || !(object instanceof Admin)) {
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }
