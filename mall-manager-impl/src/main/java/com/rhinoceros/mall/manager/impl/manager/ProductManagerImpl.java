@@ -7,7 +7,6 @@ import com.rhinoceros.mall.dao.dao.CategoryDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.manager.manager.ProductManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
@@ -26,8 +25,8 @@ public class ProductManagerImpl implements ProductManager {
     @Autowired
     private CategoryDao categoryDao;
 
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
+//    @Autowired
+//    private ElasticsearchTemplate elasticsearchTemplate;
 
     public List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery) {
         //查找指定id的分类下的所有子分类

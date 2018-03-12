@@ -30,7 +30,7 @@
      */
     function loadslideshowGrid() {
         $.ajax({
-            url:'${pageContext.request.contextPath}/indexSlider/list.json',
+            url:'${pageContext.request.contextPath}/slideshow/list.json',
             method:'get',
             success:function (data) {
                 console.log(data)
@@ -88,7 +88,7 @@
             $.messager.confirm('确认','确定删除ID为'+ids+'的轮播图信息吗？',function (r) {
                 if(r){
                     $.ajax({
-                        url:'${pageContext.request.contextPath}/indexSlider/deleteslideshow.json',
+                        url:'${pageContext.request.contextPath}/slideshow/deleteslideshow.json',
                         method:'post',
                         data:{
                             'ids':ids

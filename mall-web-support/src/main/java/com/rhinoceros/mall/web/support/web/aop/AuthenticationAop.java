@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.web.support.web.aop;
 
-import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.web.support.web.exception.AuthenticationException;
 import org.aspectj.lang.ProceedingJoinPoint;

@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.web.controller;
 
-import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.po.CartProduct;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.po.User;

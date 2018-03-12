@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `address`;
 DROP TABLE IF EXISTS `product_description`;
 DROP TABLE IF EXISTS `index_product`;
-DROP TABLE IF EXISTS `index_slide`;
+DROP TABLE IF EXISTS `index_slider`;
 
 
 CREATE TABLE `permission` (

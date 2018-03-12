@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
+<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 <nav class="top ">
     <a href="${pageContext.request.contextPath}/">
         <span style="color:#C40000;margin:0px" class=" glyphicon glyphicon-home redColor"></span>

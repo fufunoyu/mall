@@ -17,7 +17,7 @@
     </delete>
 
     <!-- 添加主页展示轮播图 -->
-    <insert id="add" parameterType="Slide">
+    <insert id="add" parameterType="IndexSlider">
        INSERT INTO `index_slider`
         (title,image_url,jump_url)
         VALUE (
