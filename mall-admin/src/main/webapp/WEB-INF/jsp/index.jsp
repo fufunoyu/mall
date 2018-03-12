@@ -87,7 +87,7 @@
             <li>
                 <span>首页管理</span>
                 <ul>
-                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/slideshow'}">
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/indexSlider'}">
                         <span>轮播图管理</span>
                     </li>
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/home'}">

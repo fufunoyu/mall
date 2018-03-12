@@ -14,7 +14,7 @@
 	<p>Click on each button to see a distinct message box.</p>
 	<div style="margin:20px 0;">
 		<a href="#" class="easyui-linkbutton" onclick="show()">Show</a>
-		<a href="#" class="easyui-linkbutton" onclick="slide()">Slide</a>
+		<a href="#" class="easyui-linkbutton" onclick="indexSlider()">Slide</a>
 		<a href="#" class="easyui-linkbutton" onclick="fade()">Fade</a>
 		<a href="#" class="easyui-linkbutton" onclick="progress()">Progress</a>
 	</div>
@@ -26,12 +26,12 @@
 				showType:'show'
 			});
 		}
-		function slide(){
+		function indexSlider(){
 			$.messager.show({
 				title:'My Title',
 				msg:'Message will be closed after 5 seconds.',
 				timeout:5000,
-				showType:'slide'
+				showType:'indexSlider'
 			});
 		}
 		function fade(){

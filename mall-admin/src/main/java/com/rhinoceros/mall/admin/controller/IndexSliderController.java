@@ -1,16 +1,14 @@
 package com.rhinoceros.mall.admin.controller;
 
 
-import com.rhinoceros.mall.core.po.Slideshow;
-import com.rhinoceros.mall.service.service.SlideshowService;
+import com.rhinoceros.mall.core.po.IndexSlider;
+import com.rhinoceros.mall.service.service.IndexSliderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,10 +16,10 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/slideshow")
-public class SlideshowController {
+public class IndexSliderController {
 //定义要调用的业务逻辑
     @Autowired
-    private SlideshowService slideshowService;
+    private IndexSliderService indexSliderService;
 
     @RequestMapping()
     public String showSlideshowList() {
@@ -34,9 +32,9 @@ public class SlideshowController {
      */
     @ResponseBody
     @RequestMapping("/list.json")
-    public List<Slideshow> getSlideshowList(){
-        List<Slideshow> slideshowList = slideshowService.findAll();
-        return slideshowList;
+    public List<IndexSlider> getSlideshowList(){
+        List<IndexSlider> indexSliderList = indexSliderService.findAll();
+        return indexSliderList;
     }
 
     /**
@@ -48,15 +46,15 @@ public class SlideshowController {
     @RequestMapping("/deleteslideshow.json")
     public String deleteSlideshow(@RequestParam("ids[]") List<Long> ids){
         for (Long id : ids){
-            slideshowService.deleteById(id);
+            indexSliderService.deleteById(id);
         }
         return "{\"result\":\"success\"}";
     }
 
     @ResponseBody
     @RequestMapping("/addslideshow.json")
-    public Slideshow addSlideshow(Slideshow slideshow){
+    public IndexSlider addSlideshow(IndexSlider indexSlider){
 
-        return slideshow;
+        return indexSlider;
     }
 }

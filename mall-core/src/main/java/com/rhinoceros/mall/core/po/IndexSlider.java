@@ -4,7 +4,7 @@ import lombok.Data;
 /**
  * 轮播图实体类
  */
-public class Slideshow {
+public class IndexSlider {
 
     private Long id;
 

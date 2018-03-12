@@ -2,23 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.rhinoceros.mall.dao.dao.SlideshowDao">
+<mapper namespace="com.rhinoceros.mall.dao.dao.IndexSliderDao">
     <!-- 找到所有主页面展示轮播图-->
-    <select id="findAll" resultType="Slideshow">
+    <select id="findAll" resultType="IndexSlider">
         SELECT *
-        FROM index_slideshow
+        FROM `index_slider`
     </select>
 
     <!--删除主页展示轮播图-->
     <delete id="deleteById" parameterType="Long">
         DELETE
-        FROM index_slideshow
+        FROM `index_slider`
         WHERE id = #{id}
     </delete>
 
     <!-- 添加主页展示轮播图 -->
-    <insert id="add" parameterType="Slideshow">
-       INSERT INTO index_slideshow
+    <insert id="add" parameterType="Slide">
+       INSERT INTO `index_slider`
         (title,image_url,jump_url)
         VALUE (
         #{title},
