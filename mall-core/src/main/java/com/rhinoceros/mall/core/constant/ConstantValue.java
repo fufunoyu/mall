@@ -1,4 +1,4 @@
-package com.rhinoceros.mall.core.constant.web;
+package com.rhinoceros.mall.core.constant;
 
 /**
  * @author Rhys Xia
@@ -28,5 +28,10 @@ public class ConstantValue {
      * 回调的url
      */
     public static final String CALLBACK_URL = "from";
+
+    /**
+     * 重置密码的参数
+     */
+    public static final String RESET_PASSWORD_PARAM = "resetPassword";
 
 }

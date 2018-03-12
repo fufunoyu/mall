@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.admin.interceptor;
 
-import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.po.Admin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

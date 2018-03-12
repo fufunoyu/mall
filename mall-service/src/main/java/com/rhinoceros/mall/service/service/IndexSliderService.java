@@ -1,21 +1,22 @@
 package com.rhinoceros.mall.service.service;
-import com.rhinoceros.mall.core.po.Slideshow;
+import com.rhinoceros.mall.core.po.IndexSlider;
+
 import java.util.List;
 
-public interface SlideshowService {
+public interface IndexSliderService {
 
     /**
      * 查找所有轮播图
      * @return
      */
-    List<Slideshow> findAll();
+    List<IndexSlider> findAll();
 
     /**
      * 添加
-     * @param slideshow
+     * @param indexSlider
      * @return
      */
-    Slideshow add(Slideshow slideshow);
+    IndexSlider add(IndexSlider indexSlider);
 
     /**
      * 删除

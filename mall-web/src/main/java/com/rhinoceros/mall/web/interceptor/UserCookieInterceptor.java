@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.web.interceptor;
 
-import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.service.impl.exception.user.UserException;

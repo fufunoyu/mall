@@ -15,7 +15,7 @@
 	<div style="margin:20px 0">
 		<span>Animation Type:</span>
 		<select onchange="changeAnimation(this.value)">
-			<option>slide</option>
+			<option>indexSlider</option>
 			<option>fade</option>
 			<option>show</option>
 		</select>
@@ -28,7 +28,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$('#cc').combo();
-			changeAnimation('slide');
+			changeAnimation('indexSlider');
 		});
 		function changeAnimation(atype){
 			$('#cc').combo('panel').panel({

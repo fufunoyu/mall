@@ -1,9 +1,9 @@
 package com.rhinoceros.mall.service.impl.service;
 
-import com.rhinoceros.mall.core.po.Slideshow;
-import com.rhinoceros.mall.dao.dao.SlideshowDao;
+import com.rhinoceros.mall.core.po.IndexSlider;
+import com.rhinoceros.mall.dao.dao.IndexSliderDao;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
-import com.rhinoceros.mall.service.service.SlideshowService;
+import com.rhinoceros.mall.service.service.IndexSliderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,20 +13,20 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class SlideshowServiceImpl implements SlideshowService {
+public class IndexSliderServiceImpl implements IndexSliderService {
     @Autowired
-    private SlideshowDao slideshowDao;
+    private IndexSliderDao indexSliderDao;
     
     @Override
-    public List<Slideshow> findAll(){
-        return slideshowDao.findAll();
+    public List<IndexSlider> findAll(){
+        return indexSliderDao.findAll();
     }
     
     @Transactional
     @Override
-    public Slideshow add(Slideshow slideshow){
-        slideshowDao.add(slideshow);
-        return slideshow;
+    public IndexSlider add(IndexSlider indexSlider){
+        indexSliderDao.add(indexSlider);
+        return indexSlider;
     }
     
     @Transactional
@@ -37,11 +37,11 @@ public class SlideshowServiceImpl implements SlideshowService {
             throw new ParameterIsNullException("id不能为空");
         }
         
-/*        Slideshow slideshow = slideshowDao.findById(id);
-        if(slideshow==null){
+/*        IndexSlider indexSlider = indexSliderDao.findById(id);
+        if(indexSlider==null){
             log.info("轮播图不存在");
             throw new EntityNotExistException("轮播图不存在");
         }*/
-        slideshowDao.deleteById(id);
+        indexSliderDao.deleteById(id);
     }
 }

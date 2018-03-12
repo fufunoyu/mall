@@ -4,6 +4,6 @@
 
 <div class="resetPasswordSuccessDiv">
 
-    <img src="/static/img/site/registerSuccess.png">
+    <img src="${pageContext.request.contextPath}/static/img/site/registerSuccess.png">
     密码修改成功
 </div>

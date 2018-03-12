@@ -170,7 +170,7 @@
 </script>
 <%--所有id以home开头--%>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
-    <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
+    <div data-options="region:'west'" style="width:250px;height: 100%;">
        <%--左侧分类栏--%>
         <ul id="home_category_list" class="easyui-datalist" title="商品分类" lines="true" data-options="{
             onSelect:onCategoryClick,
