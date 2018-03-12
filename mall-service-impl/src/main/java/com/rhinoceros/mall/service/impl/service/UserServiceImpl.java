@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("邮件发送开始");
         SimpleMailMessage message = new SimpleMailMessage();//消息构造器
         message.setFrom("mytestlong@163.com");//发件人
-        message.setTo("969564376@qq.com");//收件人
+        message.setTo("969564376@qq.com ");//收件人
         message.setSubject("MySendMail");//主题
         message.setText(text);//正文
         MailSender sender = getMailSender();
