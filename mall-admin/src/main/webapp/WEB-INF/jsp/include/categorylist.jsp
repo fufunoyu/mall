@@ -216,6 +216,8 @@
                     if(node){
                         node.target.click()
                     }
+                    $("#home_choose_list").datagrid('loadData', [])
+                    $("#home_category_tree").tree('collapseAll');
                     $("#home_add_product").window('open');
                 }
             },{
@@ -266,29 +268,47 @@
             <ul id="home_category_tree" class="easyui-tree" data-options="{
                  url:'${pageContext.request.contextPath}/category/list.json',
                  method:'get',
-                 onContextMenu: function(e,node){
+ <%--                onContextMenu: function(e,node){
                     e.preventDefault();
                     $(this).tree('select',node.target);
                     $('#mm').menu('show',{
                         left: e.pageX,
                         top: e.pageY
                     });
-                 },
+                 },--%>
                  loadFilter:loadFilter,
-<%--                 onDblClick:function (node) {
-                    if(node.children&&node.children.length>0){
+                 onDblClick:function (node) {
+                    onCategoryDblClick(node)
+                    if(node.id && node.id>0){
+                        $.ajax({
+                            url:'${pageContext.request.contextPath}/category/update',
+                            method:'post',
+                            data:{
+                                id:node.id,
+                                name:node.text,
+                                parentId: node.parentId
+                            },
+                            success:function(category){
+                                node.text = category.name
+                            }
+                        })
                         return
                     }
                     $.ajax({
-                        url:'${pageContext.request.contextPath}/product/list?id='+node.id,
-                        method:'get',
-                        success:function(data){
-                            $('#home_category_tree').tree('append',data)
+                        url:'${pageContext.request.contextPath}/category/add',
+                        method:'post',
+                        data:{
+                            name:node.text,
+                            parentId: node.parentId
+                        },
+                        success:function(category){
+                            node.id = category.id
+                            node.text = category.name
+                            node.parentId = category.parentId
                         }
                     })
-                },--%>
+                },
                 onClick:function(node){
-
                     var table = $('#home_choose_list')
                     if(node.id>0){
                         $.ajax({
@@ -308,13 +328,11 @@
                                         arr.push(data[i])
                                     }
                                 }
-
                                 table.datagrid('loadData',arr)
                             }
                          })
                     }
                 }
-
             }">
             </ul>
         </div>
