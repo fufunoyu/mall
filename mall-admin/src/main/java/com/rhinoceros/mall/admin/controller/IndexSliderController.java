@@ -54,7 +54,7 @@ public class IndexSliderController {
     @ResponseBody
     @RequestMapping("/addslideshow.json")
     public IndexSlider addSlideshow(IndexSlider indexSlider){
-
+        indexSliderService.add(indexSlider);
         return indexSlider;
     }
 }

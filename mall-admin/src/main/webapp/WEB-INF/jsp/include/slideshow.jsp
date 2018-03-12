@@ -33,7 +33,7 @@
             url:'${pageContext.request.contextPath}/slideshow/list.json',
             method:'get',
             success:function (data) {
-                console.log(data)
+//                console.log(data)
                 var arr = []
                 for(var i=0;i<data.length;i++){
                     arr.push({
@@ -43,7 +43,7 @@
                         jumpUrl:data[i].jumpUrl
                     })
                 }
-                console.log(arr)
+//                console.log(arr)
                 $('#slideshow_grid').datagrid('loadData',arr)
             }
         })
@@ -94,7 +94,7 @@
                             'ids':ids
                         },
                         success:function (data) {
-                            console.log(data)
+//                            console.log(data)
                             if(data.result==='success'){
                                 $.messager.alert('提示','删除成功!',undefined,function () {
                                     var sels = $("#slideshow_grid").datagrid("getSelections");
@@ -115,28 +115,54 @@
      * 提交信息
      */
     function submitForm(){
-        $('#ff').form('submit');
+        if(!$('#slideshow_add_form').form('validate')){
+            $.messager.alert('提示','表单还未填写完成!');
+            return ;
+        }
+        var title = $('#slideshow_title').textbox('getText')
+        var imageUrl = $('#slideshow_image_url').textbox('getText')
+        var jumpUrl = $('#slideshow_jump_url').textbox('getText')
+
+        $.ajax({
+            url:'${pageContext.request.contextPath}/slideshow/addslideshow.json',
+            method: 'post',
+            data:{
+                title:title,
+                imageUrl:imageUrl,
+                jumpUrl:jumpUrl
+            },
+            success:function (data) {
+                console.log(data)
+                loadslideshowGrid()
+                if(data.title == title){
+                    $.messager.alert('提示','提交成功!',undefined,function() {
+                        $('#slideshow_add_form').form('clear');
+                        $('#slideshow_add').window('close');
+                    })
+                }
+            }
+        })
     }
 
     /**
      * 清空编辑信息
      */
     function clearForm(){
-        $('#ff').form('clear');
+        $('#slideshow_add_form').form('clear');
     }
 </script>
 <%--弹出窗口：添加轮播图编辑窗口--%>
 <div id="slideshow_add" class="easyui-window" title="编辑添加信息" style="width:100%;max-width:400px;padding:30px 60px;"
      data-options="closed:true">
-    <form id="ff" method="post">
+    <form id="slideshow_add_form" method="post">
         <div style="margin-bottom:20px">
-            <input class="easyui-textbox" name="title" style="width:100%" data-options="label:'标题:',required:true">
+            <input id="slideshow_title" class="easyui-textbox" name="title" style="width:100%" data-options="label:'标题:',required:true">
         </div>
         <div style="margin-bottom:20px">
-            <input class="easyui-textbox" name="imageUrl" style="width:100%" data-options="label:'图片地址:',required:true">
+            <input id="slideshow_image_url" class="easyui-textbox" name="imageUrl" style="width:100%" data-options="label:'图片地址:',required:true">
         </div>
         <div style="margin-bottom:20px">
-            <input class="easyui-textbox" name="jumpUrl" style="width:100%" data-options="label:'URL:',required:true">
+            <input id="slideshow_jump_url" class="easyui-textbox" name="jumpUrl" style="width:100%" data-options="label:'URL:',required:true">
         </div>
     </form>
     <div style="text-align:center;padding:5px 0">
