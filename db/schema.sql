@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS `cart_product`;
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `address`;
 DROP TABLE IF EXISTS `product_description`;
+DROP TABLE IF EXISTS `index_product`;
+DROP TABLE IF EXISTS `index_slideshow`;
 
 
 CREATE TABLE `permission` (

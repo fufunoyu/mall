@@ -10,9 +10,9 @@
             <br>
             <c:forEach items="${c.products}" var="p" varStatus="st">
                 <div class="productItem">
-                    <a href="/product?pid=${p.id}"><img width="100px"
+                    <a href="${pageContext.request.contextPath}/product?pid=${p.id}"><img width="100px"
                                                            src="${p.imageUrls.split(";")[0]}"></a>
-                    <a class="productItemDescLink" href="/product?pid=${p.id}">
+                    <a class="productItemDescLink" href="${pageContext.request.contextPath}/product?pid=${p.id}">
 								<span class="productItemDesc">[热销]
 								${fn:substring(p.name, 0, 20)}
 								</span>

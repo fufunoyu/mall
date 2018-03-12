@@ -54,12 +54,12 @@ public class IndexProductServiceImpl implements IndexProductService {
 
     @Transactional
     @Override
-    public void deleteById(Long indexProductId) {
-        IndexProduct indexProduct = indexProductDao.findById(indexProductId);
+    public void deleteByProductId(Long productId) {
+        IndexProduct indexProduct = indexProductDao.findByProductId(productId);
         if (indexProduct == null) {
             log.info("指定在首页展示的商品不存在");
             throw new EntityNotExistException("指定在首页展示的商品不存在");
         }
-        indexProductDao.deleteById(indexProductId);
+        indexProductDao.deleteById(indexProduct.getId());
     }
 }

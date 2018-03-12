@@ -40,6 +40,7 @@
      * */
     function onCategoryDblClick(node) {
         if (node.children && node.children.length > 0) {
+            $("#category_list").tree('toggle',node.target)
             return
         }
         $.ajax({
@@ -240,7 +241,6 @@
             var photo = $('<img class="photo" src="' + url + '"/>')
             photo.bind('contextmenu', function (e) {
                 e.preventDefault();
-                console.log(url)
                 $('#product_image_menu').menu('show', {
                     left: e.pageX,
                     top: e.pageY
