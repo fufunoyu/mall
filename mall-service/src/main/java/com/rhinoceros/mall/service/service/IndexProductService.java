@@ -31,9 +31,9 @@ public interface IndexProductService {
     IndexProduct add(IndexProduct indexProduct);
 
     /**
-     * 删除主页展示商品
+     * 根据商品id删除主页展示商品
      *
-     * @param indexProductId
+     * @param productId
      */
-    void deleteById(Long indexProductId);
+    void deleteByProductId(Long productId);
 }
