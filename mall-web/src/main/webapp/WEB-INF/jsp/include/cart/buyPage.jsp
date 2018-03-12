@@ -16,7 +16,7 @@ $(function(){
   <form action="${pageContext.request.contextPath}/order/confirm" method="post">
 
 	<div class="buyFlow">
-		<img class="pull-left" src="${pageContext.request.contextPath}/static/img/site/simpleLogo.png">
+		<img class="pull-left" src="${pageContext.request.contextPath}/static/img/site/logo.jpg">
 		<img class="pull-right" src="${pageContext.request.contextPath}/static/img/site/buyflow.png">
 		<div style="clear:both"></div>
 	</div>

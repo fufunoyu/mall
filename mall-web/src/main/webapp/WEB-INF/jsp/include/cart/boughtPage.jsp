@@ -168,11 +168,13 @@
                         <span>订单号: ${o.order.identifier}
 					</span>
                     </td>
-                    <td colspan="2"><img width="13px" src="img/site/orderItemTmall.png">民生商城</td>
+                    <td colspan="2">
+                        <%--<img width="13px" src="img/site/orderItemTmall.png">--%>
+                        民生商城</td>
                     <td colspan="1">
-                        <a class="wangwanglink" href="#nowhere">
+                        <%--<a class="wangwanglink" href="#nowhere">
                             <div class="orderItemWangWangGif"></div>
-                        </a>
+                        </a>--%>
 
                     </td>
                     <td class="orderItemDeleteTD">
@@ -230,7 +232,7 @@
                             <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
-                                    <a href="/order/confirmPayPage?oid=${o.order.id}">
+                                    <a href="${pageContext.request.contextPath}/order/confirmPayPage?oid=${o.order.id}">
                                         <button class="orderListItemConfirm">确认收货</button>
                                     </a>
                                 </c:if>

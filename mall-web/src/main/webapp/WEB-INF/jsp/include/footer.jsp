@@ -8,7 +8,7 @@
 
     <div id="footer_ensure" class="footer_ensure">
         <a href="#nowhere">
-            <img src="/static/img/site/ensure.png">
+            <img src="${pageContext.request.contextPath}/static/img/site/ensure.png">
         </a>
     </div>
 
