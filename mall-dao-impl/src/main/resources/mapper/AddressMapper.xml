@@ -16,5 +16,11 @@
         )
     </insert>
 
+    <select id="findById" parameterType="Long" resultType="Address">
+        SELECT *
+        FROM address
+        WHERE id = #{id}
+    </select>
+
 
 </mapper>

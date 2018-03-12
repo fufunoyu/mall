@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.admin.controller;
 
-import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.po.Admin;
 import com.rhinoceros.mall.service.impl.exception.user.UserException;

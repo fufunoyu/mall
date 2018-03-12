@@ -1,28 +1,33 @@
 package com.rhinoceros.mall.dao.dao;
 
 
-import com.rhinoceros.mall.core.po.Slideshow;
-import org.apache.ibatis.annotations.Param;
+import com.rhinoceros.mall.core.po.IndexSlider;
 
 import java.util.List;
 
-public interface SlideshowDao {
+/**
+ * 首页轮播图
+ */
+public interface IndexSliderDao {
 
     /**
      * 查找全部轮播图信息
+     *
      * @return
      */
-    List<Slideshow> findAll();
+    List<IndexSlider> findAll();
 
     /**
      * 添加轮播图
-     * @param slideshow
+     *
+     * @param indexSlider
      * @return
      */
-    int add(Slideshow slideshow);
+    int add(IndexSlider indexSlider);
 
     /**
      * 删除轮播图
+     *
      * @param id
      */
     void deleteById(Long id);

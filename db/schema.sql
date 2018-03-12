@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS `cart_product`;
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `address`;
 DROP TABLE IF EXISTS `product_description`;
+DROP TABLE IF EXISTS `index_product`;
+DROP TABLE IF EXISTS `index_slider`;
 
 
 CREATE TABLE `permission` (
@@ -258,7 +260,7 @@ CREATE TABLE `index_product` (
 
   COMMENT '主页分类展示商品表';
 
-CREATE TABLE `index_slideshow` (
+CREATE TABLE `index_slider` (
 
 	`id` INT(20) NOT NULL AUTO_INCREMENT
 	COMMENT 'id',

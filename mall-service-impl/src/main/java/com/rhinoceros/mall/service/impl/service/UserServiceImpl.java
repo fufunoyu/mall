@@ -1,5 +1,6 @@
 package com.rhinoceros.mall.service.impl.service;
 
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.RegisterUserDto;
 import com.rhinoceros.mall.core.dto.ResetPasswordDto;
@@ -14,6 +15,9 @@ import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +27,13 @@ import java.util.Date;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
+    @Value("#{mail['mail.username']}")
+    private String from;
+
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private JavaMailSender mailSender;
 
     /**
      * 用户注册，注册失败抛出{@link UserException}
@@ -94,7 +103,6 @@ public class UserServiceImpl implements UserService {
         userDao.add(u);
     }
 
-
     /**
      * 用户登录，登录失败抛出{@link UserException}
      *
@@ -137,23 +145,43 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    public void retrievePassword(RetrievePasswordDto retrievePasswordDto) {
-        //通过输入的邮箱查询数据库
-        User user = userDao.findByEmail(retrievePasswordDto.getEmail());
-        //如果用户不存在，程序抛出异常
-        if (user == null) {
-            log.info("该邮箱还未注册");
-            throw new EmailHasFoundException("该邮箱还未注册");
-        }
-    }
 
     public void resetPassword(ResetPasswordDto resetPasswordDto) {
-
+        String secret = resetPasswordDto.getSecret();
+        String email = SecurityUtils.decode(secret);
+        User user = userDao.findByEmail(email);
+        user.setPassword(resetPasswordDto.getPassword());
+        userDao.updateSelectionById(user);
     }
 
     @Override
     public User findById(Long userId) {
         return userDao.findById(userId);
     }
+
+    @Override
+    public void sendResetPasswordEmail(RetrievePasswordDto retrievePasswordDto, String redirectUrl) {
+
+        String email = retrievePasswordDto.getEmail();
+
+        User user = userDao.findByEmail(email);
+        if (user == null) {
+            log.info("对应邮箱的用户不存在");
+            throw new UserNotFoundException("对应邮箱的用户不存在");
+        }
+
+        //加密验证参数
+        String param = SecurityUtils.encode(email);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(email);
+        message.setSubject("密码重置邮件");
+
+        //获取当前网站url
+        message.setText("重置密码:" + redirectUrl + "?" + ConstantValue.RESET_PASSWORD_PARAM + "=" + param);
+        mailSender.send(message);
+    }
+
+
 }

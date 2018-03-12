@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>后台管理</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/default/easyui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/material/easyui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery-easyui-texteditor/texteditor.css">
 
@@ -36,7 +36,7 @@
 </head>
 <body>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
-    <div data-options="region:'west',split:true" title="菜单栏" style="width:200px;height: 100%;">
+    <div data-options="region:'west'" title="菜单栏" style="width:200px;height: 100%;">
         <ul id="menu" class="easyui-tree" data-options="{
                  onClick:function (node) {
                     if(node.attributes&&node.attributes.url){

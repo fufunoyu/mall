@@ -11,4 +11,13 @@ public interface AddressDao {
      * @return
      */
     int add(Address address);
+
+    /**
+     * 根据id查找信息
+     * @param id
+     * @return
+     */
+    Address findById(Long id);
+
+
 }

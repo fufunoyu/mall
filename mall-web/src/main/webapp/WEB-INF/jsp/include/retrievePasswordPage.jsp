@@ -5,7 +5,7 @@
      * 点击验证码刷新
      */
     function refreshVerifyCode() {
-        $('#verifyCode').attr('src',"/verifyCode/getCode?a="+Math.random());
+        $('#verifyCode').attr('src',"${pageContext.request.contextPath}/verifyCode/getCode?a="+Math.random());
     }
 
     $(document).ready(function(){
@@ -16,7 +16,7 @@
     })
 
 </script>
-<form method="post" action="/verifyMail" class="registerForm">
+<form method="post" action="${pageContext.request.contextPath}/verifyMail" class="registerForm">
     <div class="registerDiv">
         <div class="registerErrorMessageDiv">
             <div class="alert alert-danger" role="alert">
@@ -34,7 +34,7 @@
             </tr>
 
             <tr>
-                <td class="registerTableLeftTD"><img id="verifyCode" src="/verifyCode/getCode" onclick="refreshVerifyCode()"></td>
+                <td class="registerTableLeftTD"><img id="verifyCode" src="${pageContext.request.contextPath}/verifyCode/getCode" onclick="refreshVerifyCode()"></td>
                 <td class="registerTableRightTD"><input id="name1" name="code"
                                                         placeholder="请输入验证码"></td>
 

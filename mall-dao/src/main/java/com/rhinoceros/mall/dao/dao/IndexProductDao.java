@@ -34,15 +34,15 @@ public interface IndexProductDao {
     /**
      * 删除主页展示商品
      *
-     * @param indexProductId
+     * @param id
      */
-    void deleteById(Long indexProductId);
+    void deleteById(Long id);
 
     /**
      * 根据id查询
      *
-     * @param id
+     * @param productId
      * @return
      */
-    IndexProduct findById(Long id);
+    IndexProduct findByProductId(Long productId);
 }

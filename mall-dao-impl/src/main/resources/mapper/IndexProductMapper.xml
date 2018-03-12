@@ -59,7 +59,7 @@
     <delete id="deleteById" parameterType="Long">
         DELETE
         FROM `index_product`
-        WHERE product_id = #{indexProductId}
+        WHERE id = #{id}
     </delete>
 
     <!-- 添加主页展示商品 -->
@@ -70,10 +70,10 @@
         )
     </insert>
 
-    <select id="findById" parameterType="Long" resultType="IndexProduct">
+    <select id="findByProductId" parameterType="Long" resultType="IndexProduct">
         SELECT *
         FROM `index_product`
-        WHERE product_id = #{indexProductId}
+        WHERE product_id = #{productId}
     </select>
 
 </mapper>

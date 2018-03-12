@@ -9,16 +9,16 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>mall-core</module>
         <module>mall-dao</module>
         <module>mall-dao-impl</module>
-        <module>mall-service</module>
-        <module>mall-service-impl</module>
-        <module>mall-core</module>
-        <module>mall-web</module>
-        <module>mall-admin</module>
-        <module>mall-web-support</module>
         <module>mall-manager</module>
         <module>mall-manager-impl</module>
+        <module>mall-service</module>
+        <module>mall-service-impl</module>
+        <module>mall-web-support</module>
+        <module>mall-web</module>
+        <module>mall-admin</module>
     </modules>
 
     <properties>
@@ -68,6 +68,7 @@
             <version>1.7.25</version>
         </dependency>
 
+        <!--test-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -77,6 +78,11 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.rhinoceros</groupId>
+                <artifactId>mall-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
             <dependency>
                 <groupId>com.rhinoceros</groupId>
                 <artifactId>mall-dao</artifactId>
@@ -109,11 +115,6 @@
             </dependency>
             <dependency>
                 <groupId>com.rhinoceros</groupId>
-                <artifactId>mall-core</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rhinoceros</groupId>
                 <artifactId>mall-web-support</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -122,13 +123,24 @@
                 <artifactId>mall-admin</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
             <dependency>
+                <groupId>com.rhinoceros</groupId>
+                <artifactId>mall-web</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+           <!-- <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-elasticsearch</artifactId>
                 <version>3.0.5.RELEASE</version>
-            </dependency>
+            </dependency>-->
 
+            <!--javamail-->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.4.7</version>
+            </dependency>
 
             <!--javaee-->
             <dependency>
@@ -136,6 +148,7 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>4.0.0</version>
             </dependency>
+
             <!--jstl-->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -167,6 +180,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>

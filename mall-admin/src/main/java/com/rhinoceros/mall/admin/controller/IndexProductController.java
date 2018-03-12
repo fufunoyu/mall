@@ -91,7 +91,7 @@ public class IndexProductController {
     @RequestMapping("/deleteproduct.json")
     public String deleteProduct(@RequestParam("ids[]") List<Long> productIds) {
         for (Long productId : productIds) {
-            indexProductService.deleteById(productId);
+            indexProductService.deleteByProductId(productId);
         }
         return "{\"result\":\"success\"}";
     }

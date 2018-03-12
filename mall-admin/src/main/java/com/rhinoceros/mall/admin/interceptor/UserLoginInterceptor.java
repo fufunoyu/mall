@@ -1,6 +1,6 @@
 package com.rhinoceros.mall.admin.interceptor;
 
-import com.rhinoceros.mall.core.constant.web.ConstantValue;
+import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.po.Admin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -28,8 +28,8 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         }
-        Admin admin = (Admin) request.getSession().getAttribute(ConstantValue.CURRENT_USER);
-        if (admin == null) {
+        Object object = request.getSession().getAttribute(ConstantValue.CURRENT_USER);
+        if (object == null || !(object instanceof Admin)) {
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }

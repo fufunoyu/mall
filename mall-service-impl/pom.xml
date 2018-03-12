@@ -26,10 +26,6 @@
     <dependencies>
         <dependency>
             <groupId>com.rhinoceros</groupId>
-            <artifactId>mall-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.rhinoceros</groupId>
             <artifactId>mall-dao-impl</artifactId>
         </dependency>
         <dependency>
@@ -37,9 +33,20 @@
             <artifactId>mall-manager-impl</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.rhinoceros</groupId>
+            <artifactId>mall-service</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
         </dependency>
     </dependencies>
 </project>
