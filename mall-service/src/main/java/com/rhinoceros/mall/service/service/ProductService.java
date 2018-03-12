@@ -3,7 +3,6 @@ package com.rhinoceros.mall.service.service;
 
 
 import com.rhinoceros.mall.core.po.Product;
-import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
 public interface ProductService {
     /**
      * 根据id查询商品信息
+     *
      * @param id 商品id号
      * @return 商品信息
      */
@@ -30,10 +30,4 @@ public interface ProductService {
 
     List<Product> findAll(PageQuery pageQuery);
 
-    /**
-     * 通过id找寻商品描述
-     * @param id
-     * @return
-     */
-    ProductDescription findDescriptionById(Long id);
 }

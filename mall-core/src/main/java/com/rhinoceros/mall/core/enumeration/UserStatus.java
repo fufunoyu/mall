@@ -8,7 +8,7 @@ public enum UserStatus {
     /**
      * 未激活
      */
-    UNACTIVATE,
+    UNACTIVATED,
 
     /**
      * 激活

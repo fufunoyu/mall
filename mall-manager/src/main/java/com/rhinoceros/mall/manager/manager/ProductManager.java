@@ -22,4 +22,45 @@ public interface ProductManager {
      */
     List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery);
 
+    /**
+     * 添加用户
+     *
+     * @param product
+     * @return
+     */
+    int add(Product product);
+
+    /**
+     * 根据id删除商品
+     *
+     * @param id
+     * @return
+     */
+    int deleteById(Long id);
+
+
+    /**
+     * 更新所有不为null的字段
+     *
+     * @param product
+     * @return
+     */
+    int updateSelectionById(Product product);
+
+    /**
+     * 根据id查询商品
+     *
+     * @param id
+     * @return
+     */
+    Product findById(Long id);
+
+    /**
+     * 根据查询字段查找符合条件的商品，支持分页
+     *
+     * @param queryString
+     * @param pageQuery
+     * @return
+     */
+    List<Product> query(String queryString, PageQuery pageQuery);
 }
