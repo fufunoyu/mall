@@ -56,7 +56,11 @@ public class SlideshowController {
     @ResponseBody
     @RequestMapping("/addslideshow.json")
     public Slideshow addSlideshow(Slideshow slideshow){
-
+/*        Slideshow slideshow = new Slideshow();
+        slideshow.setTitle(title);
+        slideshow.setImageUrl(imageUrl);
+        slideshow.setJumpUrl(jumpUrl);*/
+        slideshowService.add(slideshow);
         return slideshow;
     }
 }

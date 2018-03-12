@@ -73,7 +73,7 @@
     <select id="findById" parameterType="Long" resultType="IndexProduct">
         SELECT *
         FROM `index_product`
-        WHERE id = #{id}
+        WHERE product_id = #{indexProductId}
     </select>
 
 </mapper>

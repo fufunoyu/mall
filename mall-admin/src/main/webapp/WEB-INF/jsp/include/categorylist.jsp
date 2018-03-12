@@ -275,7 +275,7 @@
                     });
                  },
                  loadFilter:loadFilter,
-                 onDblClick:function (node) {
+<%--                 onDblClick:function (node) {
                     if(node.children&&node.children.length>0){
                         return
                     }
@@ -286,7 +286,7 @@
                             $('#home_category_tree').tree('append',data)
                         }
                     })
-                },
+                },--%>
                 onClick:function(node){
 
                     var table = $('#home_choose_list')
