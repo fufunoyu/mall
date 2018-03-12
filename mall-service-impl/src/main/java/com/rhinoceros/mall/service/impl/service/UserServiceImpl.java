@@ -146,6 +146,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Transactional
+    @Override
     public void resetPassword(ResetPasswordDto resetPasswordDto) {
         String secret = resetPasswordDto.getSecret();
         String email = SecurityUtils.decode(secret);

@@ -37,4 +37,9 @@
         WHERE product_id = #{productId}
     </select>
 
+    <select id="findProductCount">
+        SELECT COUNT (id)
+        FROM product
+    </select>
+
 </mapper>

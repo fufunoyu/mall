@@ -1,6 +1,7 @@
 <%@ taglib prefix="method" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
 <head>
 
 </head>
@@ -15,7 +16,7 @@
     }
 </style>
 <script>
-
+    var nodeId;
     /**
      * 上架时间修改为正确的显示格式
      * */
@@ -40,7 +41,7 @@
      * */
     function onCategoryDblClick(node) {
         if (node.children && node.children.length > 0) {
-            $("#category_list").tree('toggle',node.target)
+            $("#category_list").tree('toggle', node.target)
             return
         }
         $.ajax({
@@ -147,7 +148,7 @@
             method: 'post',
             data: {
                 name: categoryName,
-                id: node.id,
+                id: node.id
             },
             success: function () {
                 t.tree('beginEdit', node.target);
@@ -258,6 +259,11 @@
      * 初始菜单栏
      * */
     $(function () {
+
+        $('#dom_var_pagination').pagination({
+            // total: 114
+        });
+
         setTimeout(function () {
             $("#category_list").tree('loadData', [{
                 id: null,
@@ -353,7 +359,8 @@
     </form>
 </div>
 <%--录入商品--%>
-<div id="product_insert_win" class="easyui-window" title="录入商品" data-options="iconCls:'icon-save',closed:true,modal:true"
+<div id="product_insert_win" class="easyui-window" title="录入商品"
+     data-options="iconCls:'icon-save',closed:true,modal:true"
      style="padding:10px;width: 500px;height: 100%">
     <form id="product_description1" action="product.jsp" method="post">
         <div style="margin-bottom:20px">
@@ -463,10 +470,14 @@
                  onClick:function (node) {
                     var table = $('#product_table')
                     if(node.id>0){
+                    nodeId=node.id;
                         $.ajax({
                             url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id,
                             method:'get',
                             success:function(data){
+                            $('#dom_var_pagination').pagination({
+	                            pageList: [2,4,6,8,10]
+                            });
                                 table.datagrid('loadData',data)
                             }
                          })
@@ -507,6 +518,26 @@
             </ul>
         </div>
     </div>
+    <script>
+        $('#dom_var_pagination').pagination({
+            onSelectPage: function (pageNumber, pageSize) {
+
+                $(this).pagination('loading');
+                // alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
+                    method: 'get',
+                    success: function (data) {
+                        $('#product_table').datagrid('loadData', data)
+                    }
+                })
+                $(this).pagination('loaded');
+            }
+
+        });
+
+
+    </script>
     <%--商品表单--%>
     <div data-options="region:'center'">
         <div class="easyui-panel" title="商品列表" data-options="tools:'#product_tool'" style="width: 100%">
@@ -533,6 +564,11 @@
                 </tr>
                 </thead>
             </table>
+            <!-- 分页栏 -->
+            <div id="dom_var_pagination" class="easyui-pagination" data-options="total:100">
+
+
+            </div>
             <div>
 
             </div>

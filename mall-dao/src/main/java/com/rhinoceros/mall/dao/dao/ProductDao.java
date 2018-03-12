@@ -44,4 +44,7 @@ public interface ProductDao {
      * @return
      */
     ProductDescription findDescriptionById(Long productId);
+
+    int findProductCount();
+
 }
