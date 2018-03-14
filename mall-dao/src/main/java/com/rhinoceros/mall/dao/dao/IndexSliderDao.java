@@ -18,6 +18,20 @@ public interface IndexSliderDao {
     List<IndexSlider> findAll();
 
     /**
+     * 根据标题查找
+     * @param title
+     * @return
+     */
+    IndexSlider findByTitle(String title);
+
+    /**
+     * 根据id查找
+     * @param id
+     * @return
+     */
+    IndexSlider findById(Long id);
+
+    /**
      * 添加轮播图
      *
      * @param indexSlider
@@ -26,7 +40,7 @@ public interface IndexSliderDao {
     int add(IndexSlider indexSlider);
 
     /**
-     * 删除轮播图
+     * 根据id删除轮播图
      *
      * @param id
      */

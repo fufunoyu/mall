@@ -48,14 +48,7 @@
                    `index_product` ip)
     </select>
 
-    <!--根据根分类ID查找主页展示商品-->
-    <select id="findByCategoryId" resultType="IndexProduct" parameterType="Long">
-        SELECT *
-        FROM `index_product`
-        WHERE category_id = #{categoryId}
-    </select>
-
-    <!--删除主页展示商品-->
+    <!--根据id删除展示商品-->
     <delete id="deleteById" parameterType="Long">
         DELETE
         FROM `index_product`
@@ -70,6 +63,7 @@
         )
     </insert>
 
+    <!--根据productId查询-->
     <select id="findByProductId" parameterType="Long" resultType="IndexProduct">
         SELECT *
         FROM `index_product`

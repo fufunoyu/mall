@@ -9,6 +9,19 @@
         FROM `index_slider`
     </select>
 
+    <!--根据标题查找-->
+    <select id="findByTitle" parameterType="String" resultType="IndexSlider">
+        SELECT *
+        FROM `index_slider`
+        WHERE title = #{title}
+    </select>
+    <!--根据id查找-->
+    <select id="findById" parameterType="Long" resultType="IndexSlider">
+        SELECT *
+        FROM `index_slider`
+        WHERE id = #{id}
+    </select>
+
     <!--删除主页展示轮播图-->
     <delete id="deleteById" parameterType="Long">
         DELETE
