@@ -19,7 +19,7 @@ public interface CartProductDao {
      *
      * @param cartProductId
      */
-    void deleteById(Long cartProductId);
+    int deleteById(Long cartProductId);
 
     /**
      * 更新购物车中不为null的字段

@@ -1,11 +1,21 @@
 package com.rhinoceros.mall.manager.impl.manager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rhinoceros.mall.core.po.Category;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.dao.dao.CategoryDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
+import com.rhinoceros.mall.manager.impl.exception.BaseManagerException;
 import com.rhinoceros.mall.manager.manager.ProductManager;
+import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +28,7 @@ import java.util.List;
  * 2018/03/08 14:14
  */
 @Component
+@Slf4j
 public class ProductManagerImpl implements ProductManager {
 
     @Autowired
@@ -25,8 +36,10 @@ public class ProductManagerImpl implements ProductManager {
     @Autowired
     private CategoryDao categoryDao;
 
-//    @Autowired
-//    private ElasticsearchTemplate elasticsearchTemplate;
+    @Autowired
+    private TransportClient client;
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     public List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery) {
         //查找指定id的分类下的所有子分类
@@ -45,13 +58,74 @@ public class ProductManagerImpl implements ProductManager {
         return productDao.findByCategoryIdIn(ids, pageQuery);
     }
 
-    /**
-     * 添加商品
-     *
-     * @param product
-     */
-    public void add(Product product) {
 
-
+    @Override
+    public int add(Product product) {
+        //添加数据到数据库
+        int modify = productDao.add(product);
+        try {
+            byte[] bytes = mapper.writeValueAsBytes(product);
+            client.prepareIndex("mall", "product", product.getId().toString())
+                    .setSource(bytes, XContentType.JSON)
+                    .get();
+            return modify;
+        } catch (Exception e) {
+            log.error("json转换失败");
+            throw new BaseManagerException("json转换失败");
+        }
     }
+
+    @Override
+    public int deleteById(Long id) {
+        int modify = productDao.deleteById(id);
+        client.prepareDelete("mall", "product", id.toString());
+        return modify;
+    }
+
+    @Override
+    public int updateSelectionById(Product product) {
+        int modify = productDao.updateSelectionById(product);
+        try {
+            byte[] bytes = mapper.writeValueAsBytes(product);
+            client.prepareUpdate("mall", "product", product.getId().toString())
+                    .setDoc(bytes, XContentType.JSON);
+            return modify;
+        } catch (Exception e) {
+            log.error("json转换失败");
+            throw new BaseManagerException("json转换失败");
+        }
+    }
+
+    @Override
+    public Product findById(Long id) {
+        return productDao.findById(id);
+    }
+
+    @Override
+    public List<Product> query(String queryString, PageQuery pageQuery) {
+
+        //TODO 完善逻辑
+        BoolQueryBuilder builder = QueryBuilders.boolQuery()
+                .should(
+                        QueryBuilders.matchQuery("name", queryString)
+                );
+        SearchResponse searchResponse = client.prepareSearch("mall")
+                .setTypes("product")
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(builder)
+                .setFrom(pageQuery.getOffset())
+                .setSize(pageQuery.getSize()).get();
+        try {
+            List<Product> products = new LinkedList<Product>();
+            for (SearchHit hit : searchResponse.getHits()) {
+                Product product = mapper.readValue(hit.getSourceAsString(), Product.class);
+                products.add(product);
+            }
+            return products;
+        } catch (Exception e) {
+            log.error("json转换失败");
+            throw new BaseManagerException("json转换失败");
+        }
+    }
+
 }

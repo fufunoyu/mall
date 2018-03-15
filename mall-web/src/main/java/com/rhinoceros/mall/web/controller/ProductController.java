@@ -52,9 +52,7 @@ public class ProductController {
         }
         ProductVo productVo = new ProductVo(productService.findById(id));
         //获取商品详情
-        productVo.setProductDescription(productService.findDescriptionById(id));
         model.addAttribute("productVo", productVo);
-
 
         List<Comment> comments = commentService.findByProductId(id, new PageQuery(page, 10));
 
@@ -70,6 +68,5 @@ public class ProductController {
         model.addAttribute("nowPage", page);
         return "product";
     }
-
 
 }

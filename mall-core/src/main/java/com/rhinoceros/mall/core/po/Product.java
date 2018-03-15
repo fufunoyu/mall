@@ -66,4 +66,9 @@ public class Product {
      * 上架时间
      */
     private Date saleDate;
+
+    /**
+     * 商品描述信息
+     */
+    private String description;
 }
