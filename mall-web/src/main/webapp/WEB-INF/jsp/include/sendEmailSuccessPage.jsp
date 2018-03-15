@@ -4,6 +4,6 @@
 
 <div class="registerSuccessDiv">
 
-    <img src="/static/img/site/sendEmailSuccess.png">
+    <img src="${pageContext.request.contextPath}/static/img/site/sendEmailSuccess.png">
     邮件已发送，请注意查收
 </div>

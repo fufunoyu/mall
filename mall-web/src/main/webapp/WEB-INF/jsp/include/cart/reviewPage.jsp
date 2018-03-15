@@ -4,7 +4,7 @@
 	
 <div class="reviewDiv">
 	<div class="reviewProductInfoDiv">
-		<div class="reviewProductInfoImg"><img width="400px" height="400px" src="img/productSingle/${p.firstProductImage.id}.jpg"></div>
+		<div class="reviewProductInfoImg"><img width="400px" height="400px" src="${pageContext.request.contextPath}/static/img/productSingle/${p.firstProductImage.id}.jpg"></div>
 		<div class="reviewProductInfoRightDiv">
 			<div class="reviewProductInfoRightText">
 				${p.name}
@@ -25,7 +25,7 @@
 			</table>
 			
 			<div class="reviewProductInfoRightBelowDiv">
-				<span class="reviewProductInfoRightBelowImg"><img1 src="img/site/reviewLight.png"></span>
+				<span class="reviewProductInfoRightBelowImg"><img1 src="${pageContext.request.contextPath}/static/img/site/reviewLight.png"></span>
 				<span class="reviewProductInfoRightBelowText" >现在查看的是 您所购买商品的信息
 于<fmt:formatDate value="${o.createDate}" pattern="yyyy年MM月dd"/>下单购买了此商品 </span>
 			

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 <script>
     /**
      * 点击验证码刷新
@@ -17,7 +18,7 @@
     })
 
 </script>
-<form method="post" action="/resetPasswordSubmit" class="registerForm">
+<form method="post" action="${pageContext.request.contextPath}/resetPasswordSubmit" class="registerForm">
     <div class="registerDiv">
         <div class="registerErrorMessageDiv">
             <div class="alert alert-danger" role="alert">
@@ -26,7 +27,7 @@
             </div>
         </div>
 
-        <input name="secret" value="${secret}" type="hidden">
+        <input name="secret" value="${requestScope[ConstantValue.RESET_PASSWORD_PARAM]}" type="hidden">
 
         <table class="registerTable" align="center">
             <tr>
@@ -43,7 +44,7 @@
             </tr>
 
             <tr>
-                <td class="registerTableLeftTD"><img id="verifyCode" src="/verifyCode/getCode"
+                <td class="registerTableLeftTD"><img id="verifyCode" src="${pageContext.request.contextPath}/verifyCode/getCode"
                                                      onclick="refreshVerifyCode()"></td>
                 <td class="registerTableRightTD"><input id="name1" name="code" value="${registerUser.username}"
                                                         placeholder="请输入验证码"></td>

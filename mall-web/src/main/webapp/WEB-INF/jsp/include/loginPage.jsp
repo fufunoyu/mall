@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ page import="com.rhinoceros.mall.core.constant.web.ConstantValue" %>
+<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 <script>
     $(function () {
 

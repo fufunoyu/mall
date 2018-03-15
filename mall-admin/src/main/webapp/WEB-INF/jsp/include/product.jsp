@@ -447,7 +447,7 @@
 </div>
 <%--商品分类菜单栏--%>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
-    <div data-options="region:'west',split:true" style="width:250px;height: 100%;">
+    <div data-options="region:'west'" style="width:250px;height: 100%;">
         <div class="easyui-panel" title="商品分类" data-options="tools:'#product_category_tool'"
              border="false">
             <ul id="category_list" class="easyui-tree" data-options="{
