@@ -57,8 +57,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateSelectionById(Order order) {
         if (order.getId() == null) {
-            log.info("id不能为空");
-            throw new ParameterIsNullException("id不能为空");
+            log.info("订单id不能为空");
+            throw new ParameterIsNullException("订单id不能为空");
         }
         orderDao.updateSelectionById(order);
     }

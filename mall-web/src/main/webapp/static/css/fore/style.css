@@ -1734,7 +1734,7 @@ td.orderListItemProductRealPriceTD {
 }
 
 button.orderListItemConfirm {
-    background-color: #66B6FF;
+    background-color: #ff6666;
     border-radius: 2px;
     color: white;
     font-size: 12px;
@@ -1744,7 +1744,7 @@ button.orderListItemConfirm {
 }
 
 button.orderListItemConfirm:hover {
-    background-color: #118ADB;
+    background-color: #db3611;
 }
 
 button.orderListItemReview {
