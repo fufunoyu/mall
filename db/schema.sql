@@ -11,7 +11,6 @@ DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `cart_product`;
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `address`;
-DROP TABLE IF EXISTS `product_description`;
 DROP TABLE IF EXISTS `index_product`;
 DROP TABLE IF EXISTS `index_slider`;
 
@@ -122,6 +121,8 @@ CREATE TABLE `product` (
   COMMENT '评论数',
   sale_date   DATETIME                DEFAULT NULL
   COMMENT '上架时间',
+  description TEXT                    DEFAULT NULL
+  COMMENT '详情',
   KEY `category_id`(`category_id`),
   PRIMARY KEY `id`(`id`)
 )
@@ -237,16 +238,6 @@ CREATE TABLE `address` (
 )
   COMMENT '地址表';
 
-CREATE TABLE `product_description` (
-  product_id  INT(20) NOT NULL
-  COMMENT '商品id',
-  description TEXT    NOT NULL
-  COMMENT '商品详情',
-  KEY `product_id`(`product_id`),
-  PRIMARY KEY `product_id`(`product_id`)
-)
-  COMMENT '商品评论信息表';
-
 
 CREATE TABLE `index_product` (
 
@@ -262,14 +253,14 @@ CREATE TABLE `index_product` (
 
 CREATE TABLE `index_slider` (
 
-	`id` INT(20) NOT NULL AUTO_INCREMENT
-	COMMENT 'id',
-	`title` VARCHAR (32)
-	COMMENT '图片标题',
-	`image_url` VARCHAR (512) NOT NULL
-	COMMENT '轮播图url',
-	`jump_url` VARCHAR (512)
-	COMMENT '跳转url',
-	PRIMARY KEY `id`(`id`)
+  `id`        INT(20)      NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  `title`     VARCHAR(32)
+  COMMENT '图片标题',
+  `image_url` VARCHAR(512) NOT NULL
+  COMMENT '轮播图url',
+  `jump_url`  VARCHAR(512)
+  COMMENT '跳转url',
+  PRIMARY KEY `id`(`id`)
 )
-COMMENT '主页轮播图表';
+  COMMENT '主页轮播图表';

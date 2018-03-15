@@ -5,7 +5,7 @@ import com.rhinoceros.mall.core.dto.LoginUserDto;
 import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.po.User;
-import com.rhinoceros.mall.service.impl.exception.BaseException;
+import com.rhinoceros.mall.service.impl.exception.BaseServiceException;
 import com.rhinoceros.mall.service.impl.exception.user.UserException;
 import com.rhinoceros.mall.service.service.UserService;
 import com.rhinoceros.mall.web.support.web.annotation.Authentication;
@@ -177,7 +177,7 @@ public class LoginController {
             String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+request.getContextPath();
             userService.sendResetPasswordEmail(retrievePasswordDto,basePath+"/resetPassword");
             return "sendEmailSuccess";
-        } catch (BaseException e) {
+        } catch (BaseServiceException e) {
             model.addAttribute("msg", e.getMessage());
             return "retrievePassword";
         }
@@ -208,14 +208,14 @@ public class LoginController {
         if (validateCode != null && !(validateCode.equals((resetPasswordDto.getCode())))) {
             model.addAttribute("msg", "验证码错误");
             return "resetPassword";
+        } else {
+            try {
+                userService.resetPassword(resetPasswordDto);
+                return "resetPasswordSuccess";
+            } catch (BaseServiceException e) {
+                return "resetPassword";
+            }
         }
-        try {
-            userService.resetPassword(resetPasswordDto);
-            return "resetPasswordSuccess";
-        } catch (BaseException e) {
-            return "resetPassword";
-        }
-
 
     }
 

@@ -214,13 +214,8 @@
                 $("#productCategory").textbox('setText', category.name)
             }
         })
-        $.ajax({
-            url: '${pageContext.request.contextPath}/product/description.json?id=' + row.id,
-            method: 'get',
-            success: function (productDescription) {
-                $("#productDescription").texteditor('setValue', productDescription.description)
-            }
-        })
+
+        $("#productDescription").texteditor('setValue', row.description)
         $("#productName").textbox('setText', row.name)
         $("#productPrice").textbox('setText', row.price)
         $("#productDiscount").textbox('setText', row.discount)
