@@ -210,6 +210,14 @@ public class OrderController {
         return "confirmPay";
     }
 
+    /**
+     * 真正确认收货
+     * @param session
+     * @param model
+     * @param oid
+     * @param status
+     * @return
+     */
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
                                  Model model,
@@ -226,6 +234,14 @@ public class OrderController {
         return "orderConfirmed";
     }
 
+    /**
+     * 订单评价
+     * @param session
+     * @param model
+     * @param oid
+     * @return
+     */
+    @Authentication
     @RequestMapping({"/comment"})
     public String OrderComment(HttpSession session,
                                Model model,
@@ -234,6 +250,17 @@ public class OrderController {
         if (user == null) {
             return "redirect:/login";
         }
+
+        Order order = orderService.findById(oid);
+
+        OrderListVo orderListVo = new OrderListVo();
+        orderListVo.setOrder(order);
+        List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
+        List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
+
+        setOrderProductVos(orderProducts, orderProductVos);
+        orderListVo.setOrderProductVos(orderProductVos);
+        model.addAttribute("orderListVo", orderListVo);
 
         return "review";
     }
