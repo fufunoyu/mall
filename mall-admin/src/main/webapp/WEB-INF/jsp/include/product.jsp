@@ -476,7 +476,7 @@
                             method:'get',
                             success:function(data){
                             $('#dom_var_pagination').pagination({
-	                            pageList: [2,4,6,8,10]
+	                            pageList: [10,20,30,40,50]
                             });
                                 table.datagrid('loadData',data)
                             }
@@ -519,6 +519,7 @@
         </div>
     </div>
     <script>
+        <%--分页功能实现--%>
         $('#dom_var_pagination').pagination({
             onSelectPage: function (pageNumber, pageSize) {
 
@@ -566,8 +567,6 @@
             </table>
             <!-- 分页栏 -->
             <div id="dom_var_pagination" class="easyui-pagination" data-options="total:100">
-
-
             </div>
             <div>
 
