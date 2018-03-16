@@ -3,7 +3,6 @@ package com.rhinoceros.mall.service.impl.service;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.dao.dao.OrderDao;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
@@ -57,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateSelectionById(Order order) {
         if (order.getId() == null) {
-            log.info("id不能为空");
-            throw new ParameterIsNullException("id不能为空");
+            log.info("订单id不能为空");
+            throw new ParameterIsNullException("订单id不能为空");
         }
         orderDao.updateSelectionById(order);
     }
@@ -73,15 +72,7 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.findById(id);
     }
 
-    /**
-     * 通过orderId查找订单与商品的关系
-     * @param orderId
-     * @return
-     */
-    @Override
-    public List<OrderProduct> findProductIdByOrderId(Long orderId) {
-        return orderDao.findProductIdByOrderId(orderId);
-    }
+
 
 
 }

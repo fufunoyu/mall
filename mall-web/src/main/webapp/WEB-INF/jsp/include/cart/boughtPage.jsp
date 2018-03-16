@@ -160,13 +160,14 @@
     </div>
 
     <div class="orderListItem">
-        <c:forEach items="${orderListVos}" var="o">
+        <c:forEach items="${orderVos}" var="o">
             <table class="orderListItemTable" orderStatus="${o.order.status}" oid="${o.order.id}">
                 <tr class="orderListItemFirstTR">
                     <td colspan="2">
                         <b><fmt:formatDate value="${o.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/></b>
-                        <span>订单号: ${o.order.identifier}
-					</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="dingdanhao">订单号: </span>
+                        <span>${o.order.identifier}</span>
                     </td>
                     <td colspan="2">
                         <%--<img width="13px" src="img/site/orderItemTmall.png">--%>
@@ -184,13 +185,13 @@
 
                     </td>
                 </tr>
-                <c:forEach items="${o.orderProductVos}" var="oi" varStatus="st">
+                <%--<c:forEach items="${o.orderProductVos}" var="oi" varStatus="st">--%>
                     <tr class="orderItemProductInfoPartTR">
                         <td class="orderItemProductInfoPartTD"><img width="80" height="80"
-                                                                    src="${oi.productVo.firstImageUrl}"></td>
+                                                                    src="${o.productVo.firstImageUrl}"></td>
                         <td class="orderItemProductInfoPartTD">
                             <div class="orderListItemProductLinkOutDiv">
-                                <a href="${pageContext.request.contextPath}/product?pid=${oi.productVo.product.id}">${oi.productVo.product.name}</a>
+                                <a href="${pageContext.request.contextPath}/product?pid=${o.productVo.product.id}">${o.productVo.product.name}</a>
                                 <div class="orderListItemProductLinkInnerDiv">
                                     <img src="${pageContext.request.contextPath}/static/img/site/creditcard.png"
                                          title="支持信用卡支付">
@@ -204,24 +205,24 @@
                         <td class="orderItemProductInfoPartTD" width="100px">
 
                             <div class="orderListItemProductOriginalPrice">￥<fmt:formatNumber type="number"
-                                                                                              value="${oi.productVo.product.price}"
+                                                                                              value="${o.productVo.product.price}"
                                                                                               minFractionDigits="2"/></div>
                             <div class="orderListItemProductPrice">￥<fmt:formatNumber type="number"
-                                                                                      value="${oi.productVo.product.discount}"
+                                                                                      value="${o.productVo.product.discount}"
                                                                                       minFractionDigits="2"/></div>
 
 
                         </td>
                         <td align="center" class="orderItemProductInfoPartTD" width="100px">
-                            <span class="orderListItemNumber">${oi.num}</span>
+                            <span class="orderListItemNumber">${o.order.productNum}</span>
                         </td>
 
-                        <c:if test="${st.count==1}">
+                        <%--<c:if test="${st.count==1}">--%>
                             <%--<td valign="top" rowspan="${fn:length(o.orderProductVos)}" class="orderListItemNumberTD orderItemOrderInfoPartTD" width="100px">
                                 <span class="orderListItemNumber">${oi.num}</span>
                             </td>--%>
 
-                            <td valign="top" rowspan="${fn:length(o.orderProductVos)}" width="120px"
+                            <td valign="top" rowspan="1" width="120px" <%--rowspan="${fn:length(o.productVo)}"--%>
                                 class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD">
                                 <div class="orderListItemProductRealPrice">￥<fmt:formatNumber minFractionDigits="2"
                                                                                               maxFractionDigits="2"
@@ -229,7 +230,7 @@
                                                                                               value="${o.order.totalPrice}"/></div>
                                 <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                             </td>
-                            <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
+                            <td valign="top" rowspan="1" <%--rowspan="${fn:length(o.productVo)}"--%>
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
                                     <a href="${pageContext.request.contextPath}/order/confirmPayPage?oid=${o.order.id}">
@@ -268,9 +269,9 @@
                                 </c:if>
 
                             </td>
-                        </c:if>
+                        <%--</c:if>--%>
                     </tr>
-                </c:forEach>
+                <%--</c:forEach>--%>
 
             </table>
         </c:forEach>
