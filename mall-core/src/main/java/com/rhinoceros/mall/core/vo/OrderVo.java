@@ -4,10 +4,8 @@ package com.rhinoceros.mall.core.vo;
 import com.rhinoceros.mall.core.po.Order;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class OrderListVo {
+public class OrderVo {
 
     /**
      * 订单详情
@@ -17,8 +15,7 @@ public class OrderListVo {
     /**
      * 订单的商品列表
      */
-    private List<OrderProductVo> orderProductVos;
-
+    private ProductVo productVo;
 
 
 }
