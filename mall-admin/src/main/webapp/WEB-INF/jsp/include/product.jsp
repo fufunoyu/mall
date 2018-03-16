@@ -87,9 +87,33 @@
     /**
      * 商品信息修改
      * */
-    function productEdict() {
-
-    }
+    <%--function product_button_edit_confirm() {--%>
+        <%--$.ajax({--%>
+            <%--url: '${pageContext.request.contextPath}/product/edict',--%>
+            <%--method: 'post',--%>
+            <%--data: {--%>
+                <%--productName: $("#productName").textbox('getText'),--%>
+                <%--productPrice:$("#productPrice").textbox('getText'),--%>
+                <%--productDiscount:$("#productDiscount").textbox("getText"),--%>
+                <%--productStoreNum:$("#productStoreNum").textbox("getText"),--%>
+                <%--productSaleNum:$("#productSaleNum").textbox("getText"),--%>
+                <%--productCommentNum:$("#productCommentNum").textbox("getText"),--%>
+                <%--productStatus:$("#productStatus").textbox("getText"),--%>
+                <%--productSaleDate:$("#productSaleDate").textbox("getText"),--%>
+            <%--},--%>
+            <%--success: function (data) {--%>
+                <%--if (!node.children || !node.children.length) {--%>
+                    <%--onCategoryDblClick(node)--%>
+                <%--} else {--%>
+                    <%--$('#category_list').tree('append', {--%>
+                        <%--parent: node.target,--%>
+                        <%--data: [data]--%>
+                    <%--});--%>
+                <%--}--%>
+                <%--$("#category_dialog").dialog('close')--%>
+                <%--$("#category_name").textbox('setText', "")--%>
+            <%--}--%>
+    <%--}--%>
 
     /**
      * 菜单栏新增分类
@@ -123,13 +147,18 @@
                 parentId: node.id
             },
             success: function (data) {
-                if (!node.children || !node.children.length) {
-                    onCategoryDblClick(node)
-                } else {
-                    $('#category_list').tree('append', {
-                        parent: node.target,
-                        data: [data]
-                    });
+                if(data==null||data.length==0){
+                    $.messager.alert('提示','该菜单栏已存在!');
+                }
+                else{
+                    if (!node.children || !node.children.length) {
+                        onCategoryDblClick(node)
+                    } else {
+                        $('#category_list').tree('append', {
+                            parent: node.target,
+                            data: [data]
+                        });
+                    }
                 }
                 $("#category_dialog").dialog('close')
                 $("#category_name").textbox('setText', "")
@@ -318,6 +347,11 @@
             //...
         });
     });
+    <%--商品分类下拉框--%>
+    $('#productCategory').combotree({
+        url: '${pageContext.request.contextPath}/category',
+        required: true
+    });
 
 </script>
 <%--参数窗口--%>
@@ -355,11 +389,11 @@
             <input id="productSaleDate" class="easyui-textbox" name="saleDate" style="width:100%"
                    data-options="label:'上架日期:',required:true" readonly>
         </div>
-        <%--<div style="margin-bottom:20px">--%>
-        <%--<input id="productCategory" class="easyui-combotree" name="category" value="122"--%>
-        <%--data-options="url:'${pageContext.request.contextPath}/category',method:'get',--%>
-        <%--label:'商品分类:',labelPosition:'left'" style="width:100%">--%>
-        <%--</div>--%>
+        <div style="margin-bottom:20px">
+        <input id="productCategory" class="easyui-combotree" name="category" value="122"
+        data-options="url:'${pageContext.request.contextPath}/category',method:'get',
+        label:'商品分类:',labelPosition:'left'" style="width:100%">
+        </div>
         <div style="margin-bottom:20px">
             <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
                    data-options="label:'商品库存总量:',required:true">
@@ -372,7 +406,10 @@
             <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
                    data-options="label:'评论总数:',required:true" readonly>
         </div>
-        <div id="productDescription" class=" easyui-texteditor" data-options=label:'商品信息' style="height: 300px">
+        <div>
+            <span>商品详情:</span>
+            <div id="productDescription" class="easyui-texteditor" style="height: 300px">
+            </div>
         </div>
         <div style="margin-bottom:20px">
             <button onclick="product_button_edit_confirm">确认</button>
@@ -389,10 +426,10 @@
             <input id="productName1" class="easyui-textbox" name="name" style="width:100%"
                    data-options="label:'商品名称:',required:true">
         </div>
-        <div id="image" style="margin-bottom:20px">
+        <div id="image1" style="margin-bottom:20px">
 
         </div>
-        <div id="imageUpload" style="margin-bottom:20px">
+        <div id="imageUpload1" style="margin-bottom:20px">
 
             <input type="file" id="selectImage1">
         </div>
@@ -433,7 +470,7 @@
             <input id="productCommentNum1" class="easyui-textbox" name="commentNum" style="width:100%"
                    data-options="label:'评论总数:',required:true" readonly>
         </div>
-        <div id="productDescription" class=" easyui-texteditor" data-options=label:'商品信息' style="height: 300px">
+        <div id="productDescription1" class=" easyui-texteditor" data-options=label:'商品信息' style="height: 300px">
         </div>
     </form>
 </div>

@@ -1,7 +1,9 @@
 package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.po.Category;
+import com.rhinoceros.mall.service.impl.exception.category.CategoryHasFoundException;
 import com.rhinoceros.mall.service.service.CategoryService;
+import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +56,13 @@ public class CategoryController {
     @ResponseBody
     @RequestMapping("/add")
     public Category add(Category category) {
-        return categoryService.add(category);
+      //  Category category
+        try {
+            return categoryService.add(category);
+        }catch (CategoryHasFoundException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
