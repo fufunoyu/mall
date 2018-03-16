@@ -49,7 +49,9 @@
             </div>
             <div class="reviewProductInfoRightDiv">
                 <div class="reviewProductInfoRightText">
+                    <a  href="${pageContext.request.contextPath}/product?pid=${orderVo.productVo.product.id}" class="orderItemProductLink">
                         ${orderVo.productVo.product.name}
+                    </a>
                 </div>
                 <table class="reviewProductInfoTable">
                     <tr>

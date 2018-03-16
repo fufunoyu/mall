@@ -2,7 +2,6 @@ package com.rhinoceros.mall.web.controller;
 /* created at 4:27 PM 3/6/2018  */
 
 import com.rhinoceros.mall.core.constant.ConstantValue;
-import com.rhinoceros.mall.core.dto.OrderCommentDto;
 import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
@@ -80,6 +79,7 @@ public class OrderController {
      * @param model
      * @return
      */
+    @Authentication
     @RequestMapping("cartAdd")
     public String showCartOrderConfirm(@RequestParam("id") List<Long> ids, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
@@ -153,7 +153,6 @@ public class OrderController {
     }
 
 
-
     /**
      * 跳转到确认收货页面
      *
@@ -185,7 +184,8 @@ public class OrderController {
         return "confirmPay";
     }
 
-    /**(还没抛异常)
+    /**
+     * (还没抛异常)
      * 真正确认收货
      *
      * @param session
@@ -193,6 +193,7 @@ public class OrderController {
      * @param oid
      * @return
      */
+    @Authentication
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
                                  Model model,
@@ -222,8 +223,8 @@ public class OrderController {
     public String orderComment(HttpSession session,
                                Model model,
                                @RequestParam("oid") Long oid,
-                               @PageDefault(required = false)PageQuery pageQuery1) {
-        PageQuery pageQuery = new PageQuery(pageQuery1.getPage(),pageQuery1.getSize(),new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC));
+                               @PageDefault(required = false) PageQuery pageQuery1) {
+        PageQuery pageQuery = new PageQuery(pageQuery1.getPage(), pageQuery1.getSize(), new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC));
         Order order = orderService.findById(oid);
         OrderVo orderVo = new OrderVo();
         orderVo.setOrder(order);
@@ -231,7 +232,7 @@ public class OrderController {
         orderVo.setProductVo(productVo);
         model.addAttribute("orderVo", orderVo);
         //评论
-        List<Comment> comments = commentService.findByProductId(productVo.getProduct().getId(),pageQuery);
+        List<Comment> comments = commentService.findByProductId(productVo.getProduct().getId(), pageQuery);
         List<CommentVo> commentVos = new LinkedList<>();
         for (Comment comment : comments) {
             CommentVo vo = new CommentVo();
@@ -240,13 +241,15 @@ public class OrderController {
             commentVos.add(vo);
         }
         model.addAttribute("comments", commentVos);
-        model.addAttribute("nowPage",pageQuery.getPage());
+        model.addAttribute("nowPage", pageQuery.getPage());
 
         return "review";
     }
 
-    /**(还没抛异常)
+    /**
+     * (还没抛异常)
      * 按了提交评论后
+     *
      * @param
      * @param oid
      * @return
@@ -254,7 +257,7 @@ public class OrderController {
     @Authentication
     @RequestMapping({"/completeComment"})
     public String completeComment(@RequestParam("oid") Long oid,
-                                  @RequestParam("content") String content){
+                                  @RequestParam("content") String content) {
         Order order = new Order();
         order.setId(oid);
         //更改订单状态
@@ -264,16 +267,17 @@ public class OrderController {
         Order order1 = orderService.findById(oid);
         Comment comment = new Comment();
         comment.setContent(content);
-        comment.setCreateAt(new Date());
         comment.setOrderId(oid);
         comment.setProductId(order1.getProductId());
         comment.setUserId(order1.getUserId());
         commentService.add(comment);
-        return "redirect:/order/comment?oid=" +oid;
+        return "redirect:/order/comment?oid=" + oid;
     }
 
-    /**(未处理异常)
+    /**
+     * (未处理异常)
      * 取消订单
+     *
      * @param oid
      * @return
      */
@@ -290,12 +294,13 @@ public class OrderController {
 
     /**
      * 申请退货
+     *
      * @param oid
      * @return
      */
     @Authentication
     @RequestMapping({"/returnOrder"})
-    public String returnOrder(@RequestParam("oid")Long oid){
+    public String returnOrder(@RequestParam("oid") Long oid) {
         Order order = new Order();
         order.setId(oid);
         //更改订单状态

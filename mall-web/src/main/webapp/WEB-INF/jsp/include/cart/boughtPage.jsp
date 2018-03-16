@@ -258,6 +258,9 @@
 
                                 <c:if test="${o.order.status=='WAIT_SHIP' }">
                                     <span>待发货</span>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                     <%-- 									<button class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?id=${o.id}">催卖家发货</button> --%>
 
                                 </c:if>
