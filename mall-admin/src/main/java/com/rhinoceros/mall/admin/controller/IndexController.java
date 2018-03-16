@@ -23,4 +23,26 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * 返回首页
+     *
+     * @return
+     */
+    @RequestMapping({"/test"})
+    public String test() {
+
+        return "test";
+    }
+
+    /**
+     * 返回首页
+     *
+     * @return
+     */
+    @RequestMapping({"/test2"})
+    public String test2() {
+
+        return "test2";
+    }
+
 }

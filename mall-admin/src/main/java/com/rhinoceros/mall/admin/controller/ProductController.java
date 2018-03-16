@@ -3,6 +3,7 @@ package com.rhinoceros.mall.admin.controller;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.ProductsWithCountVo;
+import com.rhinoceros.mall.manager.manager.ProductManager;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,8 @@ public class ProductController {
         return "include/product";
     }
 
+//    @RequestMapping("/edict")
+//    public Product updateSelectionProduct() {
+//        return ProductManager.updateSelectionById();
+//    }
 }

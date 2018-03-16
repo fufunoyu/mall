@@ -56,7 +56,6 @@ public class CategoryController {
     @ResponseBody
     @RequestMapping("/add")
     public Category add(Category category) {
-      //  Category category
         try {
             return categoryService.add(category);
         }catch (CategoryHasFoundException e){

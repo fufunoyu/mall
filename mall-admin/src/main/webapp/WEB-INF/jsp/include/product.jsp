@@ -102,16 +102,7 @@
                 <%--productSaleDate:$("#productSaleDate").textbox("getText"),--%>
             <%--},--%>
             <%--success: function (data) {--%>
-                <%--if (!node.children || !node.children.length) {--%>
-                    <%--onCategoryDblClick(node)--%>
-                <%--} else {--%>
-                    <%--$('#category_list').tree('append', {--%>
-                        <%--parent: node.target,--%>
-                        <%--data: [data]--%>
-                    <%--});--%>
-                <%--}--%>
-                <%--$("#category_dialog").dialog('close')--%>
-                <%--$("#category_name").textbox('setText', "")--%>
+                <%----%>
             <%--}--%>
     <%--}--%>
 
@@ -348,10 +339,21 @@
         });
     });
     <%--商品分类下拉框--%>
-    $('#productCategory').combotree({
-        url: '${pageContext.request.contextPath}/category',
-        required: true
-    });
+    function product_categoryFilter(data) {
+        var arr = []
+        for (var i = 0; i < data.length; i++) {
+            arr.push({
+                id: data[i].id,
+                text: data[i].name,
+                state:'closed',
+                parentId: data[i].parentId,
+                // children: [{
+                //     text: ''
+                // }]
+            })
+        }
+        return arr
+    }
 
 </script>
 <%--参数窗口--%>
@@ -390,9 +392,12 @@
                    data-options="label:'上架日期:',required:true" readonly>
         </div>
         <div style="margin-bottom:20px">
-        <input id="productCategory" class="easyui-combotree" name="category" value="122"
-        data-options="url:'${pageContext.request.contextPath}/category',method:'get',
-        label:'商品分类:',labelPosition:'left'" style="width:100%">
+            <select id="productCategory" class="easyui-combotree" style="width:200px;"
+                    data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
+        onClick:function (node) {
+             <%--alert(node.id +' '+node.parentId)--%>
+        },required:true">
+            </select>
         </div>
         <div style="margin-bottom:20px">
             <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
