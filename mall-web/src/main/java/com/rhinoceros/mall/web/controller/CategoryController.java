@@ -2,6 +2,7 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.po.Category;
 import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.query.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CategoryService;
@@ -19,10 +20,10 @@ import java.util.List;
 
 /**
  * @author Rhys Xia
- * <p>
  * 2018/03/05 09:57
  */
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
@@ -38,7 +39,7 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @RequestMapping("/category")
+    @RequestMapping("/product/list")
     public String list(@RequestParam("cid") Long cid,
                        @PageDefault(required = false) PageQuery pageQuery,
                        Model model) {
@@ -53,23 +54,33 @@ public class CategoryController {
         }
 
         model.addAttribute("products", productVos);
-
         /**
          * 通过id查询分类
          */
         Category category = categoryService.findById(cid);
         model.addAttribute("category", category);
+        model.addAttribute("pageQuery", pageQuery);
+        List<Order> orders = pageQuery.getOrders();
+        List<String> sorts = new LinkedList<>();
+        if (orders != null) {
+            for (Order order : orders) {
+                sorts.add(order.getField() + "," + order.getDirection().name());
+            }
+        }
+        model.addAttribute("sorts", sorts);
         return "category";
     }
 
     /**
      * 根据id获取子分类
+     *
      * @param id
      * @return
      */
-    @RequestMapping("/category/list.json")
+    @RequestMapping("/list.json")
     @ResponseBody
     public List<Category> getById(@RequestParam("parentId") Long id) {
         return categoryService.findChildrenById(id);
     }
+
 }
