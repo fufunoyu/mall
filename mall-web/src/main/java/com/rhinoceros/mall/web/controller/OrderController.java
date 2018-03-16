@@ -6,6 +6,7 @@ import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.AddressListVo;
 import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
@@ -50,7 +51,8 @@ public class OrderController {
      */
     @Authentication
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto, Model model) {
+    public String showOrderConfirm(OrderDto orderDto, Model model,HttpSession session) {
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         //获取商品的id
         Long pid = orderDto.getProductId();
         //根据商品id获取商品信息
@@ -63,11 +65,12 @@ public class OrderController {
             Product product1 = productService.findById(orderDto.getProductId());
             model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
             model.addAttribute("total", calculate(product1.getPrice(), product1.getDiscount(), orderDto.getProductNum()));
+            List<Address> addresses = addressService.findByUserId(user.getId());
+            model.addAttribute("addressList",addresses);
             return "buy";
         }
         return "product";
     }
-
     /**
      * 购物车结算到订单确认页面
      *
@@ -206,10 +209,19 @@ public class OrderController {
         orderListVo.setOrderProductVos(orderProductVos);
         model.addAttribute("orderListVo", orderListVo);
         Address orderAddress = addressService.findById(orderListVo.getOrder().getAddressId());
+
         model.addAttribute("orderAddress", orderAddress);
         return "confirmPay";
     }
 
+    /**
+     * 确认收货
+     * @param session
+     * @param model
+     * @param oid
+     * @param status
+     * @return
+     */
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
                                  Model model,
@@ -226,6 +238,13 @@ public class OrderController {
         return "orderConfirmed";
     }
 
+    /**
+     * 评论商品
+     * @param session
+     * @param model
+     * @param oid
+     * @return
+     */
     @RequestMapping({"/comment"})
     public String OrderComment(HttpSession session,
                                Model model,

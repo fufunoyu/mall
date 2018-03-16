@@ -225,6 +225,8 @@ CREATE TABLE `address` (
   COMMENT '邮政编码',
   delivery_address VARCHAR(128) NULL
   COMMENT '收货地址',
+  detail_address VARCHAR(128) NULL
+  COMMENT '详细地址',
   delivery_name    VARCHAR(32)  NOT NULL
   COMMENT '收货人姓名',
   phone            CHAR(20)     NOT NULL
