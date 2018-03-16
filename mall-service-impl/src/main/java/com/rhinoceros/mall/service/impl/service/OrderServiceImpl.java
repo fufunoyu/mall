@@ -73,15 +73,7 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.findById(id);
     }
 
-    /**
-     * 通过orderId查找订单与商品的关系
-     * @param orderId
-     * @return
-     */
-    @Override
-    public List<OrderProduct> findProductIdByOrderId(Long orderId) {
-        return orderDao.findProductIdByOrderId(orderId);
-    }
+
 
 
 }

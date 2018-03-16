@@ -2277,3 +2277,7 @@ table.cartProductTable th.selectAndImage {
 table td {
     font-size: 12px;
 }
+
+span.dingdanhao {
+    color: #aaa;
+}

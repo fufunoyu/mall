@@ -6,13 +6,13 @@
 	<div class="confirmPayImageDiv">
 		<img src="${pageContext.request.contextPath}/static/img/site/comformPayFlow.png">
 		<div  class="confirmPayTime1">
-			<fmt:formatDate value="${orderListVo.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+			<fmt:formatDate value="${orderVo.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		<div  class="confirmPayTime2">
-			<fmt:formatDate value="${orderListVo.order.payAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+			<fmt:formatDate value="${orderVo.order.payAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		<div class="confirmPayTime3">
-            <fmt:formatDate value="${orderListVo.order.deliverAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+            <fmt:formatDate value="${orderVo.order.deliverAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 
 
@@ -30,22 +30,22 @@
 				<th width="120px">数量 </th>
 				<th width="120px">运费</th>
 			</thead>
-			<c:forEach items="${orderListVo.orderProductVos}" var="oi">
+			<%--<c:forEach items="${orderListVo.orderProductVos}" var="oi">--%>
 				<tr>
-					<td><img width="50px" src="${oi.productVo.firstImageUrl}"></td>
+					<td><img width="50px" src="${orderVo.productVo.firstImageUrl}"></td>
 					<td class="confirmPayOrderItemProductLink">
-						<a href="#nowhere">${oi.productVo.product.name}</a>
+						<a href="#nowhere">${orderVo.productVo.product.name}</a>
 					</td>
-					<td>￥<fmt:formatNumber type="number" value="${oi.productVo.product.price}" minFractionDigits="2"/></td>
-					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${oi.productVo.product.discount}" minFractionDigits="2"/></span></td>
-					<td><span>${oi.num}</span></td>
+					<td>￥<fmt:formatNumber type="number" value="${orderVo.productVo.product.price}" minFractionDigits="2"/></td>
+					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${orderVo.productVo.product.discount}" minFractionDigits="2"/></span></td>
+					<td><span>${orderVo.num}</span></td>
 					<td><span>快递 ： 0.00 </span></td>
 				</tr>
-			</c:forEach>
+			<%--</c:forEach>--%>
 		</table>
 
 		<div class="confirmPayOrderItemText pull-right">
-			实付款： <span class="confirmPayOrderItemSumPrice">￥<fmt:formatNumber type="number" value="${orderListVo.order.totalPrice}" minFractionDigits="2"/></span>
+			实付款： <span class="confirmPayOrderItemSumPrice">￥<fmt:formatNumber type="number" value="${orderVo.order.totalPrice}" minFractionDigits="2"/></span>
 		</div>
 
 
@@ -55,7 +55,7 @@
 		<table class="confirmPayOrderDetailTable">
 			<tr>
 				<td>订单编号：</td>
-				<td>${orderListVo.order.identifier} </td>
+				<td>${orderVo.order.identifier} </td>
 				<%--<td>${orderListVo.order.identifier} <img width="23px" src="img/site/confirmOrderTmall.png"></td>--%>
 			</tr>
 			<%--<tr>
@@ -93,6 +93,6 @@
 	</div>
 	<div class="confirmPayButtonDiv">
 		<div class="confirmPayWarning">请收到货后，再确认收货！否则您可能钱货两空！</div>
-		<a href="${pageContext.request.contextPath}/order/confiredPage?oid=${orderListVo.order.id}&status=WAIT_COMMENT"><button class="confirmPayButton">确认支付</button></a>
+		<a href="${pageContext.request.contextPath}/order/confiredPage?oid=${orderVo.order.id}"><button class="confirmPayButton">确认支付</button></a>
 	</div>
 </div>

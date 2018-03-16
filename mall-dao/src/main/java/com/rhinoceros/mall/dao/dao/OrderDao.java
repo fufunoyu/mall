@@ -49,10 +49,4 @@ public interface OrderDao {
      */
     Order findById(Long id);
 
-    /**
-     * 通过orderId查找订单与商品的关系
-     * @param orderId
-     * @return
-     */
-    List<OrderProduct> findProductIdByOrderId(Long orderId);
 }

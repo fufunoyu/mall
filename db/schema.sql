@@ -171,23 +171,17 @@ CREATE TABLE `order` (
   COMMENT '收货信息id',
   user_id     INT(20)        NOT NULL
   COMMENT '订单对应的用户id',
+  product_id  INT(20) NOT NULL
+  COMMENT '商品id',
+  product_num INT(5)  NOT NULL
+  COMMENT '商品数量',
   PRIMARY KEY `id`(`id`),
   KEY `user_id`(`user_id`),
   KEY `identifier`(`identifier`)
 )
   COMMENT '订单表';
 
-CREATE TABLE `order_product` (
-  product_id  INT(20) NOT NULL
-  COMMENT '商品id',
-  order_id    INT(20) NOT NULL
-  COMMENT '订单id',
-  product_num INT(5)  NOT NULL
-  COMMENT '商品数量',
-  KEY `product_id`(`product_id`),
-  KEY `order_id`(`order_id`)
-)
-  COMMENT '订单商品关系表';
+
 
 
 CREATE TABLE `cart_product` (

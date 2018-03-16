@@ -3,21 +3,21 @@
 
 
 
-<c:forEach items="${orderListVo.orderProductVos}" var="oi" varStatus="st">
+
     <div class="reviewDiv">
         <div class="reviewProductInfoDiv">
             <div class="reviewProductInfoImg"><img width="400px" height="400px"
-                                                   src="${oi.productVo.firstImageUrl}">
+                                                   src="${orderVo.productVo.firstImageUrl}">
             </div>
             <div class="reviewProductInfoRightDiv">
                 <div class="reviewProductInfoRightText">
-                        ${oi.productVo.product.name}
+                        ${orderVo.productVo.product.name}
                 </div>
                 <table class="reviewProductInfoTable">
                     <tr>
                         <td width="75px">价格:</td>
                         <td><span class="reviewProductInfoTablePrice">￥<fmt:formatNumber type="number"
-                                                                                         value="${oi.productVo.product.discount}"
+                                                                                         value="${orderVo.productVo.product.discount}"
                                                                                          minFractionDigits="2"/></span>
                             元
                         </td>
@@ -28,14 +28,14 @@
                     </tr>
                     <tr>
                         <td>销量:</td>
-                        <td><span class="reviewProductInfoTableSellNumber">${oi.productVo.product.saleNum}</span> 件</td>
+                        <td><span class="reviewProductInfoTableSellNumber">${orderVo.productVo.product.saleNum}</span> 件</td>
                     </tr>
                 </table>
 
                 <div class="reviewProductInfoRightBelowDiv">
                     <span class="reviewProductInfoRightBelowImg"><img1
                             src="${pageContext.request.contextPath}/static/img/site/reviewLight.png"></img1></span>
-                    <span class="reviewProductInfoRightBelowText">现在查看的是 您所购买商品的信息于<fmt:formatDate value="${orderListVo.order.createAt}" pattern="yyyy年MM月dd"/>下单购买了此商品 </span>
+                    <span class="reviewProductInfoRightBelowText">现在查看的是 您所购买商品的信息于<fmt:formatDate value="${orderVo.order.createAt}" pattern="yyyy年MM月dd"/>下单购买了此商品 </span>
 
                 </div>
             </div>
@@ -45,7 +45,7 @@
             <div class="reviewStasticsLeft">
                 <div class="reviewStasticsLeftTop"></div>
                 <div class="reviewStasticsLeftContent">累计评价 <span
-                        class="reviewStasticsNumber"> ${oi.productVo.product.commentNum}</span>
+                        class="reviewStasticsNumber"> ${orderVo.productVo.product.commentNum}</span>
                 </div>
                 <div class="reviewStasticsLeftFoot"></div>
             </div>
@@ -79,8 +79,8 @@
                         </tr>
                     </table>
                     <div class="makeReviewButtonDiv">
-                        <input type="hidden" name="oid" value="${o.id}">
-                        <input type="hidden" name="pid" value="${p.id}">
+                        <input type="hidden" name="oid" value="${orderVo.order.id}">
+                        <input type="hidden" name="pid" value="${orderVo.product.id}">
                         <button type="submit">提交评价</button>
                     </div>
                 </form>
@@ -89,7 +89,7 @@
 
     </div>
 
-</c:forEach>
+
 
 
 
