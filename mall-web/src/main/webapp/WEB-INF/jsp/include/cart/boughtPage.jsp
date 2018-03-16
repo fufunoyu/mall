@@ -142,6 +142,9 @@
         <div id="button_WAIT_RECEIVE"><a orderStatus="WAIT_RECEIVE" href="#nowhere">待收货</a></div>
         <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere">待评价</a></div>
         <div id="button_COMPLETED"><a orderStatus="COMPLETED" href="#nowhere">已完成</a></div>
+        <div id="button_WAIT_RETURN"><a orderStatus="WAIT_RETURN" href="#nowhere">待退货</a></div>
+        <div id="button_RETURN_ING"><a orderStatus="RETURN_ING" href="#nowhere">退货中</a></div>
+        <div id="button_RETURN_COMPLETED"><a orderStatus="RETURN_COMPLETED" href="#nowhere">退货成功</a></div>
         <div id="button_CANCEL"><a orderStatus="CANCEL" href="#nowhere" class="noRightborder">已取消</a></div>
         <div class="orderTypeLastOne"><a class="noRightborder">&nbsp;</a></div>
     </div>
@@ -179,9 +182,9 @@
 
                     </td>
                     <td class="orderItemDeleteTD">
-                        <a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
+                        <%--<a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
                             <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
-                        </a>
+                        </a>--%>
 
                     </td>
                 </tr>
@@ -230,17 +233,22 @@
                                                                                               value="${o.order.totalPrice}"/></div>
                                 <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                             </td>
-                            <td valign="top" rowspan="1" <%--rowspan="${fn:length(o.productVo)}"--%>
+                            <td valign="top" rowspan="1" align="center" <%--rowspan="${fn:length(o.productVo)}"--%>
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
                                     <a href="${pageContext.request.contextPath}/order/confirmPayPage?oid=${o.order.id}">
                                         <button class="orderListItemConfirm">确认收货</button>
                                     </a>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                 </c:if>
                                 <c:if test="${o.order.status=='WAIT_PAY' }">
 
                                     <button class="orderListItemConfirm">付款</button>
-
+                                    <div class="cancleWaitPayOrder">
+                                    <a href="${pageContext.request.contextPath}/order/cancleOrder?oid=${o.order.id}">取消订单</a>
+                                    </div>
                                 </c:if>
                                     <%--<c:if test="${o.order.status=='WAIT_PAY' }">
                                     <a href="forealipay?oid=${o.id}&total=${o.total}">
@@ -258,10 +266,16 @@
                                     <a href="${pageContext.request.contextPath}/order/comment?oid=${o.order.id}">
                                         <button class="orderListItemReview">评价</button>
                                     </a>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                 </c:if>
 
                                 <c:if test="${o.order.status=='COMPLETED'}">
                                     <span>已完成</span>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                 </c:if>
 
                                 <c:if test="${o.order.status=='CANCEL'}">

@@ -185,7 +185,7 @@ public class OrderController {
         return "confirmPay";
     }
 
-    /**还没抛异常
+    /**(还没抛异常)
      * 真正确认收货
      *
      * @param session
@@ -245,16 +245,15 @@ public class OrderController {
         return "review";
     }
 
-    /**还没抛异常
+    /**(还没抛异常)
      * 按了提交评论后
-     * @param model
+     * @param
      * @param oid
      * @return
      */
     @Authentication
     @RequestMapping({"/completeComment"})
-    public String completeComment(Model model,
-                                  @RequestParam("oid") Long oid,
+    public String completeComment(@RequestParam("oid") Long oid,
                                   @RequestParam("content") String content){
         Order order = new Order();
         order.setId(oid);
@@ -271,6 +270,38 @@ public class OrderController {
         comment.setUserId(order1.getUserId());
         commentService.add(comment);
         return "redirect:/order/comment?oid=" +oid;
+    }
+
+    /**(未处理异常)
+     * 取消订单
+     * @param oid
+     * @return
+     */
+    @Authentication
+    @RequestMapping({"/cancleOrder"})
+    public String cancleOrder(@RequestParam("oid") Long oid) {
+        Order order = new Order();
+        order.setId(oid);
+        //更改订单状态
+        order.setStatus(OrderStatus.CANCEL);
+        orderService.updateSelectionById(order);
+        return "redirect:/order/list?status=WAIT_PAY";
+    }
+
+    /**
+     * 申请退货
+     * @param oid
+     * @return
+     */
+    @Authentication
+    @RequestMapping({"/returnOrder"})
+    public String returnOrder(@RequestParam("oid")Long oid){
+        Order order = new Order();
+        order.setId(oid);
+        //更改订单状态
+        order.setStatus(OrderStatus.WAIT_RETURN);
+        orderService.updateSelectionById(order);
+        return "redirect:/order/list?status=WAIT_RETURN";
     }
 
     /**

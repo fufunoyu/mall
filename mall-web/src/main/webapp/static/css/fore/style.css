@@ -462,7 +462,7 @@ div.loginInput {
 
 div.loginInput input {
     display: inline-block;
-    border:none;
+    border: none;
     width: 244px;
     height: 40px;
     position: relative;
@@ -2076,6 +2076,13 @@ div.completeReviewDiv {
     margin: 20px 0px;
     padding: 20px 20px;
     background-color: #EFEFEF;
+}
+
+div.cancleWaitPayOrder {
+    width: 57px;
+    height: 29px;
+    text-align: center;
+    margin: 5px auto;
 }
 
 div.makeReviewText {
