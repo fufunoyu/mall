@@ -2,6 +2,7 @@ package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.ProductsWithCountVo;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,13 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/list")
-    public List<Product> productList(@PageDefault(required = false) PageQuery pageQuery, @RequestParam(value = "categoryId") Long categoryId) {
+    public ProductsWithCountVo productList(@PageDefault(required = false) PageQuery pageQuery, @RequestParam(value = "categoryId") Long categoryId) {
         List<Product> productList = productService.findDeepByCategoryId(categoryId, pageQuery);
-        return productList;
+        Long count= productService.countDeepByCategoryId(categoryId);
+        ProductsWithCountVo productsWithCountVo = new ProductsWithCountVo();
+        productsWithCountVo.setProducts(productList);
+        productsWithCountVo.setCount(count);
+        return productsWithCountVo;
     }
 
     /**

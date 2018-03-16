@@ -58,4 +58,11 @@ public interface ProductDao {
      * @return
      */
     int updateSelectionById(Product product);
+
+    /**
+     * 查找指定分类集合下的商品总数
+     * @param categoryIds
+     * @return
+     */
+    Long countByCategoryIdIn(@Param("categoryIds")List<Long> categoryIds);
 }

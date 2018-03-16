@@ -51,4 +51,9 @@ public class ProductServiceImpl implements ProductService {
         return productDao.findAll(pageQuery);
     }
 
+    @Override
+    public Long countDeepByCategoryId(Long categoryId) {
+        return productManager.countDeepByCategoryId(categoryId);
+    }
+
 }

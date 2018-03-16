@@ -16,6 +16,9 @@
     }
 </style>
 <script>
+    //记录当前目录及其子目录商品总数
+    var count;
+    //记录当前节点id
     var nodeId;
     /**
      * 上架时间修改为正确的显示格式
@@ -71,6 +74,24 @@
     }
 
     /**
+     * 分页设置每页显示条数和当前目录及其子目录共有多少件商品
+     * */
+    function changePage(page,total) {
+        $('#dom_var_pagination').pagination({
+            total: total,
+            pageNumber:page
+        });
+    }
+
+
+    /**
+     * 商品信息修改
+     * */
+    function productEdict() {
+
+    }
+
+    /**
      * 菜单栏新增分类
      */
     function append() {
@@ -123,16 +144,21 @@
         var t = $('#category_list');
         var node = t.tree('getSelected');
         var categoryName = $("#category_name").textbox("getText")
-        $.ajax({
-            url: '${pageContext.request.contextPath}/category/delete',
-            method: 'post',
-            data: {
-                name: categoryName,
-                id: node.id
-            },
-            success: function () {
-                t.tree('remove', node.target);
-            }
+        $.messager.confirm('确认','确定删除该菜单分类吗？',function (r){
+           if(r){
+               $.ajax({
+                   url: '${pageContext.request.contextPath}/category/delete',
+                   method: 'post',
+                   data: {
+                       name: categoryName,
+                       id: node.id
+                   },
+                   success: function () {
+                       t.tree('remove', node.target);
+                       $.messager.alert('提示','删除成功!');
+                   }
+               })
+           }
         })
     }
 
@@ -255,9 +281,6 @@
      * */
     $(function () {
 
-        $('#dom_var_pagination').pagination({
-            // total: 114
-        });
 
         setTimeout(function () {
             $("#category_list").tree('loadData', [{
@@ -350,6 +373,10 @@
                    data-options="label:'评论总数:',required:true" readonly>
         </div>
         <div id="productDescription" class=" easyui-texteditor" data-options=label:'商品信息' style="height: 300px">
+        </div>
+        <div style="margin-bottom:20px">
+            <button onclick="product_button_edit_confirm">确认</button>
+            <button onclick="product_button_edit_cancel">取消</button>
         </div>
     </form>
 </div>
@@ -467,13 +494,14 @@
                     if(node.id>0){
                     nodeId=node.id;
                         $.ajax({
-                            url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id,
+                            url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id+'&page='+1+'&size='+10,
                             method:'get',
                             success:function(data){
-                            $('#dom_var_pagination').pagination({
-	                            pageList: [10,20,30,40,50]
-                            });
-                                table.datagrid('loadData',data)
+                                $('#dom_var_pagination').pagination({
+                                    pageList: [10,20,30,40,50]
+                                });
+                                changePage(1,data.count)
+                                table.datagrid('loadData',data.products)
                             }
                          })
                     }
@@ -517,19 +545,18 @@
         <%--分页功能实现--%>
         $('#dom_var_pagination').pagination({
             onSelectPage: function (pageNumber, pageSize) {
-
                 $(this).pagination('loading');
                 // alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                 $.ajax({
                     url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
                     method: 'get',
                     success: function (data) {
-                        $('#product_table').datagrid('loadData', data)
+                        $('#product_table').datagrid('loadData', data.products)
+                        changePage(pageNumber,data.count)
                     }
                 })
                 $(this).pagination('loaded');
             }
-
         });
 
 
@@ -561,14 +588,10 @@
                 </thead>
             </table>
             <!-- 分页栏 -->
-            <div id="dom_var_pagination" class="easyui-pagination" data-options="total:100">
-            </div>
-            <div>
-
+            <div id="dom_var_pagination" class="easyui-pagination">
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
