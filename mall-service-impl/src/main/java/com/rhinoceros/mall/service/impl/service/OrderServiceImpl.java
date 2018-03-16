@@ -3,7 +3,6 @@ package com.rhinoceros.mall.service.impl.service;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.dao.dao.OrderDao;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;

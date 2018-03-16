@@ -177,7 +177,8 @@ CREATE TABLE `order` (
   COMMENT '商品数量',
   PRIMARY KEY `id`(`id`),
   KEY `user_id`(`user_id`),
-  KEY `identifier`(`identifier`)
+  KEY `identifier`(`identifier`),
+  KEY `product_id`(`product_id`)
 )
   COMMENT '订单表';
 

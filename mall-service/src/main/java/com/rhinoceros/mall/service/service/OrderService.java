@@ -3,7 +3,6 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
 
 import java.util.List;
