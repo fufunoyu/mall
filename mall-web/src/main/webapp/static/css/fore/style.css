@@ -2071,6 +2071,13 @@ div.makeReviewDiv {
     background-color: #EFEFEF;
 }
 
+div.completeReviewDiv {
+    border: 1px solid #D1CCC8;
+    margin: 20px 0px;
+    padding: 20px 20px;
+    background-color: #EFEFEF;
+}
+
 div.makeReviewText {
     font-size: 16px;
     color: #333333;
