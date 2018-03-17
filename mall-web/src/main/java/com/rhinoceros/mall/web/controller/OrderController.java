@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -207,6 +206,8 @@ public class OrderController {
         order.setId(oid);
         order.setStatus(status);
         orderService.updateSelectionById(order);
+        //增加商品销量
+        productService.increaseSaleNum(order.getProductId(),order.getProductNum());
         return "orderConfirmed";
     }
 
@@ -260,9 +261,6 @@ public class OrderController {
                                   @RequestParam("content") String content) {
         Order order = new Order();
         order.setId(oid);
-        //更改订单状态
-        order.setStatus(OrderStatus.COMPLETED);
-        orderService.updateSelectionById(order);
         //增加评论
         Order order1 = orderService.findById(oid);
         Comment comment = new Comment();
@@ -271,6 +269,11 @@ public class OrderController {
         comment.setProductId(order1.getProductId());
         comment.setUserId(order1.getUserId());
         commentService.add(comment);
+        //增加总评论条数
+        productService.increaseCommentNumOne(order.getProductId());
+        //更改订单状态
+        order.setStatus(OrderStatus.COMPLETED);
+        orderService.updateSelectionById(order);
         return "redirect:/order/comment?oid=" + oid;
     }
 
@@ -289,6 +292,8 @@ public class OrderController {
         //更改订单状态
         order.setStatus(OrderStatus.CANCEL);
         orderService.updateSelectionById(order);
+        //增加库存
+        productService.increaseStoreNum(oid,order.getProductNum());
         return "redirect:/order/list?status=WAIT_PAY";
     }
 

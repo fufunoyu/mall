@@ -30,4 +30,22 @@ public interface ProductService {
 
     List<Product> findAll(PageQuery pageQuery);
 
+    /**
+     * 根据商品id评论条数加一
+     * @param id
+     */
+    void increaseCommentNumOne(Long id);
+
+    /**
+     * 商品卖出后增加销量数量
+     * @param id
+     */
+    void increaseSaleNum(Long id, Integer num);
+
+    /**
+     * 增加商品库存
+     * @param id
+     * @param num
+     */
+    void increaseStoreNum(Long id, Integer num);
 }

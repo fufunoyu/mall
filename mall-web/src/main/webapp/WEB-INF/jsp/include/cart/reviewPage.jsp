@@ -36,6 +36,18 @@
             }
 
         });
+        //提交订单按钮
+        $("form.submitComment").submit(function () {
+            if ($("#content").val().length < 6 ) {
+                $("span.errorMessage").html("请输入至少5个字符");
+                return false;
+            }
+            if ($("#content").val().length > 500) {
+                $("span.errorMessage").html("最多可输入500个字符");
+                return false;
+            }
+            return true;
+        });
     });
 
 </script>
@@ -93,16 +105,19 @@
 
         <c:if test="${orderVo.order.status=='WAIT_COMMENT'}">
             <div class="makeReviewDiv">
-                <form method="post" action="${pageContext.request.contextPath}/order/completeComment">
+                <form class="submitComment" method="post" action="${pageContext.request.contextPath}/order/completeComment">
                     <div class="makeReviewText">分享体验心得，给万千想买的人一个参考</div>
                     <table class="makeReviewTable">
                         <tr>
                             <td class="makeReviewTableFirstTD">评价商品</td>
-                            <td><textarea name="content"></textarea></td>
+                            <td><textarea id="content" name="content"></textarea></td>
                         </tr>
                     </table>
                     <div class="makeReviewButtonDiv">
                         <input type="hidden" name="oid" value="${orderVo.order.id}">
+                        <div>
+                        <span class="errorMessage"></span>
+                        </div>
                         <button type="submit">提交评价</button>
                     </div>
                 </form>
