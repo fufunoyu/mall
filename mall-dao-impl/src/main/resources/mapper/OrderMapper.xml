@@ -71,4 +71,21 @@
         WHERE id = #{id}
     </select>
 
+    <insert id="addAll" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `order`
+        (status,identifier,create_at,total_price,address_id,user_id,product_id,product_num)
+        VALUES
+        <foreach collection="orders" item="order" separator=",">
+            (
+            #{order.status},
+            #{order.identifier},
+            #{order.createAt},
+            #{order.totalPrice},
+            #{order.addressId},
+            #{order.userId},
+            #{order.productId},
+            #{order.productNum}
+            )
+        </foreach>
+    </insert>
 </mapper>

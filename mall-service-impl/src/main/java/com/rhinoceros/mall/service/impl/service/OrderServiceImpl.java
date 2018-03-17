@@ -1,18 +1,33 @@
 package com.rhinoceros.mall.service.impl.service;
 /* created at 8:11 PM 3/6/2018  */
 
+import com.rhinoceros.mall.core.dto.OrderDto;
+import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
+import com.rhinoceros.mall.core.po.Address;
 import com.rhinoceros.mall.core.po.Order;
+import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.dao.dao.AddressDao;
 import com.rhinoceros.mall.dao.dao.OrderDao;
+import com.rhinoceros.mall.dao.dao.ProductDao;
+import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.service.OrderService;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.search.DocValueFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import com.rhinoceros.mall.core.enumeration.OrderStatus;
 
 @Service
 @Slf4j
@@ -20,7 +35,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDao orderDao;
-
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private ProductDao productDao;
+    @Autowired
+    private AddressDao addressDao;
     /**
      * 根据userId和订单状态找出所有符合条件的分页订单
      *
@@ -72,7 +92,95 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.findById(id);
     }
 
+    /**
+     * 添加订单
+     * @param dtos
+     * @param userId
+     * @param addressId
+     * @return
+     */
+    @Transactional
+    @Override
+    public List<Order> add(OrderListDto dtos, Long userId,Long addressId) {
+        if(userId == null){
+            log.info("用户id不能为空");
+            throw new ParameterIsNullException("用户id不能为空");
+        }
+        User user = userDao.findById(userId);
+        if(user == null){
+            log.info("用户不存在");
+            throw new EntityNotExistException("用户不存在");
+        }
+        if(addressId==null){
+            log.info("地址Id不能为空");
+            throw new ParameterIsNullException("地址Id不能为空");
+        }
+        Address address = addressDao.findById(addressId);
+        if(address==null){
+            log.info("地址不存在");
+            throw new EntityNotExistException("地址不存在");
+        }
+        List<Order> orders = new LinkedList<>();
+        //设置订单号
+        List<OrderDto> orderDtos = dtos.getOrders();
 
+        for(OrderDto orderDto:orderDtos){
+            Order order = new Order();
+            Integer productNum = orderDto.getProductNum();
+            if(productNum==null||productNum<=0){
+                log.info("商品数量需要大于0");
 
+            }
+            Long productId =  orderDto.getProductId();
+            if(productId==null){
+                log.info("商品ID不能为空");
+                throw  new ParameterIsNullException("商品ID不能为空");
+            }
+            Product product = productDao.findById(productId);
+            if(product==null){
+                log.info("商品不存在");
+                throw new EntityNotExistException("商品不存在");
+            }
+            if(product.getStoreNum()-productNum<0){
+                log.info("库存不足");
+                throw new EntityNotExistException("库存不足");
+            }
+            BigDecimal price = product.getPrice();
+            BigDecimal discount = product.getDiscount();
+            BigDecimal totalPrice = calculate(price,discount,productNum);
+            product.setSaleNum(product.getStoreNum()-productNum);
+            productDao.updateSelectionById(product);
+            String identifier = randNumber();
+            order.setIdentifier(identifier);
+            order.setStatus(OrderStatus.WAIT_PAY);
+            order.setCreateAt(new Date());
+            order.setAddressId(addressId);
+            order.setProductId(productId);
+            order.setProductNum(productNum);
+            order.setTotalPrice(totalPrice);
+            order.setUserId(userId);
+            orders.add(order);
+        }
+        orderDao.addAll(orders);
+        return orders;
+    }
+    private BigDecimal calculate(BigDecimal price, BigDecimal discount, Integer num) {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        if (discount == null) {
+            totalPrice = price.multiply(BigDecimal.valueOf(num));
+        } else {
+            totalPrice = discount.multiply(BigDecimal.valueOf(num));
+        }
+        return totalPrice;
+    }
 
+    private String randNumber(){
+        Random rand = new Random();
+        int max=9999,min=1000;
+        int shu = rand.nextInt(max)%(max-min+1) + min;
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+        String randomNumber = sdf.format(date)+shu;
+        return randomNumber;
+    }
 }

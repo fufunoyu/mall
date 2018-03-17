@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 <script>
-    var total = 0;
     $(function () {
+        var total = 0
         var singleSum = $(".orderItemUnitSum").attr("value");
         if (singleSum != null) {
             alert(singleSum);
@@ -13,20 +13,28 @@
     //选中某个地址列表
     $(function () {
         $(".showAddressInfo").click(function () {
-            $(".showAddressInfo").each(function (index,item) {
-                console.log(item)
+            $(".showAddressInfo").each(function (index, item) {
                 $(item).removeClass("address_selected")
             })
             $(this).addClass("address_selected")
+            $("#address").val($(this).attr("addressId"))
         });
+        //提交按钮,所有验证通过方可提交
+        $('#order_form').submit(function () {
+            var id = $("#address").val()
+            if (!id && id.trim() === '') {
+                $("#error_message span").html("请选择收货地址")
+                $("#error_message").css('display', 'inline-block')
+                return false;
+            }
+            return true;
+        })
     })
 
 </script>
 
 <div class="buyPageDiv">
-    <form action="${pageContext.request.contextPath}/order/confirm" method="post">
-
-
+    <form id="order_form" action="${pageContext.request.contextPath}/order/confirm" method="post">
         <div class="buyFlow">
             <img class="pull-left" src="${pageContext.request.contextPath}/static/img/site/logo.jpg">
             <img class="pull-right" src="${pageContext.request.contextPath}/static/img/site/buyflow.png">
@@ -37,7 +45,7 @@
 
             <div class="showTable">
                 <c:forEach var="address" items="${addressList}" begin="0" end="4">
-                    <div class="showAddressInfo">
+                    <div class="showAddressInfo" addressId="${address.id}">
                         <div>
                             <span class="addressStyle" type="text">${address.deliveryAddress}</span>
                             <span></span>
@@ -77,12 +85,9 @@
             </table>
 
         </div>--%>
-
         <input type="hidden" id="address" name="addressId">
         <div class="productList">
             <div class="productListTip">确认订单信息</div>
-
-
             <table class="productListTable">
                 <thead>
                 <tr>
@@ -114,7 +119,6 @@
                                class="orderItemProductLink">
                                     ${orderProduct.productVo.product.name}
                             </a>
-
 
                             <img src="${pageContext.request.contextPath}/static/img/site/creditcard.png"
                                  title="支持信用卡支付">
@@ -151,8 +155,10 @@
 
                             </td>
                         </c:if>
-
                     </tr>
+                    <input type="hidden" name="orders[${st.index}].productId"
+                           value="${orderProduct.productVo.product.id}">
+                    <input type="hidden" name="orders[${st.index}].productNum" value="${orderProduct.num}">
                 </c:forEach>
 
                 </tbody>
@@ -186,6 +192,13 @@
             </div>
         </div>
 
+        <input type="hidden" id="product" name="productId">
+
+        <div class="alert alert-danger" id="error_message" style="display: none;float:right;width: 200px;padding: 5px;margin: 0;">
+            <span class="errorMessage" style="line-height: 20px;height: 20px"></span>
+        </div>
+
+        <div style="clear: both"></div>
         <div class="submitOrderDiv">
             <button type="submit" class="submitOrderButton">提交订单</button>
         </div>

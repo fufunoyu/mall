@@ -3,17 +3,20 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.dto.OrderDto;
+import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.OrderVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
+import com.rhinoceros.mall.service.impl.service.OrderServiceImpl;
 import com.rhinoceros.mall.service.service.AddressService;
 import com.rhinoceros.mall.service.service.CartProductService;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.Authentication;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,21 +39,20 @@ public class OrderController {
     private ProductService productService;
     @Autowired
     private AddressService addressService;
-
     @Autowired
     private CartProductService cartProductService;
 
-
     /**
      * 提交订单页面的商品展示
-     *
      * @param orderDto
      * @param model
      * @return
      */
     @Authentication
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto, Model model) {
+    public String showOrderConfirm(OrderDto orderDto, Model model,HttpSession session) {
+        //获取对应用户
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         //获取商品的id
         Long pid = orderDto.getProductId();
         //根据商品id获取商品信息
@@ -62,19 +64,21 @@ public class OrderController {
             orderProductVo.setNum(orderDto.getProductNum());
             model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
             model.addAttribute("total", calculate(product.getPrice(), product.getDiscount(), orderDto.getProductNum()));
+            //获取用户的收货地址
+            List<Address> addresses = addressService.findByUserId(user.getId());
+            model.addAttribute("addressList",addresses);
             return "buy";
         }
         return "product";
     }
-
     /**
      * 购物车结算到订单确认页面
-     *
      * @param ids
      * @param session
      * @param model
      * @return
      */
+    @Authentication
     @RequestMapping("cartAdd")
     public String showCartOrderConfirm(@RequestParam("id") List<Long> ids, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
@@ -91,16 +95,24 @@ public class OrderController {
             vo.setNum(cartProduct.getProductNum());
             orderProductVos.add(vo);
         }
-
+        List<Address> addresses = addressService.findByUserId(user.getId());
+        model.addAttribute("addressList",addresses);
         model.addAttribute("orderProducts", orderProductVos);
         model.addAttribute("total", total);
         return "buy";
 
     }
+    @Authentication
+    @RequestMapping("/confirm")
+    public String addOrder(@RequestParam("addressId")Long addressId, OrderListDto dtos,HttpSession session,Model model){
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
 
+        List<Order> orders = orderService.add(dtos,user.getId(),addressId);
+        model.addAttribute("orders",orders);
+        return "alipay";
+    }
     /**
      * 订单显示页面
-     *
      * @param model
      * @param session
      * @param orderStatus
@@ -146,12 +158,8 @@ public class OrderController {
         model.addAttribute("orderStatus", orderStatus == null ? "ALL" : orderStatus.name());
         return "bought";
     }
-
-
-
     /**
      * 跳转到确认收货页面
-     *
      * @param session
      * @param oid
      * @param model
@@ -182,12 +190,12 @@ public class OrderController {
 
     /**
      * 真正确认收货
-     *
      * @param session
      * @param model
      * @param oid
      * @return
      */
+    @Authentication
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
                                  Model model,
@@ -221,7 +229,6 @@ public class OrderController {
         if (user == null) {
             return "redirect:/login";
         }
-
         Order order = orderService.findById(oid);
         OrderVo orderVo = new OrderVo();
         orderVo.setOrder(order);
@@ -232,8 +239,6 @@ public class OrderController {
         return "review";
     }
 
-
-
     /**
      * 计算商品总额
      *
@@ -242,7 +247,7 @@ public class OrderController {
      * @param num
      * @return
      */
-    private BigDecimal calculate(BigDecimal price, BigDecimal discount, Integer num) {
+    public BigDecimal calculate(BigDecimal price, BigDecimal discount, Integer num) {
         BigDecimal totalPrice = BigDecimal.ZERO;
         if (discount == null) {
             totalPrice = price.multiply(BigDecimal.valueOf(num));

@@ -23,7 +23,6 @@ public interface CartProductDao {
 
     /**
      * 更新购物车中不为null的字段
-     *
      * @param cartProduct
      * @return
      */
@@ -31,7 +30,6 @@ public interface CartProductDao {
 
     /**
      * 向购物车中添加商品
-     *
      * @param cartProduct
      * @return 修改条目数目
      */
@@ -48,7 +46,6 @@ public interface CartProductDao {
 
     /**
      * 根据id查询购物车，不存在返回null
-     *
      * @param id
      * @return
      */
