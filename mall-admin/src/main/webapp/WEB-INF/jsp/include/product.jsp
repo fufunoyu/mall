@@ -125,6 +125,11 @@
         });
         // alert(url)
         // alert(row.imageUrls)
+        var selected = $("#productCategory").combotree('tree').tree('getSelected')
+        var categoryId = null
+        if(selected != null){
+            categoryId = selected.id
+        }
         $.ajax({
             url: '${pageContext.request.contextPath}/product/update',
             method: 'post',
@@ -138,7 +143,7 @@
                 // productCommentNum:$("#productCommentNum").textbox("getText"),
                 status: $("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
                 // productSaleDate:$("#productSaleDate").textbox("getText"),
-                category: $("#productCategory").textbox("getText"),
+                categoryId:categoryId,
                 description: $("#productDescription").texteditor('getValue')
             },
             success: function () {
@@ -158,6 +163,21 @@
                         productDescription: $("#productDescription").texteditor('getValue')
                     }
                 });
+                $.messager.alert('提示', '修改成功!');
+                $("#product_win").window("close")
+                var total = $('#dom_var_pagination').pagination('options').total
+                var pageSize = $('#dom_var_pagination').pagination('options').pageSize
+                var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
+                    method: 'get',
+                    success: function (data) {
+                        $('#product_table').datagrid('loadData', data.products)
+                        changePage(pageNumber, data.count)
+                    }
+                })
+
+
             }
         })
     }
@@ -493,9 +513,11 @@
     <div style="margin-bottom:20px">
         <select id="productCategory" class="easyui-combotree" style="width:100%;"
                 data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
-        onClick:function (node) {
-             <%--alert(node.id +' '+node.parentId)--%>
-        },required:true,label:'商品分类:'">
+                onClick:function (node) {
+                     <%--alert(node.id +' '+node.parentId)--%>
+                     <%--$('#productCategory').val(node.id)--%>
+                },
+                required:true,label:'商品分类:'">
         </select>
     </div>
     <div style="margin-bottom:20px">
@@ -556,11 +578,14 @@
             <input id="productSaleDate1" class="easyui-textbox" name="saleDate" style="width:100%"
                    data-options="label:'上架日期:',required:true" readonly>
         </div>
-        <%--<div style="margin-bottom:20px">--%>
-        <%--<input id="productCategory1" class="easyui-combotree" name="category" value="122"--%>
-        <%--data-options="url:'${pageContext.request.contextPath}/category',method:'get',--%>
-        <%--label:'商品分类:',labelPosition:'left'" style="width:100%">--%>
-        <%--</div>--%>
+        <div style="margin-bottom:20px">
+            <select id="productCategory1" class="easyui-combotree" style="width:100%;"
+                    data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
+        onClick:function (node) {
+             <%--alert(node.id +' '+node.parentId)--%>
+        },required:true,label:'商品分类:'">
+            </select>
+        </div>
         <div style="margin-bottom:20px">
             <input id="productStoreNum1" class="easyui-textbox" name="storeNum" style="width:100%"
                    data-options="label:'商品库存总量:',required:true">

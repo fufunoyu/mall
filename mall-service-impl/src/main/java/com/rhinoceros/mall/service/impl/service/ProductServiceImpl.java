@@ -52,12 +52,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Long countDeepByCategoryId(Long categoryId) {
-
-        return productManager.countDeepByCategoryId(categoryId);
-    }
-
-    @Override
-    public Long countDeepByCategoryId(Long categoryId) {
         return productManager.countDeepByCategoryId(categoryId);
     }
 
@@ -66,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
      * @param id
      */
     @Override
+    @Transactional
     public void deleteById(Long id) {
         productManager.deleteById(id);
     }
@@ -75,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
      * @param product
      */
     @Override
+    @Transactional
     public void updateSelectionById(Product product) {
         productManager.updateSelectionById(product);
     }

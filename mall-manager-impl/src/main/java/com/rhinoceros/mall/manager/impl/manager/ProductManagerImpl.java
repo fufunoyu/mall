@@ -62,23 +62,6 @@ public class ProductManagerImpl implements ProductManager {
     }
 
     @Override
-    public Long countDeepByCategoryId(Long categoryId) {
-        //查找指定id的分类下的所有子分类
-        List<Category> list = categoryDao.findChildrenById(categoryId);
-        for (int i = 0; i < list.size(); i++) {
-            list.addAll(categoryDao.findChildrenById(list.get(i).getId()));
-        }
-        //获取该分类和子分类的id
-        List<Long> ids = new LinkedList<Long>();
-        ids.add(categoryId);
-        for (Category category : list) {
-            ids.add(category.getId());
-        }
-        return productDao.countByCategoryIdIn(ids);
-    }
-
-
-    @Override
     public int add(Product product) {
         //添加数据到数据库
         int modify = productDao.add(product);

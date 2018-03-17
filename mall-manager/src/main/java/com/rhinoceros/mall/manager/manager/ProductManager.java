@@ -79,11 +79,5 @@ public interface ProductManager {
      */
     Long countQuery(String queryString);
 
-    /**
-     * 根据分类id查找该分类下及其子分类下的所有产品的总数
-     *
-     * @param categoryId
-     * @return
-     */
-    Long countDeepByCategoryId(Long categoryId);
+
 }
