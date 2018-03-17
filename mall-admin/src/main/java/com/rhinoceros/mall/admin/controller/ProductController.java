@@ -81,4 +81,14 @@ public class ProductController {
         productService.updateSelectionById(product);
     }
 
+    /**
+     * 增加商品
+     *
+     * @param product
+     */
+    @ResponseBody
+    @RequestMapping("/add")
+    public void add(Product product) {
+        productService.addSelectionById(product);
+    }
 }

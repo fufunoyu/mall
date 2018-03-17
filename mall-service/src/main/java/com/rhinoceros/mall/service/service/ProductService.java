@@ -56,4 +56,6 @@ public interface ProductService {
     void deleteById(Long id);
 
     void updateSelectionById(Product product);
+
+    void addSelectionById(Product product);
 }

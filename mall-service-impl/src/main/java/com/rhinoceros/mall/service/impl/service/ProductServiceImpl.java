@@ -75,4 +75,9 @@ public class ProductServiceImpl implements ProductService {
         productManager.updateSelectionById(product);
     }
 
+    @Override
+    public void addSelectionById(Product product) {
+        productManager.add(product);
+    }
+
 }
