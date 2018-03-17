@@ -3,6 +3,7 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.dto.OrderDto;
+import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
@@ -53,7 +54,9 @@ public class OrderController {
      */
     @Authentication
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto, Model model) {
+    public String showOrderConfirm(OrderDto orderDto, Model model,HttpSession session) {
+        //获取对应用户
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         //获取商品的id
         Long pid = orderDto.getProductId();
         //根据商品id获取商品信息
@@ -65,6 +68,10 @@ public class OrderController {
             orderProductVo.setNum(orderDto.getProductNum());
             model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
             model.addAttribute("total", calculate(product.getPrice(), product.getDiscount(), orderDto.getProductNum()));
+            //获取用户的收货地址
+            List<Address> addresses = addressService.findByUserId(user.getId());
+            model.addAttribute("addressList",addresses);
+
             return "buy";
         }
         return "product";
@@ -86,6 +93,7 @@ public class OrderController {
         //根据商品id获取商品信息
         List<OrderProductVo> orderProductVos = new LinkedList<>();
         BigDecimal total = BigDecimal.ZERO;
+
         for (CartProduct cartProduct : cartProducts) {
             OrderProductVo vo = new OrderProductVo();
             Product product = productService.findById(cartProduct.getProductId());
@@ -96,12 +104,32 @@ public class OrderController {
             orderProductVos.add(vo);
         }
 
+        List<Address> addresses = addressService.findByUserId(user.getId());
+        model.addAttribute("addressList",addresses);
         model.addAttribute("orderProducts", orderProductVos);
         model.addAttribute("total", total);
+        String cartSubmit = "success";
+        model.addAttribute("cartSubmit",cartSubmit);
         return "buy";
 
     }
 
+    /**
+     * 显示地址列表
+     * @param addressId
+     * @param dtos
+     * @param session
+     * @param model
+     * @return
+     */
+    @Authentication
+    @RequestMapping("/confirm")
+    public String addOrder(@RequestParam("addressId")Long addressId, OrderListDto dtos,HttpSession session,Model model){
+        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
+        List<Order> orders = orderService.add(dtos,user.getId(),addressId);
+        model.addAttribute("orders",orders);
+        return "alipay";
+    }
     /**
      * 订单显示页面
      *
@@ -150,6 +178,7 @@ public class OrderController {
         model.addAttribute("orderStatus", orderStatus == null ? "ALL" : orderStatus.name());
         return "bought";
     }
+
 
 
     /**

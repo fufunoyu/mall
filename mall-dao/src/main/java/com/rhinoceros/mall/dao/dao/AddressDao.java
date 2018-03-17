@@ -3,10 +3,13 @@ package com.rhinoceros.mall.dao.dao;
 
 import com.rhinoceros.mall.core.po.Address;
 
+import java.util.List;
+
 public interface AddressDao {
 
     /**
      * 增加地址
+     *
      * @param address
      * @return
      */
@@ -14,10 +17,16 @@ public interface AddressDao {
 
     /**
      * 根据id查找信息
+     *
      * @param id
      * @return
      */
     Address findById(Long id);
 
-
+    /**
+     * 根据用户id显示地址信息
+     * @param id
+     * @return
+     */
+    List<Address> findByUserId(Long id);
 }

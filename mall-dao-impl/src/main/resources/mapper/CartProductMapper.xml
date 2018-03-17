@@ -10,7 +10,7 @@
         FROM `cart_product`
         WHERE user_id = #{userId}
     </select>
-
+    <!--查询购物车信息-->
     <select id="findById" parameterType="Long" resultType="CartProduct">
         SELECT *
         FROM `cart_product`
