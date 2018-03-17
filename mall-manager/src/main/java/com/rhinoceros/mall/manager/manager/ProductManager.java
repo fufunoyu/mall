@@ -63,4 +63,20 @@ public interface ProductManager {
      * @return
      */
     List<Product> query(String queryString, PageQuery pageQuery);
+
+    /**
+     * 统计指定查询条件查询到商品总数
+     *
+     * @param queryString
+     * @return
+     */
+    Long countQuery(String queryString);
+
+    /**
+     * 根据分类id查找该分类下及其子分类下的所有产品的总数
+     *
+     * @param categoryId
+     * @return
+     */
+    Long countDeepByCategoryId(Long categoryId);
 }

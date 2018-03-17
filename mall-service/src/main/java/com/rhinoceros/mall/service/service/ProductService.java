@@ -28,8 +28,28 @@ public interface ProductService {
      */
     List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery);
 
-    List<Product> findAll(PageQuery pageQuery);
+    /**
+     * 根据条件分页查询商品列表
+     *
+     * @param query
+     * @param pageQuery
+     * @return
+     */
+    List<Product> query(String query, PageQuery pageQuery);
 
+    /**
+     * 获取指定条件查询出的数据总数
+     *
+     * @param query
+     * @return
+     */
+    Long countQuery(String query);
 
-
+    /**
+     * 根据分类id查找该分类下及其子分类下的所有产品的总数
+     *
+     * @param categoryId
+     * @return
+     */
+    Long countDeepByCategoryId(Long categoryId);
 }
