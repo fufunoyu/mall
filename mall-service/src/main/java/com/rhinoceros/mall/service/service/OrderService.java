@@ -41,6 +41,16 @@ public interface OrderService {
      */
     Order findById(Long id);
 
+    /**
+     * 确认收货
+     * @param oid
+     */
+    void confirmedReceive(Long oid);
 
+    /**
+     * 取消订单
+     * @param oid
+     */
+    void cancelOrder(Long oid);
 
 }

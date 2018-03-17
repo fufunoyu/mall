@@ -56,33 +56,5 @@ public class ProductServiceImpl implements ProductService {
         return productDao.findAll(pageQuery);
     }
 
-    //未处理异常
-    @Transactional
-    @Override
-    public void increaseCommentNumOne(Long id) {
-        Product product = productDao.findById(id);
-        Long num = product.getCommentNum();
-        product.setCommentNum(num + 1);
-        productDao.updateSelectionById(product);
-    }
 
-    //未处理异常
-    @Transactional
-    @Override
-    public void increaseSaleNum(Long id, Integer num) {
-        Product product = productDao.findById(id);
-        Integer saleNum = product.getSaleNum();
-        product.setSaleNum(saleNum + num);
-        productDao.updateSelectionById(product);
-    }
-
-    //未处理异常
-    @Transactional
-    @Override
-    public void increaseStoreNum(Long id, Integer num) {
-        Product product = productDao.findById(id);
-        Integer storeNum = product.getStoreNum();
-        product.setStoreNum(storeNum + num);
-        productDao.updateSelectionById(product);
-    }
 }

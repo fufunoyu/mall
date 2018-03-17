@@ -188,26 +188,14 @@ public class OrderController {
      * 真正确认收货
      *
      * @param session
-     * @param model
      * @param oid
      * @return
      */
     @Authentication
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
-                                 Model model,
                                  @RequestParam("oid") Long oid) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-        OrderStatus status = OrderStatus.WAIT_COMMENT;
-        Order order = new Order();
-        order.setId(oid);
-        order.setStatus(status);
-        orderService.updateSelectionById(order);
-        //增加商品销量
-        productService.increaseSaleNum(order.getProductId(),order.getProductNum());
+        orderService.confirmedReceive(oid);
         return "orderConfirmed";
     }
 
@@ -259,9 +247,7 @@ public class OrderController {
     @RequestMapping({"/completeComment"})
     public String completeComment(@RequestParam("oid") Long oid,
                                   @RequestParam("content") String content) {
-        Order order = new Order();
-        order.setId(oid);
-        //增加评论
+
         Order order1 = orderService.findById(oid);
         Comment comment = new Comment();
         comment.setContent(content);
@@ -269,11 +255,7 @@ public class OrderController {
         comment.setProductId(order1.getProductId());
         comment.setUserId(order1.getUserId());
         commentService.add(comment);
-        //增加总评论条数
-        productService.increaseCommentNumOne(order.getProductId());
-        //更改订单状态
-        order.setStatus(OrderStatus.COMPLETED);
-        orderService.updateSelectionById(order);
+
         return "redirect:/order/comment?oid=" + oid;
     }
 
@@ -285,15 +267,9 @@ public class OrderController {
      * @return
      */
     @Authentication
-    @RequestMapping({"/cancleOrder"})
-    public String cancleOrder(@RequestParam("oid") Long oid) {
-        Order order = new Order();
-        order.setId(oid);
-        //更改订单状态
-        order.setStatus(OrderStatus.CANCEL);
-        orderService.updateSelectionById(order);
-        //增加库存
-        productService.increaseStoreNum(oid,order.getProductNum());
+    @RequestMapping({"/cancelOrder"})
+    public String cancelOrder(@RequestParam("oid") Long oid) {
+        orderService.cancelOrder(oid);
         return "redirect:/order/list?status=WAIT_PAY";
     }
 

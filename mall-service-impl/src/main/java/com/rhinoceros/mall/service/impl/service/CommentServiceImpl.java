@@ -1,11 +1,14 @@
 package com.rhinoceros.mall.service.impl.service;
 /* created at 8:06 PM 3/1/2018  */
 
+import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Comment;
+import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.dao.dao.CommentDao;
+import com.rhinoceros.mall.dao.dao.OrderDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.dao.dao.UserDao;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
@@ -33,6 +36,8 @@ public class CommentServiceImpl implements CommentService {
     private UserDao userDao;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderDao orderDao;
 
     @Override
     public List<Comment> findByProductId(Long productId, PageQuery pageQuery) {
@@ -69,11 +74,23 @@ public class CommentServiceImpl implements CommentService {
             log.info("订单不存在");
             throw new EntityNotExistException("订单不存在");
         }
-        if (comment.getContent() == null||comment.getContent().trim().equals("")) {
+        if (comment.getContent() == null || comment.getContent().trim().equals("")) {
             log.info("评论不能为空");
             throw new ParameterIsNullException("评论不能为空");
         }
         comment.setCreateAt(new Date());
         commentDao.add(comment);
+        //增加总评论条数
+        Long pid = comment.getProductId();
+        Product product1 = new Product();
+        Long commentNum = productDao.findById(pid).getCommentNum()+1;
+        product1.setCommentNum(commentNum);
+        product1.setId(pid);
+        productDao.updateSelectionById(product1);
+        //更改订单状态
+        Order order = new Order();
+        order.setId(oid);
+        order.setStatus(OrderStatus.COMPLETED);
+        orderService.updateSelectionById(order);
     }
 }

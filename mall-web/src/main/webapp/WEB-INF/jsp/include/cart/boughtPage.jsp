@@ -247,7 +247,7 @@
 
                                     <button class="orderListItemConfirm">付款</button>
                                     <div class="cancleWaitPayOrder">
-                                    <a href="${pageContext.request.contextPath}/order/cancleOrder?oid=${o.order.id}">取消订单</a>
+                                    <a href="${pageContext.request.contextPath}/order/cancelOrder?oid=${o.order.id}">取消订单</a>
                                     </div>
                                 </c:if>
                                     <%--<c:if test="${o.order.status=='WAIT_PAY' }">
