@@ -12,6 +12,7 @@
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <util:properties id="alipayConfig" location="classpath:alipay.properties"/>
     <util:properties id="esConfig" location="classpath:es.properties"/>
 
     <!--包扫描-->
