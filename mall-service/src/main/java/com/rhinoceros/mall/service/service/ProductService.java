@@ -33,4 +33,6 @@ public interface ProductService {
     Long countDeepByCategoryId(Long categoryId);
 
     void deleteById(Long id);
+
+    void updateSelectionById(Product product);
 }

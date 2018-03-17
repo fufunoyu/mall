@@ -56,9 +56,22 @@ public class ProductServiceImpl implements ProductService {
         return productManager.countDeepByCategoryId(categoryId);
     }
 
+    /**
+     * 通过id删除商品
+     * @param id
+     */
     @Override
     public void deleteById(Long id) {
         productManager.deleteById(id);
+    }
+
+    /**
+     * 通过id修改商品
+     * @param product
+     */
+    @Override
+    public void updateSelectionById(Product product) {
+        productManager.updateSelectionById(product);
     }
 
 }

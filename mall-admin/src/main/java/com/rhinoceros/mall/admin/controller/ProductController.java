@@ -69,4 +69,16 @@ public class ProductController {
     public void delete(Product product) {
        productService.deleteById(product.getId());
     }
+
+    /**
+     * 修改商品
+     *
+     * @param product
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public void update(Product product) {
+        productService.updateSelectionById(product);
+    }
+
 }
