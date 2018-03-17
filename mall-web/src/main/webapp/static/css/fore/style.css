@@ -1115,8 +1115,6 @@ div.address {
     width: 1000px;
     height: 180px;
     text-align: left;
-    border: 1px solid #F00;
-
 }
 
 div.addressTip, div.productListTip {
@@ -1130,7 +1128,7 @@ div.showTable{
     width: 1000px;
     height: 100px;
     text-align: left;
-    border: 1px solid #F00;
+
 }
 div.showAddressInfo{
     width: 246px;

@@ -60,7 +60,7 @@
                     </div>
                 </c:forEach>
             </div>
-            <div class="addressTip">新增货地址</div>
+            <%--<div class="addressTip">新增收货地址</div>--%>
         </div>
         <%--<div>
 
@@ -193,7 +193,7 @@
         </div>
 
         <input type="hidden" id="product" name="productId">
-
+        <input type="hidden" id="orders" name="cartSubmit" value="${cartSubmit}">
         <div class="alert alert-danger" id="error_message" style="display: none;float:right;width: 200px;padding: 5px;margin: 0;">
             <span class="errorMessage" style="line-height: 20px;height: 20px"></span>
         </div>

@@ -4,17 +4,13 @@ package com.rhinoceros.mall.service.impl.service;
 import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
-import com.rhinoceros.mall.core.po.Address;
-import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.Product;
-import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.dao.dao.AddressDao;
-import com.rhinoceros.mall.dao.dao.OrderDao;
-import com.rhinoceros.mall.dao.dao.ProductDao;
-import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.dao.dao.*;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
+import com.rhinoceros.mall.service.impl.exception.order.OrderProductNumException;
+import com.rhinoceros.mall.service.impl.exception.order.OrderProductStoreNumException;
 import com.rhinoceros.mall.service.impl.exception.order.OrderStatusException;
 import com.rhinoceros.mall.service.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
     private UserDao userDao;
     @Autowired
     private AddressDao addressDao;
+    @Autowired
+    private CartProductDao cartProductDao;
     /**
      * 根据userId和订单状态找出所有符合条件的分页订单
      *
@@ -183,6 +181,7 @@ public class OrderServiceImpl implements OrderService {
             log.info("地址不存在");
             throw new EntityNotExistException("地址不存在");
         }
+
         List<Order> orders = new LinkedList<>();
         //设置订单号
         List<OrderDto> orderDtos = dtos.getOrders();
@@ -192,7 +191,7 @@ public class OrderServiceImpl implements OrderService {
             Integer productNum = orderDto.getProductNum();
             if(productNum==null||productNum<=0){
                 log.info("商品数量需要大于0");
-
+                throw new OrderProductNumException("商品数量需要大于0");
             }
             Long productId =  orderDto.getProductId();
             if(productId==null){
@@ -206,12 +205,12 @@ public class OrderServiceImpl implements OrderService {
             }
             if(product.getStoreNum()-productNum<0){
                 log.info("库存不足");
-                throw new EntityNotExistException("库存不足");
+                throw new OrderProductStoreNumException("库存不足");
             }
             BigDecimal price = product.getPrice();
             BigDecimal discount = product.getDiscount();
             BigDecimal totalPrice = calculate(price,discount,productNum);
-            product.setSaleNum(product.getStoreNum()-productNum);
+            product.setStoreNum(product.getStoreNum()-productNum);
             productDao.updateSelectionById(product);
             String identifier = randNumber();
             order.setIdentifier(identifier);
@@ -223,8 +222,13 @@ public class OrderServiceImpl implements OrderService {
             order.setTotalPrice(totalPrice);
             order.setUserId(userId);
             orders.add(order);
+            if(dtos.getCartSubmit().equals("success")){
+                CartProduct cartProduct = cartProductDao.findByUserIdAndProductId(userId,productId);
+                cartProductDao.deleteById(cartProduct.getProductId());
+            }
         }
         orderDao.addAll(orders);
+
         return orders;
     }
     private BigDecimal calculate(BigDecimal price, BigDecimal discount, Integer num) {

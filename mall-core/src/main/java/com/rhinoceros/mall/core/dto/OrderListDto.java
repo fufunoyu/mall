@@ -9,4 +9,5 @@ import java.util.List;
 @Setter
 public class OrderListDto {
     private List<OrderDto> orders;
+    private String cartSubmit;
 }

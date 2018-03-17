@@ -71,6 +71,7 @@ public class OrderController {
             //获取用户的收货地址
             List<Address> addresses = addressService.findByUserId(user.getId());
             model.addAttribute("addressList",addresses);
+
             return "buy";
         }
         return "product";
@@ -92,6 +93,7 @@ public class OrderController {
         //根据商品id获取商品信息
         List<OrderProductVo> orderProductVos = new LinkedList<>();
         BigDecimal total = BigDecimal.ZERO;
+
         for (CartProduct cartProduct : cartProducts) {
             OrderProductVo vo = new OrderProductVo();
             Product product = productService.findById(cartProduct.getProductId());
@@ -101,18 +103,29 @@ public class OrderController {
             vo.setNum(cartProduct.getProductNum());
             orderProductVos.add(vo);
         }
+
         List<Address> addresses = addressService.findByUserId(user.getId());
         model.addAttribute("addressList",addresses);
         model.addAttribute("orderProducts", orderProductVos);
         model.addAttribute("total", total);
+        String cartSubmit = "success";
+        model.addAttribute("cartSubmit",cartSubmit);
         return "buy";
 
     }
+
+    /**
+     * 显示地址列表
+     * @param addressId
+     * @param dtos
+     * @param session
+     * @param model
+     * @return
+     */
     @Authentication
     @RequestMapping("/confirm")
     public String addOrder(@RequestParam("addressId")Long addressId, OrderListDto dtos,HttpSession session,Model model){
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-
         List<Order> orders = orderService.add(dtos,user.getId(),addressId);
         model.addAttribute("orders",orders);
         return "alipay";
