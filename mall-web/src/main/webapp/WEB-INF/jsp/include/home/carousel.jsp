@@ -4,16 +4,16 @@
 <div id="carousel-of-product" class="carousel-of-product carousel indexSlider" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
-        <c:forEach items="${images}" var="image" varStatus="st">
+        <c:forEach items="${silders}" var="slider" varStatus="st">
             <li data-target="#carousel-of-product" data-indexSlider-to="${st.index}" class="${st.index==0?'active':''}"></li>
         </c:forEach>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <c:forEach items="${images}" var="image" varStatus="st">
+        <c:forEach items="${sliders}" var="slider" varStatus="st">
             <div class="item ${st.index==0?'active':''}">
-                <img class="carousel carouselImage" src="${image}">
+                <img class="carousel carouselImage" src="${slider.imageUrl}">
             </div>
         </c:forEach>
     </div>

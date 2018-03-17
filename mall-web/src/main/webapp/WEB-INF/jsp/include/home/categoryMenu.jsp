@@ -6,7 +6,7 @@
     <c:forEach items="${categories}" var="category">
         <div cid="${category.id}" class="eachCategory">
             <span class="glyphicon glyphicon-link"></span>
-            <a href="category?cid=${category.id}">
+            <a href="${pageContext.request.contextPath}/category/product/list?cid=${category.id}">
                     ${category.name}
             </a>
         </div>

@@ -48,4 +48,11 @@ public interface OrderDao {
      */
     Order findById(Long id);
 
+    /**
+     * 形成订单
+     * @param orders
+     * @return
+     */
+    int addAll(@Param("orders") List<Order> orders);
+
 }

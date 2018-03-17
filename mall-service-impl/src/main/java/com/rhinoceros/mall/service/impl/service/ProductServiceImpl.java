@@ -9,6 +9,7 @@ import com.rhinoceros.mall.service.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,8 +19,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductDao productDao;
 
     @Autowired
     private ProductManager productManager;
@@ -32,23 +31,29 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product findById(Long id) {
-        return productDao.findById(id);
+        return productManager.findById(id);
     }
+
 
     @Override
     public List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery) {
         return productManager.findDeepByCategoryId(categoryId, pageQuery);
     }
 
-    /**
-     * 找寻商品的方法
-     *
-     * @param pageQuery
-     * @return
-     */
     @Override
-    public List<Product> findAll(PageQuery pageQuery) {
-        return productDao.findAll(pageQuery);
+    public List<Product> query(String query, PageQuery pageQuery) {
+        return productManager.query(query, pageQuery);
+    }
+
+    @Override
+    public Long countQuery(String query) {
+        return productManager.countQuery(query);
+    }
+
+    @Override
+    public Long countDeepByCategoryId(Long categoryId) {
+
+        return productManager.countDeepByCategoryId(categoryId);
     }
 
     @Override
