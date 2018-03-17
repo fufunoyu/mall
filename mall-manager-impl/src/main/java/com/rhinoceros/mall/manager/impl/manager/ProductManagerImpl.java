@@ -138,4 +138,37 @@ public class ProductManagerImpl implements ProductManager {
         }
     }
 
+    @Override
+    public Long countQuery(String queryString) {
+        //根据商品名称和描述查询
+        BoolQueryBuilder builder = QueryBuilders
+                .boolQuery()
+                .should(QueryBuilders.matchQuery("name", queryString))
+                .should(QueryBuilders.matchQuery("description", queryString));
+        SearchResponse searchResponse = client.prepareSearch("mall")
+                .setTypes("product")
+                .setSearchType(SearchType.QUERY_THEN_FETCH)
+                .setQuery(builder)
+                .get();
+        return searchResponse.getHits().totalHits;
+    }
+
+    @Override
+    public Long countDeepByCategoryId(Long categoryId) {
+        //查找指定id的分类下的所有子分类
+        List<Category> list = categoryDao.findChildrenById(categoryId);
+        for (int i = 0; i < list.size(); i++) {
+            list.addAll(categoryDao.findChildrenById(list.get(i).getId()));
+        }
+        //获取该分类和子分类的id
+        List<Long> ids = new LinkedList<Long>();
+        ids.add(categoryId);
+        for (Category category : list) {
+            ids.add(category.getId());
+        }
+
+        // 根据分类id查找产品列表
+        return productDao.countByCategoryIdIn(ids);
+    }
+
 }

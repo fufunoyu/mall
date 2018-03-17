@@ -1,6 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
+<%--引入kkpager--%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/kkpager/kkpager.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/kkpager/kkpager_orange.css"/>
+<%--使用kkpager--%>
+<script type="text/javascript">
+    $(function () {
+        //生成分页控件
+        kkpager.generPageHtml({
+            pno: '${page.page}',
+            //总页码
+            total: '${(total+page.size)/page.size}',
+            //总数据条数
+            totalRecords: '${total}',
+            //链接前部
+            hrefFormer: '',
+            //链接尾部
+            hrefLatter: '',
+            mode: 'click', //可选，默认就是link
+            //链接算法
+            click: function (n) {
+                $("#search_form").attr('action','${pageContext.request.contextPath}/product/search?page='+n)
+                $("#search_form").submit()
+            }
 
+        });
+    });
+
+</script>
 <div class="searchProducts">
     <c:forEach items="${productList}" var="productVo">
         <div class="productUnit" price="${productVo.product.discount}">
@@ -27,4 +54,6 @@
         </div>
     </c:if>
     <div style="clear:both"></div>
+    <%--显示kkpager--%>
+    <div id="kkpager"></div>
 </div>

@@ -39,13 +39,13 @@
         <tr>
             <%--<td <c:if test="${'all'==param.sort||empty param.sort}">class="grayColumn"</c:if> ><a href="?cid=${c.id}&sort=all">综合<span class="glyphicon glyphicon-arrow-down"></span></a></td>--%>
             <%--<td <c:if test="${'review'==param.sort}">class="grayColumn"</c:if> ><a href="?cid=${c.id}&sort=review">人气<span class="glyphicon glyphicon-arrow-down"></span></a></td>--%>
-            <td <c:if test="${sorts.size()>0&&'saleDate,DESC'==sorts[0]}">class="grayColumn"</c:if>><a
+            <td <c:if test="${sorts.size()>0&&'saleDate,DESC'.equals(sorts[0])}">class="grayColumn"</c:if>><a
                     href="?cid=${category.id}&sort=saleDate,DESC">新品<span class="glyphicon glyphicon-arrow-down"></span></a>
             </td>
-            <td <c:if test="${sorts.size()>0&&'saleNum,DESC'==sorts[0]}">class="grayColumn"</c:if>><a
+            <td <c:if test="${sorts.size()>0&&'saleNum,DESC'.equals(sorts[0])}">class="grayColumn"</c:if>><a
                     href="?cid=${category.id}&sort=saleNum,DESC">销量<span class="glyphicon glyphicon-arrow-down"></span></a>
             </td>
-            <td <c:if test="${sorts.size()>0&&'discount,DESC'==sorts[0]}">class="grayColumn"</c:if>><a
+            <td <c:if test="${sorts.size()>0&&'discount,DESC'.equals(sorts[0])}">class="grayColumn"</c:if>><a
                     href="?cid=${category.id}&sort=discount,DESC">价格<span
                     class="glyphicon glyphicon-resize-vertical"></span></a></td>
         </tr>

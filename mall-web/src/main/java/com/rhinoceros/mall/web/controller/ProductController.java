@@ -91,6 +91,11 @@ public class ProductController {
             vos.add(productVo);
         }
 
+        Long total = productService.countQuery(query);
+
+        model.addAttribute("total", total);
+        model.addAttribute("query", query);
+        model.addAttribute("page", pageQuery);
         model.addAttribute("productList", vos);
         return "searchResult";
     }

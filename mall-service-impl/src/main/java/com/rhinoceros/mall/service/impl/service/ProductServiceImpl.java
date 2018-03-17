@@ -42,4 +42,15 @@ public class ProductServiceImpl implements ProductService {
         return productManager.query(query, pageQuery);
     }
 
+    @Override
+    public Long countQuery(String query) {
+        return productManager.countQuery(query);
+    }
+
+    @Override
+    public Long countDeepByCategoryId(Long categoryId) {
+
+        return productManager.countDeepByCategoryId(categoryId);
+    }
+
 }

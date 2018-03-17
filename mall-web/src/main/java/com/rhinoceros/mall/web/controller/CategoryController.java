@@ -46,6 +46,7 @@ public class CategoryController {
 
 
         List<Product> products = productService.findDeepByCategoryId(cid, pageQuery);
+        Long total = productService.countDeepByCategoryId(cid);
 
         List<ProductVo> productVos = new LinkedList<>();
         for (Product p : products) {
@@ -54,12 +55,12 @@ public class CategoryController {
         }
 
         model.addAttribute("products", productVos);
-        /**
-         * 通过id查询分类
-         */
+
+        // 通过id查询分类
         Category category = categoryService.findById(cid);
+        model.addAttribute("total", total);
         model.addAttribute("category", category);
-        model.addAttribute("pageQuery", pageQuery);
+        model.addAttribute("page", pageQuery);
         List<Order> orders = pageQuery.getOrders();
         List<String> sorts = new LinkedList<>();
         if (orders != null) {
