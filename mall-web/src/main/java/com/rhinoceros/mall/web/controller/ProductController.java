@@ -2,12 +2,14 @@ package com.rhinoceros.mall.web.controller;
 /* created at 8:44 AM 3/1/2018  */
 
 import com.rhinoceros.mall.core.po.Comment;
+import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.CommentVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.CommentService;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.service.service.UserService;
+import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import java.util.List;
  * 商品详情页跳转
  */
 @Controller
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -39,7 +42,7 @@ public class ProductController {
      * @param model
      * @return
      */
-    @RequestMapping({"/product"})
+    @RequestMapping
     public String index(
             @RequestParam("pid") Long id,
             @RequestParam(value = "page", required = false) Integer page,
@@ -69,4 +72,31 @@ public class ProductController {
         return "product";
     }
 
+    /**
+     * 查询商品
+     *
+     * @param query
+     * @param pageQuery
+     * @return
+     */
+    @RequestMapping("/search")
+    public String search(@RequestParam("query") String query, @PageDefault(required = false) PageQuery pageQuery, Model model) {
+
+        List<Product> products = productService.query(query, pageQuery);
+
+        List<ProductVo> vos = new LinkedList<>();
+
+        for (Product product : products) {
+            ProductVo productVo = new ProductVo(product);
+            vos.add(productVo);
+        }
+
+        Long total = productService.countQuery(query);
+
+        model.addAttribute("total", total);
+        model.addAttribute("query", query);
+        model.addAttribute("page", pageQuery);
+        model.addAttribute("productList", vos);
+        return "searchResult";
+    }
 }

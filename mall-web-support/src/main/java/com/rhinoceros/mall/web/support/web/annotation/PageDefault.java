@@ -32,6 +32,13 @@ public @interface PageDefault {
     int size() default 10;
 
     /**
+     * 默认分页方式
+     *
+     * @return
+     */
+    String[] sort() default {};
+
+    /**
      * 分页参数是否必须有，默认必须有
      *
      * @return

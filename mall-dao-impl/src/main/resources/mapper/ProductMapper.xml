@@ -30,6 +30,14 @@
         ${page.queryString}
     </select>
 
+    <select id="countByCategoryIdIn" resultType="Long">
+        SELECT count(*) FROM `product`
+        WHERE category_id in
+        <foreach collection="categoryIds" item="categoryId" open="(" close=")" separator=",">
+            #{categoryId}
+        </foreach>
+    </select>
+
     <insert id="add" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `product`
         (name, price, discount, status, category_id, store_num, sale_num, image_urls, comment_num, sale_date, description)
@@ -59,7 +67,7 @@
             <if test="status!=null">
                 status = #{status}
             </if>
-            <if test="category_id!=null">
+            <if test="categoryId!=null">
                 category_id = #{categoryId}
             </if>
             <if test="storeNum!=null">

@@ -1,6 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
 
+<%--引入kkpager--%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/kkpager/kkpager.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/kkpager/kkpager_orange.css"/>
+<%--使用kkpager--%>
+<script type="text/javascript">
+    $(function () {
+        //生成分页控件
+        kkpager.generPageHtml({
+            pno: '${page.page}',
+            //总页码
+            total: '${(total+page.size)/page.size}',
+            //总数据条数
+            totalRecords: '${total}',
+            //链接前部
+            hrefFormer: '',
+            //链接尾部
+            hrefLatter: '',
+            mode: 'link', //可选，默认就是link
+            //链接算法
+            getLink: function (n) {
+                return this.hrefFormer + '?cid=${category.id}&page=' + n + "${sorts.size()>0?'&sort='.concat(sorts[0]):''}"
+            }
+
+        });
+    });
+
+</script>
 
 <c:if test="${empty param.categorycount}">
     <c:set var="categorycount" scope="page" value="100"/>
@@ -28,15 +55,17 @@
                         <span class="monthDeal ">成交量 <span class="productDealNumber">${p.product.saleNum}笔</span></span>
                         <span class="productReview">评价<span
                                 class="productReviewNumber">${p.product.commentNum}</span></span>
-                        <%--<span class="wangwang">
-                            <a class="wangwanglink" href="#nowhere">
-                                <img src="${pageContext.request.contextPath}/static/img/site/wangwang.png">
-                            </a>
-					    </span>--%>
+                            <%--<span class="wangwang">
+                                <a class="wangwanglink" href="#nowhere">
+                                    <img src="${pageContext.request.contextPath}/static/img/site/wangwang.png">
+                                </a>
+                            </span>--%>
                     </div>
                 </div>
             </div>
         </c:if>
     </c:forEach>
     <div style="clear:both"></div>
+    <%--显示kkpager--%>
+    <div id="kkpager"></div>
 </div>
