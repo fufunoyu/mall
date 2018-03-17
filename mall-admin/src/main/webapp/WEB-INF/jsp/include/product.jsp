@@ -68,18 +68,41 @@
         $("#product_insert_win").window("open")
     }
 
+    <%--删除商品--%>
     function productRemove() {
-        <%--删除商品--%>
-        //TODO
+        var t = $('#product_table');
+        var row = t.datagrid('getSelected');
+        $.messager.confirm('确认', '确定删除该产品吗？', function (r) {
+            if (r) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/product/delete',
+                    method: 'post',
+                    data: {
+                        id: row.id
+                    },
+                    success: function () {
+                        var index = t.datagrid('getRowIndex',row);
+                        t.datagrid('deleteRow',index);
+                        var total = $('#dom_var_pagination').pagination('options').total
+                        var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
+                        $('#dom_var_pagination').pagination('refresh',{
+                            total: total-1,
+                            pageNumber: pageNumber
+                        });
+                        $.messager.alert('提示', '删除成功!');
+                    }
+                })
+            }
+        })
     }
 
     /**
      * 分页设置每页显示条数和当前目录及其子目录共有多少件商品
      * */
-    function changePage(page,total) {
+    function changePage(page, total) {
         $('#dom_var_pagination').pagination({
             total: total,
-            pageNumber:page
+            pageNumber: page
         });
     }
 
@@ -88,22 +111,22 @@
      * 商品信息修改
      * */
     <%--function product_button_edit_confirm() {--%>
-        <%--$.ajax({--%>
-            <%--url: '${pageContext.request.contextPath}/product/edict',--%>
-            <%--method: 'post',--%>
-            <%--data: {--%>
-                <%--productName: $("#productName").textbox('getText'),--%>
-                <%--productPrice:$("#productPrice").textbox('getText'),--%>
-                <%--productDiscount:$("#productDiscount").textbox("getText"),--%>
-                <%--productStoreNum:$("#productStoreNum").textbox("getText"),--%>
-                <%--productSaleNum:$("#productSaleNum").textbox("getText"),--%>
-                <%--productCommentNum:$("#productCommentNum").textbox("getText"),--%>
-                <%--productStatus:$("#productStatus").textbox("getText"),--%>
-                <%--productSaleDate:$("#productSaleDate").textbox("getText"),--%>
-            <%--},--%>
-            <%--success: function (data) {--%>
-                <%----%>
-            <%--}--%>
+    <%--$.ajax({--%>
+    <%--url: '${pageContext.request.contextPath}/product/edict',--%>
+    <%--method: 'post',--%>
+    <%--data: {--%>
+    <%--productName: $("#productName").textbox('getText'),--%>
+    <%--productPrice:$("#productPrice").textbox('getText'),--%>
+    <%--productDiscount:$("#productDiscount").textbox("getText"),--%>
+    <%--productStoreNum:$("#productStoreNum").textbox("getText"),--%>
+    <%--productSaleNum:$("#productSaleNum").textbox("getText"),--%>
+    <%--productCommentNum:$("#productCommentNum").textbox("getText"),--%>
+    <%--productStatus:$("#productStatus").textbox("getText"),--%>
+    <%--productSaleDate:$("#productSaleDate").textbox("getText"),--%>
+    <%--},--%>
+    <%--success: function (data) {--%>
+    <%----%>
+    <%--}--%>
     <%--}--%>
 
     /**
@@ -138,10 +161,10 @@
                 parentId: node.id
             },
             success: function (data) {
-                if(data==null||data.length==0){
-                    $.messager.alert('提示','该菜单栏已存在!');
+                if (data == null || data.length == 0) {
+                    $.messager.alert('提示', '该菜单栏已存在!');
                 }
-                else{
+                else {
                     if (!node.children || !node.children.length) {
                         onCategoryDblClick(node)
                     } else {
@@ -164,21 +187,21 @@
         var t = $('#category_list');
         var node = t.tree('getSelected');
         var categoryName = $("#category_name").textbox("getText")
-        $.messager.confirm('确认','确定删除该菜单分类吗？',function (r){
-           if(r){
-               $.ajax({
-                   url: '${pageContext.request.contextPath}/category/delete',
-                   method: 'post',
-                   data: {
-                       name: categoryName,
-                       id: node.id
-                   },
-                   success: function () {
-                       t.tree('remove', node.target);
-                       $.messager.alert('提示','删除成功!');
-                   }
-               })
-           }
+        $.messager.confirm('确认', '确定删除该菜单分类吗？', function (r) {
+            if (r) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/category/delete',
+                    method: 'post',
+                    data: {
+                        name: categoryName,
+                        id: node.id
+                    },
+                    success: function () {
+                        t.tree('remove', node.target);
+                        $.messager.alert('提示', '删除成功!');
+                    }
+                })
+            }
         })
     }
 
@@ -339,13 +362,14 @@
         });
     });
     <%--商品分类下拉框--%>
+
     function product_categoryFilter(data) {
         var arr = []
         for (var i = 0; i < data.length; i++) {
             arr.push({
                 id: data[i].id,
                 text: data[i].name,
-                state:'closed',
+                state: 'closed',
                 parentId: data[i].parentId,
                 // children: [{
                 //     text: ''
@@ -594,7 +618,7 @@
                     method: 'get',
                     success: function (data) {
                         $('#product_table').datagrid('loadData', data.products)
-                        changePage(pageNumber,data.count)
+                        changePage(pageNumber, data.count)
                     }
                 })
                 $(this).pagination('loaded');

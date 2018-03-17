@@ -56,4 +56,9 @@ public class ProductServiceImpl implements ProductService {
         return productManager.countDeepByCategoryId(categoryId);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        productManager.deleteById(id);
+    }
+
 }

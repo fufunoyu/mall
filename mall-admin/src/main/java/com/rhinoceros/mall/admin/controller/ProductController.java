@@ -58,4 +58,15 @@ public class ProductController {
 //    public Product updateSelectionProduct() {
 //        return ProductManager.updateSelectionById();
 //    }
+
+    /**
+     * 删除商品
+     *
+     * @param product
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public void delete(Product product) {
+       productService.deleteById(product.getId());
+    }
 }

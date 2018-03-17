@@ -31,4 +31,6 @@ public interface ProductService {
     List<Product> findAll(PageQuery pageQuery);
 
     Long countDeepByCategoryId(Long categoryId);
+
+    void deleteById(Long id);
 }
