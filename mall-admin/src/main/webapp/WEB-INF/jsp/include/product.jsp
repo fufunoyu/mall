@@ -392,11 +392,11 @@
                    data-options="label:'上架日期:',required:true" readonly>
         </div>
         <div style="margin-bottom:20px">
-            <select id="productCategory" class="easyui-combotree" style="width:200px;"
+            <select id="productCategory" class="easyui-combotree" style="width:100%;"
                     data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
         onClick:function (node) {
              <%--alert(node.id +' '+node.parentId)--%>
-        },required:true">
+        },required:true,label:'商品分类:'">
             </select>
         </div>
         <div style="margin-bottom:20px">
