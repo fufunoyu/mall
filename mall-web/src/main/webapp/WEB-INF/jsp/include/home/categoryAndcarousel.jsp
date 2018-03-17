@@ -6,9 +6,20 @@
     function showProductsAsideCategorys(cid) {
         $("div.eachCategory[cid=" + cid + "]").css("background-color", "white");
         $("div.eachCategory[cid=" + cid + "] a").css("color", "#87CEFA");
-        $.ajax({
-            url:'${pageContext.request.contextPath}'
-        })
+        var row = $("div.productsAsideCategorys[cid=" + cid + "] div.row")
+        if (row.children().length <=0) {
+            $.ajax({
+                url: '${pageContext.request.contextPath}/category/list.json?parentId=' + cid,
+                method: 'get',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var a = $("<a href='${pageContext.request.contextPath}/category/product/list?cid=" + data[i].id + "'>" + data[i].name + "</a>")
+                        row.append(a)
+                    }
+                    row.append($("<div class='seperator'></div>"))
+                }
+            })
+        }
         $("div.productsAsideCategorys[cid=" + cid + "]").show();
     }
 
