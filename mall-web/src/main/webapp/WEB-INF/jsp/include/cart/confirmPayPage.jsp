@@ -34,11 +34,11 @@
 				<tr>
 					<td><img width="50px" src="${orderVo.productVo.firstImageUrl}"></td>
 					<td class="confirmPayOrderItemProductLink">
-						<a href="#nowhere">${orderVo.productVo.product.name}</a>
+						<a href="${pageContext.request.contextPath}/product?pid=${orderVo.productVo.product.id}">${orderVo.productVo.product.name}</a>
 					</td>
 					<td>￥<fmt:formatNumber type="number" value="${orderVo.productVo.product.price}" minFractionDigits="2"/></td>
 					<td><span class="conformPayProductPrice">￥<fmt:formatNumber type="number" value="${orderVo.productVo.product.discount}" minFractionDigits="2"/></span></td>
-					<td><span>${orderVo.num}</span></td>
+					<td><span>${orderVo.order.productNum}</span></td>
 					<td><span>快递 ： 0.00 </span></td>
 				</tr>
 			<%--</c:forEach>--%>
@@ -86,7 +86,7 @@
             </tr>
 			<tr>
 				<td>成交时间：</td>
-				<td><fmt:formatDate value="${orderListVo.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td><fmt:formatDate value="${orderVo.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			</tr>
 		</table>
 

@@ -3,11 +3,13 @@ package com.rhinoceros.mall.service.impl.service;
 
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.manager.manager.ProductManager;
 import com.rhinoceros.mall.service.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(Long id) {
         return productManager.findById(id);
     }
+
 
     @Override
     public List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery) {
