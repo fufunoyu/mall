@@ -3,7 +3,6 @@ package com.rhinoceros.mall.dao.dao;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,10 +48,4 @@ public interface OrderDao {
      */
     Order findById(Long id);
 
-    /**
-     * 通过orderId查找订单与商品的关系
-     * @param orderId
-     * @return
-     */
-    List<OrderProduct> findProductIdByOrderId(Long orderId);
 }

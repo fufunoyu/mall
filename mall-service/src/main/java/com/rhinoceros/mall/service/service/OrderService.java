@@ -3,9 +3,7 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.vo.OrderListVo;
 
 import java.util.List;
 
@@ -43,11 +41,6 @@ public interface OrderService {
      */
     Order findById(Long id);
 
-    /**
-     * 通过orderId查找订单与商品的关系
-     * @param orderId
-     * @return
-     */
-    List<OrderProduct> findProductIdByOrderId(Long orderId);
+
 
 }

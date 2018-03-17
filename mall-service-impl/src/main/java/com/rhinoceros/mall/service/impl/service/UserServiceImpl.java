@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService {
         userDao.add(u);
     }
 
+
     /**
      * 用户登录，登录失败抛出{@link UserException}
      *
@@ -184,6 +185,5 @@ public class UserServiceImpl implements UserService {
         message.setText("重置密码:" + redirectUrl + "?" + ConstantValue.RESET_PASSWORD_PARAM + "=" + param);
         mailSender.send(message);
     }
-
 
 }
