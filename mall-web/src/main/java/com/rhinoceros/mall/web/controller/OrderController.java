@@ -6,14 +6,13 @@ import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.CommentVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
 import com.rhinoceros.mall.core.vo.OrderVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
-import com.rhinoceros.mall.service.service.AddressService;
-import com.rhinoceros.mall.service.service.CartProductService;
-import com.rhinoceros.mall.service.service.OrderService;
-import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.service.service.*;
 import com.rhinoceros.mall.web.support.web.annotation.Authentication;
+import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +38,10 @@ public class OrderController {
 
     @Autowired
     private CartProductService cartProductService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -75,6 +78,7 @@ public class OrderController {
      * @param model
      * @return
      */
+    @Authentication
     @RequestMapping("cartAdd")
     public String showCartOrderConfirm(@RequestParam("id") List<Long> ids, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
@@ -148,7 +152,6 @@ public class OrderController {
     }
 
 
-
     /**
      * 跳转到确认收货页面
      *
@@ -181,26 +184,18 @@ public class OrderController {
     }
 
     /**
+     * (还没抛异常)
      * 真正确认收货
      *
      * @param session
-     * @param model
      * @param oid
      * @return
      */
+    @Authentication
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
-                                 Model model,
                                  @RequestParam("oid") Long oid) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-        OrderStatus status = OrderStatus.WAIT_COMMENT;
-        Order order = new Order();
-        order.setId(oid);
-        order.setStatus(status);
-        orderService.updateSelectionById(order);
+        orderService.confirmedReceive(oid);
         return "orderConfirmed";
     }
 
@@ -214,25 +209,86 @@ public class OrderController {
      */
     @Authentication
     @RequestMapping({"/comment"})
-    public String OrderComment(HttpSession session,
+    public String orderComment(HttpSession session,
                                Model model,
-                               @RequestParam("oid") Long oid) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-
+                               @RequestParam("oid") Long oid,
+                               @PageDefault(required = false) PageQuery pageQuery1) {
+        PageQuery pageQuery = new PageQuery(pageQuery1.getPage(), pageQuery1.getSize(), new com.rhinoceros.mall.core.query.Order("createAt", com.rhinoceros.mall.core.query.Order.Direction.DESC));
         Order order = orderService.findById(oid);
         OrderVo orderVo = new OrderVo();
         orderVo.setOrder(order);
         ProductVo productVo = new ProductVo(productService.findById(order.getProductId()));
         orderVo.setProductVo(productVo);
-
         model.addAttribute("orderVo", orderVo);
+        //评论
+        List<Comment> comments = commentService.findByProductId(productVo.getProduct().getId(), pageQuery);
+        List<CommentVo> commentVos = new LinkedList<>();
+        for (Comment comment : comments) {
+            CommentVo vo = new CommentVo();
+            vo.setComment(comment);
+            vo.setUser(userService.findById(comment.getUserId()));
+            commentVos.add(vo);
+        }
+        model.addAttribute("comments", commentVos);
+        model.addAttribute("nowPage", pageQuery.getPage());
+
         return "review";
     }
 
+    /**
+     * (还没抛异常)
+     * 按了提交评论后
+     *
+     * @param
+     * @param oid
+     * @return
+     */
+    @Authentication
+    @RequestMapping({"/completeComment"})
+    public String completeComment(@RequestParam("oid") Long oid,
+                                  @RequestParam("content") String content) {
 
+        Order order1 = orderService.findById(oid);
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.setOrderId(oid);
+        comment.setProductId(order1.getProductId());
+        comment.setUserId(order1.getUserId());
+        commentService.add(comment);
+
+        return "redirect:/order/comment?oid=" + oid;
+    }
+
+    /**
+     * (未处理异常)
+     * 取消订单
+     *
+     * @param oid
+     * @return
+     */
+    @Authentication
+    @RequestMapping({"/cancelOrder"})
+    public String cancelOrder(@RequestParam("oid") Long oid) {
+        orderService.cancelOrder(oid);
+        return "redirect:/order/list?status=WAIT_PAY";
+    }
+
+    /**
+     * 申请退货
+     *
+     * @param oid
+     * @return
+     */
+    @Authentication
+    @RequestMapping({"/returnOrder"})
+    public String returnOrder(@RequestParam("oid") Long oid) {
+        Order order = new Order();
+        order.setId(oid);
+        //更改订单状态
+        order.setStatus(OrderStatus.WAIT_RETURN);
+        orderService.updateSelectionById(order);
+        return "redirect:/order/list?status=WAIT_RETURN";
+    }
 
     /**
      * 计算商品总额
