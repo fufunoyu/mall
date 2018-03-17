@@ -42,11 +42,7 @@
             <artifactId>transport</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.1991wangliang</groupId>
-            <artifactId>alipay-api</artifactId>
-            <version>1.0.3</version>
-        </dependency>
+
     </dependencies>
 
 </project>
