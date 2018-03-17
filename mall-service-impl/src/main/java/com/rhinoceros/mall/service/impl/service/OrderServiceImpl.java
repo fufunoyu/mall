@@ -9,6 +9,7 @@ import com.rhinoceros.mall.dao.dao.OrderDao;
 import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
+import com.rhinoceros.mall.service.impl.exception.order.OrderStatusException;
 import com.rhinoceros.mall.service.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,19 +90,22 @@ public class OrderServiceImpl implements OrderService {
             log.info("订单id不能为空");
             throw new ParameterIsNullException("订单id不能为空");
         }
-        if (orderDao.findById(oid) == null) {
+        Order order = orderDao.findById(oid);
+        if (order == null) {
             log.info("订单不存在");
             throw new EntityNotExistException("订单不存在");
         }
+
+        if(order.getStatus() != OrderStatus.WAIT_RECEIVE){
+            log.info("订单不是待收货状态");
+            throw new OrderStatusException("订单不是待收货状态");
+        }
         //更改订单状态
-        Order order = new Order();
-        order.setId(oid);
         order.setStatus(OrderStatus.WAIT_COMMENT);
         orderDao.updateSelectionById(order);
         //增加商品销量
-        Order order1 = orderDao.findById(oid);
-        Long pid = order1.getProductId();
-        Integer num = order1.getProductNum();
+        Long pid = order.getProductId();
+        Integer num = order.getProductNum();
         Product product = new Product();
         Integer saleNum = productDao.findById(pid).getSaleNum()+num;
         product.setId(pid);
@@ -116,21 +120,23 @@ public class OrderServiceImpl implements OrderService {
             log.info("订单id不能为空");
             throw new ParameterIsNullException("订单id不能为空");
         }
-        if (orderDao.findById(oid) == null) {
+        Order order = orderDao.findById(oid);
+        if (order == null) {
             log.info("订单不存在");
             throw new EntityNotExistException("订单不存在");
         }
-        //更改订单状态
-        Order order = new Order();
-        order.setId(oid);
+        if(order.getStatus() != OrderStatus.WAIT_PAY){
+            log.info("订单不是未支付状态");
+            throw new OrderStatusException("订单不是未支付状态");
+        }
+        //更改订单状态;
         order.setStatus(OrderStatus.CANCEL);
         orderDao.updateSelectionById(order);
         //增加库存
-        Order order1 = orderDao.findById(oid);
         Product product = new Product();
-        Integer storeNum = productDao.findById(order1.getProductId()).getStoreNum()+order1.getProductNum();
+        Integer storeNum = productDao.findById(order.getProductId()).getStoreNum()+order.getProductNum();
         product.setStoreNum(storeNum);
-        product.setId(order1.getProductId());
+        product.setId(order.getProductId());
         productDao.updateSelectionById(product);
     }
 }

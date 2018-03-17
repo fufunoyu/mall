@@ -13,6 +13,7 @@ import com.rhinoceros.mall.dao.dao.ProductDao;
 import com.rhinoceros.mall.dao.dao.UserDao;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
+import com.rhinoceros.mall.service.impl.exception.order.OrderStatusException;
 import com.rhinoceros.mall.service.service.CommentService;
 import com.rhinoceros.mall.service.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -70,13 +71,19 @@ public class CommentServiceImpl implements CommentService {
             log.info("订单id不能为空");
             throw new ParameterIsNullException("订单id不能为空");
         }
-        if (orderService.findById(oid) == null) {
-            log.info("订单不存在");
-            throw new EntityNotExistException("订单不存在");
-        }
         if (comment.getContent() == null || comment.getContent().trim().equals("")) {
             log.info("评论不能为空");
             throw new ParameterIsNullException("评论不能为空");
+        }
+        Order order = orderDao.findById(oid);
+        if (order == null) {
+            log.info("订单不存在");
+            throw new EntityNotExistException("订单不存在");
+        }
+
+        if(order.getStatus() != OrderStatus.WAIT_COMMENT){
+            log.info("订单不是待评论状态");
+            throw new OrderStatusException("订单不是待评论状态");
         }
         comment.setCreateAt(new Date());
         commentDao.add(comment);
@@ -88,8 +95,6 @@ public class CommentServiceImpl implements CommentService {
         product1.setId(pid);
         productDao.updateSelectionById(product1);
         //更改订单状态
-        Order order = new Order();
-        order.setId(oid);
         order.setStatus(OrderStatus.COMPLETED);
         orderService.updateSelectionById(order);
     }
