@@ -7,6 +7,8 @@ import com.rhinoceros.mall.service.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AddressServiceImpl implements AddressService {
 
@@ -16,5 +18,20 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address findById(Long id) {
         return addressDao.findById(id);
+    }
+
+    @Override
+    public Address addDeliveryAddress(Address address) {
+        return null;
+    }
+
+    /**
+     * 根据用户id找到地址列表
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Address> findByUserId(Long id) {
+        return addressDao.findByUserId(id);
     }
 }

@@ -22,5 +22,11 @@
         WHERE id = #{id}
     </select>
 
+    <!--查找用户的所有收货地址信息-->
+     <select id="findByUserId" parameterType="Long" resultType="Address">
+        SELECT *
+        FROM address
+        WHERE user_id  = #{userId}
+     </select>
 
 </mapper>
