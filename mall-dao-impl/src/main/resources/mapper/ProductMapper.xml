@@ -56,37 +56,37 @@
         UPDATE `product`
         <set>
             <if test="name!=null">
-                name = #{name}
+                name = #{name},
             </if>
             <if test="price!=null">
-                price = #{price}
+                price = #{price},
             </if>
             <if test="discount!=null">
-                discount = #{discount}
+                discount = #{discount},
             </if>
             <if test="status!=null">
-                status = #{status}
+                status = #{status},
             </if>
             <if test="category_id!=null">
-                category_id = #{categoryId}
+                category_id = #{categoryId},
             </if>
             <if test="storeNum!=null">
-                store_num = #{storeNum}
+                store_num = #{storeNum},
             </if>
             <if test="saleNum!=null">
-                sale_num = #{saleNum}
+                sale_num = #{saleNum},
             </if>
             <if test="imageUrls!=null">
-                image_urls = #{imageUrls}
+                image_urls = #{imageUrls},
             </if>
             <if test="commentNum!=null">
-                comment_num = #{commentNum}
+                comment_num = #{commentNum},
             </if>
             <if test="saleDate!=null">
-                sale_date = #{saleDate}
+                sale_date = #{saleDate},
             </if>
             <if test="description!=null">
-                description = #{description}
+                description = #{description},
             </if>
         </set>
         WHERE id = #{id}
