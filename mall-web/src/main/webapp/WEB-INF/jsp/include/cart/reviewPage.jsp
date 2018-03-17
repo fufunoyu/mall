@@ -38,11 +38,11 @@
         });
         //提交订单按钮
         $("form.submitComment").submit(function () {
-            if ($("#content").val().length < 6 ) {
+            if ($("#content").val().trim().length < 5 ) {
                 $("span.errorMessage").html("请输入至少5个字符");
                 return false;
             }
-            if ($("#content").val().length > 500) {
+            if ($("#content").val().trim().length > 500) {
                 $("span.errorMessage").html("最多可输入500个字符");
                 return false;
             }

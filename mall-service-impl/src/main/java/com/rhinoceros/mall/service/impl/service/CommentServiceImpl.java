@@ -85,6 +85,7 @@ public class CommentServiceImpl implements CommentService {
             log.info("订单不是待评论状态");
             throw new OrderStatusException("订单不是待评论状态");
         }
+        comment.setContent(comment.getContent().trim());
         comment.setCreateAt(new Date());
         commentDao.add(comment);
         //增加总评论条数
