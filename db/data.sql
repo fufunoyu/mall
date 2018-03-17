@@ -52,28 +52,15 @@ insert  into `comment`(`product_id`,`order_id`,`user_id`,`content`,`create_at`) 
 
 
 
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_PAY','12341234','2018-03-15 21:12:56','2018-03-15 21:12:57','2018-03-15 21:13:56','2018-03-15 21:14:56','1000.00','12351345',1,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_SHIP','1623461234','2018-03-16 21:12:56','2018-03-16 21:12:57','2018-03-16 21:13:56','2018-03-16 21:14:56','2000.00','1213624345',1,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_SHIP','236567','2018-03-17 21:12:56','2018-03-17 21:12:57','2018-03-17 21:13:56','2018-03-17 21:14:56','3000.00','121362134518',2,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_SHIP','16789651261234','2018-03-18 21:12:56','2018-03-18 21:12:57','2018-03-18 21:13:56','2018-03-18 21:14:56','4000.00','121362828',2,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_RECEIVE','16231245634','2018-03-19 21:12:56','2018-03-19 21:12:57','2018-03-19 21:13:56','2018-03-19 21:14:56','5000.00','12136236275',1,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('WAIT_COMMENT','162356811234','2018-03-20 21:12:56','2018-03-20 21:12:57','2018-03-20 21:13:56','2018-03-20 21:14:56','6000.00','187838624345',1,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('COMPLETED','1623461356214','2018-03-21 21:12:56','2018-03-21 21:12:57','2018-03-21 21:13:56','2018-03-21 21:14:56','7000.00','12116624345',1,1);
-INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`) VALUES ('CANCEL','1623456738234','2018-03-22 21:12:56','2018-03-22 21:12:57','2018-03-22 21:13:56','2018-03-22 21:14:56','8000.00','1214514345',1,1);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('WAIT_PAY','12341234','2018-03-15 21:12:56','2018-03-15 21:12:57','2018-03-15 21:13:56','2018-03-15 21:14:56','1000.00','12351345',1,1,1,3);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('WAIT_SHIP','1623461234','2018-03-16 21:12:56','2018-03-16 21:12:57','2018-03-16 21:13:56','2018-03-16 21:14:56','2000.00','1213624345',1,1,3,2);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('WAIT_SHIP','236567','2018-03-17 21:12:56','2018-03-17 21:12:57','2018-03-17 21:13:56','2018-03-17 21:14:56','3000.00','121362134518',2,1,2,1);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('WAIT_SHIP','16789651261234','2018-03-18 21:12:56','2018-03-18 21:12:57','2018-03-18 21:13:56','2018-03-18 21:14:56','4000.00','121362828',2,1,2,1);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('WAIT_RECEIVE','16231245634','2018-03-19 21:12:56','2018-03-19 21:12:57','2018-03-19 21:13:56','2018-03-19 21:14:56','5000.00','12136236275',1,1,1,1);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('WAIT_COMMENT','162356811234','2018-03-20 21:12:56','2018-03-20 21:12:57','2018-03-20 21:13:56','2018-03-20 21:14:56','6000.00','187838624345',1,1,3,4);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('COMPLETED','1623461356214','2018-03-21 21:12:56','2018-03-21 21:12:57','2018-03-21 21:13:56','2018-03-21 21:14:56','7000.00','12116624345',1,1,2,7);
+INSERT  INTO `order`(`status`,`identifier`,`create_at`,`pay_at`,`deliver_at`,`finish_at`,`total_price`,`express_num`,`address_id`,`user_id`,`product_id`,`product_num`) VALUES ('CANCEL','1623456738234','2018-03-22 21:12:56','2018-03-22 21:12:57','2018-03-22 21:13:56','2018-03-22 21:14:56','8000.00','1214514345',1,1,1,3);
 
-
-
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (1,1,3);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (2,3,1);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (3,2,2);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (1,8,3);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (2,7,7);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (3,6,4);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (1,5,1);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (2,4,1);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (1,3,4);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (3,5,2);
-INSERT  INTO `order_product`(`product_id`,`order_id`,`product_num`) VALUES (2,5,6);
 
 
 

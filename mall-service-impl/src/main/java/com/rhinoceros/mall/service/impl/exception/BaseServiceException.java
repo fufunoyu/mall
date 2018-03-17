@@ -6,12 +6,12 @@ package com.rhinoceros.mall.service.impl.exception;
  * 2018/03/10 09:08
  * 基础异常类
  */
-abstract public class BaseException extends RuntimeException {
-    public BaseException() {
+abstract public class BaseServiceException extends RuntimeException {
+    public BaseServiceException() {
         super();
     }
 
-    public BaseException(String msg) {
+    public BaseServiceException(String msg) {
         super(msg);
     }
 }

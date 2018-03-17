@@ -6,12 +6,11 @@ import com.rhinoceros.mall.core.dto.OrderDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.*;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.vo.AddressListVo;
-import com.rhinoceros.mall.core.vo.OrderListVo;
 import com.rhinoceros.mall.core.vo.OrderProductVo;
+import com.rhinoceros.mall.core.vo.OrderVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
-import com.rhinoceros.mall.service.service.CartProductService;
 import com.rhinoceros.mall.service.service.AddressService;
+import com.rhinoceros.mall.service.service.CartProductService;
 import com.rhinoceros.mall.service.service.OrderService;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.Authentication;
@@ -20,12 +19,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.LinkedList;
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -44,15 +42,15 @@ public class OrderController {
 
 
     /**
-     * 订单显示页面
+     * 提交订单页面的商品展示
+     *
      * @param orderDto
      * @param model
      * @return
      */
     @Authentication
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto, Model model,HttpSession session) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
+    public String showOrderConfirm(OrderDto orderDto, Model model) {
         //获取商品的id
         Long pid = orderDto.getProductId();
         //根据商品id获取商品信息
@@ -62,15 +60,13 @@ public class OrderController {
             ProductVo productVo = new ProductVo(product);
             orderProductVo.setProductVo(productVo);
             orderProductVo.setNum(orderDto.getProductNum());
-            Product product1 = productService.findById(orderDto.getProductId());
             model.addAttribute("orderProducts", Collections.singleton(orderProductVo));
-            model.addAttribute("total", calculate(product1.getPrice(), product1.getDiscount(), orderDto.getProductNum()));
-            List<Address> addresses = addressService.findByUserId(user.getId());
-            model.addAttribute("addressList",addresses);
+            model.addAttribute("total", calculate(product.getPrice(), product.getDiscount(), orderDto.getProductNum()));
             return "buy";
         }
         return "product";
     }
+
     /**
      * 购物车结算到订单确认页面
      *
@@ -90,14 +86,14 @@ public class OrderController {
             OrderProductVo vo = new OrderProductVo();
             Product product = productService.findById(cartProduct.getProductId());
             ProductVo productVo = new ProductVo(product);
-            total = total.add(calculate(product.getPrice(),product.getDiscount(),cartProduct.getProductNum()));
+            total = total.add(calculate(product.getPrice(), product.getDiscount(), cartProduct.getProductNum()));
             vo.setProductVo(productVo);
             vo.setNum(cartProduct.getProductNum());
             orderProductVos.add(vo);
         }
 
         model.addAttribute("orderProducts", orderProductVos);
-        model.addAttribute("total",total);
+        model.addAttribute("total", total);
         return "buy";
 
     }
@@ -133,19 +129,17 @@ public class OrderController {
         PageQuery pageQuery = new PageQuery(page, pageSize, queryOrder);
 
         List<Order> orders = orderService.findByUserIdAndStatus(user.getId(), orderStatus, pageQuery);
-        List<OrderListVo> orderListVos = new LinkedList<OrderListVo>();
+        List<OrderVo> orderVos = new LinkedList<OrderVo>();
         for (Order order : orders) {
-            OrderListVo orderListVo = new OrderListVo();
-            orderListVo.setOrder(order);
-            List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
-            List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
-
-            setOrderProductVos(orderProducts, orderProductVos);
-            orderListVo.setOrderProductVos(orderProductVos);
-            orderListVos.add(orderListVo);
+            OrderVo orderVo = new OrderVo();
+            orderVo.setOrder(order);
+            //设置商品
+            ProductVo productVo = new ProductVo(productService.findById(order.getProductId()));
+            orderVo.setProductVo(productVo);
+            orderVos.add(orderVo);
         }
 
-        model.addAttribute("orderListVos", orderListVos);
+        model.addAttribute("orderVos", orderVos);
         model.addAttribute("orderNum", orderNum);
         model.addAttribute("nowPage", page);
         model.addAttribute("pageSize", pageSize);
@@ -153,32 +147,7 @@ public class OrderController {
         return "bought";
     }
 
-    /**
-     * 改变订单状态
-     *
-     * @param oid
-     * @param status
-     * @param session
-     * @return
-     */
-    @Authentication
-    @ResponseBody
-    @RequestMapping({"/status"})
-    public String addToCartProduct(
-            @RequestParam("oid") Long oid,
-            @RequestParam("status") OrderStatus status,
-            HttpSession session
-    ) {
-        User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/login";
-        }
-        Order order = new Order();
-        order.setId(oid);
-        order.setStatus(status);
-        orderService.updateSelectionById(order);
-        return "success";
-    }
+
 
     /**
      * 跳转到确认收货页面
@@ -191,46 +160,43 @@ public class OrderController {
     @Authentication
     @RequestMapping({"/confirmPayPage"})
     public String confirmReceiveButton(HttpSession session,
-                                 @RequestParam("oid") Long oid,
-                                 Model model) {
+                                       @RequestParam("oid") Long oid,
+                                       Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
             return "redirect:/login";
         }
+        OrderVo orderVo = new OrderVo();
+        //设置订单
         Order order = orderService.findById(oid);
-        model.addAttribute("order", order);
+        orderVo.setOrder(order);
+        //设置商品
+        ProductVo productVo = new ProductVo(productService.findById(order.getProductId()));
+        orderVo.setProductVo(productVo);
 
-        OrderListVo orderListVo = new OrderListVo();
-        orderListVo.setOrder(order);
-        List<OrderProduct> orderProducts = orderService.findProductIdByOrderId(order.getId());
-        List<OrderProductVo> orderProductVos = new LinkedList<OrderProductVo>();
-
-        setOrderProductVos(orderProducts, orderProductVos);
-        orderListVo.setOrderProductVos(orderProductVos);
-        model.addAttribute("orderListVo", orderListVo);
-        Address orderAddress = addressService.findById(orderListVo.getOrder().getAddressId());
-
+        model.addAttribute("orderVo", orderVo);
+        Address orderAddress = addressService.findById(orderVo.getOrder().getAddressId());
         model.addAttribute("orderAddress", orderAddress);
         return "confirmPay";
     }
 
     /**
-     * 确认收货
+     * 真正确认收货
+     *
      * @param session
      * @param model
      * @param oid
-     * @param status
      * @return
      */
     @RequestMapping({"/confiredPage"})
     public String confirmReceive(HttpSession session,
                                  Model model,
-                                 @RequestParam("oid") Long oid,
-                                 @RequestParam("status")OrderStatus status) {
+                                 @RequestParam("oid") Long oid) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         if (user == null) {
             return "redirect:/login";
         }
+        OrderStatus status = OrderStatus.WAIT_COMMENT;
         Order order = new Order();
         order.setId(oid);
         order.setStatus(status);
@@ -239,12 +205,14 @@ public class OrderController {
     }
 
     /**
-     * 评论商品
+     * 订单评价
+     *
      * @param session
      * @param model
      * @param oid
      * @return
      */
+    @Authentication
     @RequestMapping({"/comment"})
     public String OrderComment(HttpSession session,
                                Model model,
@@ -254,21 +222,17 @@ public class OrderController {
             return "redirect:/login";
         }
 
+        Order order = orderService.findById(oid);
+        OrderVo orderVo = new OrderVo();
+        orderVo.setOrder(order);
+        ProductVo productVo = new ProductVo(productService.findById(order.getProductId()));
+        orderVo.setProductVo(productVo);
+
+        model.addAttribute("orderVo", orderVo);
         return "review";
     }
 
-    private void setOrderProductVos(List<OrderProduct> orderProducts, List<OrderProductVo> orderProductVos) {
-        for (OrderProduct orderProduct : orderProducts) {
-            Product product = productService.findById(orderProduct.getProductId());
-            ProductVo productVo = new ProductVo(product);
-            productVo.setProduct(product);
-            //创建OrderProductVo对象以便填充
-            OrderProductVo orderProductVo = new OrderProductVo();
-            orderProductVo.setNum(orderProduct.getProductNum());
-            orderProductVo.setProductVo(productVo);
-            orderProductVos.add(orderProductVo);
-        }
-    }
+
 
     /**
      * 计算商品总额

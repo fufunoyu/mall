@@ -2,7 +2,6 @@ package com.rhinoceros.mall.dao.dao;
 /* created at 3:37 PM 2/28/2018  */
 
 import com.rhinoceros.mall.core.po.Product;
-import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,12 +35,27 @@ public interface ProductDao {
      */
     List<Product> findByCategoryIdIn(@Param("categoryIds") List<Long> categoryIds, @Param("page") PageQuery pageQuery);
 
-
     /**
-     * 根据产品id查找产品详情
+     * 添加商品
      *
-     * @param productId
+     * @param product
      * @return
      */
-    ProductDescription findDescriptionById(Long productId);
+    int add(Product product);
+
+    /**
+     * 根据id删除商品
+     *
+     * @param id
+     * @return
+     */
+    int deleteById(Long id);
+
+    /**
+     * 根据id更新所有不为null的字段
+     *
+     * @param product
+     * @return
+     */
+    int updateSelectionById(Product product);
 }
