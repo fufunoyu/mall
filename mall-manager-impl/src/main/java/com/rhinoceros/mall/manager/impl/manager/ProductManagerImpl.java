@@ -80,7 +80,7 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public int deleteById(Long id) {
         int modify = productDao.deleteById(id);
-        client.prepareDelete("mall", "product", id.toString());
+        client.prepareDelete("mall", "product", id.toString()).get();
         return modify;
     }
 
@@ -90,7 +90,8 @@ public class ProductManagerImpl implements ProductManager {
         try {
             byte[] bytes = mapper.writeValueAsBytes(product);
             client.prepareUpdate("mall", "product", product.getId().toString())
-                    .setDoc(bytes, XContentType.JSON);
+                    .setDoc(bytes, XContentType.JSON)
+                    .get();
             return modify;
         } catch (Exception e) {
             log.error("json转换失败");

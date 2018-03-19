@@ -94,7 +94,7 @@
                     var total = $('#dom_var_pagination').pagination('options').total
                     var pageSize = $('#dom_var_pagination').pagination('options').pageSize
                     var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
-                    if(categoryId!=null && categoryId != nodeId){
+                    if(categoryId!=null || categoryId != nodeId){
                         $.ajax({
                             url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
                             method: 'get',
@@ -601,10 +601,10 @@
                 <option value=" LEAVE_SHELF">下架</option>
             </select>
         </div>
-        <div style="margin-bottom:20px">
-            <input id="productSaleDate1" class="easyui-textbox" name="saleDate" style="width:100%"
-                   data-options="label:'上架日期:',required:true" readonly>
-        </div>
+        <%--<div style="margin-bottom:20px">--%>
+            <%--<input id="productSaleDate1" class="easyui-textbox" name="saleDate" style="width:100%"--%>
+                   <%--data-options="label:'上架日期:',required:true" readonly>--%>
+        <%--</div>--%>
         <div style="margin-bottom:20px">
             <select id="productCategory1" class="easyui-combotree" style="width:100%;"
                     data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
@@ -617,14 +617,14 @@
             <input id="productStoreNum1" class="easyui-textbox" name="storeNum" style="width:100%"
                    data-options="label:'商品库存总量:',required:true">
         </div>
-        <div style="margin-bottom:20px">
-            <input id="productSaleNum1" class="easyui-textbox" name="saleNum" style="width:100%"
-                   data-options="label:'商品销售总量:',required:true" readonly>
-        </div>
-        <div style="margin-bottom:20px">
-            <input id="productCommentNum1" class="easyui-textbox" name="commentNum" style="width:100%"
-                   data-options="label:'评论总数:',required:true" readonly>
-        </div>
+        <%--<div style="margin-bottom:20px">--%>
+            <%--<input id="productSaleNum1" class="easyui-textbox" name="saleNum" style="width:100%"--%>
+                   <%--data-options="label:'商品销售总量:',required:true" readonly>--%>
+        <%--</div>--%>
+        <%--<div style="margin-bottom:20px">--%>
+            <%--<input id="productCommentNum1" class="easyui-textbox" name="commentNum" style="width:100%"--%>
+                   <%--data-options="label:'评论总数:',required:true" readonly>--%>
+        <%--</div>--%>
         <div>
             <span>商品详情:</span>
             <div id="productDescription1" class="easyui-texteditor" style="height: 300px">
