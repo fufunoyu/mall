@@ -1,0 +1,15 @@
+.content{
+    display: block;
+    border:none;
+    min-height:800px;
+}
+
+.sidenav{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidenav li{
+    padding: 5px 0;
+}

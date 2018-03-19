@@ -9,7 +9,6 @@ public interface AddressDao {
 
     /**
      * 增加地址
-     *
      * @param address
      * @return
      */
@@ -17,7 +16,6 @@ public interface AddressDao {
 
     /**
      * 根据id查找信息
-     *
      * @param id
      * @return
      */
@@ -29,4 +27,19 @@ public interface AddressDao {
      * @return
      */
     List<Address> findByUserId(Long id);
+    /**
+     * 更新地址中不为null的字段
+     *
+     * @param address
+     * @return
+     */
+    int updateSelectionById(Address address);
+
+    /**
+     * 删除地址
+     *
+     * @param id
+     */
+    void deleteById(Long id);
+
 }
