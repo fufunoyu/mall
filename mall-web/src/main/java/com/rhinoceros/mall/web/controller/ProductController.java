@@ -3,6 +3,7 @@ package com.rhinoceros.mall.web.controller;
 
 import com.rhinoceros.mall.core.po.Comment;
 import com.rhinoceros.mall.core.po.Product;
+import com.rhinoceros.mall.core.query.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.CommentVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
@@ -57,7 +58,7 @@ public class ProductController {
         //获取商品详情
         model.addAttribute("productVo", productVo);
 
-        List<Comment> comments = commentService.findByProductId(id, new PageQuery(page, 10));
+        List<Comment> comments = commentService.findByProductId(id, new PageQuery(page, 10,new Order("createAt", Order.Direction.DESC)));
 
         List<CommentVo> commentVos = new LinkedList<>();
         for (Comment comment : comments) {
