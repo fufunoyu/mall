@@ -99,4 +99,9 @@ public class CommentServiceImpl implements CommentService {
         order.setStatus(OrderStatus.COMPLETED);
         orderService.updateSelectionById(order);
     }
+
+    @Override
+    public List<Comment> findByUserId(Long userId, PageQuery pageQuery){
+        return commentDao.findByUserId(userId,pageQuery);
+    }
 }

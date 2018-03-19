@@ -183,12 +183,9 @@
                data-options="singleSelect:false,collapsible:true,toolbar:toolbar">
             <thead>
             <tr>
-                <th data-options="field:'id',width:80">商品ID</th>
                 <th data-options="field:'name',width:100">商品名</th>
                 <th data-options="field:'price',width:80,align:'right'">商品价格</th>
                 <th data-options="field:'discount',width:80,align:'right'">优惠价</th>
-                <%--<th data-options="field:'status',width:60,align:'center'">商品状态</th>--%>
-                <%--<th data-options="field:'categoryId',width:60,align:'center'">分类ID</th>--%>
                 <th data-options="field:'storeNum',width:60,align:'center'">库存总量</th>
                 <th data-options="field:'saleNum',width:60,align:'center'">销售总量</th>
                 <th data-options="field:'commentNum',width:60,align:'center'">评论总数</th>
@@ -344,7 +341,7 @@
                 <thead>
                 <tr>
                     <th data-options="field:'ck',checkbox:true"></th>
-                    <th data-options="field:'id',width:150">商品ID</th>
+                    <%--<th data-options="field:'id',width:150">商品ID</th>--%>
                     <th data-options="field:'name',width:150">商品名称</th>
                     <th data-options="field:'price',width:150,align:'right'">价格</th>
                     <th data-options="field:'discount',width:150,align:'right'">折后价</th>

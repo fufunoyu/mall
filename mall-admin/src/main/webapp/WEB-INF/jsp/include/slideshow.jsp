@@ -17,7 +17,6 @@
     <thead>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>
-        <th data-options="field:'id',width:80">ID</th>
         <th data-options="field:'title',width:200">标题</th>
         <th data-options="field:'imageUrl',width:180,align:'right'">图片地址</th>
         <th data-options="field:'jumpUrl',width:180,align:'right'">跳转地址</th>
