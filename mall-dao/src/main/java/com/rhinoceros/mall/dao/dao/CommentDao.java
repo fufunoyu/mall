@@ -16,4 +16,12 @@ public interface CommentDao {
      * @return 商品评价的对象的列表
      */
     List<Comment> findByProductId(@Param("productId") Long productId, @Param("page") PageQuery pageQuery);
+
+    /**
+     * 根据用户id查询商品评价
+     * @param userId
+     * @param pageQuery
+     * @return
+     */
+    List<Comment> findByUserId(@Param("userId") Long userId, @Param("page") PageQuery pageQuery);
 }

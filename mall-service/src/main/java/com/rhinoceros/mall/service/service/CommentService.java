@@ -16,4 +16,12 @@ public interface CommentService {
      * @return
      */
     List<Comment> findByProductId(Long productId, PageQuery pageQuery);
+
+    /**
+     * 根据用户id查询商品评价
+     * @param userId
+     * @param pageQuery
+     * @return
+     */
+    List<Comment> findByUserId(Long userId, PageQuery pageQuery);
 }

@@ -6,6 +6,8 @@ import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.po.User;
 
+import java.util.List;
+
 /**
  * 用户业务逻辑接口
  */
@@ -49,4 +51,11 @@ public interface UserService {
      * @param resetPasswordDto
      */
     void resetPassword(ResetPasswordDto resetPasswordDto);
+
+    /**
+     * 修改用户资料
+     * @param user
+     * @return
+     */
+    User updateSelectionById(User user);
 }

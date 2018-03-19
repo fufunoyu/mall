@@ -9,4 +9,10 @@
         ${page.queryString}
     </select>
 
+    <select id="findByUserId" resultType="Comment">
+        SELECT * FROM `comment` c
+        WHERE c.`user_id` = #{userId}
+        ${page.queryString}
+    </select>
+
 </mapper>

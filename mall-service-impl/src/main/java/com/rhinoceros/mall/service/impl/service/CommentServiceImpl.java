@@ -21,4 +21,9 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> findByProductId(Long productId, PageQuery pageQuery) {
         return commentDao.findByProductId(productId, pageQuery);
     }
+
+    @Override
+    public List<Comment> findByUserId(Long userId, PageQuery pageQuery){
+        return commentDao.findByUserId(userId,pageQuery);
+    }
 }
