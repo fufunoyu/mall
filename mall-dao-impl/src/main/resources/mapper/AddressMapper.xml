@@ -22,11 +22,42 @@
         WHERE id = #{id}
     </select>
 
-    <!--查找用户的所有收货地址信息-->
-     <select id="findByUserId" parameterType="Long" resultType="Address">
+    <select id="findByUserId" parameterType="Long" resultType="Address">
         SELECT *
         FROM address
-        WHERE user_id  = #{userId}
-     </select>
+        WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateSelectionById" parameterType="Address">
+        UPDATE address
+        <set>
+            <if test="postalCode != null">
+                postal_code = #{postalCode}
+            </if>
+        </set>
+        <set>
+            <if test="deliveryAddress != null">
+                delivery_address = #{deliveryAddress}
+            </if>
+        </set>
+        <set>
+            <if test="deliveryName != null">
+                delivery_name = #{deliveryName}
+            </if>
+        </set>
+        <set>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM address
+        WHERE id = #{id}
+    </delete>
+
 
 </mapper>

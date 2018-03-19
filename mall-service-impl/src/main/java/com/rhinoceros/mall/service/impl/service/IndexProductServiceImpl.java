@@ -30,11 +30,6 @@ public class IndexProductServiceImpl implements IndexProductService {
         return indexProductDao.findAll();
     }
 
-    @Override
-    public List<IndexProduct> findByCategoryId(Long categoryId) {
-        return indexProductDao.findByCategoryId(categoryId);
-    }
-
     @Transactional
     @Override
     public IndexProduct add(IndexProduct indexProduct) {

@@ -23,4 +23,12 @@ public interface CommentDao {
      * @return
      */
     int add(Comment comment);
+
+    /**
+     * 根据用户id查询商品评价
+     * @param userId
+     * @param pageQuery
+     * @return
+     */
+    List<Comment> findByUserId(@Param("userId") Long userId, @Param("page") PageQuery pageQuery);
 }

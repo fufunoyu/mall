@@ -10,6 +10,7 @@ import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.utils.SecurityUtils;
 import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
@@ -103,7 +104,6 @@ public class UserServiceImpl implements UserService {
         userDao.add(u);
     }
 
-
     /**
      * 用户登录，登录失败抛出{@link UserException}
      *
@@ -184,4 +184,25 @@ public class UserServiceImpl implements UserService {
         mailSender.send(message);
     }
 
+    /**
+     * 根据id更新用户信息中不为null的字段
+     * @param user
+     * @return
+     */
+    @Transactional
+    @Override
+    public User updateSelectionById(User user) {
+        Long userId = user.getId();
+        if (userId == null){
+            log.info("用户id不能为空");
+            throw new ParameterIsNullException("用户id不能为空");
+        }
+        User old = userDao.findById(userId);
+        if (old==null){
+            log.info("用户不存在");
+            throw  new EntityNotExistException("用户不存在");
+        }
+        userDao.updateSelectionById(user);
+        return userDao.findById(userId);
+    }
 }
