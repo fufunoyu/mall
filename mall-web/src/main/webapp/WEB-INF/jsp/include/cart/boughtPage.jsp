@@ -142,6 +142,9 @@
         <div id="button_WAIT_RECEIVE"><a orderStatus="WAIT_RECEIVE" href="#nowhere">待收货</a></div>
         <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere">待评价</a></div>
         <div id="button_COMPLETED"><a orderStatus="COMPLETED" href="#nowhere">已完成</a></div>
+        <div id="button_WAIT_RETURN"><a orderStatus="WAIT_RETURN" href="#nowhere">待退货</a></div>
+        <div id="button_RETURN_ING"><a orderStatus="RETURN_ING" href="#nowhere">退货中</a></div>
+        <div id="button_RETURN_COMPLETED"><a orderStatus="RETURN_COMPLETED" href="#nowhere">退货成功</a></div>
         <div id="button_CANCEL"><a orderStatus="CANCEL" href="#nowhere" class="noRightborder">已取消</a></div>
         <div class="orderTypeLastOne"><a class="noRightborder">&nbsp;</a></div>
     </div>
@@ -160,13 +163,14 @@
     </div>
 
     <div class="orderListItem">
-        <c:forEach items="${orderListVos}" var="o">
+        <c:forEach items="${orderVos}" var="o">
             <table class="orderListItemTable" orderStatus="${o.order.status}" oid="${o.order.id}">
                 <tr class="orderListItemFirstTR">
                     <td colspan="2">
                         <b><fmt:formatDate value="${o.order.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/></b>
-                        <span>订单号: ${o.order.identifier}
-					</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="dingdanhao">订单号: </span>
+                        <span>${o.order.identifier}</span>
                     </td>
                     <td colspan="2">
                         <%--<img width="13px" src="img/site/orderItemTmall.png">--%>
@@ -178,19 +182,19 @@
 
                     </td>
                     <td class="orderItemDeleteTD">
-                        <a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
+                        <%--<a class="deleteOrderLink" oid="${o.order.id}" href="#nowhere">
                             <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
-                        </a>
+                        </a>--%>
 
                     </td>
                 </tr>
-                <c:forEach items="${o.orderProductVos}" var="oi" varStatus="st">
+                <%--<c:forEach items="${o.orderProductVos}" var="oi" varStatus="st">--%>
                     <tr class="orderItemProductInfoPartTR">
                         <td class="orderItemProductInfoPartTD"><img width="80" height="80"
-                                                                    src="${oi.productVo.firstImageUrl}"></td>
+                                                                    src="${o.productVo.firstImageUrl}"></td>
                         <td class="orderItemProductInfoPartTD">
                             <div class="orderListItemProductLinkOutDiv">
-                                <a href="${pageContext.request.contextPath}/product?pid=${oi.productVo.product.id}">${oi.productVo.product.name}</a>
+                                <a href="${pageContext.request.contextPath}/product?pid=${o.productVo.product.id}">${o.productVo.product.name}</a>
                                 <div class="orderListItemProductLinkInnerDiv">
                                     <img src="${pageContext.request.contextPath}/static/img/site/creditcard.png"
                                          title="支持信用卡支付">
@@ -204,24 +208,24 @@
                         <td class="orderItemProductInfoPartTD" width="100px">
 
                             <div class="orderListItemProductOriginalPrice">￥<fmt:formatNumber type="number"
-                                                                                              value="${oi.productVo.product.price}"
+                                                                                              value="${o.productVo.product.price}"
                                                                                               minFractionDigits="2"/></div>
                             <div class="orderListItemProductPrice">￥<fmt:formatNumber type="number"
-                                                                                      value="${oi.productVo.product.discount}"
+                                                                                      value="${o.productVo.product.discount}"
                                                                                       minFractionDigits="2"/></div>
 
 
                         </td>
                         <td align="center" class="orderItemProductInfoPartTD" width="100px">
-                            <span class="orderListItemNumber">${oi.num}</span>
+                            <span class="orderListItemNumber">${o.order.productNum}</span>
                         </td>
 
-                        <c:if test="${st.count==1}">
+                        <%--<c:if test="${st.count==1}">--%>
                             <%--<td valign="top" rowspan="${fn:length(o.orderProductVos)}" class="orderListItemNumberTD orderItemOrderInfoPartTD" width="100px">
                                 <span class="orderListItemNumber">${oi.num}</span>
                             </td>--%>
 
-                            <td valign="top" rowspan="${fn:length(o.orderProductVos)}" width="120px"
+                            <td valign="top" rowspan="1" width="120px" <%--rowspan="${fn:length(o.productVo)}"--%>
                                 class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD">
                                 <div class="orderListItemProductRealPrice">￥<fmt:formatNumber minFractionDigits="2"
                                                                                               maxFractionDigits="2"
@@ -229,17 +233,22 @@
                                                                                               value="${o.order.totalPrice}"/></div>
                                 <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                             </td>
-                            <td valign="top" rowspan="${fn:length(o.orderProductVos)}"
+                            <td valign="top" rowspan="1" align="center" <%--rowspan="${fn:length(o.productVo)}"--%>
                                 class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
                                 <c:if test="${o.order.status=='WAIT_RECEIVE' }">
                                     <a href="${pageContext.request.contextPath}/order/confirmPayPage?oid=${o.order.id}">
                                         <button class="orderListItemConfirm">确认收货</button>
                                     </a>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                 </c:if>
                                 <c:if test="${o.order.status=='WAIT_PAY' }">
 
                                     <button class="orderListItemConfirm">付款</button>
-
+                                    <div class="cancleWaitPayOrder">
+                                    <a href="${pageContext.request.contextPath}/order/cancelOrder?oid=${o.order.id}">取消订单</a>
+                                    </div>
                                 </c:if>
                                     <%--<c:if test="${o.order.status=='WAIT_PAY' }">
                                     <a href="forealipay?oid=${o.id}&total=${o.total}">
@@ -249,6 +258,9 @@
 
                                 <c:if test="${o.order.status=='WAIT_SHIP' }">
                                     <span>待发货</span>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                     <%-- 									<button class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?id=${o.id}">催卖家发货</button> --%>
 
                                 </c:if>
@@ -257,10 +269,16 @@
                                     <a href="${pageContext.request.contextPath}/order/comment?oid=${o.order.id}">
                                         <button class="orderListItemReview">评价</button>
                                     </a>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                 </c:if>
 
                                 <c:if test="${o.order.status=='COMPLETED'}">
                                     <span>已完成</span>
+                                    <div class="cancleWaitPayOrder">
+                                        <a href="${pageContext.request.contextPath}/order/returnOrder?oid=${o.order.id}">申请退货</a>
+                                    </div>
                                 </c:if>
 
                                 <c:if test="${o.order.status=='CANCEL'}">
@@ -268,9 +286,9 @@
                                 </c:if>
 
                             </td>
-                        </c:if>
+                        <%--</c:if>--%>
                     </tr>
-                </c:forEach>
+                <%--</c:forEach>--%>
 
             </table>
         </c:forEach>

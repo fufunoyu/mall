@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class AddressServiceImpl implements AddressService {
@@ -24,13 +26,17 @@ public class AddressServiceImpl implements AddressService {
         return addressDao.findById(id);
     }
 
+    @Override
+    public Address addDeliveryAddress(Address address) {
+        return null;
+    }
+
     /***
      * 根据用户ID获取地址
      * @param userId
      * @return
      */
     @Override
-    @Transactional
     public List<Address> findByUserId(Long userId){
         if(userId == null){
             log.info("用户id不能为空");

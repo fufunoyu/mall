@@ -3,7 +3,6 @@ package com.rhinoceros.mall.service.service;
 
 
 import com.rhinoceros.mall.core.po.Product;
-import com.rhinoceros.mall.core.po.ProductDescription;
 import com.rhinoceros.mall.core.query.PageQuery;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
 public interface ProductService {
     /**
      * 根据id查询商品信息
+     *
      * @param id 商品id号
      * @return 商品信息
      */
@@ -28,12 +28,28 @@ public interface ProductService {
      */
     List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery);
 
-    List<Product> findAll(PageQuery pageQuery);
-
     /**
-     * 通过id找寻商品描述
-     * @param id
+     * 根据条件分页查询商品列表
+     *
+     * @param query
+     * @param pageQuery
      * @return
      */
-    ProductDescription findDescriptionById(Long id);
+    List<Product> query(String query, PageQuery pageQuery);
+
+    /**
+     * 获取指定条件查询出的数据总数
+     *
+     * @param query
+     * @return
+     */
+    Long countQuery(String query);
+
+    /**
+     * 根据分类id查找该分类下及其子分类下的所有产品的总数
+     *
+     * @param categoryId
+     * @return
+     */
+    Long countDeepByCategoryId(Long categoryId);
 }

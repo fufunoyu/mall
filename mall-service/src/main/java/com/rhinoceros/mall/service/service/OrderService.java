@@ -1,12 +1,12 @@
 package com.rhinoceros.mall.service.service;
 /* created at 8:10 PM 3/6/2018  */
 
+import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
-import com.rhinoceros.mall.core.po.OrderProduct;
 import com.rhinoceros.mall.core.query.PageQuery;
-import com.rhinoceros.mall.core.vo.OrderListVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -44,10 +44,23 @@ public interface OrderService {
     Order findById(Long id);
 
     /**
-     * 通过orderId查找订单与商品的关系
-     * @param orderId
+     * 添加订单
+     *
+     * @param dtos
+     * @param userId
      * @return
      */
-    List<OrderProduct> findProductIdByOrderId(Long orderId);
+    List<Order> add(OrderListDto dtos, Long userId,Long addressId);
+    /**
+     * 确认收货
+     * @param oid
+     */
+    void confirmedReceive(Long oid);
+
+    /**
+     * 取消订单
+     * @param oid
+     */
+    void cancelOrder(Long oid);
 
 }

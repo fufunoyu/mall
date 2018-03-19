@@ -18,6 +18,12 @@ public interface CommentService {
     List<Comment> findByProductId(Long productId, PageQuery pageQuery);
 
     /**
+     * 添加评论
+     * @param comment
+     */
+    void add(Comment comment);
+
+    /**
      * 根据用户id查询商品评价
      * @param userId
      * @param pageQuery

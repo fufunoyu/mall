@@ -16,6 +16,14 @@ public interface AddressService {
     Address findById(Long id);
 
     /**
+     * 添加收货地址
+     *
+     * @param address
+     * @return
+     */
+    Address addDeliveryAddress(Address address);
+
+    /**
      * 根据用户ID查找
      * @param userId
      * @return

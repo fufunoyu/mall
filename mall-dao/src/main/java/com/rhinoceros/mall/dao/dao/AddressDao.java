@@ -22,12 +22,11 @@ public interface AddressDao {
     Address findById(Long id);
 
     /**
-     * 根据用户ID查找地址
-     * @param userId
+     * 根据用户id显示地址信息
+     * @param id
      * @return
      */
-    List<Address> findByUserId(Long userId);
-
+    List<Address> findByUserId(Long id);
     /**
      * 更新地址中不为null的字段
      *

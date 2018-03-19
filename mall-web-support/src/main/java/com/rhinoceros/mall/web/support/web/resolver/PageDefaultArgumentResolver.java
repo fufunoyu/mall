@@ -44,6 +44,8 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
         // 获取请求参数，并进行url解码
         String pageStr = nativeWebRequest.getParameter(PAGE_PARAM);
         String sizeStr = nativeWebRequest.getParameter(SIZE_PARAM);
+        String[] sortStrArr = nativeWebRequest.getParameterValues(SORT_PARAM);
+
         if (pageStr != null) {
             pageStr = URLDecoder.decode(pageStr, "UTF-8");
         }
@@ -59,22 +61,25 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
             WebDataBinder binder = webDataBinderFactory.createBinder(nativeWebRequest, null, methodParameter.getParameterName());
             page = binder.convertIfNecessary(pageStr, Integer.class);
             size = binder.convertIfNecessary(sizeStr, Integer.class);
+        }
 
-            // 判断是否可以为空，如果不能，使用注解中的默认值
-            PageDefault annotation = methodParameter.getParameterAnnotation(PageDefault.class);
-            if (!annotation.required()) {
-                if (page == null) {
-                    page = annotation.page();
-                }
-                if (size == null) {
-                    size = annotation.size();
-                }
+        // 判断是否可以为空，如果不能，使用注解中的默认值
+        PageDefault annotation = methodParameter.getParameterAnnotation(PageDefault.class);
+        if (!annotation.required()) {
+            if (page == null) {
+                page = annotation.page();
+            }
+            if (size == null) {
+                size = annotation.size();
+            }
+            if (sortStrArr == null) {
+                sortStrArr = annotation.sort();
             }
         }
 
+
         List<Order> orders = new LinkedList<Order>();
-        String[] sortStrArr = nativeWebRequest.getParameterValues(SORT_PARAM);
-        if(sortStrArr != null){
+        if (sortStrArr != null) {
             for (int i = 0; i < sortStrArr.length; i++) {
                 sortStrArr[i] = URLDecoder.decode(sortStrArr[i], "UTF-8");
             }
@@ -96,7 +101,11 @@ public class PageDefaultArgumentResolver implements HandlerMethodArgumentResolve
             }
         }
 
-        // 绑定排序参数
-        return new PageQuery(page, size, orders);
+        if (page != null && size != null) {
+            // 绑定排序参数
+            return new PageQuery(page, size, orders);
+        }
+
+        return null;
     }
 }

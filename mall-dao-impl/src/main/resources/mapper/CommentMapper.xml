@@ -9,6 +9,16 @@
         ${page.queryString}
     </select>
 
+    <insert id="add" parameterType="Comment">
+        INSERT INTO `comment` (product_id,order_id,user_id,content,create_at)
+        VALUE (
+        #{productId},
+        #{orderId},
+        #{userId},
+        #{content},
+        #{createAt}
+        )
+    </insert>
     <select id="findByUserId" resultType="Comment">
         SELECT * FROM `comment` c
         WHERE c.`user_id` = #{userId}

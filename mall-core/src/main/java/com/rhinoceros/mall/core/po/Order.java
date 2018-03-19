@@ -61,6 +61,14 @@ public class Order {
      * 订单对应的用户id
      */
     private Long userId;
+    /**
+     * 商品id
+     */
+    private Long productId;
+    /**
+     * 购买数量
+     */
+    private Integer productNum;
 
 }
 

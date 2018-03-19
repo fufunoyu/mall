@@ -29,7 +29,10 @@ import lombok.NoArgsConstructor;
      * 收货地址,多级地址则以{@link ADDRESS_SEPARATION}隔开
      */
     private String deliveryAddress;
-
+   /**
+    * 收货详细地址,
+    */
+   private String detailAddress;
     /**
      * 收货人姓名
      */

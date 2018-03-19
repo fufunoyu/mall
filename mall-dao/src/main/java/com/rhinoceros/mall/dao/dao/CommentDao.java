@@ -18,6 +18,13 @@ public interface CommentDao {
     List<Comment> findByProductId(@Param("productId") Long productId, @Param("page") PageQuery pageQuery);
 
     /**
+     * 添加评论
+     * @param comment
+     * @return
+     */
+    int add(Comment comment);
+
+    /**
      * 根据用户id查询商品评价
      * @param userId
      * @param pageQuery
