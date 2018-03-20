@@ -13,7 +13,7 @@
 <body>
 <%--轮播图信息列表--%>
 <table id = "slideshow_grid" class="easyui-datagrid" title="详细信息列表"
-       data-options="singleSelect:false,collapsible:true,toolbar:toolbar">
+       data-options="singleSelect:false,collapsible:true,toolbar:toolbar,pagination:true">
     <thead>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>

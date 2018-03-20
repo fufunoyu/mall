@@ -67,7 +67,7 @@
      * @type {[null,null]}
      */
     var toolbarWaitReturn = [{
-        text:'确认退货',
+        text:'允许退货',
         iconCls: 'icon-ok',
         handler:function () {
             var ids = getSelectionsIds();
