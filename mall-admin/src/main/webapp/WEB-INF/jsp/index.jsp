@@ -85,6 +85,7 @@
                 </ul>
             </li>
             <li>
+            <li>
                 <span>首页管理</span>
                 <ul>
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/slideshow'}">
@@ -93,9 +94,6 @@
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/home'}">
                         <span>分类商品广告管理</span>
                     </li>
-                    <li>index.html</li>
-                    <li>about.html</li>
-                    <li>welcome.html</li>
                 </ul>
             </li>
         </ul>

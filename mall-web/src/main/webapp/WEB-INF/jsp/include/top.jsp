@@ -10,7 +10,7 @@
     <span>欢迎来民生商城</span>
 
     <c:if test="${!empty sessionScope[ConstantValue.CURRENT_USER]}">
-        <a href="${pageContext.request.contextPath}/user/me">${sessionScope[ConstantValue.CURRENT_USER].nickname}</a>
+        <a href="${pageContext.request.contextPath}/user/info">${sessionScope[ConstantValue.CURRENT_USER].nickname}</a>
         <a href="${pageContext.request.contextPath}/logout">退出</a>
     </c:if>
 

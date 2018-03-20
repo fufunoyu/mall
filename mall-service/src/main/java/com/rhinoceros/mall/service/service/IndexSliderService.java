@@ -19,7 +19,7 @@ public interface IndexSliderService {
     IndexSlider add(IndexSlider indexSlider);
 
     /**
-     * 删除
+     * 根据id删除
      * @param id
      */
     void deleteById(Long id);
