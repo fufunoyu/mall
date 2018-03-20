@@ -1,5 +1,6 @@
 package com.rhinoceros.mall.core.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class User {
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
     /**
      * 邮箱
@@ -67,6 +69,7 @@ public class User {
     /**
      * 用户状态
      */
+    @JsonIgnore
     private UserStatus status;
 
 }

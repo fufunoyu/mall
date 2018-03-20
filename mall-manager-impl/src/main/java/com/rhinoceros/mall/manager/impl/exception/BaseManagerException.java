@@ -11,4 +11,7 @@ public class BaseManagerException extends RuntimeException {
     public BaseManagerException(String msg) {
         super(msg);
     }
+    public BaseManagerException() {
+        super();
+    }
 }

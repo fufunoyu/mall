@@ -62,8 +62,8 @@
                     <li>
                         <span>Photos</span>
                     </li>
-                    <li>
-                        <span>Program Files</span>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/waitReturnPage'}">
+                        <span>待退货</span>
                     </li>
                     <li>index.html</li>
                     <li>about.html</li>

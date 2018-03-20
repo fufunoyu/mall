@@ -53,6 +53,10 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.findByUserIdAndStatus(userId, status, pageQuery);
     }
 
+    @Override
+    public List<Order> findByStatus(OrderStatus status, PageQuery pageQuery) {
+        return orderDao.findByStatus(status, pageQuery);
+    }
 
     /**
      * 根据用户id和状态找出符合条件的订单数量
@@ -231,6 +235,15 @@ public class OrderServiceImpl implements OrderService {
 
         return orders;
     }
+
+    @Override
+    public void goToReturn(String oIdentifier) {
+        Order order = new Order();
+        order.setIdentifier(oIdentifier);
+        order.setStatus(OrderStatus.RETURN_ING);
+        orderDao.updateSelectionByIdentifier(order);
+    }
+
     private BigDecimal calculate(BigDecimal price, BigDecimal discount, Integer num) {
         BigDecimal totalPrice = BigDecimal.ZERO;
         if (discount == null) {

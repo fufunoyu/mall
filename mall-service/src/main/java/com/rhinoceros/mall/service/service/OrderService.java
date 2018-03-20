@@ -21,6 +21,14 @@ public interface OrderService {
      */
     List<Order> findByUserIdAndStatus(Long userId, OrderStatus status, PageQuery pageQuery);
 
+    /**
+     * 根据订单状态找出符合条件的分页订单
+     * @param status
+     * @param pageQuery
+     * @return
+     */
+    List<Order> findByStatus(OrderStatus status, PageQuery pageQuery);
+
 
     /**
      * 根据用户id和状态找出符合条件的订单数量
@@ -62,5 +70,11 @@ public interface OrderService {
      * @param oid
      */
     void cancelOrder(Long oid);
+
+    /**
+     * 后台确认允许退货
+     * @param oIdentifier
+     */
+    void goToReturn(String oIdentifier);
 
 }

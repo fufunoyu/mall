@@ -23,6 +23,14 @@
         ${page.queryString}
     </select>
 
+
+    <select id="findByStatus" resultType="Order">
+        SELECT *
+        FROM `order`
+        WHERE status = #{status}
+        ${page.queryString}
+    </select>
+
     <select id="countByUserIdAndStatus" resultType="Integer">
         SELECT count(*)
         FROM `order`
@@ -65,6 +73,9 @@
         WHERE id = #{id}
     </update>
 
+
+
+
     <select id="findById" resultType="Order" parameterType="Long">
         SELECT *
         FROM `order`
@@ -88,4 +99,36 @@
             )
         </foreach>
     </insert>
+
+    <update id="updateSelectionByIdentifier" parameterType="Order">
+        UPDATE `order`
+        <set>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="createAt!=null">
+                create_at = #{createAt},
+            </if>
+            <if test="payAt!=null">
+                pay_at = #{payAt},
+            </if>
+            <if test="deliverAt!=null">
+                deliver_at = #{deliverAt},
+            </if>
+            <if test="finishAt!=null">
+                finish_at = #{finishAt},
+            </if>
+            <if test="totalPrice!=null">
+                total_price = #{totalPrice},
+            </if>
+            <if test="expressNum!=null">
+                express_num = #{expressNum},
+            </if>
+            <if test="addressId!=null">
+                address_id = #{addressId},
+            </if>
+        </set>
+        WHERE identifier = #{identifier}
+    </update>
+
 </mapper>

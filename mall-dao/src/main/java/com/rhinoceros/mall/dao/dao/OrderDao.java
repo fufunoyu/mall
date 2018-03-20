@@ -26,6 +26,15 @@ public interface OrderDao {
      */
     List<Order> findByUserIdAndStatus(@Param("userId") Long userId, @Param("status") OrderStatus status, @Param("page")PageQuery pageQuery);
 
+
+    /**
+     * 根据订单状态查找所有符合要求的订单
+     * @param status
+     * @param pageQuery
+     * @return
+     */
+    List<Order> findByStatus(@Param("status") OrderStatus status, @Param("page")PageQuery pageQuery);
+
     /**
      * 根据userId和订单状态统计符合要求的订单数目
      * @param userId
@@ -54,5 +63,12 @@ public interface OrderDao {
      * @return
      */
     int addAll(@Param("orders") List<Order> orders);
+
+    /**
+     * 根据订单号更新订单信息
+     * @param order
+     * @return
+     */
+    int updateSelectionByIdentifier(Order order);
 
 }

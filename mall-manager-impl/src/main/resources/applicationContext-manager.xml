@@ -24,16 +24,16 @@
         <property name="keyPublic" value="#{alipayConfig['alipay.alipayPublicKey']}"/>
         <property name="keyPrivate" value="#{alipayConfig['alipay.appPrivateKey']}"/>
         <property name="signType" value="#{alipayConfig['alipay.signType']}"/>
-        <property name="seller" value="#{alipayConfig['alipay.seller']}"/>
-        <property name="inputCharset" value="#{alipayConfig['alipay.seller']}"/>
+        <property name="seller" value="#{alipayConfig['alipay.sellerId']}"/>
+        <property name="inputCharset" value="UTF-8"/>
         <property name="notifyUrl" value="#{alipayConfig['alipay.notifyUrl']}"/>
         <property name="returnUrl" value="#{alipayConfig['alipay.returnUrl']}"/>
+        <property name="test" value="true"/>
     </bean>
 
     <bean id="payService" class="com.egzosn.pay.ali.api.AliPayService">
         <constructor-arg name="payConfigStorage" ref="aliPayConfigStorage"/>
     </bean>
-
 
 
 </beans>
