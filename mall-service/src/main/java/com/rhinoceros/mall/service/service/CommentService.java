@@ -30,4 +30,11 @@ public interface CommentService {
      * @return
      */
     List<Comment> findByUserId(Long userId, PageQuery pageQuery);
+
+    /**
+     * 查找对应用户id的评论总数
+     * @param userId
+     * @return
+     */
+    int commentNumByUserId(Long userId);
 }

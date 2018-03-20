@@ -6,10 +6,11 @@
 
     <!--添加地址-->
     <insert id="add" parameterType="Address">
-        INSERT INTO `address` (postal_code, delivery_address, delivery_name, phone, user_id)
+        INSERT INTO `address` (postal_code,delivery_address,detail_address,delivery_name, phone, user_id)
             VALUE (
             #{postalCode},
             #{deliveryAddress},
+            #{detailAddress},
             #{deliveryName},
             #{phone},
             #{userId}
@@ -32,22 +33,19 @@
         UPDATE address
         <set>
             <if test="postalCode != null">
-                postal_code = #{postalCode}
+                postal_code = #{postalCode},
             </if>
-        </set>
-        <set>
             <if test="deliveryAddress != null">
-                delivery_address = #{deliveryAddress}
+                delivery_address = #{deliveryAddress},
             </if>
-        </set>
-        <set>
+            <if test="detailAddress != null">
+                delivery_address = #{deliveryAddress},
+            </if>
             <if test="deliveryName != null">
-                delivery_name = #{deliveryName}
+                delivery_name = #{deliveryName},
             </if>
-        </set>
-        <set>
             <if test="phone != null">
-                phone = #{phone}
+                phone = #{phone},
             </if>
         </set>
         WHERE id = #{id}

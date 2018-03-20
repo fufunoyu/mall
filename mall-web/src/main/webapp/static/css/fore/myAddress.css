@@ -6,10 +6,12 @@ ul, li{
     margin: 5px;
     float: left;
     width: 150px;
+    cursor: pointer;
+    border: 1px solid transparent;
 }
 
 .headImg:hover {
-    border: 1px solid #777;
+    border-color: #eee;
 }
 
 .headImg img {
@@ -25,13 +27,14 @@ ul, li{
 .left {
     float: left;
     width: 200px;
-    height: 300px;
+    height: 760px;
+    background-image: url("http://pic.58pic.com/58pic/13/49/66/44858PIC5uJ_1024.jpg");
     background-color: white;
 }
 .right {
-    background-color: white;
+    background-image: url("http://www.zdsee.com/bbs/attachment/Mon_0612/30_17712_67c269e2a6f9775.jpg");
     margin-left: 210px;
-    height: 300px;
+    height: 760px;
 }
 .right .info{
     margin: 30px 0 10px 0;
@@ -159,3 +162,14 @@ ul, li{
     transition: 0s
 }
 
+.imgBtn:hover {
+    opacity: 0.6;
+}
+
+.imgBtn:active{
+    transform: translateY(4px);
+}
+
+.ddd{
+    display:inline-block
+}

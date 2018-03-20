@@ -15,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
-import java.util.LinkedList;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -91,7 +93,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/updateAddress.json")
     public Integer updateAddress(Address address,HttpSession session){
-        Address newAddress = addressService.updateSelectionById(address);
+        addressService.updateSelectionById(address);
         return 1;
     }
 
@@ -124,19 +126,26 @@ public class UserController {
     @RequestMapping("/evaluation")
     public String showMyEvaluation(HttpSession session,Model model, @RequestParam(value = "page", required = false) Integer page){
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-
-        model.addAttribute("isComment", page != null);
         if (page == null) {
             page = 1;
         }
-        List<Comment> comments = commentService.findByUserId(user.getId(), new PageQuery(page, 10));
-        Integer commentNum = comments.size();
+        List<Comment> comments = commentService.findByUserId(user.getId(), new PageQuery(page, 5));
+        Integer commentNum = commentService.commentNumByUserId(user.getId());
         model.addAttribute("comments", comments);
         model.addAttribute("user",user);
         model.addAttribute("nowPage", page);
         model.addAttribute("commentNum",commentNum);
         return "include/user/myEvaluationPage";
     }
+
+    @RequestMapping("/uploadAvatar")
+    public String uploadAvatar(MultipartFile file) throws Exception{
+        String filename = file.getOriginalFilename();
+        file.transferTo(new File("D:/uploadAvatar/"+filename));
+        String avatar_url = "";
+        return "include/user/modifyInfoPage";
+    }
+
 
 
 }

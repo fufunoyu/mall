@@ -23,7 +23,8 @@
             var email = document.getElementById("emailid").value
             var telephone = document.getElementById("telephoneid").value
             var gender = $("input[name='sex']").filter(":checked").attr("value")
-            console.log(new Date(birthday))
+            var birth = new Date(birthday)
+            console.log(birth)
             console.log(realname)
             console.log(email)
             console.log(telephone)
@@ -40,6 +41,9 @@
                 alert("电话不能为空，请填写")
                 return false
             }
+/*            if(new Date(birthday) == null){
+                alert("请选择生日！")
+            }*/
             $.ajax({
                 url:'${pageContext.request.contextPath}/user/update.json',
                 method:'post',
@@ -49,11 +53,14 @@
                     nickname:nickname,
                     email:email,
                     telephone:telephone,
-                    birthday:new Date(birthday),
+                    birthday:birth,
                     gender:gender
                 },
                 success:function (data) {
                     console.log(data)
+                    if(data!=1){
+                        alert("修改失败")
+                    }
                     alert("修改成功")
                 }
             })
@@ -154,6 +161,10 @@
             <div class="modal-body">
                 <br/>
                 <br/>
+                <form id="avatar_form" action="${pageContext.request.contextPath}/user/uploadAvatar" enctype="multipart/form-data" method="post">
+                    上传图片：<input type="file" name="file" value="选择图片">
+                    <input type="submit" value="上传">
+                </form>
                 <div>
                     头像url：<input style="width: 600px" type="text" id="avatarUrl"><br/>
                 </div>
