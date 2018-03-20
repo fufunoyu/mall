@@ -153,6 +153,11 @@ public class OrderServiceImpl implements OrderService {
         productDao.updateSelectionById(product);
     }
 
+    @Override
+    public List<Order> findByStatus(OrderStatus status) {
+        return orderDao.findByStatus(status);
+    }
+
     /**
      * 添加订单
      * @param dtos

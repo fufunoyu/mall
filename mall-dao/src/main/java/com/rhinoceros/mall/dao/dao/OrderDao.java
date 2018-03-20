@@ -55,4 +55,11 @@ public interface OrderDao {
      */
     int addAll(@Param("orders") List<Order> orders);
 
+    /**
+     * 返回每种状态下的订单
+     * @param status
+     * @return
+     */
+    List<Order> findByStatus(OrderStatus status);
+
 }

@@ -14,7 +14,7 @@
 <%--轮播图信息列表--%>
 <table id = "slideshow_grid" class="easyui-datagrid" title="详细信息列表"
        data-options="singleSelect:false,collapsible:true,toolbar:toolbar">
-    <thead>
+    <tbody>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>
         <th data-options="field:'id',width:80">ID</th>
@@ -22,7 +22,7 @@
         <th data-options="field:'imageUrl',width:180,align:'right'">图片地址</th>
         <th data-options="field:'jumpUrl',width:180,align:'right'">跳转地址</th>
     </tr>
-    </thead>
+    </tbody>
 </table>
 <script>
     /**

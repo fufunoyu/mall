@@ -5,6 +5,7 @@ import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
+import jdk.net.SocketFlow;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -62,5 +63,12 @@ public interface OrderService {
      * @param oid
      */
     void cancelOrder(Long oid);
+
+    /**
+     * 返回统一状态的订单结果
+     * @param status
+     * @return
+     */
+    List<Order> findByStatus(OrderStatus status);
 
 }

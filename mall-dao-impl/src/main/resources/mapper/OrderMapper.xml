@@ -88,4 +88,10 @@
             )
         </foreach>
     </insert>
+
+    <select id="findByStatus" parameterType="com.rhinoceros.mall.core.enumeration.OrderStatus" resultType="Order">
+        SELECT *
+        FROM `order`
+        WHERE status = #{status}
+    </select>
 </mapper>
