@@ -2,6 +2,8 @@ package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.ProductsWithCountVo;
+import com.rhinoceros.mall.manager.manager.ProductManager;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,13 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/list")
-    public List<Product> productList(@PageDefault(required = false) PageQuery pageQuery, @RequestParam(value = "categoryId") Long categoryId) {
+    public ProductsWithCountVo productList(@PageDefault(required = false) PageQuery pageQuery, @RequestParam(value = "categoryId") Long categoryId) {
         List<Product> productList = productService.findDeepByCategoryId(categoryId, pageQuery);
-        return productList;
+        Long count= productService.countDeepByCategoryId(categoryId);
+        ProductsWithCountVo productsWithCountVo = new ProductsWithCountVo();
+        productsWithCountVo.setProducts(productList);
+        productsWithCountVo.setCount(count);
+        return productsWithCountVo;
     }
 
     /**
@@ -48,4 +54,41 @@ public class ProductController {
         return "include/product";
     }
 
+//    @RequestMapping("/edict")
+//    public Product updateSelectionProduct() {
+//        return ProductManager.updateSelectionById();
+//    }
+
+    /**
+     * 删除商品
+     *
+     * @param product
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public void delete(Product product) {
+       productService.deleteById(product.getId());
+    }
+
+    /**
+     * 修改商品
+     *
+     * @param product
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public void update(Product product) {
+        productService.updateSelectionById(product);
+    }
+
+    /**
+     * 增加商品
+     *
+     * @param product
+     */
+    @ResponseBody
+    @RequestMapping("/add")
+    public void add(Product product) {
+        productService.addSelectionById(product);
+    }
 }

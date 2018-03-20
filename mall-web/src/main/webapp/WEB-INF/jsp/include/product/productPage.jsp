@@ -3,6 +3,8 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <title>商品展示 ${p.name}</title>
+
+
 <div class="productPageDiv">
 
 	<%@include file="imgAndInfo.jsp" %>

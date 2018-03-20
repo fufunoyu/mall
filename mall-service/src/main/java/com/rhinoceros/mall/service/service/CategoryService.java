@@ -56,4 +56,11 @@ public interface CategoryService {
     void deleteById(Long id);
 
     Category updateSelection(Category category);
+
+    /**
+     * 根据菜单栏名字查询
+     * @param name
+     * @return
+     */
+    public Category findByCategoryName(String name);
 }

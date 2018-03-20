@@ -85,6 +85,7 @@
                 </ul>
             </li>
             <li>
+            <li>
                 <span>首页管理</span>
                 <ul>
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/slideshow'}">
