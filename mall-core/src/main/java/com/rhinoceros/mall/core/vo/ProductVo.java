@@ -32,8 +32,10 @@ public class ProductVo {
     public ProductVo(Product product) {
         this.product = product;
         //获取商品图片url数组
-        imagesUrls = product.getImageUrls().split(Product.IMAGE_SEPARATION);
-        firstImageUrl = imagesUrls[0];
+        if(product.getImageUrls()!=null){
+            imagesUrls = product.getImageUrls().split(Product.IMAGE_SEPARATION);
+            firstImageUrl = imagesUrls[0];
+        }
     }
 
 

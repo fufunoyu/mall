@@ -23,6 +23,13 @@ public interface ProductManager {
     List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery);
 
     /**
+     * 查询某个分类及其子分类下商品总数
+     * @param categoryId
+     * @return
+     */
+    Long countDeepByCategoryId(Long categoryId);
+
+    /**
      * 添加用户
      *
      * @param product
@@ -72,11 +79,5 @@ public interface ProductManager {
      */
     Long countQuery(String queryString);
 
-    /**
-     * 根据分类id查找该分类下及其子分类下的所有产品的总数
-     *
-     * @param categoryId
-     * @return
-     */
-    Long countDeepByCategoryId(Long categoryId);
+
 }

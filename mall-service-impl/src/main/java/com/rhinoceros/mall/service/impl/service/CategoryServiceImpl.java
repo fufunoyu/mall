@@ -2,6 +2,7 @@ package com.rhinoceros.mall.service.impl.service;
 
 import com.rhinoceros.mall.core.po.Category;
 import com.rhinoceros.mall.dao.dao.CategoryDao;
+import com.rhinoceros.mall.service.impl.exception.category.CategoryHasFoundException;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.service.CategoryService;
@@ -47,6 +48,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public Category add(Category category) {
+        //判断菜单栏名字是否重复
+        Category category1 = findByCategoryName(category.getName());
+        if (category1 != null) {
+            log.info("该分类栏已存在");
+            throw new CategoryHasFoundException("该分类栏已存在");
+        }
         //如果parentId为null，则表示添加根分类，否则添加到指定分类下，会对parentId是否存在进行校验
         if (category.getParentId() != null) {
             Category parent = categoryDao.findById(category.getParentId());
@@ -58,6 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDao.add(category);
         return category;
     }
+
 
     @Transactional
     @Override
@@ -101,4 +109,14 @@ public class CategoryServiceImpl implements CategoryService {
     public Category findById(Long id) {
         return categoryDao.findById(id);
     }
+
+    /**
+     * 查找菜单栏名字
+     * @param name
+     * @return
+     */
+    public Category findByCategoryName(String name) {
+        return categoryDao.findByCategoryName(name);
+    }
+
 }

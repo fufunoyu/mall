@@ -200,10 +200,12 @@ public class LoginController {
         if (br.hasErrors()) {
             model.addAttribute("msg", br.getFieldError().getDefaultMessage());
             return "resetPassword";
-        } else if (!(resetPasswordDto.getPassword().equals(resetPasswordDto.getRePassword()))) {
+        }
+        if (!(resetPasswordDto.getPassword().equals(resetPasswordDto.getRePassword()))) {
             model.addAttribute("msg", "两次密码不一致");
             return "resetPassword";
-        } else if (validateCode != null && !(validateCode.equals((resetPasswordDto.getCode())))) {
+        }
+        if (validateCode != null && !(validateCode.equals((resetPasswordDto.getCode())))) {
             model.addAttribute("msg", "验证码错误");
             return "resetPassword";
         } else {

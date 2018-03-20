@@ -44,6 +44,7 @@ public class ProductManagerImpl implements ProductManager {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    @Override
     public List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery) {
         //查找指定id的分类下的所有子分类
         List<Category> list = categoryDao.findChildrenById(categoryId);
@@ -60,7 +61,6 @@ public class ProductManagerImpl implements ProductManager {
         // 根据分类id查找产品列表
         return productDao.findByCategoryIdIn(ids, pageQuery);
     }
-
 
     @Override
     public int add(Product product) {
@@ -81,7 +81,7 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public int deleteById(Long id) {
         int modify = productDao.deleteById(id);
-        client.prepareDelete("mall", "product", id.toString());
+        client.prepareDelete("mall", "product", id.toString()).get();
         return modify;
     }
 
@@ -91,7 +91,8 @@ public class ProductManagerImpl implements ProductManager {
         try {
             byte[] bytes = mapper.writeValueAsBytes(product);
             client.prepareUpdate("mall", "product", product.getId().toString())
-                    .setDoc(bytes, XContentType.JSON);
+                    .setDoc(bytes, XContentType.JSON)
+                    .get();
             return modify;
         } catch (Exception e) {
             log.error("json转换失败");
