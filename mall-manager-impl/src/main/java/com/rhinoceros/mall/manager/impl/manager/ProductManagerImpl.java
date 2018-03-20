@@ -44,6 +44,7 @@ public class ProductManagerImpl implements ProductManager {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    @Override
     public List<Product> findDeepByCategoryId(Long categoryId, PageQuery pageQuery) {
         //查找指定id的分类下的所有子分类
         List<Category> list = categoryDao.findChildrenById(categoryId);

@@ -25,7 +25,7 @@ public class ElasticsearchConfig {
 
 
     @Bean
-    public TransportClient client() throws UnknownHostException {
+    public TransportClient transportClient() throws UnknownHostException {
         Settings settings = Settings.builder()
                 .put("cluster.name",clusterName)
                 .build();
