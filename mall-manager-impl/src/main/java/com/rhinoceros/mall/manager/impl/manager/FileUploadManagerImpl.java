@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 
+/**
+ * 文件上传接口实现
+ */
 @Component
 public class FileUploadManagerImpl implements FileUploadManager {
     @Value("#{qiniuConfig['qiniu.bucket']}")
@@ -27,13 +30,16 @@ public class FileUploadManagerImpl implements FileUploadManager {
 
     @Override
     public String upload(InputStream is, String filePath, String fileName) {
+        //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone2());
+        //通过该类上传文件
         UploadManager uploadManager = new UploadManager(cfg);
         Auth auth = Auth.create(accessKey, secretKey);
         String key = filePath.endsWith("/") ? filePath + fileName : filePath + "/" + fileName;
         String uploadToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(is, key, uploadToken, null, null);
+            //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
 
             return putRet.key;

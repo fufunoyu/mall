@@ -65,47 +65,48 @@
     function productAppend() {
         $("#product_insert_win").window("open")
     }
+
     function product_button_append_confirm() {
         <%--打开新增商品页面--%>
-            var selected = $("#productCategory1").combotree('tree').tree('getSelected')
-            var categoryId = null
-            if(selected != null){
-                categoryId = selected.id
-            }
+        var selected = $("#productCategory1").combotree('tree').tree('getSelected')
+        var categoryId = null
+        if (selected != null) {
+            categoryId = selected.id
+        }
         $.ajax({
-                url: '${pageContext.request.contextPath}/product/add',
-                method: 'post',
-                data: {
-                    name: $("#productName1").textbox('getText'),
-                    price: $("#productPrice1").textbox('getText'),
-                    discount: $("#productDiscount1").textbox("getText"),
-                    storeNum: $("#productStoreNum1").textbox("getText"),
-                    // productSaleNum:$("#productSaleNum").textbox("getText"),
-                    // productCommentNum:$("#productCommentNum").textbox("getText"),
-                    status: $("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
-                    // productSaleDate:$("#productSaleDate").textbox("getText"),
-                    categoryId:categoryId,
-                    description: $("#productDescription1").texteditor('getValue'),
-                    imageUrls:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3245716057,3112804808&fm=27&gp=0.jpg"
-                },
-                success: function () {
-                    $.messager.alert('提示', '插入成功!');
-                    $("#product_insert_win").window("close")
-                    var total = $('#dom_var_pagination').pagination('options').total
-                    var pageSize = $('#dom_var_pagination').pagination('options').pageSize
-                    var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
-                    if(categoryId!=null || categoryId != nodeId){
-                        $.ajax({
-                            url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
-                            method: 'get',
-                            success: function (data) {
-                                $('#product_table').datagrid('loadData', data.products)
-                                changePage(pageNumber, data.count)
-                            }
-                        })
-                    }
+            url: '${pageContext.request.contextPath}/product/add',
+            method: 'post',
+            data: {
+                name: $("#productName1").textbox('getText'),
+                price: $("#productPrice1").textbox('getText'),
+                discount: $("#productDiscount1").textbox("getText"),
+                storeNum: $("#productStoreNum1").textbox("getText"),
+                // productSaleNum:$("#productSaleNum").textbox("getText"),
+                // productCommentNum:$("#productCommentNum").textbox("getText"),
+                status: $("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
+                // productSaleDate:$("#productSaleDate").textbox("getText"),
+                categoryId: categoryId,
+                description: $("#productDescription1").texteditor('getValue'),
+                imageUrls: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3245716057,3112804808&fm=27&gp=0.jpg"
+            },
+            success: function () {
+                $.messager.alert('提示', '插入成功!');
+                $("#product_insert_win").window("close")
+                var total = $('#dom_var_pagination').pagination('options').total
+                var pageSize = $('#dom_var_pagination').pagination('options').pageSize
+                var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
+                if (categoryId != null || categoryId != nodeId) {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
+                        method: 'get',
+                        success: function (data) {
+                            $('#product_table').datagrid('loadData', data.products)
+                            changePage(pageNumber, data.count)
+                        }
+                    })
                 }
-            })
+            }
+        })
     }
 
     <%--删除商品--%>
@@ -167,7 +168,7 @@
         // alert(row.imageUrls)
         var selected = $("#productCategory").combotree('tree').tree('getSelected')
         var categoryId = null
-        if(selected != null){
+        if (selected != null) {
             categoryId = selected.id
         }
         $.ajax({
@@ -183,7 +184,7 @@
                 // productCommentNum:$("#productCommentNum").textbox("getText"),
                 status: $("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
                 // productSaleDate:$("#productSaleDate").textbox("getText"),
-                categoryId:categoryId,
+                categoryId: categoryId,
                 description: $("#productDescription").texteditor('getValue')
             },
             success: function () {
@@ -528,7 +529,8 @@
                data-options="label:'优惠价:',required:true">
     </div>
     <div style="margin-bottom:20px">
-        <select id="productStatus" class="easyui-combobox" name="state" label="商品状态:" labelPosition="left" style="width:100%;"
+        <select id="productStatus" class="easyui-combobox" name="state" label="商品状态:" labelPosition="left"
+                style="width:100%;"
                 panelHeight="50">
             <option value="ON_SHELF">上架</option>
             <option value=" LEAVE_SHELF">下架</option>
@@ -574,66 +576,67 @@
 <div id="product_insert_win" class="easyui-window" title="录入商品"
      data-options="iconCls:'icon-save',closed:true,modal:true"
      style="padding:10px;width: 500px;height: 100%">
-        <div style="margin-bottom:20px">
-            <input id="productName1" class="easyui-textbox" name="name" style="width:100%"
-                   data-options="label:'商品名称:',required:true">
-        </div>
-        <div id="image1" style="margin-bottom:20px">
+    <div style="margin-bottom:20px">
+        <input id="productName1" class="easyui-textbox" name="name" style="width:100%"
+               data-options="label:'商品名称:',required:true">
+    </div>
+    <div id="image1" style="margin-bottom:20px">
 
-        </div>
-        <div id="imageUpload1" style="margin-bottom:20px">
+    </div>
+    <div id="imageUpload1" style="margin-bottom:20px">
 
-            <input type="file" id="selectImage1">
-        </div>
+        <input type="file" id="selectImage1">
+    </div>
 
-        <div style="margin-bottom:20px">
-            <input id="productPrice1" class="easyui-textbox" name="price" style="width:100%"
-                   data-options="label:'商品价格:',required:true">
-        </div>
-        <div style="margin-bottom:20px">
-            <input id="productDiscount1" class="easyui-textbox" name="discount" style="width:100%"
-                   data-options="label:'优惠价:',required:true">
-        </div>
-        <div style="margin-bottom:20px">
-            <select id="productStatus1" class="easyui-combobox" name="state" label="商品状态:" labelPosition="left" style="width:100%;"
-                    panelHeight="50">
-                <option value="ON_SHELF">上架</option>
-                <option value=" LEAVE_SHELF">下架</option>
-            </select>
-        </div>
-        <%--<div style="margin-bottom:20px">--%>
-            <%--<input id="productSaleDate1" class="easyui-textbox" name="saleDate" style="width:100%"--%>
-                   <%--data-options="label:'上架日期:',required:true" readonly>--%>
-        <%--</div>--%>
-        <div style="margin-bottom:20px">
-            <select id="productCategory1" class="easyui-combotree" style="width:100%;"
-                    data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
+    <div style="margin-bottom:20px">
+        <input id="productPrice1" class="easyui-textbox" name="price" style="width:100%"
+               data-options="label:'商品价格:',required:true">
+    </div>
+    <div style="margin-bottom:20px">
+        <input id="productDiscount1" class="easyui-textbox" name="discount" style="width:100%"
+               data-options="label:'优惠价:',required:true">
+    </div>
+    <div style="margin-bottom:20px">
+        <select id="productStatus1" class="easyui-combobox" name="state" label="商品状态:" labelPosition="left"
+                style="width:100%;"
+                panelHeight="50">
+            <option value="ON_SHELF">上架</option>
+            <option value=" LEAVE_SHELF">下架</option>
+        </select>
+    </div>
+    <%--<div style="margin-bottom:20px">--%>
+    <%--<input id="productSaleDate1" class="easyui-textbox" name="saleDate" style="width:100%"--%>
+    <%--data-options="label:'上架日期:',required:true" readonly>--%>
+    <%--</div>--%>
+    <div style="margin-bottom:20px">
+        <select id="productCategory1" class="easyui-combotree" style="width:100%;"
+                data-options="url:'${pageContext.request.contextPath}/category/list.json',loadFilter: product_categoryFilter,
         onClick:function (node) {
              <%--alert(node.id +' '+node.parentId)--%>
         },required:true,label:'商品分类:'">
-            </select>
+        </select>
+    </div>
+    <div style="margin-bottom:20px">
+        <input id="productStoreNum1" class="easyui-textbox" name="storeNum" style="width:100%"
+               data-options="label:'商品库存总量:',required:true">
+    </div>
+    <%--<div style="margin-bottom:20px">--%>
+    <%--<input id="productSaleNum1" class="easyui-textbox" name="saleNum" style="width:100%"--%>
+    <%--data-options="label:'商品销售总量:',required:true" readonly>--%>
+    <%--</div>--%>
+    <%--<div style="margin-bottom:20px">--%>
+    <%--<input id="productCommentNum1" class="easyui-textbox" name="commentNum" style="width:100%"--%>
+    <%--data-options="label:'评论总数:',required:true" readonly>--%>
+    <%--</div>--%>
+    <div>
+        <span>商品详情:</span>
+        <div id="productDescription1" class="easyui-texteditor" style="height: 300px">
         </div>
-        <div style="margin-bottom:20px">
-            <input id="productStoreNum1" class="easyui-textbox" name="storeNum" style="width:100%"
-                   data-options="label:'商品库存总量:',required:true">
-        </div>
-        <%--<div style="margin-bottom:20px">--%>
-            <%--<input id="productSaleNum1" class="easyui-textbox" name="saleNum" style="width:100%"--%>
-                   <%--data-options="label:'商品销售总量:',required:true" readonly>--%>
-        <%--</div>--%>
-        <%--<div style="margin-bottom:20px">--%>
-            <%--<input id="productCommentNum1" class="easyui-textbox" name="commentNum" style="width:100%"--%>
-                   <%--data-options="label:'评论总数:',required:true" readonly>--%>
-        <%--</div>--%>
-        <div>
-            <span>商品详情:</span>
-            <div id="productDescription1" class="easyui-texteditor" style="height: 300px">
-            </div>
-        </div>
-        <div style="margin-bottom:20px">
-            <button onclick="product_button_append_confirm()">确认</button>
-            <button onclick="product_button_append_cancel()">取消</button>
-        </div>
+    </div>
+    <div style="margin-bottom:20px">
+        <button onclick="product_button_append_confirm()">确认</button>
+        <button onclick="product_button_append_cancel()">取消</button>
+    </div>
 </div>
 <%--商品分类栏新增窗口--%>
 <div id="category_dialog" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true"
