@@ -51,4 +51,12 @@
         FROM `category`
         WHERE id = #{id}
     </select>
+
+    <!--查寻新建分类栏是否已存在-->
+    <select id="findByCategoryName" resultType="Category" parameterType="String">
+        SELECT *
+        FROM `category`
+        WHERE name = #{name}
+    </select>
+
 </mapper>

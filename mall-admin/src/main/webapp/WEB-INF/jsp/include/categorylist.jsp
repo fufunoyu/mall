@@ -306,7 +306,6 @@
                     })
                 },
                 onClick:function(node){
-
                     var table = $('#home_choose_list')
                     if(node.id>0){
                         $.ajax({

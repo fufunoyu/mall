@@ -52,4 +52,6 @@ public interface CategoryDao {
      * @return
      */
     int updateSelectionById(Category category);
+
+    Category findByCategoryName(String name);
 }
