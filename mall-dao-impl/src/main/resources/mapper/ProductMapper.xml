@@ -67,7 +67,7 @@
             <if test="status!=null">
                 status = #{status},
             </if>
-            <if test="categoryId!=null">
+            <if test="category_id!=null">
                 category_id = #{categoryId},
             </if>
             <if test="storeNum!=null">

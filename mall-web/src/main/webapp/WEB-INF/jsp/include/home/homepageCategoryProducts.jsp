@@ -3,10 +3,10 @@
          pageEncoding="UTF-8" isELIgnored="false" %>
 
 <div class="homepageCategoryProducts">
-    <c:forEach items="${categoryWithProductList}" var="c" varStatus="stc">
+    <c:forEach items="${categoryWithProducts}" var="c" varStatus="stc">
         <div class="eachHomepageCategoryProducts">
             <div class="left-mark"></div>
-            <span class="categoryTitle">${c.category.name}</span>
+            <span class="categoryTitle">${c.name}</span>
             <br>
             <c:forEach items="${c.products}" var="p" varStatus="st">
                 <div class="productItem">
