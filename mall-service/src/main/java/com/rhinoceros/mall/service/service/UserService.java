@@ -63,9 +63,8 @@ public interface UserService {
     /**
      * 上传文件
      * @param is
-     * @param filePath
      * @param fileName
      * @return
      */
-    String upload(InputStream is, String filePath, String fileName);
+    String upload(InputStream is, String fileName);
 }

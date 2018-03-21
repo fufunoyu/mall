@@ -147,11 +147,17 @@
                         $("#home_category_tree").tree('getSelected').target.click()
                         if(data.length == ids.length){
                             $.messager.alert('提示','添加商品成功!',undefined,function() {
-//                                            $("#home_product_list").datagrid('loadData', [])
+
                             })
                         }
                         var itemList = $("#home_choose_list");
                         itemList.datagrid("clearSelections");
+                        var total = $('#dom_var_pagination').pagination('options').total
+                        var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
+                        $('#dom_var_pagination').pagination('refresh', {
+                            total: total - ids.length,
+                            pageNumber: pageNumber
+                        });
                     }
                 })
             }
@@ -167,6 +173,58 @@
         itemList.datagrid("clearSelections");
         $("#home_add_product").window('close');
     }
+
+    /**
+     * 分页设置每页显示条数和当前目录及其子目录共有多少件商品
+     * */
+    function changePage(page, total) {
+        $('#dom_var_pagination').pagination({
+            total: total,
+            pageNumber: page
+        });
+    }
+
+
+    <%--分页功能实现--%>
+    $('#dom_var_pagination').pagination({
+        onSelectPage: function (pageNumber, pageSize) {
+            $(this).pagination('loading');
+            // alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
+            $.ajax({
+                url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
+                method: 'get',
+                success: function (data) {
+                    $('#home_choose_list').datagrid('loadData', data.products)
+                    changePage(pageNumber, data.count)
+                }
+            })
+            $(this).pagination('loaded');
+        }
+    });
+
+    function setUnselectProduct() {
+        var rows = $('#home_choose_list').datagrid('getRows')
+        var ids = getProductId()
+        var i = 0
+        for(;i<rows.length;i++){
+            var j =0;
+            for(;j<ids.length;j++){
+                console.log(rows)
+                if(rows[i].id == ids[j]){
+                    var index = $('#home_choose_list').datagrid('getRowIndex',rows[i])
+                    var row = $(".datagrid-row[datagrid-row-index="+index+"]")
+                    row.css('opacity',0.6)
+                    row.css('cursor','not-allowed')
+                    row.click(function (e) {
+                        e.preventDefault()
+                        e.stopPropagation()
+                    })
+                }
+            }
+        }
+    }
+
+
 </script>
 <%--所有id以home开头--%>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
@@ -196,6 +254,7 @@
         <script>
 //            在商品列表中获取被选中的商品行index
             function getSelectionsIds(){
+
                 var itemList = $("#home_product_list");
                 var sels = itemList.datagrid("getSelections");
                 var ids = [];
@@ -308,26 +367,21 @@
                 onClick:function(node){
                     var table = $('#home_choose_list')
                     if(node.id>0){
+                    nodeId=node.id;
                         $.ajax({
-                            url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id,
+                            url:'${pageContext.request.contextPath}/product/list?categoryId='+node.id+'&page='+1+'&size='+10,
                             method:'get',
                             success:function(data){
-                                var ids = getProductId()
-                                var arr = []
-                                for(var i=0;i<data.length;i++){
-                                    var j =0;
-                                    for(;j<ids.length;j++){
-                                        if(data[i].id == ids[j]){
-                                            break;
-                                        }
-                                    }
-                                    if(j>=ids.length){
-                                        arr.push(data[i])
-                                    }
-                                }
-                                table.datagrid('loadData',arr)
+                                console.log(data)
+                                $('#dom_var_pagination').pagination({
+                                    pageList: [10,20,30,40,50]
+                                });
+                                changePage(1,data.count)
+                                table.datagrid('loadData',data.products)
+                                setUnselectProduct()
                             }
                          })
+
                     }
                 }
             }">
@@ -352,9 +406,10 @@
                 </tr>
                 </thead>
             </table>
-
+                <!-- 分页栏 -->
+            <div id="dom_var_pagination" class="easyui-pagination">
+            </div>
         </div>
-
     </div>
 </div>
 </body>

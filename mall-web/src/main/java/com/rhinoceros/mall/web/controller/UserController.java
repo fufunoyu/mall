@@ -160,19 +160,6 @@ public class UserController {
         return file;
     }*/
 
-    /**
-     * 生成六位数的随机数
-     * @return
-     */
-    public String random(){
-        Random random = new Random();
-        String result="";
-        for (int i=0;i<6;i++)
-        {
-            result+=random.nextInt(10);
-        }
-        return result;
-    }
 
     @RequestMapping("/uploadAvatar")
     public String uploadAvatar(HttpSession session,@RequestPart("file") MultipartFile multipartFile)
@@ -181,22 +168,18 @@ public class UserController {
         Long userId = currentUser.getId();
         User newUser = new User();
         newUser.setId(userId);
+        //获取文件名和输入流
         String fileName = multipartFile.getOriginalFilename();
         InputStream is =multipartFile.getInputStream();
-        String basePath = "user";
-        //随机生成文件名
-        String randomName = random();
         if(fileName!=""){
-            //截取文件格式名
-            String suffix = fileName.substring(fileName.indexOf("."));
-            //重新拼装文件名称
-            String saveName = randomName + suffix;
-            String savePath = basePath + "/" + saveName;
-            System.out.println(saveName);
-            System.out.println(savePath);
-            String a_url = userService.upload(is,savePath,saveName);
+            //获取图片url
+            String a_url = userService.upload(is,fileName);
+            //更新数据库中用户头像
             newUser.setAvatar(a_url);
             userService.updateSelectionById(newUser);
+            //获取用户数据更新session
+            newUser = userService.findById(userId);
+            session.setAttribute(ConstantValue.CURRENT_USER,newUser);
         }
         return "include/user/modifyInfoPage";
     }

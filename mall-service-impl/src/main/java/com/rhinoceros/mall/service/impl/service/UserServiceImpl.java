@@ -15,6 +15,7 @@ import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -215,11 +218,16 @@ public class UserServiceImpl implements UserService {
     /**
      * 上传文件
      * @param is
-     * @param filePath
      * @param fileName
      * @return
      */
-    public String upload(InputStream is, String filePath, String fileName){
-        return fileUploadManager.upload(is,filePath,fileName);
+    public String upload(InputStream is, String fileName){
+        Date date = new Date();
+/*        long times = date.getTime();//时间戳*/
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd/");
+        String dateString = formatter.format(date);
+        String savePath = "user/avatar/"+dateString;//保存路径
+        String saveName = UUID.randomUUID().toString()+ "_" + fileName;//重组文件名称
+        return fileUploadManager.upload(is,savePath,saveName);
     }
 }

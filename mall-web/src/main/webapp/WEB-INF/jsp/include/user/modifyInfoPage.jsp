@@ -163,7 +163,7 @@
                 <br/>
                 <form id="avatar_form" action="${pageContext.request.contextPath}/user/uploadAvatar" enctype="multipart/form-data" method="post">
                     上传图片：<input type="file" name="file" value="选择图片">
-                    <input type="submit" value="上传">
+                    <input type="submit" onclick="uploadSubmit()" value="上传">
                 </form>
                 <div>
                     头像url：<input style="width: 600px" type="text" id="avatarUrl"><br/>
@@ -260,6 +260,10 @@
         function avatar_cancle() {
             document.getElementById("avatarUrl").value = ""
             avatarModal.style.display = "none";
+        }
+
+        function uploadSubmit() {
+
         }
 
 
