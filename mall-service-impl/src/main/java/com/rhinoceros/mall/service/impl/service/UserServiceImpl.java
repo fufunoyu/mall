@@ -10,6 +10,7 @@ import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.utils.SecurityUtils;
 import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.manager.manager.FileUploadManager;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.impl.exception.user.*;
@@ -22,6 +23,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
 import java.util.Date;
 
 @Service
@@ -35,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private FileUploadManager fileUploadManager;
 
     /**
      * 用户注册，注册失败抛出{@link UserException}
@@ -206,5 +210,16 @@ public class UserServiceImpl implements UserService {
         }
         userDao.updateSelectionById(user);
         return userDao.findById(userId);
+    }
+
+    /**
+     * 上传文件
+     * @param is
+     * @param filePath
+     * @param fileName
+     * @return
+     */
+    public String upload(InputStream is, String filePath, String fileName){
+        return fileUploadManager.upload(is,filePath,fileName);
     }
 }

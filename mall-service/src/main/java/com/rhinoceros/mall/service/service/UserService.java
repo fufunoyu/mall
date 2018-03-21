@@ -6,6 +6,7 @@ import com.rhinoceros.mall.core.dto.ResetPasswordDto;
 import com.rhinoceros.mall.core.dto.RetrievePasswordDto;
 import com.rhinoceros.mall.core.po.User;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -58,4 +59,13 @@ public interface UserService {
      * @return
      */
     User updateSelectionById(User user);
+
+    /**
+     * 上传文件
+     * @param is
+     * @param filePath
+     * @param fileName
+     * @return
+     */
+    String upload(InputStream is, String filePath, String fileName);
 }
