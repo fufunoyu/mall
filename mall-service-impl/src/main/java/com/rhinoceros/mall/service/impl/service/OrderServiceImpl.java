@@ -153,9 +153,37 @@ public class OrderServiceImpl implements OrderService {
         productDao.updateSelectionById(product);
     }
 
+    /**
+     * 根据订单状态查找所有订单
+     * @param status
+     * @return
+     */
     @Override
-    public List<Order> findByStatus(OrderStatus status) {
-        return orderDao.findByStatus(status);
+    public List<Order> findByStatus(OrderStatus status, PageQuery pageQuery) {
+        return orderDao.findByStatus(status,pageQuery);
+    }
+
+    /**
+     * 根据订单号删除订单
+     * @param identifier
+     */
+    @Override
+    public void deleteByIdentifier(String identifier) {
+        if(identifier==null){
+            log.info("订单不能为空");
+            throw new ParameterIsNullException("订单不能为空");
+        }
+        orderDao.deleteByIdentifier(identifier);
+    }
+
+    /**
+     *  获取指定条件查询出的数据总数
+     * @param status
+     * @return
+     */
+    @Override
+    public Long countByStatus(OrderStatus status) {
+        return orderDao.countBystatus(status);
     }
 
     /**

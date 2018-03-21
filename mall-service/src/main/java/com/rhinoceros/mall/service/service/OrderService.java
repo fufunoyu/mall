@@ -69,6 +69,18 @@ public interface OrderService {
      * @param status
      * @return
      */
-    List<Order> findByStatus(OrderStatus status);
+    List<Order> findByStatus(OrderStatus status, PageQuery pageQuery);
 
+    /**
+     * 根据订单号删除订单
+     * @param identifier
+     */
+    void deleteByIdentifier(String identifier);
+    /**
+     * 获取指定条件查询出的数据总数
+     *
+     * @param status
+     * @return
+     */
+    Long countByStatus(OrderStatus status);
 }

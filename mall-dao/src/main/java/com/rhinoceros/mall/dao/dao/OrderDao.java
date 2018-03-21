@@ -60,6 +60,18 @@ public interface OrderDao {
      * @param status
      * @return
      */
-    List<Order> findByStatus(OrderStatus status);
+    List<Order> findByStatus(@Param("status") OrderStatus status, @Param("page") PageQuery pageQuery);
 
+    /**
+     * 根据订单id删除订单
+     * @param identifier
+     */
+    void deleteByIdentifier(String identifier);
+
+    /**
+     * 统计某个订单状态下的订单数量
+     * @param status
+     * @return
+     */
+    Long countBystatus(OrderStatus status);
 }

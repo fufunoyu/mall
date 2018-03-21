@@ -70,7 +70,7 @@
         FROM `order`
         WHERE id = #{id}
     </select>
-
+    <!--添加所有订单-->
     <insert id="addAll" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `order`
         (status,identifier,create_at,total_price,address_id,user_id,product_id,product_num)
@@ -88,10 +88,21 @@
             )
         </foreach>
     </insert>
-
-    <select id="findByStatus" parameterType="com.rhinoceros.mall.core.enumeration.OrderStatus" resultType="Order">
+    <!--根据订单状态返回订单信息-->
+    <select id="findByStatus"  resultType="Order">
         SELECT *
         FROM `order`
+        WHERE status = #{status}
+         ${page.queryString}
+    </select>
+    <!--根据订单号删除订单-->
+    <delete id="deleteByIdentifier" parameterType="String">
+        DELETE FROM `order`
+        WHERE identifier = #{identifier}
+    </delete>
+    <!--统计某个订单状态下的订单数量-->
+    <select id="countBystatus" resultType="Long">
+        SELECT count(*) FROM `order`
         WHERE status = #{status}
     </select>
 </mapper>
