@@ -131,4 +131,10 @@
         WHERE identifier = #{identifier}
     </update>
 
+    <select id="countOrderByStatus"  resultType="Long">
+        SELECT count(*)
+        FROM `order`
+        WHERE status = #{status}
+    </select>
+
 </mapper>

@@ -77,4 +77,10 @@ public interface OrderService {
      */
     void goToReturn(String oIdentifier);
 
+    /**
+     * 查找某状态下的订单的总数
+     * @param orderStatus
+     * @return
+     */
+    Long countOrderByStatus(OrderStatus orderStatus);
 }

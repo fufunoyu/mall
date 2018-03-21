@@ -244,6 +244,11 @@ public class OrderServiceImpl implements OrderService {
         orderDao.updateSelectionByIdentifier(order);
     }
 
+    @Override
+    public Long countOrderByStatus(OrderStatus orderStatus) {
+        return orderDao.countOrderByStatus(orderStatus);
+    }
+
     private BigDecimal calculate(BigDecimal price, BigDecimal discount, Integer num) {
         BigDecimal totalPrice = BigDecimal.ZERO;
         if (discount == null) {

@@ -7,6 +7,7 @@ import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.AdminOrderListWithCountVo;
 import com.rhinoceros.mall.core.vo.AdminOrderVo;
 import com.rhinoceros.mall.core.vo.OrderVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
@@ -54,9 +55,14 @@ public class OrderController {
      */
     @ResponseBody
     @RequestMapping("/waitReturnList.json")
-    public List<AdminOrderVo> getSlideshowList(@PageDefault(required = false) PageQuery pageQuery) {
+    public AdminOrderListWithCountVo getSlideshowList(@PageDefault(required = false) PageQuery pageQuery) {
         List<Order> orders = orderService.findByStatus(OrderStatus.WAIT_RETURN, pageQuery);
-        return getAdminOrderList(orders, true, true, false);
+        List<AdminOrderVo> adminOrderVoList = getAdminOrderList(orders, true, true, false);
+        Long count = orderService.countOrderByStatus(OrderStatus.WAIT_RETURN);
+        AdminOrderListWithCountVo adminOrderListWithCountVo = new AdminOrderListWithCountVo();
+        adminOrderListWithCountVo.setAdminOrderVoList(adminOrderVoList);
+        adminOrderListWithCountVo.setCount(count);
+        return adminOrderListWithCountVo;
     }
 
 

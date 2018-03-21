@@ -92,7 +92,6 @@
             success: function () {
                 $.messager.alert('提示', '插入成功!');
                 $("#product_insert_win").window("close")
-                var total = $('#dom_var_pagination').pagination('options').total
                 var pageSize = $('#dom_var_pagination').pagination('options').pageSize
                 var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
                 if (categoryId != null || categoryId != nodeId) {

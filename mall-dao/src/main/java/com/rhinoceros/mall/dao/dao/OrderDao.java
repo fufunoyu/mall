@@ -71,4 +71,10 @@ public interface OrderDao {
      */
     int updateSelectionByIdentifier(Order order);
 
+    /**
+     * 查找某状态下的订单的总数
+     * @param orderStatus
+     * @return
+     */
+    Long countOrderByStatus(@Param("status") OrderStatus orderStatus);
 }
