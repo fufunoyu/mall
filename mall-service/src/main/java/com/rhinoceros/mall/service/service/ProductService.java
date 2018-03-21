@@ -53,9 +53,21 @@ public interface ProductService {
      */
     Long countDeepByCategoryId(Long categoryId);
 
+    /**
+     * 根据id删除商品
+     * @param id
+     */
     void deleteById(Long id);
 
+    /**
+     * 根据id修改商品
+     * @param product
+     */
     void updateSelectionById(Product product);
 
+    /**
+     * 根据id新增商品
+     * @param product
+     */
     void addSelectionById(Product product);
 }

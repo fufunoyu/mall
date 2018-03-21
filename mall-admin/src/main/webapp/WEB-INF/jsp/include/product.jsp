@@ -73,6 +73,16 @@
         if (selected != null) {
             categoryId = selected.id
         }
+        // data.append("name",$("#productName1").textbox('getText'))
+        // data.append("price",$("#productPrice1").textbox('getText'))
+        // data.append("discount",$("#productDiscount1").textbox("getText"))
+        // data.append("storeNum",$("#productStoreNum1").textbox("getText"))
+        // data.append("status",$("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
+        // data.append("categoryId",categoryId)
+        // data.append("description",$("#productDescription1").texteditor('getValue'))
+        // // data.append("saleNum",0)
+        // // data.append("commentNum",0)
+        // // data.append("saleDate",new Date())
         $.ajax({
             url: '${pageContext.request.contextPath}/product/add',
             method: 'post',
@@ -158,11 +168,32 @@
      * 商品信息修改
      * */
     function product_button_edit_confirm() {
+        var selected = $("#productCategory").combotree('tree').tree('getSelected')
+        var categoryId = null
+        if (selected != null) {
+            categoryId = selected.id
+        }
         var t = $('#product_table');
         var status1;
         var row = t.datagrid('getSelected');
         var url = "";
         var photos = $(".photo");
+
+        var files = $('#selectImage')[0].files
+
+        var data = new FormData()
+
+        for(var i=0;i<files.length;i++){
+            data.append("files",files[i])
+        }
+        data.append("id",row.id)
+        data.append("name",$("#productName").textbox('getText'))
+        data.append("price",$("#productPrice").textbox('getText'))
+        data.append("discount",$("#productDiscount").textbox("getText"))
+        data.append("storeNum",$("#productStoreNum").textbox("getText"))
+        data.append("status",$("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
+        data.append("categoryId",categoryId)
+        data.append("description",$("#productDescription").texteditor('getValue'))
         photos.each(function (index) {
             url += $(this).attr('src');
             if (index != photos.length - 1) {
@@ -171,27 +202,26 @@
         });
         // alert(url)
         // alert(row.imageUrls)
-        var selected = $("#productCategory").combotree('tree').tree('getSelected')
-        var categoryId = null
-        if (selected != null) {
-            categoryId = selected.id
-        }
         $.ajax({
             url: '${pageContext.request.contextPath}/product/update',
+            processData: false,
+            contentType: false,
             method: 'post',
-            data: {
-                id: row.id,
-                name: $("#productName").textbox('getText'),
-                price: $("#productPrice").textbox('getText'),
-                discount: $("#productDiscount").textbox("getText"),
-                storeNum: $("#productStoreNum").textbox("getText"),
-                // productSaleNum:$("#productSaleNum").textbox("getText"),
-                // productCommentNum:$("#productCommentNum").textbox("getText"),
-                status: $("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
-                // productSaleDate:$("#productSaleDate").textbox("getText"),
-                categoryId: categoryId,
-                description: $("#productDescription").texteditor('getValue')
-            },
+            // data: {
+            //     id: row.id,
+            //     name: $("#productName").textbox('getText'),
+            //     price: $("#productPrice").textbox('getText'),
+            //     discount: $("#productDiscount").textbox("getText"),
+            //     storeNum: $("#productStoreNum").textbox("getText"),
+            //     // productSaleNum:$("#productSaleNum").textbox("getText"),
+            //     // productCommentNum:$("#productCommentNum").textbox("getText"),
+            //     status: $("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
+            //     // productSaleDate:$("#productSaleDate").textbox("getText"),
+            //     categoryId: categoryId,
+            //     // imagerUrls: document.getElementById("imageUpload"),
+            //     description: $("#productDescription").texteditor('getValue')
+            // },
+            data:data,
             success: function () {
                 $.messager.alert('提示', '修改成功!');
                 $("#product_win").window("close")
@@ -521,13 +551,12 @@
     </div>
     <div>
         <span>商品图片:</span>
-        <div id="image" style="margin-bottom:20px">
+        <div id="image" type="file" style="margin-bottom:20px">
 
         </div>
     </div>
     <div id="imageUpload" style="margin-bottom:20px">
-
-        <input type="file" id="selectImage">
+        <input type="file" multiple name="files" id="selectImage">
     </div>
 
     <div style="margin-bottom:20px">

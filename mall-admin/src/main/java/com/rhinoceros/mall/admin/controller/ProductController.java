@@ -3,15 +3,17 @@ package com.rhinoceros.mall.admin.controller;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.ProductsWithCountVo;
-import com.rhinoceros.mall.manager.manager.ProductManager;
 import com.rhinoceros.mall.service.service.ProductService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -77,7 +79,7 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    public void update(Product product) {
+    public void update(@RequestPart("files")MultipartFile [] multipartFiles, Product product) {
         productService.updateSelectionById(product);
     }
 
@@ -88,7 +90,7 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/add")
-    public void add(Product product) {
+    public void add(@RequestPart("files")MultipartFile [] multipartFiles,Product product) {
         productService.addSelectionById(product);
     }
 }
