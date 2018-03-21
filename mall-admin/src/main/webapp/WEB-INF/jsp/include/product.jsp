@@ -109,6 +109,11 @@
         })
     }
 
+    //取消商品新增
+    function product_button_append_cancel() {
+        $("#product_insert_win").window("close")
+    }
+
     <%--删除商品--%>
 
     function productRemove() {
@@ -205,6 +210,11 @@
 
             }
         })
+    }
+
+    //取消商品修改
+    function product_button_edit_cancel() {
+        $("#product_win").window("close")
     }
 
     <%--function product_button_edit_confirm() {--%>
