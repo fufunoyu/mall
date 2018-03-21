@@ -73,24 +73,14 @@
         if (selected != null) {
             categoryId = selected.id
         }
-        // data.append("name",$("#productName1").textbox('getText'))
-        // data.append("price",$("#productPrice1").textbox('getText'))
-        // data.append("discount",$("#productDiscount1").textbox("getText"))
-        // data.append("storeNum",$("#productStoreNum1").textbox("getText"))
-        // data.append("status",$("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        // data.append("categoryId",categoryId)
-        // data.append("description",$("#productDescription1").texteditor('getValue'))
-        // // data.append("saleNum",0)
-        // // data.append("commentNum",0)
-        // // data.append("saleDate",new Date())
         $.ajax({
             url: '${pageContext.request.contextPath}/product/add',
             method: 'post',
             data: {
                 name: $("#productName1").textbox('getText'),
-                price: $("#productPrice1").textbox('getText'),
-                discount: $("#productDiscount1").textbox("getText"),
-                storeNum: $("#productStoreNum1").textbox("getText"),
+                price: $("#productPrice1").numberspinner('getValue'),
+                discount: $("#productDiscount1").numberspinner("getValue"),
+                storeNum: $("#productStoreNum1").numberspinner("getValue"),
                 // productSaleNum:$("#productSaleNum").textbox("getText"),
                 // productCommentNum:$("#productCommentNum").textbox("getText"),
                 status: $("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
@@ -172,9 +162,10 @@
         var categoryId = null
         if (selected != null) {
             categoryId = selected.id
+            data.append("categoryId",categoryId)
+
         }
         var t = $('#product_table');
-        var status1;
         var row = t.datagrid('getSelected');
         var url = "";
         var photos = $(".photo");
@@ -188,11 +179,10 @@
         }
         data.append("id",row.id)
         data.append("name",$("#productName").textbox('getText'))
-        data.append("price",$("#productPrice").textbox('getText'))
-        data.append("discount",$("#productDiscount").textbox("getText"))
-        data.append("storeNum",$("#productStoreNum").textbox("getText"))
+        data.append("price",$("#productPrice").numberspinner("getValue"))
+        data.append("discount",$("#productDiscount").numberspinner("getValue"))
+        data.append("storeNum",$("#productStoreNum").numberspinner("getValue"))
         data.append("status",$("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        data.append("categoryId",categoryId)
         data.append("description",$("#productDescription").texteditor('getValue'))
         photos.each(function (index) {
             url += $(this).attr('src');
@@ -207,20 +197,6 @@
             processData: false,
             contentType: false,
             method: 'post',
-            // data: {
-            //     id: row.id,
-            //     name: $("#productName").textbox('getText'),
-            //     price: $("#productPrice").textbox('getText'),
-            //     discount: $("#productDiscount").textbox("getText"),
-            //     storeNum: $("#productStoreNum").textbox("getText"),
-            //     // productSaleNum:$("#productSaleNum").textbox("getText"),
-            //     // productCommentNum:$("#productCommentNum").textbox("getText"),
-            //     status: $("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
-            //     // productSaleDate:$("#productSaleDate").textbox("getText"),
-            //     categoryId: categoryId,
-            //     // imagerUrls: document.getElementById("imageUpload"),
-            //     description: $("#productDescription").texteditor('getValue')
-            // },
             data:data,
             success: function () {
                 $.messager.alert('提示', '修改成功!');
@@ -236,8 +212,6 @@
                         changePage(pageNumber, data.count)
                     }
                 })
-
-
             }
         })
     }
@@ -441,9 +415,9 @@
 
         $("#productDescription").texteditor('setValue', row.description)
         $("#productName").textbox('setText', row.name)
-        $("#productPrice").textbox('setText', row.price)
-        $("#productDiscount").textbox('setText', row.discount)
-        $("#productStoreNum").textbox('setText', row.storeNum)
+        $("#productPrice").numberspinner("setValue", row.price)
+        $("#productDiscount").numberspinner("setValue",  row.discount)
+        $("#productStoreNum").numberspinner("setValue",  row.storeNum)
         $("#productSaleNum").textbox('setText', row.saleNum)
         $("#productCommentNum").textbox('setText', row.commentNum)
         var status
@@ -459,15 +433,6 @@
         for (var i = 0; i < images.length; i++) {
             var url = images[i]
             var photo = $('<img class="photo" src="' + url + '"/>')
-            photo.bind('contextmenu', url,
-                function (e) {
-                    e.preventDefault();
-                    $('#product_image_menu').menu('show', {
-                        left: e.pageX,
-                        top: e.pageY,
-                    });
-                    $("#tmpRightClickImgUrl").val(e.data)
-                })
             $("#image").append(photo)
         }
         // var upload = $('<input class="easyui-filebox" label="File1:" labelPosition="top" data-options="prompt:\'Choose a file...\'" style="width:100%">')
@@ -480,8 +445,6 @@
      * 初始菜单栏
      * */
     $(function () {
-
-
         setTimeout(function () {
             $("#category_list").tree('loadData', [{
                 id: null,
@@ -492,23 +455,24 @@
          * 上传图片
          * @type {string}
          */
-        var photoImgUrl = '';
         //file change event
-        $('input[type="file"]').change(function (e) {
+        $('#selectImage').change(function (e) {
             // $('#img').attr('src',$("#tmpfile").val());
-            var file = this.files[0];
+            var files = this.files;
             if (window.FileReader) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                //监听文件读取结束后事件
-                reader.onloadend = function (e) {
-                    // $("#img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
-                    var url = e.target.result;
-                    var photo = $('<img class="photo" src="' + url + '"/>')
-                    $("#image").append(photo)
-                    // photoImgUrl+=
-                };
-                $('#selectImage').empty();
+                $("#image").empty()
+                for(var i=0;i<files.length;i++){
+                    var reader = new FileReader();
+                    reader.readAsDataURL(files[i]);
+                    //监听文件读取结束后事件
+                    reader.onloadend = function (e) {
+                        // $("#img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+                        var url = e.target.result;
+                        var photo = $('<img class="photo" src="' + url + '"/>')
+                        $("#image").append(photo)
+                        // photoImgUrl+=
+                    };
+                }
             }
         })
 
@@ -551,20 +515,18 @@
     </div>
     <div>
         <span>商品图片:</span>
-        <div id="image" type="file" style="margin-bottom:20px">
-
-        </div>
+        <div id="image" type="file" style="margin-bottom:20px"></div>
     </div>
     <div id="imageUpload" style="margin-bottom:20px">
         <input type="file" multiple name="files" id="selectImage">
     </div>
 
     <div style="margin-bottom:20px">
-        <input id="productPrice" class="easyui-textbox" name="price" style="width:100%"
+        <input id="productPrice" class="easyui-numberspinner" name="price" style="width:100%"
                data-options="label:'商品价格:',required:true">
     </div>
     <div style="margin-bottom:20px">
-        <input id="productDiscount" class="easyui-textbox" name="discount" style="width:100%"
+        <input id="productDiscount" class="easyui-numberspinner" name="discount" style="width:100%"
                data-options="label:'优惠价:',required:true">
     </div>
     <div style="margin-bottom:20px">
@@ -590,7 +552,7 @@
         </select>
     </div>
     <div style="margin-bottom:20px">
-        <input id="productStoreNum" class="easyui-textbox" name="storeNum" style="width:100%"
+        <input id="productStoreNum" class="easyui-numberspinner" name="storeNum" style="width:100%"
                data-options="label:'商品库存总量:',required:true">
     </div>
     <div style="margin-bottom:20px">
@@ -628,11 +590,11 @@
     </div>
 
     <div style="margin-bottom:20px">
-        <input id="productPrice1" class="easyui-textbox" name="price" style="width:100%"
+        <input id="productPrice1" class="easyui-numberspinner" name="price" style="width:100%"
                data-options="label:'商品价格:',required:true">
     </div>
     <div style="margin-bottom:20px">
-        <input id="productDiscount1" class="easyui-textbox" name="discount" style="width:100%"
+        <input id="productDiscount1" class="easyui-numberspinner" name="discount" style="width:100%"
                data-options="label:'优惠价:',required:true">
     </div>
     <div style="margin-bottom:20px">
@@ -656,7 +618,7 @@
         </select>
     </div>
     <div style="margin-bottom:20px">
-        <input id="productStoreNum1" class="easyui-textbox" name="storeNum" style="width:100%"
+        <input id="productStoreNum1" class="easyui-numberspinner" name="storeNum" style="width:100%"
                data-options="label:'商品库存总量:',required:true">
     </div>
     <%--<div style="margin-bottom:20px">--%>
@@ -704,10 +666,7 @@
     <a href="javascript:void(0)" class="icon-add" onclick="productAppend()"></a>
     <a href="javascript:void(0)" class="icon-remove" onclick="productRemove()" style="margin-right: 10px"></a>
 </div>
-<%--图片删除--%>
-<div id="product_image_menu" class="easyui-menu" style="width:120px;">
-    <div onclick="removeProductImg()" data-options="iconCls:'icon-remove'">删除</div>
-</div>
+
 <%--工具栏--%>
 <div id="product_category_tool2" class="easyui-menu" style="width:120px;">
     <div onclick="append()" data-options="iconCls:'icon-add'">添加</div>

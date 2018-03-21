@@ -4,6 +4,7 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.InputStreamWithFileName;
 
 import java.util.List;
 
@@ -62,8 +63,9 @@ public interface ProductService {
     /**
      * 根据id修改商品
      * @param product
+     * @param inputStreamWithFileName
      */
-    void updateSelectionById(Product product);
+    void updateSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
 
     /**
      * 根据id新增商品

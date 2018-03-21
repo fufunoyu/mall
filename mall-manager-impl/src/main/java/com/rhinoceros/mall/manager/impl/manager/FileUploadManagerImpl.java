@@ -15,18 +15,19 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 
+
 /**
  * 文件上传接口实现
  */
 @Component
 public class FileUploadManagerImpl implements FileUploadManager {
+    private static final String BASE_URL = "http://p5u6o7frf.bkt.clouddn.com";
     @Value("#{qiniuConfig['qiniu.bucket']}")
     private String bucket;
     @Value("#{qiniuConfig['qiniu.secretKey']}")
     private String secretKey;
     @Value("#{qiniuConfig['qiniu.accessKey']}")
     private String accessKey;
-
 
     @Override
     public String upload(InputStream is, String filePath, String fileName) {
@@ -42,7 +43,7 @@ public class FileUploadManagerImpl implements FileUploadManager {
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
 
-            return putRet.key;
+            return BASE_URL + "/" + putRet.key;
         } catch (QiniuException e) {
             e.printStackTrace();
             throw new FileUplodException("文件上传失败");

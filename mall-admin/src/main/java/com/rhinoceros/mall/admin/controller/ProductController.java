@@ -2,8 +2,10 @@ package com.rhinoceros.mall.admin.controller;
 
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.InputStreamWithFileName;
 import com.rhinoceros.mall.core.vo.ProductsWithCountVo;
 import com.rhinoceros.mall.service.service.ProductService;
+import com.rhinoceros.mall.service.service.UserService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -79,8 +83,17 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    public void update(@RequestPart("files")MultipartFile [] multipartFiles, Product product) {
-        productService.updateSelectionById(product);
+    public void update(@RequestPart("files")MultipartFile [] multipartFiles, Product product) throws IOException {
+        List<InputStreamWithFileName> list = new LinkedList<>();
+        for(MultipartFile file:multipartFiles){
+            InputStreamWithFileName inputStreamWithFileName=new InputStreamWithFileName();
+            String fileName=file.getOriginalFilename();
+            InputStream is=file.getInputStream();
+            inputStreamWithFileName.setFileName(fileName);
+            inputStreamWithFileName.setIs(is);
+            list.add(inputStreamWithFileName);
+        }
+        productService.updateSelectionById(product,list);
     }
 
     /**
@@ -90,7 +103,7 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/add")
-    public void add(@RequestPart("files")MultipartFile [] multipartFiles,Product product) {
+    public void add(Product product) {
         productService.addSelectionById(product);
     }
 }
