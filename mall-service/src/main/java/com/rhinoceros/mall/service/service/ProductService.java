@@ -69,7 +69,7 @@ public interface ProductService {
 
     /**
      * 根据id新增商品
-     * @param product
+     * @param inputStreamWithFileNames
      */
-    void addSelectionById(Product product);
+    void addSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
 }

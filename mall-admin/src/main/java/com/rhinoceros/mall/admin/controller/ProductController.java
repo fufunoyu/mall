@@ -43,7 +43,7 @@ public class ProductController {
     @RequestMapping("/list")
     public ProductsWithCountVo productList(@PageDefault(required = false) PageQuery pageQuery, @RequestParam(value = "categoryId") Long categoryId) {
         List<Product> productList = productService.findDeepByCategoryId(categoryId, pageQuery);
-        Long count= productService.countDeepByCategoryId(categoryId);
+        Long count = productService.countDeepByCategoryId(categoryId);
         ProductsWithCountVo productsWithCountVo = new ProductsWithCountVo();
         productsWithCountVo.setProducts(productList);
         productsWithCountVo.setCount(count);
@@ -73,7 +73,7 @@ public class ProductController {
     @ResponseBody
     @RequestMapping("/delete")
     public void delete(Product product) {
-       productService.deleteById(product.getId());
+        productService.deleteById(product.getId());
     }
 
     /**
@@ -83,17 +83,17 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    public void update(@RequestPart("files")MultipartFile [] multipartFiles, Product product) throws IOException {
+    public void update(@RequestPart("files") MultipartFile[] multipartFiles, Product product) throws IOException {
         List<InputStreamWithFileName> list = new LinkedList<>();
-        for(MultipartFile file:multipartFiles){
-            InputStreamWithFileName inputStreamWithFileName=new InputStreamWithFileName();
-            String fileName=file.getOriginalFilename();
-            InputStream is=file.getInputStream();
+        for (MultipartFile file : multipartFiles) {
+            InputStreamWithFileName inputStreamWithFileName = new InputStreamWithFileName();
+            String fileName = file.getOriginalFilename();
+            InputStream is = file.getInputStream();
             inputStreamWithFileName.setFileName(fileName);
             inputStreamWithFileName.setIs(is);
             list.add(inputStreamWithFileName);
         }
-        productService.updateSelectionById(product,list);
+        productService.updateSelectionById(product, list);
     }
 
     /**
@@ -103,7 +103,16 @@ public class ProductController {
      */
     @ResponseBody
     @RequestMapping("/add")
-    public void add(Product product) {
-        productService.addSelectionById(product);
+    public void add(@RequestPart("files") MultipartFile[] multipartFiles, Product product) throws IOException {
+        List<InputStreamWithFileName> list = new LinkedList<>();
+        for (MultipartFile file : multipartFiles) {
+            InputStreamWithFileName inputStreamWithFileName = new InputStreamWithFileName();
+            String fileName = file.getOriginalFilename();
+            InputStream is = file.getInputStream();
+            inputStreamWithFileName.setFileName(fileName);
+            inputStreamWithFileName.setIs(is);
+            list.add(inputStreamWithFileName);
+        }
+        productService.addSelectionById(product, list);
     }
 }

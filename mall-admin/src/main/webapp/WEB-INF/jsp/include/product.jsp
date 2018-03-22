@@ -68,45 +68,61 @@
 
     function product_button_append_confirm() {
         <%--打开新增商品页面--%>
+        var data = new FormData()
         var selected = $("#productCategory1").combotree('tree').tree('getSelected')
         var categoryId = null
         if (selected != null) {
             categoryId = selected.id
+            data.append("categoryId",categoryId)
         }
-        $.ajax({
-            url: '${pageContext.request.contextPath}/product/add',
-            method: 'post',
-            data: {
-                name: $("#productName1").textbox('getText'),
-                price: $("#productPrice1").numberspinner('getValue'),
-                discount: $("#productDiscount1").numberspinner("getValue"),
-                storeNum: $("#productStoreNum1").numberspinner("getValue"),
-                // productSaleNum:$("#productSaleNum").textbox("getText"),
-                // productCommentNum:$("#productCommentNum").textbox("getText"),
-                status: $("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF",
-                // productSaleDate:$("#productSaleDate").textbox("getText"),
-                categoryId: categoryId,
-                description: $("#productDescription1").texteditor('getValue'),
-                imageUrls: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3245716057,3112804808&fm=27&gp=0.jpg"
-            },
-            success: function () {
-                $.messager.alert('提示', '插入成功!');
-                $("#product_insert_win").window("close")
-                var total = $('#dom_var_pagination').pagination('options').total
-                var pageSize = $('#dom_var_pagination').pagination('options').pageSize
-                var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
-                if (categoryId != null || categoryId != nodeId) {
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
-                        method: 'get',
-                        success: function (data) {
-                            $('#product_table').datagrid('loadData', data.products)
-                            changePage(pageNumber, data.count)
-                        }
-                    })
+        else{
+            $.messager.alert('提示', '请选择商品分类！');
+        }
+        var files = $('#selectImage1')[0].files
+        for(var i=0;i<files.length;i++){
+            data.append("files",files[i])
+        }
+        data.append("name",$("#productName1").textbox('getText'))
+        data.append("price",$("#productPrice1").numberspinner("getValue"))
+        data.append("discount",$("#productDiscount1").numberspinner("getValue"))
+        data.append("storeNum",$("#productStoreNum1").numberspinner("getValue"))
+        data.append("status",$("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
+        data.append("description",$("#productDescription1").texteditor('getValue'))
+        if($("#productName1").textbox('getText')==null||$("#productName1").textbox('getText').trim()==""){
+            $.messager.alert('提示', '商品名输入不正确！');
+        }else if(files==null||files.length==0){
+            $.messager.alert('提示', '图片不能为空!');
+        }else if($("#productPrice1").numberspinner("getValue")==null||$("#productPrice1").textbox('getText').trim()==""){
+            $.messager.alert('提示', '商品价格不正确!');
+        }else if($("#productDiscount1").numberspinner("getValue")==null||$("#productDiscount1").textbox('getText').trim()==""){
+            $.messager.alert('提示', '商品优惠价格不正确!');
+        }else if($("#productStoreNum1").numberspinner("getValue")==null||$("#productStoreNum1").textbox('getText').trim()==""){
+            $.messager.alert('提示', '商品库存不正确!');
+        }else{
+            $.ajax({
+                url: '${pageContext.request.contextPath}/product/add',
+                processData: false,
+                contentType: false,
+                method: 'post',
+                data: data,
+                success: function () {
+                    $.messager.alert('提示', '插入成功!');
+                    $("#product_insert_win").window("close")
+                    var pageSize = $('#dom_var_pagination').pagination('options').pageSize
+                    var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
+                    if (categoryId != null || categoryId != nodeId) {
+                        $.ajax({
+                            url: '${pageContext.request.contextPath}/product/list?categoryId=' + nodeId + "&page=" + pageNumber + "&size=" + pageSize,
+                            method: 'get',
+                            success: function (data) {
+                                $('#product_table').datagrid('loadData', data.products)
+                                changePage(pageNumber, data.count)
+                            }
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     //取消商品新增
@@ -167,12 +183,7 @@
         }
         var t = $('#product_table');
         var row = t.datagrid('getSelected');
-        var url = "";
-        var photos = $(".photo");
-
         var files = $('#selectImage')[0].files
-
-
         for(var i=0;i<files.length;i++){
             data.append("files",files[i])
         }
@@ -183,14 +194,6 @@
         data.append("storeNum",$("#productStoreNum").numberspinner("getValue"))
         data.append("status",$("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
         data.append("description",$("#productDescription").texteditor('getValue'))
-        photos.each(function (index) {
-            url += $(this).attr('src');
-            if (index != photos.length - 1) {
-                url += ";";
-            }
-        });
-        // alert(url)
-        // alert(row.imageUrls)
         $.ajax({
             url: '${pageContext.request.contextPath}/product/update',
             processData: false,
@@ -562,14 +565,13 @@
         <input id="productName1" class="easyui-textbox" name="name" style="width:100%"
                data-options="label:'商品名称:',required:true">
     </div>
-    <div id="image1" style="margin-bottom:20px">
-
+    <div>
+        <span>商品图片:</span>
+        <div id="image1" type="file" style="margin-bottom:20px"></div>
     </div>
     <div id="imageUpload1" style="margin-bottom:20px">
-
-        <input type="file" id="selectImage1">
+        <input type="file" multiple name="files" id="selectImage1">
     </div>
-
     <div style="margin-bottom:20px">
         <input id="productPrice1" class="easyui-numberspinner" name="price" style="width:100%"
                data-options="label:'商品价格:',required:true">

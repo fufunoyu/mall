@@ -119,7 +119,21 @@ public class ProductServiceImpl implements ProductService {
      * @param product
      */
     @Override
-    public void addSelectionById(Product product) {
+    @Transactional
+    public void addSelectionById(final Product product, List<InputStreamWithFileName> inputStreamWithFileNames) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        String dateString = formatter.format(new Date());
+        String savePath = "product/" + dateString;
+        List<String> urls = new LinkedList<>();
+        for (InputStreamWithFileName inputStreamWithFileName : inputStreamWithFileNames) {
+            String saveName = UUID.randomUUID().toString() + "_" + inputStreamWithFileName.getFileName();
+            String url = fileUploadManager.upload(inputStreamWithFileName.getIs(), savePath, saveName);
+            urls.add(url);
+        }
+        product.setImageUrls(urls.stream()
+                .reduce((left, acc) -> left + Product.IMAGE_SEPARATION + acc)
+                .orElse("")
+        );
         productManager.add(product);
     }
 
