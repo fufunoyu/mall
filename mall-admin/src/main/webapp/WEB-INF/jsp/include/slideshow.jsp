@@ -14,14 +14,14 @@
 <%--轮播图信息列表--%>
 <table id = "slideshow_grid" class="easyui-datagrid" title="详细信息列表"
        data-options="singleSelect:false,collapsible:true,toolbar:toolbar">
-    <tbody>
+    <thead>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>
         <th data-options="field:'title',width:200">标题</th>
         <th data-options="field:'imageUrl',width:180,align:'right'">图片地址</th>
         <th data-options="field:'jumpUrl',width:180,align:'right'">跳转地址</th>
     </tr>
-    </tbody>
+    </thead>
 </table>
 <script>
     /**
@@ -32,7 +32,6 @@
             url:'${pageContext.request.contextPath}/slideshow/list.json',
             method:'get',
             success:function (data) {
-//                console.log(data)
                 var arr = []
                 for(var i=0;i<data.length;i++){
                     arr.push({
@@ -42,7 +41,6 @@
                         jumpUrl:data[i].jumpUrl
                     })
                 }
-//                console.log(arr)
                 $('#slideshow_grid').datagrid('loadData',arr)
             }
         })
