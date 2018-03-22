@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="com.rhinoceros.mall.core.enumeration.Gender" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix='fmt' %>
-
+<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 <html>
 <head>
     <title>个人信息</title>
@@ -17,9 +17,9 @@
 <body>
 <div class="left">
     <div class="headImg">
-        <img src="${user.avatar}" alt="头像">
+        <img src="${sessionScope[ConstantValue.CURRENT_USER].avatar}" alt="头像">
         <div class="desc">
-            <span>昵称：</span>${user.nickname}
+            <span>昵称：</span>${sessionScope[ConstantValue.CURRENT_USER].nickname}
         </div>
     </div>
 </div>
@@ -30,25 +30,25 @@
     <ul>
         <li id="l_username">
             <label>真实姓名：</label>
-            <span class="username" id="username">${user.username}</span>
+            <span class="username" id="username">${sessionScope[ConstantValue.CURRENT_USER].username}</span>
         </li>
         <li id="l_gender">
             <label>性别：</label>
-            <span class="gender" id="gender">${user.gender==Gender.FEMALE?'女':'男'}</span>
+            <span class="gender" id="gender">${sessionScope[ConstantValue.CURRENT_USER].gender==Gender.FEMALE?'女':'男'}</span>
         </li>
         <li id="l_birthday">
             <label>生日：</label>
             <span class="birthday" id="birthday">
-                <fmt:formatDate value="${user.birthday}" pattern="yyyy/MM/dd"/>
+                <fmt:formatDate value="${sessionScope[ConstantValue.CURRENT_USER].birthday}" pattern="yyyy/MM/dd"/>
             </span>
         </li>
         <li id="l_email">
             <label>邮箱：</label>
-            <span class="email" id="email">${user.email}</span>
+            <span class="email" id="email">${sessionScope[ConstantValue.CURRENT_USER].email}</span>
         </li>
         <li id="l_telephone">
             <label>电话：</label>
-            <span class="telephone" id="telephone">${user.telephone}</span>
+            <span class="telephone" id="telephone">${sessionScope[ConstantValue.CURRENT_USER].telephone}</span>
         </li>
     </ul>
 </div>

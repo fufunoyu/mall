@@ -6,21 +6,50 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 <html>
 <head>
     <title>后台管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/material/easyui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/themes/icon.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery-easyui-texteditor/texteditor.css">
-
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/static/easyui-1.5.4.2/jquery-easyui-texteditor/texteditor.css">
     <style>
-        html,body{
+        html, body {
             margin: 0;
             padding: 0;
         }
+
         .button {
             text-decoration: none;
             color: inherit;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .title{
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: lightskyblue;
+        }
+
+        .header a:hover {
+            color: blue;
+        }
+
+        .header > div>* {
+            margin-left: 10px;
         }
     </style>
     <script type="application/javascript"
@@ -35,6 +64,13 @@
     </script>
 </head>
 <body>
+<div class="header">
+    <h2 class="title">民生银行网上商城后台管理系统</h2>
+    <div>
+        <span>${sessionScope[ConstantValue.CURRENT_USER].username}</span>
+        <a href="${pageContext.request.contextPath}/logout">退出登录</a>
+    </div>
+</div>
 <div class="easyui-layout" style="width: 100%;height: 100%;">
     <div data-options="region:'west'" title="菜单栏" style="width:200px;height: 100%;">
         <ul id="menu" class="easyui-tree" data-options="{
@@ -103,5 +139,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

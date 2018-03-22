@@ -10,10 +10,12 @@ import com.rhinoceros.mall.core.enumeration.UserStatus;
 import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.utils.SecurityUtils;
 import com.rhinoceros.mall.dao.dao.UserDao;
+import com.rhinoceros.mall.manager.manager.FileUploadManager;
 import com.rhinoceros.mall.service.impl.exception.common.EntityNotExistException;
 import com.rhinoceros.mall.service.impl.exception.common.ParameterIsNullException;
 import com.rhinoceros.mall.service.impl.exception.user.*;
 import com.rhinoceros.mall.service.service.UserService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +24,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -35,6 +40,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private FileUploadManager fileUploadManager;
 
     /**
      * 用户注册，注册失败抛出{@link UserException}
@@ -207,4 +214,54 @@ public class UserServiceImpl implements UserService {
         userDao.updateSelectionById(user);
         return userDao.findById(userId);
     }
+
+    /**
+     * 上传文件
+     * @param is
+     * @param user
+     * @param fileName
+     * @return
+     */
+    @Transactional
+    @Override
+    public User upload(InputStream is,User user ,String fileName){
+        String str = fileName.substring(fileName.lastIndexOf(".")+1);//获取文件后缀
+        String extName = convertString(str);//后缀转化为小写
+        //判断文件格式是否为图片
+        if(!extName.equals("jpg")&&!extName.equals("png")&&!extName.equals("bmp")&&!extName.equals("gif")){
+            throw new AvatarFormatNotCorrectException("图片格式不正确");
+        }
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd/");
+        String dateString = formatter.format(date);
+        String savePath = "user/avatar/"+dateString;//保存路径
+        String saveName = UUID.randomUUID().toString()+ "_" + fileName;//重组文件名称
+        //获取图片url
+        String a_url = fileUploadManager.upload(is,savePath,saveName);
+        //更新数据库中用户头像
+        user.setAvatar(a_url);
+        //更新用户数据
+        userDao.updateSelectionById(user);
+        //获取用户
+        user = userDao.findById(user.getId());
+        return user;
+    }
+
+    /**格式化**/
+    private String convertString(String str){
+        char[] ch = str.toCharArray();
+        StringBuffer sbf = new StringBuffer();
+        for(int i=0; i< ch.length; i++){
+            sbf.append(charToLowerCase(ch[i]));
+        }
+        return sbf.toString();
+    }
+    /***转小写**/
+    private char charToLowerCase(char ch){
+        if(ch <= 90 && ch >= 65){
+            ch += 32;
+        }
+        return ch;
+    }
+
 }

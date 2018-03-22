@@ -5,7 +5,8 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <c:forEach items="${silders}" var="slider" varStatus="st">
-            <li data-target="#carousel-of-product" data-indexSlider-to="${st.index}" class="${st.index==0?'active':''}"></li>
+            <li data-target="#carousel-of-product" data-indexSlider-to="${st.index}"
+                class="${st.index==0?'active':''}"></li>
         </c:forEach>
     </ol>
 
@@ -13,13 +14,15 @@
     <div class="carousel-inner" role="listbox">
         <c:forEach items="${sliders}" var="slider" varStatus="st">
             <div class="item ${st.index==0?'active':''}">
-                <img class="carousel carouselImage" src="${slider.imageUrl}">
+                <a href="${slider.jumpUrl}">
+                    <img class="carousel carouselImage" src="${slider.imageUrl}">
+                </a>
             </div>
         </c:forEach>
     </div>
 
     <!-- Controls -->
-    <%--<a class="left carousel-control" href="#carousel-of-product" role="button" data-indexSlider="prev">
+   <%-- <a class="left carousel-control" href="#carousel-of-product" role="button" data-indexSlider="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     </a>
     <a class="right carousel-control" href="#carousel-of-product" role="button" data-indexSlider="next">
