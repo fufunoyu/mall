@@ -41,8 +41,6 @@ public class Product {
      * 商品分类id
      */
     private Long categoryId;
-
-
     /**
      * 商品库存总量
      */
