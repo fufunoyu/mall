@@ -42,9 +42,9 @@ public class OrderController {
     public DeliveryInfosVo findByStatus(@PageDefault(required = false)PageQuery pageQuery) {
         List<Order> orders = new LinkedList<>();
         List<DeliveryInfoVo> deliveryInfoVos = new LinkedList<>();
-        orders = orderService.findByStatus(OrderStatus.WAIT_PAY,pageQuery);
+        orders = orderService.findByStatus(OrderStatus.WAIT_SHIP,pageQuery);
         DeliveryInfosVo deliveryInfosVo = new DeliveryInfosVo();
-        deliveryInfosVo.setCount(orderService.countByStatus(OrderStatus.WAIT_PAY));
+        deliveryInfosVo.setCount(orderService.countByStatus(OrderStatus.WAIT_SHIP));
         for (Order order : orders) {
             Order order1 = new Order();
             DeliveryInfoVo deliveryInfoVo = new DeliveryInfoVo();
@@ -68,7 +68,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping("/update")
     public String delete(@RequestParam("ids[]")List<Long> ids) {
-            orderService.updateStatus2ShipByIds(ids,OrderStatus.WAIT_SHIP);
+            orderService.updateStatus2ShipByIds(ids);
         return "{\"result\":\"success\"}";
     }
     @RequestMapping()

@@ -109,4 +109,13 @@
         SELECT count(*) FROM `order`
         WHERE status = #{status}
     </select>
+    <!--查找符合条件的所有订单-->
+    <select id="findByIds" parameterType="Long" resultType="Order">
+        SELECT *
+        FROM `order`
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

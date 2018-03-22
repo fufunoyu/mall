@@ -73,7 +73,7 @@ public interface OrderService {
      * 根据订单号删除订单
      * @param ids
      */
-    void updateStatus2ShipByIds(List<Long> ids,OrderStatus status);
+    void updateStatus2ShipByIds(List<Long> ids);
     /**
      * 获取指定条件查询出的数据总数
      *

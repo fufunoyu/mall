@@ -167,12 +167,19 @@ public class OrderServiceImpl implements OrderService {
      * 根据id号修改订单状态
      * @param ids
      */
-    public void updateStatus2ShipByIds(List<Long> ids,OrderStatus status) {
+    public void updateStatus2ShipByIds(List<Long> ids) {
         if(ids ==null){
             log.info("订单不能为空");
             throw new ParameterIsNullException("订单不能为空");
         }
-        orderDao.updateStateByIds(ids,status);
+        List<Order> orders = orderDao.findByIds(ids);
+        for(Order order:orders){
+            if(order.getStatus()!=OrderStatus.WAIT_SHIP){
+                log.info("订单状态异常");
+                throw new OrderStatusException("订单状态异常");
+            }
+        }
+        orderDao.updateStateByIds(ids,OrderStatus.WAIT_RECEIVE);
     }
 
     /**

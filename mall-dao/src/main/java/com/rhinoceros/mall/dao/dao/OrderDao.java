@@ -74,4 +74,11 @@ public interface OrderDao {
      * @return
      */
     Long countBystatus(OrderStatus status);
+
+    /**
+     * 查找符合条件的所有订单
+     * @param ids
+     * @return
+     */
+    List<Order> findByIds(@Param("ids") List<Long> ids);
 }
