@@ -62,15 +62,13 @@ public class OrderController {
     }
 
     /**
-     * 根据订单号删除订单
-     * @param identifiers
+     * 根据id批量修改订单状态
+     * @param ids
      */
     @ResponseBody
-    @RequestMapping("/delete")
-    public String delete(@RequestParam("identifiers[]")List<String> identifiers) {
-        for(String identifier:identifiers){
-            orderService.deleteByIdentifier(identifier);
-        }
+    @RequestMapping("/update")
+    public String delete(@RequestParam("ids[]")List<Long> ids) {
+            orderService.updateStatus2ShipByIds(ids,OrderStatus.WAIT_SHIP);
         return "{\"result\":\"success\"}";
     }
     @RequestMapping()

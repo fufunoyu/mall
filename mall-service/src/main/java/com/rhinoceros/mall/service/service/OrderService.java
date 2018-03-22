@@ -5,9 +5,7 @@ import com.rhinoceros.mall.core.dto.OrderListDto;
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
-import jdk.net.SocketFlow;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -73,9 +71,9 @@ public interface OrderService {
 
     /**
      * 根据订单号删除订单
-     * @param identifier
+     * @param ids
      */
-    void deleteByIdentifier(String identifier);
+    void updateStatus2ShipByIds(List<Long> ids,OrderStatus status);
     /**
      * 获取指定条件查询出的数据总数
      *

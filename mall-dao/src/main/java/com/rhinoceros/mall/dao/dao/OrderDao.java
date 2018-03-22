@@ -63,10 +63,10 @@ public interface OrderDao {
     List<Order> findByStatus(@Param("status") OrderStatus status, @Param("page") PageQuery pageQuery);
 
     /**
-     * 根据订单id删除订单
-     * @param identifier
+     * 根据订单id修改订单状态
+     * @param ids
      */
-    void deleteByIdentifier(String identifier);
+    void updateStateByIds(@Param("ids") List<Long> ids,@Param("status")OrderStatus status);
 
     /**
      * 统计某个订单状态下的订单数量

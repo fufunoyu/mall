@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th data-options="field:'ck',checkbox:true"></th>
+                <th data-options="field:'id'">id</th>
                 <th data-options="field:'identifier'">订单号</th>
                 <th data-options="field:'createAt'">下单时间</th>
                 <th data-options="field:'name'">商品名称</th>
@@ -40,11 +41,12 @@
         $.ajax({
             url:'${pageContext.request.contextPath}/order/send',
             method:'get',
-            success:function (data) {
-                console.log(data)
+            success:function (result) {
                 var arr = []
+                var data = result.deliveryInfoVos
                 for(var i=0;i<data.length;i++){
                     arr.push({
+                        id:data[i].order.id,
                         identifier:data[i].order.identifier,
                         createAt:data[i].order.createAt,
                         name:data[i].product.name,
@@ -57,6 +59,7 @@
                     })
                 }
                 $('#sendGoods_grid').datagrid('loadData',arr)
+                changePage(1,result.count)
             }
         })
     }
@@ -71,11 +74,11 @@
     //获得被选中的订单号
     function getSelectionsIds(){
         var sels = $("#sendGoods_grid").datagrid("getSelections");
-        var identifiers = [];
+        var ids = [];
         for(var i in sels){
-            identifiers.push(sels[i].identifier);
+            ids.push(sels[i].id);
         }
-        return identifiers;
+        return ids;
     }
     /**
      * 工具栏
@@ -85,18 +88,18 @@
         text:'发货',
         iconCls: 'icon-remove',
         handler:function () {
-            var identifiers = getSelectionsIds();
-            if(identifiers.length == 0){
+            var ids = getSelectionsIds();
+            if(ids.length == 0){
                 $.messager.alert('提示','请选择至少一行！');
                 return
             }
-            $.messager.confirm('确认','确定发货的订单号为'+identifiers+'吗？',function (r) {
+            $.messager.confirm('确认','确定发货的订单号为'+ids+'吗？',function (r) {
                 if(r){
                     $.ajax({
-                        url:'${pageContext.request.contextPath}/order/delete.json',
+                        url:'${pageContext.request.contextPath}/order/update.json',
                         method:'post',
                         data:{
-                            'identifiers':identifiers
+                            'ids':ids
                         },
                         success:function (data) {
 //                            console.log(data)
@@ -121,10 +124,26 @@
             $(this).pagination('loading');
             // alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
             $.ajax({
-                url: '${pageContext.request.contextPath}/order/send=' + "&page=" + pageNumber + "&size=" + pageSize,
+                url: '${pageContext.request.contextPath}/order/send?' + "page=" + pageNumber + "&size=" + pageSize,
                 method: 'get',
-                success: function (data) {
-                    $('#sendGoods_grid').datagrid('loadData', data)
+                success: function (result) {
+                    var arr = []
+                    var data = result.deliveryInfoVos
+                    for(var i=0;i<data.length;i++){
+                        arr.push({
+                            identifier:data[i].order.id,
+                            identifier:data[i].order.identifier,
+                            createAt:data[i].order.createAt,
+                            name:data[i].product.name,
+                            nickname:data[i].user.nickname,
+                            telephone:data[i].user.telephone,
+                            deliveryName:data[i].address.deliveryName,
+                            deliveryAddress:data[i].address.deliveryAddress+data[i].address.detailAddress,
+                            postalCode:data[i].address.postalCode,
+                            phone:data[i].address.phone,
+                        })
+                    }
+                    $('#sendGoods_grid').datagrid('loadData',arr)
                     changePage(pageNumber, data.count)
                 }
             })

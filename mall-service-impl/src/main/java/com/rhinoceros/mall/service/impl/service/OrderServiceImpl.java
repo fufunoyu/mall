@@ -164,16 +164,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 根据订单号删除订单
-     * @param identifier
+     * 根据id号修改订单状态
+     * @param ids
      */
-    @Override
-    public void deleteByIdentifier(String identifier) {
-        if(identifier==null){
+    public void updateStatus2ShipByIds(List<Long> ids,OrderStatus status) {
+        if(ids ==null){
             log.info("订单不能为空");
             throw new ParameterIsNullException("订单不能为空");
         }
-        orderDao.deleteByIdentifier(identifier);
+        orderDao.updateStateByIds(ids,status);
     }
 
     /**

@@ -64,7 +64,7 @@
         </set>
         WHERE id = #{id}
     </update>
-
+    <!--查询订单信息-->
     <select id="findById" resultType="Order" parameterType="Long">
         SELECT *
         FROM `order`
@@ -95,11 +95,15 @@
         WHERE status = #{status}
          ${page.queryString}
     </select>
-    <!--根据订单号删除订单-->
-    <delete id="deleteByIdentifier" parameterType="String">
-        DELETE FROM `order`
-        WHERE identifier = #{identifier}
-    </delete>
+    <!--根据订单id批量修改订单状态-->
+    <update id="updateStateByIds">
+        UPDATE `order`
+        SET status = #{status}
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
     <!--统计某个订单状态下的订单数量-->
     <select id="countBystatus" resultType="Long">
         SELECT count(*) FROM `order`
