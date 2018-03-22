@@ -59,8 +59,8 @@
             <li>
                 <span>订单管理</span>
                 <ul>
-                    <li>
-                        <span>Photos</span>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order'}">
+                        <span>待发货</span>
                     </li>
                     <li>
                         <span>Program Files</span>

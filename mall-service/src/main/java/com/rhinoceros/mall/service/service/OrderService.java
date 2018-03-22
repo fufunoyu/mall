@@ -6,7 +6,6 @@ import com.rhinoceros.mall.core.enumeration.OrderStatus;
 import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.core.query.PageQuery;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -63,4 +62,23 @@ public interface OrderService {
      */
     void cancelOrder(Long oid);
 
+    /**
+     * 返回统一状态的订单结果
+     * @param status
+     * @return
+     */
+    List<Order> findByStatus(OrderStatus status, PageQuery pageQuery);
+
+    /**
+     * 根据订单号删除订单
+     * @param ids
+     */
+    void updateStatus2ShipByIds(List<Long> ids);
+    /**
+     * 获取指定条件查询出的数据总数
+     *
+     * @param status
+     * @return
+     */
+    Long countByStatus(OrderStatus status);
 }
