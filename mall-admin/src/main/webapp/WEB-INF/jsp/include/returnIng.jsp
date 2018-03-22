@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>待退货订单管理</title>
+    <title>退货中订单管理</title>
 </head>
 <body>
 <%--轮播图信息列表--%>
-<table id="waitReturn_grid" class="easyui-datagrid" title="待退货订单列表"
-       data-options="singleSelect:false,collapsible:true,toolbar:toolbarWaitReturn">
+<table id="returnIng_grid" class="easyui-datagrid" title="退货中订单列表"
+       data-options="singleSelect:false,collapsible:true,toolbar:toolbarReturnIng">
     <thead>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>
@@ -21,7 +21,7 @@
     </thead>
 </table>
 <!-- 分页栏 -->
-<div id="waitReturn_pagination" class="easyui-pagination">
+<div id="returnIng_pagination" class="easyui-pagination">
 </div>
 <script>
 
@@ -45,7 +45,7 @@
      */
     function waitReturnGrid() {
         $.ajax({
-            url: '${pageContext.request.contextPath}/order/waitReturnList.json',
+            url: '${pageContext.request.contextPath}/order/returnIngList.json',
             method: 'get',
             success: function (data) {
 //                console.log(data)
@@ -57,7 +57,7 @@
 
     //获得被选中的行id
     function getSelectionsIds() {
-        var sels = $("#waitReturn_grid").datagrid("getSelections");
+        var sels = $("#returnIng_grid").datagrid("getSelections");
         var ids = [];
         for (var i in sels) {
             ids.push(sels[i].orderId);
@@ -69,8 +69,8 @@
      * 工具栏
      * @type {[null,null]}
      */
-    var toolbarWaitReturn = [{
-        text: '允许退货',
+    var toolbarReturnIng = [{
+        text: '确认已退货',
         iconCls: 'icon-ok',
         handler: function () {
             var ids = getSelectionsIds();
@@ -78,10 +78,10 @@
                 $.messager.alert('提示', '请选择至少一行！');
                 return
             }
-            $.messager.confirm('确认', '确定允许订单号为' + ids + '的订单退货吗？', function (r) {
+            $.messager.confirm('确认', '确定订单号为' + ids + '的订单已退货吗？\n 注意：确认后将会把款项退还给用户', function (r) {
                 if (r) {
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/order/goToReturn.json',
+                        url: '${pageContext.request.contextPath}/order/confirmReturn.json',
                         method: 'post',
                         data: {
                             'ids': ids
@@ -89,24 +89,24 @@
                         success: function (data) {
 //                            console.log(data)
                             if (data.result === 'success') {
-                                $.messager.alert('提示', '处理成功!', undefined, function () {
-                                    var pageSize = $('#waitReturn_pagination').pagination('options').pageSize
-                                    var pageNumber = $('#waitReturn_pagination').pagination('options').pageNumber
-                                     if ($('#waitReturn_grid').datagrid('getRows').length == ids.length && pageNumber != 1) {
+                                $.messager.alert('提示', '确认成功!', undefined, function () {
+                                    var pageSize = $('#returnIng_pagination').pagination('options').pageSize
+                                    var pageNumber = $('#returnIng_pagination').pagination('options').pageNumber
+                                     if ($('#returnIng_grid').datagrid('getRows').length == ids.length && pageNumber != 1) {
                                         pageNumber--
                                     }
                                     $.ajax({
-                                        url: '${pageContext.request.contextPath}/order/waitReturnList.json?page=' + pageNumber + "&size=" + pageSize,
+                                        url: '${pageContext.request.contextPath}/order/returnIngList.json?page=' + pageNumber + "&size=" + pageSize,
                                         method: 'get',
                                         success: function (data) {
                                             refreshPage(data, pageNumber)
                                         }
                                     })
                                     //删除处理后的行
-                                    /*var sels = $("#waitReturn_grid").datagrid("getSelections");
+                                    /*var sels = $("#returnIng_grid").datagrid("getSelections");
                                     for (var index in sels) {
-                                        var row_index = $("#waitReturn_grid").datagrid("getRowIndex", sels[index])
-                                        $("#waitReturn_grid").datagrid('deleteRow', row_index);
+                                        var row_index = $("#returnIng_grid").datagrid("getRowIndex", sels[index])
+                                        $("#returnIng_grid").datagrid('deleteRow', row_index);
                                     }*/
                                 })
                             }
@@ -119,12 +119,12 @@
 
 
     <%--分页功能实现--%>
-    $('#waitReturn_pagination').pagination({
+    $('#returnIng_pagination').pagination({
         onSelectPage: function (pageNumber, pageSize) {
             $(this).pagination('loading');
             // alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
             $.ajax({
-                url: '${pageContext.request.contextPath}/order/waitReturnList.json?page=' + pageNumber + "&size=" + pageSize,
+                url: '${pageContext.request.contextPath}/order/returnIngList.json?page=' + pageNumber + "&size=" + pageSize,
                 method: 'get',
                 success: function (data) {
                     refreshPage(data, pageNumber)
@@ -147,11 +147,11 @@
                 userId: data.adminOrderVoList[i].user.id,
                 orderId: data.adminOrderVoList[i].order.identifier,
                 productNum: data.adminOrderVoList[i].order.productNum,
-                status: "待退货"
+                status: "退货中"
             })
         }
 //                console.log(arr)
-        $('#waitReturn_grid').datagrid('loadData', arr)
+        $('#returnIng_grid').datagrid('loadData', arr)
         changePage(pageNumber, data.count)
     }
 
@@ -159,7 +159,7 @@
      * 分页设置每页显示条数和当前目录及其子目录共有多少件商品
      * */
     function changePage(page, total) {
-        $('#waitReturn_pagination').pagination({
+        $('#returnIng_pagination').pagination({
             total: total,
             pageNumber: page
         });

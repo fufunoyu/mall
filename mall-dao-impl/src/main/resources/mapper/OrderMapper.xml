@@ -137,4 +137,10 @@
         WHERE status = #{status}
     </select>
 
+    <select id="findByIdentifier" resultType="Order" parameterType="String">
+        SELECT *
+        FROM `order`
+        WHERE identifier = #{identifier}
+    </select>
+
 </mapper>

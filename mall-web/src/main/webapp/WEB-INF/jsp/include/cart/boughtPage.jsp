@@ -142,7 +142,6 @@
         <div id="button_WAIT_RECEIVE"><a orderStatus="WAIT_RECEIVE" href="#nowhere">待收货</a></div>
         <div id="button_WAIT_COMMENT"><a orderStatus="WAIT_COMMENT" href="#nowhere">待评价</a></div>
         <div id="button_COMPLETED"><a orderStatus="COMPLETED" href="#nowhere">已完成</a></div>
-        <div id="button_WAIT_RETURN"><a orderStatus="WAIT_RETURN" href="#nowhere">待退货</a></div>
         <div id="button_RETURN_ING"><a orderStatus="RETURN_ING" href="#nowhere">退货中</a></div>
         <div id="button_RETURN_COMPLETED"><a orderStatus="RETURN_COMPLETED" href="#nowhere">退货成功</a></div>
         <div id="button_CANCEL"><a orderStatus="CANCEL" href="#nowhere" class="noRightborder">已取消</a></div>

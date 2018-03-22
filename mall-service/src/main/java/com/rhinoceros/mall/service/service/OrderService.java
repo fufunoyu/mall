@@ -72,10 +72,18 @@ public interface OrderService {
     void cancelOrder(Long oid);
 
     /**
-     * 后台确认允许退货
+     * 申请退货
+     * @param oid
+     */
+    void applyReturnOrder(Long oid);
+
+
+
+    /**
+     * 后台确认退货成功
      * @param oIdentifier
      */
-    void goToReturn(String oIdentifier);
+    void confirmReturn(String oIdentifier);
 
     /**
      * 查找某状态下的订单的总数

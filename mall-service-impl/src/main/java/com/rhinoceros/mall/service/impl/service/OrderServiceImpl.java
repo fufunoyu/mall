@@ -40,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
     private AddressDao addressDao;
     @Autowired
     private CartProductDao cartProductDao;
+
     /**
      * 根据userId和订单状态找出所有符合条件的分页订单
      *
@@ -87,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 根据订单id查找订单
+     *
      * @param id
      * @return
      */
@@ -98,6 +100,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 确认收货
+     *
      * @param oid
      */
     @Transactional
@@ -113,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
             throw new EntityNotExistException("订单不存在");
         }
 
-        if(order.getStatus() != OrderStatus.WAIT_RECEIVE){
+        if (order.getStatus() != OrderStatus.WAIT_RECEIVE) {
             log.info("订单不是待收货状态");
             throw new OrderStatusException("订单不是待收货状态");
         }
@@ -124,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
         Long pid = order.getProductId();
         Integer num = order.getProductNum();
         Product product = new Product();
-        Integer saleNum = productDao.findById(pid).getSaleNum()+num;
+        Integer saleNum = productDao.findById(pid).getSaleNum() + num;
         product.setId(pid);
         product.setSaleNum(saleNum);
         productDao.updateSelectionById(product);
@@ -142,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
             log.info("订单不存在");
             throw new EntityNotExistException("订单不存在");
         }
-        if(order.getStatus() != OrderStatus.WAIT_PAY){
+        if (order.getStatus() != OrderStatus.WAIT_PAY) {
             log.info("订单不是未支付状态");
             throw new OrderStatusException("订单不是未支付状态");
         }
@@ -151,14 +154,36 @@ public class OrderServiceImpl implements OrderService {
         orderDao.updateSelectionById(order);
         //增加库存
         Product product = new Product();
-        Integer storeNum = productDao.findById(order.getProductId()).getStoreNum()+order.getProductNum();
+        Integer storeNum = productDao.findById(order.getProductId()).getStoreNum() + order.getProductNum();
         product.setStoreNum(storeNum);
         product.setId(order.getProductId());
         productDao.updateSelectionById(product);
     }
 
+    @Transactional
+    @Override
+    public void applyReturnOrder(Long oid) {
+        if (oid == null) {
+            log.info("订单id不能为空");
+            throw new ParameterIsNullException("订单id不能为空");
+        }
+        Order order = orderDao.findById(oid);
+        if (order == null) {
+            log.info("订单不存在");
+            throw new EntityNotExistException("订单不存在");
+        }
+        if (order.getStatus() != OrderStatus.WAIT_RECEIVE && order.getStatus() != OrderStatus.WAIT_SHIP && order.getStatus() != OrderStatus.WAIT_COMMENT && order.getStatus() != OrderStatus.COMPLETED) {
+            log.info("订单不是 未收货/未发货/未评论/已完成 状态");
+            throw new OrderStatusException("订单不是 未收货/未发货/未评论/已完成 状态");
+        }
+        //更改订单状态;
+        order.setStatus(OrderStatus.RETURN_ING);
+        orderDao.updateSelectionById(order);
+    }
+
     /**
      * 添加订单
+     *
      * @param dtos
      * @param userId
      * @param addressId
@@ -167,21 +192,21 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public List<Order> add(OrderListDto dtos, Long userId, Long addressId) {
-        if(userId == null){
+        if (userId == null) {
             log.info("用户id不能为空");
             throw new ParameterIsNullException("用户id不能为空");
         }
         User user = userDao.findById(userId);
-        if(user == null){
+        if (user == null) {
             log.info("用户不存在");
             throw new EntityNotExistException("用户不存在");
         }
-        if(addressId==null){
+        if (addressId == null) {
             log.info("地址Id不能为空");
             throw new ParameterIsNullException("地址Id不能为空");
         }
         Address address = addressDao.findById(addressId);
-        if(address==null){
+        if (address == null) {
             log.info("地址不存在");
             throw new EntityNotExistException("地址不存在");
         }
@@ -190,31 +215,31 @@ public class OrderServiceImpl implements OrderService {
         //设置订单号
         List<OrderDto> orderDtos = dtos.getOrders();
 
-        for(OrderDto orderDto:orderDtos){
+        for (OrderDto orderDto : orderDtos) {
             Order order = new Order();
             Integer productNum = orderDto.getProductNum();
-            if(productNum==null||productNum<=0){
+            if (productNum == null || productNum <= 0) {
                 log.info("商品数量需要大于0");
                 throw new OrderProductNumException("商品数量需要大于0");
             }
-            Long productId =  orderDto.getProductId();
-            if(productId==null){
+            Long productId = orderDto.getProductId();
+            if (productId == null) {
                 log.info("商品ID不能为空");
-                throw  new ParameterIsNullException("商品ID不能为空");
+                throw new ParameterIsNullException("商品ID不能为空");
             }
             Product product = productDao.findById(productId);
-            if(product==null){
+            if (product == null) {
                 log.info("商品不存在");
                 throw new EntityNotExistException("商品不存在");
             }
-            if(product.getStoreNum()-productNum<0){
+            if (product.getStoreNum() - productNum < 0) {
                 log.info("库存不足");
                 throw new OrderProductStoreNumException("库存不足");
             }
             BigDecimal price = product.getPrice();
             BigDecimal discount = product.getDiscount();
-            BigDecimal totalPrice = calculate(price,discount,productNum);
-            product.setStoreNum(product.getStoreNum()-productNum);
+            BigDecimal totalPrice = calculate(price, discount, productNum);
+            product.setStoreNum(product.getStoreNum() - productNum);
             productDao.updateSelectionById(product);
             String identifier = randNumber();
             order.setIdentifier(identifier);
@@ -226,8 +251,8 @@ public class OrderServiceImpl implements OrderService {
             order.setTotalPrice(totalPrice);
             order.setUserId(userId);
             orders.add(order);
-            if(dtos.getCartSubmit().equals("success")){
-                CartProduct cartProduct = cartProductDao.findByUserIdAndProductId(userId,productId);
+            if (dtos.getCartSubmit().equals("success")) {
+                CartProduct cartProduct = cartProductDao.findByUserIdAndProductId(userId, productId);
                 cartProductDao.deleteById(cartProduct.getProductId());
             }
         }
@@ -236,11 +261,24 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
+
     @Override
-    public void goToReturn(String oIdentifier) {
-        Order order = new Order();
+    public void confirmReturn(String oIdentifier) {
+        if (oIdentifier == null) {
+            log.info("订单号不能为空");
+            throw new ParameterIsNullException("订单号不能为空");
+        }
+        Order order = orderDao.findByIdentifier(oIdentifier);
+        if (order == null) {
+            log.info("订单不存在");
+            throw new EntityNotExistException("订单不存在");
+        }
+        if (order.getStatus() != OrderStatus.RETURN_ING) {
+            log.info("订单不是退货中状态");
+            throw new OrderStatusException("订单不是退货中状态");
+        }
         order.setIdentifier(oIdentifier);
-        order.setStatus(OrderStatus.RETURN_ING);
+        order.setStatus(OrderStatus.RETURN_COMPLETED);
         orderDao.updateSelectionByIdentifier(order);
     }
 
@@ -259,13 +297,13 @@ public class OrderServiceImpl implements OrderService {
         return totalPrice;
     }
 
-    private String randNumber(){
+    private String randNumber() {
         Random rand = new Random();
-        int max=9999,min=1000;
-        int shu = rand.nextInt(max)%(max-min+1) + min;
+        int max = 9999, min = 1000;
+        int shu = rand.nextInt(max) % (max - min + 1) + min;
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
-        String randomNumber = sdf.format(date)+shu;
+        String randomNumber = sdf.format(date) + shu;
         return randomNumber;
     }
 }

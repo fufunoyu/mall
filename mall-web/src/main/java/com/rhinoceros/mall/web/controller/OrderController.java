@@ -318,12 +318,8 @@ public class OrderController {
     @Authentication
     @RequestMapping({"/returnOrder"})
     public String returnOrder(@RequestParam("oid") Long oid) {
-        Order order = new Order();
-        order.setId(oid);
-        //更改订单状态
-        order.setStatus(OrderStatus.WAIT_RETURN);
-        orderService.updateSelectionById(order);
-        return "redirect:/order/list?status=WAIT_RETURN";
+        orderService.applyReturnOrder(oid);
+        return "redirect:/order/list?status=RETURN_ING";
     }
 
     /**

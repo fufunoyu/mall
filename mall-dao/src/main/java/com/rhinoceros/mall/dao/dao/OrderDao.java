@@ -77,4 +77,11 @@ public interface OrderDao {
      * @return
      */
     Long countOrderByStatus(@Param("status") OrderStatus orderStatus);
+
+    /**
+     * 根据订单号查找订单
+     * @param identifier
+     * @return
+     */
+    Order findByIdentifier(String identifier);
 }

@@ -43,7 +43,7 @@ public class IndexController {
     @RequestMapping({"/test"})
     public String test() {
 
-        return "test";
+        return "getAdminOrderListWithCountVo";
     }
 
     /**
@@ -63,7 +63,7 @@ public class IndexController {
         String accessKey = "--v9g6tQBIff98Hh9yCFUFO11nGp9HedpH16HFX1";
         String secretKey = "Guh68YUhFLGl87dUtfrjF7O-4XU3QNasKpJ6FNd-";
         String bucket = "mall";
-//如果是Windows情况下，格式是 D:\\qiniu\\test.png
+//如果是Windows情况下，格式是 D:\\qiniu\\getAdminOrderListWithCountVo.png
 //        String localFilePath = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3245716057,3112804808&fm=27&gp=0.jpg";
         String localFilePath = "E:\\a.jpg";
 

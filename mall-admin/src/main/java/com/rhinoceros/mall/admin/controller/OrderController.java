@@ -9,7 +9,6 @@ import com.rhinoceros.mall.core.po.User;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.AdminOrderListWithCountVo;
 import com.rhinoceros.mall.core.vo.AdminOrderVo;
-import com.rhinoceros.mall.core.vo.OrderVo;
 import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.AddressService;
 import com.rhinoceros.mall.service.service.OrderService;
@@ -43,38 +42,57 @@ public class OrderController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping("/waitReturnPage")
-    public String showWaitReturn() {
-        return "include/waitReturn";
-    }
 
     /**
-     * 获取所有等待退货的订单信息
+     * 显示退货中页面
+     * @return
+     */
+    @RequestMapping("/returnIngPage")
+    public String showReturnIngPage(){
+        return "include/returnIng";
+    }
+
+
+
+    /**
+     * 获取所有退货中的订单的信息
      *
      * @return
      */
     @ResponseBody
-    @RequestMapping("/waitReturnList.json")
-    public AdminOrderListWithCountVo getSlideshowList(@PageDefault(required = false) PageQuery pageQuery) {
-        List<Order> orders = orderService.findByStatus(OrderStatus.WAIT_RETURN, pageQuery);
-        List<AdminOrderVo> adminOrderVoList = getAdminOrderList(orders, true, true, false);
-        Long count = orderService.countOrderByStatus(OrderStatus.WAIT_RETURN);
-        AdminOrderListWithCountVo adminOrderListWithCountVo = new AdminOrderListWithCountVo();
-        adminOrderListWithCountVo.setAdminOrderVoList(adminOrderVoList);
-        adminOrderListWithCountVo.setCount(count);
+    @RequestMapping("/returnIngList.json")
+    public AdminOrderListWithCountVo getReturnIngList(@PageDefault(required = false) PageQuery pageQuery) {
+        AdminOrderListWithCountVo adminOrderListWithCountVo = getAdminOrderListWithCountVo(OrderStatus.RETURN_ING, pageQuery, true, true, false);
         return adminOrderListWithCountVo;
     }
 
 
+
     /**
-     * 根据订单列表生成订单展示列表
-     * @param orderList
-     * @param bProduct 是否传入商品信息
-     * @param bUser 是否传入用户信息
-     * @param bAddress 是否传入地址信息
+     * 确认订单退货成功
+     * @param ids
      * @return
      */
-    private List<AdminOrderVo> getAdminOrderList(List<Order> orderList, Boolean bProduct, Boolean bUser, Boolean bAddress) {
+    @ResponseBody
+    @RequestMapping("/confirmReturn.json")
+    public String confirmReturn(@RequestParam("ids[]")List<String> ids){
+        for(String oIdentifier: ids){
+            orderService.confirmReturn(oIdentifier);
+        }
+        return "{\"result\":\"success\"}";
+    }
+
+    /**
+     * 获取订单展示对象
+     * @param orderStatus
+     * @param pageQuery
+     * @param bProduct
+     * @param bUser
+     * @param bAddress
+     * @return
+     */
+    public AdminOrderListWithCountVo getAdminOrderListWithCountVo(OrderStatus orderStatus, PageQuery pageQuery, Boolean bProduct, Boolean bUser, Boolean bAddress){
+        List<Order> orderList = orderService.findByStatus(orderStatus, pageQuery);
         List<AdminOrderVo> adminOrderVoList = new LinkedList<>();
         for (Order order : orderList) {
             AdminOrderVo adminOrderVo = new AdminOrderVo();
@@ -93,21 +111,13 @@ public class OrderController {
             }
             adminOrderVoList.add(adminOrderVo);
         }
-        return adminOrderVoList;
+        Long count = orderService.countOrderByStatus(orderStatus);
+        AdminOrderListWithCountVo adminOrderListWithCountVo = new AdminOrderListWithCountVo();
+        adminOrderListWithCountVo.setAdminOrderVoList(adminOrderVoList);
+        adminOrderListWithCountVo.setCount(count);
+        return adminOrderListWithCountVo;
     }
 
-    /**
-     * 更改订单状态
-     * @param ids
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/goToReturn.json")
-    public String goToReturn(@RequestParam("ids[]") List<String> ids){
-        for (String id : ids){
-            orderService.goToReturn(id);
-        }
-        return "{\"result\":\"success\"}";
-    }
+
 
 }
