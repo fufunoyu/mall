@@ -43,8 +43,6 @@ public class CategoryController {
     public String list(@RequestParam("cid") Long cid,
                        @PageDefault(required = false) PageQuery pageQuery,
                        Model model) {
-
-
         List<Product> products = productService.findDeepByCategoryId(cid, pageQuery);
         Long total = productService.countDeepByCategoryId(cid);
 

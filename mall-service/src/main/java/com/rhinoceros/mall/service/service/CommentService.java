@@ -22,4 +22,12 @@ public interface CommentService {
      * @param comment
      */
     void add(Comment comment);
+
+    /**
+     * 根据用户id查询商品评价
+     * @param userId
+     * @param pageQuery
+     * @return
+     */
+    List<Comment> findByUserId(Long userId, PageQuery pageQuery);
 }

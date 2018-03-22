@@ -3,6 +3,8 @@ package com.rhinoceros.mall.dao.dao;
 
 import com.rhinoceros.mall.core.po.Address;
 
+import java.util.List;
+
 public interface AddressDao {
 
     /**
@@ -19,5 +21,25 @@ public interface AddressDao {
      */
     Address findById(Long id);
 
+    /**
+     * 根据用户id显示地址信息
+     * @param id
+     * @return
+     */
+    List<Address> findByUserId(Long id);
+    /**
+     * 更新地址中不为null的字段
+     *
+     * @param address
+     * @return
+     */
+    int updateSelectionById(Address address);
+
+    /**
+     * 删除地址
+     *
+     * @param id
+     */
+    void deleteById(Long id);
 
 }

@@ -15,14 +15,6 @@ public interface IndexProductService {
     List<CategoryWithProducts> findAll();
 
     /**
-     * 根据根分类ID查找主页展示商品
-     *
-     * @param categoryId
-     * @return
-     */
-    List<IndexProduct> findByCategoryId(Long categoryId);
-
-    /**
      * 添加主页展示商品
      *
      * @param indexProduct

@@ -265,7 +265,7 @@ div.left-mark {
     height: 20px;
     vertical-align: top;
     width: 5px;
-    background-color: #19C8A9;
+    background-color: #b10000;
 }
 
 span.categoryTitle {
@@ -1080,7 +1080,9 @@ div.buyDiv button {
     width: 180px;
     height: 40px;
 }
-
+div.arrangement button{
+    float: left;
+}
 button.buyButton {
     border: 1px solid #C40000;
     background-color: #FFEDED;
@@ -1110,6 +1112,8 @@ button.addCartButton span.glyphicon {
 
 div.address {
     margin: 20px 5px;
+    width: 1000px;
+    height: 180px;
     text-align: left;
 }
 
@@ -1118,9 +1122,39 @@ div.addressTip, div.productListTip {
     font-size: 16px;
     font-weight: bold;
     text-align: left;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
+div.showTable{
+    width: 1000px;
+    height: 100px;
+    text-align: left;
 
+}
+div.showAddressInfo{
+    width: 246px;
+    height: 80px;
+    float: left;
+    border: 2px solid #eee;
+    margin:4px;
+    padding: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+div.showAddressInfo:hover{
+    border-color: #C40000;
+}
+.address_selected{
+    border-color: #C40000 !important;
+}
+div.showAddressInfo span{
+    display: inline-block;
+    line-height:14px;
+    height:16px;
+    margin:2px 2px 0px 0px;
+
+}
 table.addressTable {
     margin: 20px 20px;
     width: 600px;
@@ -1312,7 +1346,7 @@ span.leaveMessageTextareaSpan {
 }
 
 div.orderItemTotalSumDiv {
-    margin: 40px;
+    margin: 20px;
     height: 40px;
 }
 
