@@ -158,12 +158,12 @@
      * 商品信息修改
      * */
     function product_button_edit_confirm() {
+        var data = new FormData()
         var selected = $("#productCategory").combotree('tree').tree('getSelected')
         var categoryId = null
         if (selected != null) {
             categoryId = selected.id
             data.append("categoryId",categoryId)
-
         }
         var t = $('#product_table');
         var row = t.datagrid('getSelected');
@@ -172,7 +172,6 @@
 
         var files = $('#selectImage')[0].files
 
-        var data = new FormData()
 
         for(var i=0;i<files.length;i++){
             data.append("files",files[i])
@@ -221,24 +220,6 @@
         $("#product_win").window("close")
     }
 
-    <%--function product_button_edit_confirm() {--%>
-    <%--$.ajax({--%>
-    <%--url: '${pageContext.request.contextPath}/product/edict',--%>
-    <%--method: 'post',--%>
-    <%--data: {--%>
-    <%--productName: $("#productName").textbox('getText'),--%>
-    // productPrice:$("#productPrice").textbox('getText'),
-    // productDiscount:$("#productDiscount").textbox("getText"),
-    // productStoreNum:$("#productStoreNum").textbox("getText"),
-    // productSaleNum:$("#productSaleNum").textbox("getText"),
-    // productCommentNum:$("#productCommentNum").textbox("getText"),
-    // productStatus:$("#productStatus").textbox("getText"),
-    // productSaleDate:$("#productSaleDate").textbox("getText"),
-    <%--},--%>
-    <%--success: function (data) {--%>
-    <%----%>
-    <%--}--%>
-    <%--}--%>
 
     /**
      * 菜单栏新增分类

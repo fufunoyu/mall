@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
      * 通过id修改商品
      *
      * @param product
-     * @param inputStreamWithFileName
+     * @param inputStreamWithFileNames
      */
     @Override
     @Transactional

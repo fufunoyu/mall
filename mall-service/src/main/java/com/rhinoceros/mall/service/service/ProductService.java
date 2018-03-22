@@ -63,7 +63,7 @@ public interface ProductService {
     /**
      * 根据id修改商品
      * @param product
-     * @param inputStreamWithFileName
+     * @param inputStreamWithFileNames
      */
     void updateSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
 
