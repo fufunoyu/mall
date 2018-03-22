@@ -4,13 +4,14 @@ import com.rhinoceros.mall.core.enumeration.Gender;
 import com.rhinoceros.mall.core.enumeration.UserStatus;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 用户实体
  */
 @Data
-public class User {
+public class User implements Serializable{
     /**
      * 用户id
      */
