@@ -66,5 +66,5 @@ public interface UserService {
      * @param fileName
      * @return
      */
-    String upload(InputStream is, String fileName);
+    User upload(InputStream is,User user,String fileName);
 }

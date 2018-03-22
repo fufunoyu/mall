@@ -6,13 +6,9 @@ ul, li{
     margin: 5px;
     float: left;
     width: 150px;
-    cursor: pointer;
     border: 1px solid transparent;
 }
 
-.headImg:hover {
-    border-color: #eee;
-}
 
 .headImg img {
     border-radius: 50%;

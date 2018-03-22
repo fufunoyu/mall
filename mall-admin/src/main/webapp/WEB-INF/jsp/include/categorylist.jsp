@@ -212,7 +212,7 @@
                 console.log(rows)
                 if(rows[i].id == ids[j]){
                     var index = $('#home_choose_list').datagrid('getRowIndex',rows[i])
-                    var row = $(".datagrid-row[datagrid-row-index="+index+"]")
+                    var row = $("#home_center .datagrid-row[datagrid-row-index="+index+"]")
                     row.css('opacity',0.6)
                     row.css('cursor','not-allowed')
                     row.click(function (e) {
@@ -387,7 +387,7 @@
             }">
             </ul>
         </div>
-        <div data-options="region:'center'" style="height: 100%">
+        <div data-options="region:'center'" id="home_center" style="height: 100%">
             <%--添加商品窗口右侧的可选择商品列表--%>
             <table id="home_choose_list"class="easyui-datagrid" title="商品列表" style="width:960px;height:250px;padding:10px;"
                    toolbar="#toolbar" idField="id" collapsible="true"

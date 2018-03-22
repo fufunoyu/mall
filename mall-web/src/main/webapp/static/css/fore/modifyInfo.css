@@ -162,3 +162,52 @@ ul, li{
     opacity: 1;
     transition: 0s
 }
+.file-box{
+    position:relative;
+    width:340px
+}
+.txt {
+    height:22px;
+    border:1px solid #cdcdcd;
+    width:180px;
+}
+.btn {
+    background-color:#FFF;
+    border:1px solid #CDCDCD;
+    height:24px;
+    width:70px;
+}
+.file {
+    position:absolute;
+    top:0;
+    right:80px;
+    height:24px;
+    filter:alpha(opacity:0);
+    opacity: 0;
+    width:260px
+}
+
+.uploadBtn {
+    border: none;
+    color: white;
+    height:24px;
+    width:70px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.uploadBtn1 {
+    background-color: #FFF;
+    color: black;
+    border: 2px solid #b80d1d;
+}
+.uploadBtn1:hover {
+    background-color: #b80d1d;
+    color: white;
+}
