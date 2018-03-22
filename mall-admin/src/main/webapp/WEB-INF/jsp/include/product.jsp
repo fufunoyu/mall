@@ -75,9 +75,6 @@
             categoryId = selected.id
             data.append("categoryId",categoryId)
         }
-        else{
-            $.messager.alert('提示', '请选择商品分类！');
-        }
         var files = $('#selectImage1')[0].files
         for(var i=0;i<files.length;i++){
             data.append("files",files[i])
@@ -98,6 +95,8 @@
             $.messager.alert('提示', '商品优惠价格不正确!');
         }else if($("#productStoreNum1").numberspinner("getValue")==null||$("#productStoreNum1").textbox('getText').trim()==""){
             $.messager.alert('提示', '商品库存不正确!');
+        }else if(categoryId==null){
+            $.messager.alert('提示', '请选择商品分类!');
         }else{
             $.ajax({
                 url: '${pageContext.request.contextPath}/product/add',
@@ -105,8 +104,8 @@
                 contentType: false,
                 method: 'post',
                 data: data,
-                success: function () {
-                    $.messager.alert('提示', '插入成功!');
+                success: function (result) {
+                    $.messager.alert('提示', result);
                     $("#product_insert_win").window("close")
                     var pageSize = $('#dom_var_pagination').pagination('options').pageSize
                     var pageNumber = $('#dom_var_pagination').pagination('options').pageNumber
@@ -120,6 +119,9 @@
                             }
                         })
                     }
+                },
+                error:function (errorMsg) {
+                    $.messager.alert('提示', errorMsg);
                 }
             })
         }
@@ -200,8 +202,8 @@
             contentType: false,
             method: 'post',
             data:data,
-            success: function () {
-                $.messager.alert('提示', '修改成功!');
+            success: function (result) {
+                $.messager.alert('提示', result);
                 $("#product_win").window("close")
                 var total = $('#dom_var_pagination').pagination('options').total
                 var pageSize = $('#dom_var_pagination').pagination('options').pageSize
@@ -214,6 +216,9 @@
                         changePage(pageNumber, data.count)
                     }
                 })
+            },
+            error:function (errorMsg) {
+                $.messager.alert('提示', errorMsg);
             }
         })
     }

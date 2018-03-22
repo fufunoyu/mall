@@ -4,9 +4,10 @@ import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.InputStreamWithFileName;
 import com.rhinoceros.mall.core.vo.ProductsWithCountVo;
+import com.rhinoceros.mall.manager.impl.exception.FileUplodException;
 import com.rhinoceros.mall.service.service.ProductService;
-import com.rhinoceros.mall.service.service.UserService;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * 创建商品控制器
  */
+@Slf4j
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -82,18 +85,17 @@ public class ProductController {
      * @param product
      */
     @ResponseBody
-    @RequestMapping("/update")
-    public void update(@RequestPart("files") MultipartFile[] multipartFiles, Product product) throws IOException {
+    @RequestMapping(value = "/update",produces = "text/plain;charset=UTF-8")
+    public String update(@RequestPart("files") MultipartFile[] multipartFiles, Product product) {
         List<InputStreamWithFileName> list = new LinkedList<>();
-        for (MultipartFile file : multipartFiles) {
-            InputStreamWithFileName inputStreamWithFileName = new InputStreamWithFileName();
-            String fileName = file.getOriginalFilename();
-            InputStream is = file.getInputStream();
-            inputStreamWithFileName.setFileName(fileName);
-            inputStreamWithFileName.setIs(is);
-            list.add(inputStreamWithFileName);
+        uploadFile(multipartFiles, list);
+        try {
+            productService.updateSelectionById(product, list);
+        }catch (FileUplodException e){
+            e.printStackTrace();
+            return "图片格式不正确";
         }
-        productService.updateSelectionById(product, list);
+        return "修改成功";
     }
 
     /**
@@ -102,17 +104,48 @@ public class ProductController {
      * @param product
      */
     @ResponseBody
-    @RequestMapping("/add")
-    public void add(@RequestPart("files") MultipartFile[] multipartFiles, Product product) throws IOException {
+    @RequestMapping(value = "/add", produces = "text/plain;charset=UTF-8")
+    public String add(@RequestPart("files") MultipartFile[] multipartFiles, Product product) {
         List<InputStreamWithFileName> list = new LinkedList<>();
-        for (MultipartFile file : multipartFiles) {
-            InputStreamWithFileName inputStreamWithFileName = new InputStreamWithFileName();
-            String fileName = file.getOriginalFilename();
-            InputStream is = file.getInputStream();
-            inputStreamWithFileName.setFileName(fileName);
-            inputStreamWithFileName.setIs(is);
-            list.add(inputStreamWithFileName);
+        uploadFile(multipartFiles, list);
+        if (product.getName() == null || product.getName().trim().equals("")) {
+            return "商品名不能为空！";
         }
-        productService.addSelectionById(product, list);
+        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            return "商品价格不能为空！";
+        }
+        if (product.getDiscount() == null || product.getDiscount().compareTo(BigDecimal.ZERO) <= 0) {
+            return "商品优惠价格不能为空！";
+        }
+        if (product.getStoreNum() == null || product.getStoreNum() <= 0) {
+            return "商品库存不能为空！";
+        }
+        if (product.getCategoryId() == null) {
+            return "商品分类不能为空！";
+        }
+        try {
+            productService.addSelectionById(product, list);
+        }catch (FileUplodException e){
+            e.printStackTrace();
+            return "图片格式不正确";
+        }
+        return "新增成功！";
+    }
+
+    private void uploadFile(@RequestPart("files") MultipartFile[] multipartFiles, List<InputStreamWithFileName> list) {
+
+        try {
+            for (MultipartFile file : multipartFiles) {
+                InputStreamWithFileName inputStreamWithFileName = new InputStreamWithFileName();
+                String fileName = file.getOriginalFilename();
+                InputStream is = file.getInputStream();
+                inputStreamWithFileName.setFileName(fileName);
+                inputStreamWithFileName.setIs(is);
+                list.add(inputStreamWithFileName);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
     }
 }

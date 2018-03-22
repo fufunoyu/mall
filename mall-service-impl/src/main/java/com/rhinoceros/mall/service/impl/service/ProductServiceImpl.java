@@ -1,9 +1,11 @@
 package com.rhinoceros.mall.service.impl.service;
 
 
+import com.rhinoceros.mall.core.enumeration.ProductStatus;
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
 import com.rhinoceros.mall.core.vo.InputStreamWithFileName;
+import com.rhinoceros.mall.manager.impl.exception.FileUplodException;
 import com.rhinoceros.mall.manager.manager.FileUploadManager;
 import com.rhinoceros.mall.manager.manager.ProductManager;
 import com.rhinoceros.mall.service.service.ProductService;
@@ -102,6 +104,14 @@ public class ProductServiceImpl implements ProductService {
         String savePath = "product/" + dateString;
         List<String> urls = new LinkedList<>();
         for (InputStreamWithFileName inputStreamWithFileName : inputStreamWithFileNames) {
+            //获取文件后缀
+            String str=inputStreamWithFileName.getFileName().substring(inputStreamWithFileName.getFileName().lastIndexOf(".")+1);
+            //后缀转化为小写
+            String extName=convertString(str);
+            //判断文件格式是否为图片
+            if(!extName.equals("jpg")&&!extName.equals("png")&&!extName.equals("bmp")&&!extName.equals("gif")){
+                throw new FileUplodException("图片格式不正确");
+            }
             String saveName = UUID.randomUUID().toString() + "_" + inputStreamWithFileName.getFileName();
             String url = fileUploadManager.upload(inputStreamWithFileName.getIs(), savePath, saveName);
             urls.add(url);
@@ -114,6 +124,32 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
+     * 格式化
+     * @param str
+     * @return
+     */
+    private String convertString(String str) {
+        char[] ch=str.toCharArray();
+        StringBuffer sbf=new StringBuffer();
+        for(int i=0;i<ch.length;i++){
+            sbf.append(charToLower(ch[i]));
+        }
+        return sbf.toString();
+    }
+
+    /**
+     * 转小写
+     * @param ch
+     * @return
+     */
+    private char charToLower(char ch) {
+        if(ch<=90&&ch>=65){
+            ch+=32;
+        }
+        return ch;
+    }
+
+    /**
      * 通过id增添商品
      *
      * @param product
@@ -121,11 +157,25 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void addSelectionById(final Product product, List<InputStreamWithFileName> inputStreamWithFileNames) {
+        product.setSaleNum(0);
+        product.setCommentNum(0L);
+        if (product.getStatus().equals(ProductStatus.ON_SHELF)) {
+            product.setSaleDate(new Date());
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         String dateString = formatter.format(new Date());
         String savePath = "product/" + dateString;
         List<String> urls = new LinkedList<>();
         for (InputStreamWithFileName inputStreamWithFileName : inputStreamWithFileNames) {
+            //获取文件后缀
+            String str=inputStreamWithFileName.getFileName().substring(inputStreamWithFileName.getFileName().lastIndexOf(".")+1);
+            //后缀转化为小写
+            String extName=convertString(str);
+            //判断文件格式是否为图片
+            if(!extName.equals("jpg")&&!extName.equals("png")&&!extName.equals("bmp")&&!extName.equals("gif")){
+                throw new FileUplodException("图片格式不正确");
+            }
+            inputStreamWithFileName.getFileName();
             String saveName = UUID.randomUUID().toString() + "_" + inputStreamWithFileName.getFileName();
             String url = fileUploadManager.upload(inputStreamWithFileName.getIs(), savePath, saveName);
             urls.add(url);

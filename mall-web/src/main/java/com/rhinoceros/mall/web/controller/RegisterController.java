@@ -34,11 +34,10 @@ public class RegisterController {
      * 当点击提交时判断是否允许注册
      *
      * @param userDto
-     * @return
+     * @return·
      */
     @RequestMapping("/registerSubmit")
     public String registerSubmit(@Validated @ModelAttribute("registerUser") RegisterUserDto userDto, BindingResult br, Model model) {
-
         if (br.hasErrors()) {
             model.addAttribute("msg", br.getFieldError().getDefaultMessage());
             return "register";
