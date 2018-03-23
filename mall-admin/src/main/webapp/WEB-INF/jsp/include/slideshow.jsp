@@ -55,7 +55,7 @@
     })()
 
 //获得被选中的行id
-    function getSelectionsIds(){
+    function getSlidesIds(){
         var sels = $("#slideshow_grid").datagrid("getSelections");
         var ids = [];
         for(var i in sels){
@@ -78,7 +78,7 @@
         text:'删除',
         iconCls: 'icon-remove',
         handler:function () {
-            var ids = getSelectionsIds();
+            var ids = getSlidesIds();
             if(ids.length == 0){
                 $.messager.alert('提示','请选择至少一行！');
                 return

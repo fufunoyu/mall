@@ -14,7 +14,6 @@ import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.*;
 import com.rhinoceros.mall.web.support.web.annotation.Authentication;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -97,6 +93,7 @@ public class OrderController {
     public String showCartOrderConfirm(@RequestParam("id") List<Long> ids, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         List<CartProduct> cartProducts = cartProductService.findCartProducts(ids, user.getId());
+
         //根据商品id获取商品信息
         List<OrderProductVo> orderProductVos = new LinkedList<>();
         BigDecimal total = BigDecimal.ZERO;
@@ -142,13 +139,14 @@ public class OrderController {
 
     /**
      * 按付款按钮
+     *
      * @param oid
      * @param model
      * @return
      */
     @Authentication
     @RequestMapping("payFromOrder")
-    public String addOrder(@RequestParam("oid")Long oid,Model model){
+    public String addOrder(@RequestParam("oid") Long oid, Model model) {
         List<Order> orders = new LinkedList<>();
         orders.add(orderService.findById(oid));
         String paypage = payService.toPayByOrderList(orders);
@@ -173,6 +171,7 @@ public class OrderController {
 
     /**
      * 支付返回
+     *
      * @param request
      * @return
      * @throws IOException
@@ -370,8 +369,6 @@ public class OrderController {
         orderService.applyReturnOrder(oid);
         return "redirect:/order/list?status=RETURN_ING";
     }
-
-
 
 
     /**

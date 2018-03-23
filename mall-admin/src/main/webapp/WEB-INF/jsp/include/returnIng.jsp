@@ -56,7 +56,7 @@
 
 
     //获得被选中的行id
-    function getSelectionsIds() {
+    function getWaitReturnIds() {
         var sels = $("#returnIng_grid").datagrid("getSelections");
         var ids = [];
         for (var i in sels) {
@@ -73,7 +73,7 @@
         text: '确认已退货',
         iconCls: 'icon-ok',
         handler: function () {
-            var ids = getSelectionsIds();
+            var ids = getWaitReturnIds();
             if (ids.length == 0) {
                 $.messager.alert('提示', '请选择至少一行！');
                 return

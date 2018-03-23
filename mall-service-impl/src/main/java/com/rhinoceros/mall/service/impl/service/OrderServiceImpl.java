@@ -181,15 +181,7 @@ public class OrderServiceImpl implements OrderService {
         orderDao.updateSelectionById(order);
     }
 
-    /**
-     * 根据订单状态查找所有订单
-     * @param status
-     * @return
-     */
-    @Override
-    public List<Order> findByStatus(OrderStatus status, PageQuery pageQuery) {
-        return orderDao.findByStatus(status,pageQuery);
-    }
+
 
     /**
      * 根据id号修改订单状态
@@ -292,7 +284,7 @@ public class OrderServiceImpl implements OrderService {
             orders.add(order);
             if (dtos.getCartSubmit().equals("success")) {
                 CartProduct cartProduct = cartProductDao.findByUserIdAndProductId(userId, productId);
-                cartProductDao.deleteById(cartProduct.getProductId());
+                cartProductDao.deleteById(cartProduct.getId());
             }
         }
         orderDao.addAll(orders);
