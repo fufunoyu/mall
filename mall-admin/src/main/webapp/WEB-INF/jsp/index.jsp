@@ -98,29 +98,20 @@
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order'}">
                         <span>待发货</span>
                     </li>
-                    <li>
-                        <span>Program Files</span>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                        <span>已发货</span>
                     </li>
-                    <li>index.html</li>
-                    <li>about.html</li>
-                    <li>welcome.html</li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                        <span>待收货</span>
+                    </li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                        <span>待评价</span>
+                    </li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                        <span>退货中</span>
+                    </li>
                 </ul>
             </li>
-            <li>
-                <span>用户管理</span>
-                <ul>
-                    <li>
-                        <span>Photos</span>
-                    </li>
-                    <li>
-                        <span>Program Files</span>
-                    </li>
-                    <li>index.html</li>
-                    <li>about.html</li>
-                    <li>welcome.html</li>
-                </ul>
-            </li>
-            <li>
             <li>
                 <span>首页管理</span>
                 <ul>

@@ -96,6 +96,7 @@ public class ProductManagerImpl implements ProductManager {
                     .get();
             return modify;
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("json转换失败");
             throw new BaseManagerException("json转换失败");
         }

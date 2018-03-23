@@ -17,6 +17,7 @@
     <thead>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>
+        <th data-options="field:'id',width:80">ID</th>
         <th data-options="field:'title',width:200">标题</th>
         <th data-options="field:'imageUrl',width:180,align:'right'">图片地址</th>
         <th data-options="field:'jumpUrl',width:180,align:'right'">跳转地址</th>
@@ -54,7 +55,7 @@
     })()
 
 //获得被选中的行id
-    function getSelectionsIds(){
+    function getSlidesIds(){
         var sels = $("#slideshow_grid").datagrid("getSelections");
         var ids = [];
         for(var i in sels){
@@ -77,7 +78,7 @@
         text:'删除',
         iconCls: 'icon-remove',
         handler:function () {
-            var ids = getSelectionsIds();
+            var ids = getSlidesIds();
             if(ids.length == 0){
                 $.messager.alert('提示','请选择至少一行！');
                 return
