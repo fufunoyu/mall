@@ -182,6 +182,45 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
+     * 根据订单状态查找所有订单
+     * @param status
+     * @return
+     */
+    @Override
+    public List<Order> findByStatus(OrderStatus status, PageQuery pageQuery) {
+        return orderDao.findByStatus(status,pageQuery);
+    }
+
+    /**
+     * 根据id号修改订单状态
+     * @param ids
+     */
+    public void updateStatus2ShipByIds(List<Long> ids) {
+        if(ids ==null){
+            log.info("订单不能为空");
+            throw new ParameterIsNullException("订单不能为空");
+        }
+        List<Order> orders = orderDao.findByIds(ids);
+        for(Order order:orders){
+            if(order.getStatus()!=OrderStatus.WAIT_SHIP){
+                log.info("订单状态异常");
+                throw new OrderStatusException("订单状态异常");
+            }
+        }
+        orderDao.updateStateByIds(ids,OrderStatus.WAIT_RECEIVE);
+    }
+
+    /**
+     *  获取指定条件查询出的数据总数
+     * @param status
+     * @return
+     */
+    @Override
+    public Long countByStatus(OrderStatus status) {
+        return orderDao.countBystatus(status);
+    }
+
+    /**
      * 添加订单
      *
      * @param dtos

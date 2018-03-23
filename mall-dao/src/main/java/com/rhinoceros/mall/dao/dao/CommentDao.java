@@ -31,4 +31,11 @@ public interface CommentDao {
      * @return
      */
     List<Comment> findByUserId(@Param("userId") Long userId, @Param("page") PageQuery pageQuery);
+
+    /**
+     * 查找对应用户id的评论总数
+     * @param userId
+     * @return
+     */
+    int commentNumByUserId(Long userId);
 }

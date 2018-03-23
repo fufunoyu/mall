@@ -23,14 +23,6 @@
         ${page.queryString}
     </select>
 
-
-    <select id="findByStatus" resultType="Order">
-        SELECT *
-        FROM `order`
-        WHERE status = #{status}
-        ${page.queryString}
-    </select>
-
     <select id="countByUserIdAndStatus" resultType="Integer">
         SELECT count(*)
         FROM `order`
@@ -75,16 +67,13 @@
         </set>
         WHERE id = #{id}
     </update>
-
-
-
-
+    <!--查询订单信息-->
     <select id="findById" resultType="Order" parameterType="Long">
         SELECT *
         FROM `order`
         WHERE id = #{id}
     </select>
-
+    <!--添加所有订单-->
     <insert id="addAll" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `order`
         (status,identifier,create_at,total_price,address_id,user_id,product_id,product_num)
@@ -102,6 +91,36 @@
             )
         </foreach>
     </insert>
+    <!--根据订单状态返回订单信息-->
+    <select id="findByStatus"  resultType="Order">
+        SELECT *
+        FROM `order`
+        WHERE status = #{status}
+         ${page.queryString}
+    </select>
+    <!--根据订单id批量修改订单状态-->
+    <update id="updateStateByIds">
+        UPDATE `order`
+        SET status = #{status}
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <!--统计某个订单状态下的订单数量-->
+    <select id="countBystatus" resultType="Long">
+        SELECT count(*) FROM `order`
+        WHERE status = #{status}
+    </select>
+    <!--查找符合条件的所有订单-->
+    <select id="findByIds" parameterType="Long" resultType="Order">
+        SELECT *
+        FROM `order`
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 
     <update id="updateSelectionByIdentifier" parameterType="Order">
         UPDATE `order`

@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="com.rhinoceros.mall.core.enumeration.Gender" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix='fmt' %>
+<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 
 <html>
 <head>
@@ -23,7 +24,8 @@
             var email = document.getElementById("emailid").value
             var telephone = document.getElementById("telephoneid").value
             var gender = $("input[name='sex']").filter(":checked").attr("value")
-            console.log(new Date(birthday))
+            var birth = new Date(birthday)
+            console.log(birth)
             console.log(realname)
             console.log(email)
             console.log(telephone)
@@ -40,21 +42,27 @@
                 alert("电话不能为空，请填写")
                 return false
             }
+/*            if(new Date(birthday) == null){
+                alert("请选择生日！")
+            }*/
             $.ajax({
                 url:'${pageContext.request.contextPath}/user/update.json',
                 method:'post',
                 data:{
-                    id:${user.id},
+                    id:${sessionScope[ConstantValue.CURRENT_USER].id},
                     username:realname,
                     nickname:nickname,
                     email:email,
                     telephone:telephone,
-                    birthday:new Date(birthday),
+                    birthday:birth,
                     gender:gender
                 },
                 success:function (data) {
                     console.log(data)
-                    alert("修改成功")
+                    if(data!=1){
+                        alert("修改失败")
+                    }
+                    parent.location.href=parent.location.href
                 }
             })
         }
@@ -64,9 +72,9 @@
 <body>
 <div class="left">
     <div class="headImg">
-        <img src="${user.avatar}" alt="头像" onclick="updateAvatar()">
+        <img src="${sessionScope[ConstantValue.CURRENT_USER].avatar}" alt="头像" onclick="updateAvatar()">
         <div class="desc">
-            <span>昵称：</span><input type="text" id="nicknameid" name="nickname" size="10" value=${user.nickname}>
+            <span>昵称：</span><input type="text" id="nicknameid" name="nickname" size="10" value=${sessionScope[ConstantValue.CURRENT_USER].nickname}>
         </div>
 
     </div>
@@ -80,32 +88,32 @@
             <li id="l_username">
                 <label>真实姓名：</label>
                 <span class="username" id="username">
-                <input type="text" id="usernameid" name="username" size="20" value='${user.username}'>
+                <input type="text" id="usernameid" name="username" size="20" value='${sessionScope[ConstantValue.CURRENT_USER].username}'>
             </span>
             </li>
             <li id="l_gender">
                 <label>性别：</label>
                 <span class="gender" id="gender">
-                    <input type="radio" name="sex" id="male" value="MALE" ${user.gender == Gender.MALE?'checked':''}>男
-                    <input type="radio" name="sex" id="female" value="FEMALE" ${user.gender == Gender.FEMALE?'checked':''}>女
+                    <input type="radio" name="sex" id="male" value="MALE" ${sessionScope[ConstantValue.CURRENT_USER].gender == Gender.MALE?'checked':''}>男
+                    <input type="radio" name="sex" id="female" value="FEMALE" ${sessionScope[ConstantValue.CURRENT_USER].gender == Gender.FEMALE?'checked':''}>女
                 </span>
             </li>
             <li id="l_birthday">
                 <label>生日：</label>
                 <span class="birthday" id="birthday">
-                    <input id = "dateid" type="date" size="20" value='<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>'>
+                    <input id = "dateid" type="date" size="20" value='<fmt:formatDate value="${sessionScope[ConstantValue.CURRENT_USER].birthday}" pattern="yyyy-MM-dd"/>'>
             </span>
             </li>
             <li id="l_email">
                 <label>邮箱：</label>
                 <span class="email" id="email">
-                    <input type="text" id="emailid" name="email" size="20" value=${user.email}>
+                    <input type="text" id="emailid" name="email" size="20" value=${sessionScope[ConstantValue.CURRENT_USER].email}>
                 </span>
             </li>
             <li id="l_telephone">
                 <label>电话：</label>
                 <span class="telephone" id="telephone">
-                    <input type="text" id="telephoneid" name="telephone" size="20" value=${user.telephone}>
+                    <input type="text" id="telephoneid" name="telephone" size="20" value=${sessionScope[ConstantValue.CURRENT_USER].telephone}>
                 </span>
             </li>
         </ul>
@@ -148,24 +156,32 @@
         <!-- 弹窗内容 -->
         <div class="modal-content">
             <div class="modal-header">
-                <%--<span class="close">&times;</span>--%>
+                <span class="close" onclick="avatar_cancle()">&times;</span>
                 <h2>修改头像</h2>
             </div>
             <div class="modal-body">
                 <br/>
                 <br/>
-                <div>
-                    头像url：<input style="width: 600px" type="text" id="avatarUrl"><br/>
+                <div class="file-box">
+                    <form id="avatar_form" action="${pageContext.request.contextPath}/user/uploadAvatar" enctype="multipart/form-data" method="post">
+                        <input type='text' name='textfield' id='textfield' class='txt' />
+                        <input type='button' class='btn' value='浏览...' />
+                        <input type="file" class="file" size="28" name="file" id="fileField" onchange="document.getElementById('textfield').value = this.value">
+                        <input type="submit" onclick="avatar_confirm()" class="uploadBtn uploadBtn1" value="上 传">
+                    </form>
                 </div>
-                <br/>
-                <br/>
-                <button class="button" id="avatar_confirm" onclick="avatar_confirm()">确 认</button>
-                <button class="button" id="avatar_cancle" onclick="avatar_cancle()">取 消</button>
-                <br/>
-                <br/>
+<%--                <form id="avatar_form" action="${pageContext.request.contextPath}/user/uploadAvatar" enctype="multipart/form-data" method="post">
+                    <input type='text' name='textfield' id='textfield' class='txt' />
+                    <input type="file" name="file" id="fileField" onchange="document.getElementById('textfield').value = this.value">
+                    <input type="submit" class="button" value="上 传">
+                </form>--%>
+
             </div>
         </div>
     </div>
+
+
+
     <script>
         var modal = document.getElementById('updateModal');
         var avatarModal = document.getElementById('updateAvatar');
@@ -197,11 +213,17 @@
                 document.getElementById("pass2").value=""
                 return false
             }
+/*            if(pass1 == ${sessionScope[ConstantValue.CURRENT_USER].password}){
+                alert("新密码不可以和旧密码一样！")
+                document.getElementById("pass1").value=""
+                document.getElementById("pass2").value=""
+                return false
+            }*/
             $.ajax({
                 url:'${pageContext.request.contextPath}/user/update.json',
                 method:'post',
                 data:{
-                    id:${user.id},
+                    id:${sessionScope[ConstantValue.CURRENT_USER].id},
                     password:pass1
                 },
                 success:function (data) {
@@ -225,32 +247,24 @@
         }
 
         function avatar_confirm() {
-            var url = document.getElementById("avatarUrl").value
-            console.log(url)
-            if(url == "") {
-                alert("URL不可为空，请输入！")
-                return false
+            var obj = document.getElementById("textfield").value
+            console.log(obj)
+            if (obj == ""){
+                alert("请至少选择一个上传文件!")
             }
-            $.ajax({
-                url:'${pageContext.request.contextPath}/user/update.json',
-                method:'post',
-                data:{
-                    id:${user.id},
-                    avatar:url
-                },
-                success:function (data) {
-                    document.getElementById("avatarUrl").value=""
-                    alert("修改成功")
-                    location.reload()
-                }
-            })
+            else{
+                alert("修改成功")
+                avatarModal.style.display = "none";
+                /*document.getElementById("tip").style.display = "none"*/
+            }
         }
 
         function avatar_cancle() {
-            document.getElementById("avatarUrl").value = ""
+            document.getElementById("textfield").value = ""
+            var obj = document.getElementById("fileField")
+            obj.outerHTML=obj.outerHTML;
             avatarModal.style.display = "none";
         }
-
 
     </script>
 </div>

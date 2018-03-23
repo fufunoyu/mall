@@ -13,7 +13,7 @@
     <title>管理员登录</title>
     <style>
         .body{
-            background-image: url("//www.51pptmoban.com/d/file/2014/08/24/fa3534816e89cd2840cc52c6ec7eff7d.jpg");
+            background-image: url("http://www.51pptmoban.com/d/file/2014/08/24/fa3534816e89cd2840cc52c6ec7eff7d.jpg?WebShieldDRSessionVerify=mGZ1THQP7JvjsNs8SAm6");
             background-color: #6583af;
             background-size: cover;
             background-repeat: no-repeat;

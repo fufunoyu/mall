@@ -107,4 +107,24 @@ public interface OrderDao {
     int updateAliPayByOrderIdentifier(AliPay aliPay);
 
     List<String> findOIdentifierByTotalId(String totalId);
+
+    /**
+     * 根据订单id修改订单状态
+     * @param ids
+     */
+    void updateStateByIds(@Param("ids") List<Long> ids,@Param("status")OrderStatus status);
+
+    /**
+     * 统计某个订单状态下的订单数量
+     * @param status
+     * @return
+     */
+    Long countBystatus(OrderStatus status);
+
+    /**
+     * 查找符合条件的所有订单
+     * @param ids
+     * @return
+     */
+    List<Order> findByIds(@Param("ids") List<Long> ids);
 }

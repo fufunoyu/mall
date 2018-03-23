@@ -113,6 +113,4 @@ public class LoginController {
         response.addCookie(password);
         return "redirect:/login";
     }
-
-
 }
