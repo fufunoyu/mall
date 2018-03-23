@@ -32,7 +32,6 @@
             url:'${pageContext.request.contextPath}/slideshow/list.json',
             method:'get',
             success:function (data) {
-//                console.log(data)
                 var arr = []
                 for(var i=0;i<data.length;i++){
                     arr.push({
@@ -42,7 +41,6 @@
                         jumpUrl:data[i].jumpUrl
                     })
                 }
-//                console.log(arr)
                 $('#slideshow_grid').datagrid('loadData',arr)
             }
         })

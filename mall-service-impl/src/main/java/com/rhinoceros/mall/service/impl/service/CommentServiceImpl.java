@@ -45,6 +45,24 @@ public class CommentServiceImpl implements CommentService {
         return commentDao.findByProductId(productId, pageQuery);
     }
 
+    @Override
+    public List<Comment> findByUserId(Long userId, PageQuery pageQuery){
+        if (userId == null){
+            log.info("用户id不能为空");
+            throw new ParameterIsNullException("用户id不能为空");
+        }
+        return commentDao.findByUserId(userId,pageQuery);
+    }
+
+    @Override
+    public int commentNumByUserId(Long userId){
+        if (userId == null){
+            log.info("用户id不能为空");
+            throw new ParameterIsNullException("用户id不能为空");
+        }
+        return commentDao.commentNumByUserId(userId);
+    }
+
     @Transactional
     @Override
     public void add(Comment comment) {
@@ -100,8 +118,5 @@ public class CommentServiceImpl implements CommentService {
         orderService.updateSelectionById(order);
     }
 
-    @Override
-    public List<Comment> findByUserId(Long userId, PageQuery pageQuery){
-        return commentDao.findByUserId(userId,pageQuery);
-    }
+
 }

@@ -55,4 +55,30 @@ public interface OrderDao {
      */
     int addAll(@Param("orders") List<Order> orders);
 
+    /**
+     * 返回每种状态下的订单
+     * @param status
+     * @return
+     */
+    List<Order> findByStatus(@Param("status") OrderStatus status, @Param("page") PageQuery pageQuery);
+
+    /**
+     * 根据订单id修改订单状态
+     * @param ids
+     */
+    void updateStateByIds(@Param("ids") List<Long> ids,@Param("status")OrderStatus status);
+
+    /**
+     * 统计某个订单状态下的订单数量
+     * @param status
+     * @return
+     */
+    Long countBystatus(OrderStatus status);
+
+    /**
+     * 查找符合条件的所有订单
+     * @param ids
+     * @return
+     */
+    List<Order> findByIds(@Param("ids") List<Long> ids);
 }

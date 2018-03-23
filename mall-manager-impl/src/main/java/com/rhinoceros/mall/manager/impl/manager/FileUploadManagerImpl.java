@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 
-
 /**
  * 文件上传接口实现
  */
@@ -28,6 +27,7 @@ public class FileUploadManagerImpl implements FileUploadManager {
     private String secretKey;
     @Value("#{qiniuConfig['qiniu.accessKey']}")
     private String accessKey;
+
 
     @Override
     public String upload(InputStream is, String filePath, String fileName) {

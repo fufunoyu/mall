@@ -25,4 +25,10 @@
         ${page.queryString}
     </select>
 
+    <select id="commentNumByUserId" parameterType="Long" resultType="Integer">
+        SELECT COUNT(*) AS commentNum
+        FROM `comment` c
+        WHERE c.`user_id` = #{userId}
+    </select>
+
 </mapper>
