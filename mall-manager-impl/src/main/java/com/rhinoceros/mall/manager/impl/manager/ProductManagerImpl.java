@@ -88,6 +88,7 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public int updateSelectionById(Product product) {
         int modify = productDao.updateSelectionById(product);
+        product = productDao.findById(product.getId());
         try {
             byte[] bytes = mapper.writeValueAsBytes(product);
             client.prepareUpdate("mall", "product", product.getId().toString())
