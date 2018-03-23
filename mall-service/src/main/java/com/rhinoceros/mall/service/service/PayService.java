@@ -4,6 +4,7 @@ package com.rhinoceros.mall.service.service;
 import com.rhinoceros.mall.core.po.Order;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public interface PayService {
@@ -11,10 +12,10 @@ public interface PayService {
     /**
      * 付款
      *
-     * @param order
+     * @param orderIdList
      * @return
      */
-    String toPay(Order order);
+    String toPayByOrderList(List<Order> orderIdList);
 
     /**
      * 支付回调处理
@@ -23,6 +24,6 @@ public interface PayService {
      * @param inputStream
      * @return
      */
-    Long payBack(Map<String, String[]> parameter, InputStream inputStream);
+    List<String> payBack(Map<String, String[]> parameter, InputStream inputStream);
 
 }

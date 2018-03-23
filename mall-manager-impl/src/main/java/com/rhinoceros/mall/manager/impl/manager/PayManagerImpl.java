@@ -7,7 +7,10 @@ import com.egzosn.pay.common.api.PayService;
 import com.egzosn.pay.common.bean.MethodType;
 import com.egzosn.pay.common.bean.PayMessage;
 import com.egzosn.pay.common.bean.PayOrder;
-import com.rhinoceros.mall.core.query.Order;
+import com.egzosn.pay.common.bean.RefundOrder;
+import com.rhinoceros.mall.core.enumeration.OrderStatus;
+import com.rhinoceros.mall.core.po.AliPay;
+import com.rhinoceros.mall.core.po.Order;
 import com.rhinoceros.mall.dao.dao.OrderDao;
 import com.rhinoceros.mall.manager.impl.exception.pay.PayBackException;
 import com.rhinoceros.mall.manager.manager.PayManager;
@@ -16,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -28,7 +33,8 @@ public class PayManagerImpl implements PayManager {
     private OrderDao orderDao;
 
     @Override
-    public String toPay(PayOrder order) {
+    public String aliToPay(PayOrder order) {
+
         //网页支付
         order.setTransactionType(AliTransactionType.DIRECT);
         //获取支付订单信息
@@ -38,7 +44,7 @@ public class PayManagerImpl implements PayManager {
     }
 
     @Override
-    public Long payBack(Map<String, String[]> parameter, InputStream inputStream) {
+    public List<String> aliPayBack(Map<String, String[]> parameter, InputStream inputStream) {
         Map<String,Object> params = payService.getParameter2Map(parameter,inputStream);
         //支付账户配置
         PayConfigStorage storage = payService.getPayConfigStorage();
@@ -54,9 +60,36 @@ public class PayManagerImpl implements PayManager {
         //这里处理业务逻辑
         //创建支付消息
         PayMessage message = new PayMessage(params, storage.getPayType(), storage.getMsgType().name());
-        Long oid = Long.valueOf(message.getOutTradeNo());
-//        return  payService.getPayOutMessage("success", "成功").toMessage();
-        return oid;
+        String orderTotalId = message.getOutTradeNo();
+        List<String> orderIdentifierList = orderDao.findOIdentifierByTotalId(orderTotalId);
+        Map<String, Object> payMessage = message.getPayMessage();
+        String tradeNo = (String) payMessage.get("trade_no");
+        for (String orderIdentifier : orderIdentifierList) {
+            AliPay aliPay = orderDao.findAliPayByOrderIdentifier(orderIdentifier);
+            aliPay.setTradeNo(tradeNo);
+            orderDao.updateAliPayByOrderIdentifier(aliPay);
+        }
+        //        return  payService.getPayOutMessage("success", "成功").toMessage();
+        return orderIdentifierList;
+    }
+
+    //把返回的订单数据解析成订单列表
+    private List<String> analyOrderIdentifier(String orderIdentifier){
+        List<String> orderIdentifierList = new LinkedList<>();
+        for(int i=0;i<orderIdentifier.length();i++) {
+
+            if(orderIdentifier.charAt(i)==';'||i==0){
+                String temp="";
+                int wordlength=i;
+                if(i==0) wordlength=-1;
+                while (wordlength<orderIdentifier.length()-1&&orderIdentifier.charAt(++wordlength)!=';'){
+                    temp += orderIdentifier.charAt(wordlength);
+//                    System.out.println(temp);
+                }
+                orderIdentifierList.add(temp);
+            }
+        }
+        return orderIdentifierList;
     }
 
 }

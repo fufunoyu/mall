@@ -30,6 +30,8 @@
         <property name="notifyUrl" value="#{alipayConfig['alipay.notifyUrl']}"/>
         <property name="returnUrl" value="#{alipayConfig['alipay.returnUrl']}"/>
         <property name="test" value="true"/>
+        <property name="msgType" value="json"/>
+        <property name="payType" value="aliPay"/>
     </bean>
 
     <bean id="payService" class="com.egzosn.pay.ali.api.AliPayService">

@@ -243,8 +243,9 @@
                                     </div>
                                 </c:if>
                                 <c:if test="${o.order.status=='WAIT_PAY' }">
-
-                                    <button class="orderListItemConfirm">付款</button>
+                                    <a href="${pageContext.request.contextPath}/order/payFromOrder?oid=${o.order.id}">
+                                        <button class="orderListItemConfirm">付款</button>
+                                    </a>
                                     <div class="cancleWaitPayOrder">
                                     <a href="${pageContext.request.contextPath}/order/cancelOrder?oid=${o.order.id}">取消订单</a>
                                     </div>

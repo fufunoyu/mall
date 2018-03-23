@@ -297,6 +297,10 @@ public class OrderServiceImpl implements OrderService {
         return totalPrice;
     }
 
+    /**
+     * 生成订单号
+     * @return
+     */
     private String randNumber() {
         Random rand = new Random();
         int max = 9999, min = 1000;

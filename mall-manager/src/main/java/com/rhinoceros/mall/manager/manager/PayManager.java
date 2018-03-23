@@ -4,6 +4,7 @@ package com.rhinoceros.mall.manager.manager;
 import com.egzosn.pay.common.bean.PayOrder;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public interface PayManager {
@@ -13,7 +14,7 @@ public interface PayManager {
     * @param payOrder
     * @return
     */
-   String toPay(PayOrder payOrder);
+   String aliToPay(PayOrder payOrder);
 
    /**
     * 支付回调
@@ -21,6 +22,6 @@ public interface PayManager {
     * @param inputStream
     * @return
     */
-   Long payBack(Map<String, String[]> parameter, InputStream inputStream);
+   List<String> aliPayBack(Map<String, String[]> parameter, InputStream inputStream);
 
 }

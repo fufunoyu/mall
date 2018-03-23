@@ -14,6 +14,7 @@ import com.rhinoceros.mall.core.vo.ProductVo;
 import com.rhinoceros.mall.service.service.*;
 import com.rhinoceros.mall.web.support.web.annotation.Authentication;
 import com.rhinoceros.mall.web.support.web.annotation.PageDefault;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -121,7 +122,7 @@ public class OrderController {
     }
 
     /**
-     * 显示地址列表
+     * 提交订单按钮
      *
      * @param addressId
      * @param dtos
@@ -134,9 +135,57 @@ public class OrderController {
     public String addOrder(@RequestParam("addressId") Long addressId, OrderListDto dtos, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         List<Order> orders = orderService.add(dtos, user.getId(), addressId);
-        model.addAttribute("orders", orders);
-        return "alipay";
+        String paypage = payService.toPayByOrderList(orders);
+        model.addAttribute("page", paypage);
+        return "pay";
     }
+
+    /**
+     * 按付款按钮
+     * @param oid
+     * @param model
+     * @return
+     */
+    @Authentication
+    @RequestMapping("payFromOrder")
+    public String addOrder(@RequestParam("oid")Long oid,Model model){
+        List<Order> orders = new LinkedList<>();
+        orders.add(orderService.findById(oid));
+        String paypage = payService.toPayByOrderList(orders);
+        model.addAttribute("page", paypage);
+        return "pay";
+    }
+
+    /**
+     * 支付功能
+     *
+     * @param orderIdList
+     * @return
+     */
+/*    @Authentication
+    @RequestMapping({"/payFunction"})
+    public String pay(@RequestParam("oid") List<Long> orderIdList,
+                      Model model) {
+        String paypage = payService.toPayByOrderList(orderIdList);
+        model.addAttribute("page", paypage);
+        return "pay";
+    }*/
+
+    /**
+     * 支付返回
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping({"/payResult"})
+    public String payResult(HttpServletRequest request) throws IOException {
+        //加了抛异常就不能加model了？？
+        Map<String, String[]> parameter = request.getParameterMap();
+        ServletInputStream inputStream = request.getInputStream();
+        List<String> orderIdentifierList = payService.payBack(parameter, inputStream);
+        return "paySuccess";
+    }
+
 
     /**
      * 订单显示页面
@@ -322,45 +371,8 @@ public class OrderController {
         return "redirect:/order/list?status=RETURN_ING";
     }
 
-    /**
-     * 支付功能
-     *
-     * @param oid
-     * @return
-     */
-    @Authentication
-    @RequestMapping({"/pay"})
-    public String pay(@RequestParam("oid") Long oid,
-                      Model model) {
-        Order order = orderService.findById(oid);
-        String paypage = payService.toPay(order);
-        model.addAttribute("page", paypage);
-        return "pay";
-    }
 
-    /**
-     * 支付返回
-     * @param request
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping({"/payResult"})
-    public String payResult(HttpServletRequest request) throws IOException {
-        //加了抛异常就不能加model了？？
-        Map<String, String[]> parameter = request.getParameterMap();
-        ServletInputStream inputStream = request.getInputStream();
-        Long oid = payService.payBack(parameter, inputStream);
-        return "paySuccess";
-    }
 
-    /**
-     * 支付测试
-     * @return
-     */
-    @RequestMapping({"/test"})
-    public String test() {
-        return "paySuccess";
-    }
 
     /**
      * 计算商品总额

@@ -69,6 +69,9 @@
             <if test="addressId!=null">
                 address_id = #{addressId},
             </if>
+            <if test="payType!=null">
+                pay_type = #{payType},
+            </if>
         </set>
         WHERE id = #{id}
     </update>
@@ -127,6 +130,9 @@
             <if test="addressId!=null">
                 address_id = #{addressId},
             </if>
+            <if test="payType!=null">
+                pay_type = #{payType},
+            </if>
         </set>
         WHERE identifier = #{identifier}
     </update>
@@ -141,6 +147,41 @@
         SELECT *
         FROM `order`
         WHERE identifier = #{identifier}
+    </select>
+
+    <insert id="addAliPay" parameterType="AliPay">
+        INSERT INTO `ali_pay`
+        (order_identifier,trade_no,return_id,order_total_id)
+        VALUE
+        (#{orderIdentifier},#{tradeNo},#{returnId},#{orderTotalId})
+    </insert>
+
+    <select id="findAliPayByOrderIdentifier" parameterType="String" resultType="AliPay">
+        SELECT *
+        FROM `ali_pay`
+        WHERE order_identifier = #{orderIdentifier}
+    </select>
+
+    <update id="updateAliPayByOrderIdentifier" parameterType="AliPay">
+        UPDATE `ali_pay`
+        <set>
+            <if test="tradeNo!=null">
+                trade_no = #{tradeNo},
+            </if>
+            <if test="returnId!=null">
+                return_id = #{returnId},
+            </if>
+            <if test="orderTotalId!=null">
+                order_total_id = #{orderTotalId}
+            </if>
+        </set>
+        WHERE order_identifier = #{orderIdentifier}
+    </update>
+
+    <select id="findOIdentifierByTotalId" parameterType="String" resultType="String">
+        SELECT order_identifier
+        FROM `ali_pay`
+        WHERE order_total_id = #{totalId}
     </select>
 
 </mapper>

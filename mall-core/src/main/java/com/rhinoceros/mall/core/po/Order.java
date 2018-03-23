@@ -1,6 +1,7 @@
 package com.rhinoceros.mall.core.po;
 
 import com.rhinoceros.mall.core.enumeration.OrderStatus;
+import com.rhinoceros.mall.core.enumeration.PayType;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -69,6 +70,10 @@ public class Order {
      * 购买数量
      */
     private Integer productNum;
+    /**
+     * 支付方式
+     */
+    private PayType payType;
 
 }
 
