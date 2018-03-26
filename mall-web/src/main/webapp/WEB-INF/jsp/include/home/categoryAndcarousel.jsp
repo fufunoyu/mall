@@ -5,7 +5,7 @@
 <script>
     function showProductsAsideCategorys(cid) {
         $("div.eachCategory[cid=" + cid + "]").css("background-color", "white");
-        $("div.eachCategory[cid=" + cid + "] a").css("color", "#87CEFA");
+        $("div.eachCategory[cid=" + cid + "] a").css("color", "red");
         var row = $("div.productsAsideCategorys[cid=" + cid + "] div.row")
         if (row.children().length <=0) {
             $.ajax({
@@ -25,8 +25,9 @@
 
 
     function hideProductsAsideCategorys(cid) {
-        $("div.eachCategory[cid=" + cid + "]").css("background-color", "#e2e2e3");
-        $("div.eachCategory[cid=" + cid + "] a").css("color", "#000");
+        $("div.eachCategory[cid=" + cid + "]").css("background-color", "");
+
+        $("div.eachCategory[cid=" + cid + "] a").css("color", "#fff");
         $("div.productsAsideCategorys[cid=" + cid + "]").hide();
     }
 
@@ -62,17 +63,10 @@
             $("img#catear").hide();
         });
 
-        var left = $("div#carousel-of-product").offset().left;
-        $("div.categoryMenu").css("left", left - 20);
-        $("div.categoryWithCarousel div.head").css("margin-left", left);
-        $("div.productsAsideCategorys").css("left", left - 20);
-
-
     });
 </script>
 
 <img src="${pageContext.request.contextPath}/static/img/site/catear.png" id="catear" class="catear"/>
-
 <div class="categoryWithCarousel">
     <div class="headbar show1">
         <div class="head ">
@@ -81,7 +75,7 @@
         </div>
         <div class="rightMenu">
             <c:forEach items="${categories}" var="category" varStatus="st">
-                <c:if test="${st.count<=4}">
+                <c:if test="${st.count<=8}">
                     <span>
                         <a href="${pageContext.request.contextPath}/category/product/list?cid=${category.id}">${category.name}</a>
                     </span>
@@ -100,6 +94,7 @@
 
 
     <%@include file="carousel.jsp" %>
+
 
     <div class="carouselBackgroundDiv">
     </div>

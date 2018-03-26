@@ -129,7 +129,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2>修改密码</h2>
+                <h3>修改密码</h3>
             </div>
             <div class="modal-body">
                 <br/>
@@ -157,7 +157,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close" onclick="avatar_cancle()">&times;</span>
-                <h2>修改头像</h2>
+                <h3>修改头像</h3>
             </div>
             <div class="modal-body">
                 <br/>
