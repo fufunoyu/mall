@@ -76,7 +76,7 @@
         var sels = $("#sendGoods_grid").datagrid("getSelections");
         var ids = [];
         for(var i in sels){
-            ids.push(sels[i].id);
+            ids.push(sels[i].identifier);
         }
         return ids;
     }

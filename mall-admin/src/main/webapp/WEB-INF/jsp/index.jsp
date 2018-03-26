@@ -95,17 +95,17 @@
             <li>
                 <span>订单管理</span>
                 <ul>
-                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order'}">
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/waitShip'}">
                         <span>待发货</span>
                     </li>
-                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/shipIngPage'}">
                         <span>已发货</span>
                     </li>
-                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
-                        <span>待收货</span>
-                    </li>
-                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/waitCommentPage'}">
                         <span>待评价</span>
+                    </li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/completedPage'}">
+                        <span>已完成</span>
                     </li>
                     <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
                         <span>退货中</span>

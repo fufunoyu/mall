@@ -83,6 +83,73 @@ public class OrderController {
         return "{\"result\":\"success\"}";
     }
 
+
+    /**
+     * 显示已发货页面
+     * @return
+     */
+    @RequestMapping("/shipIngPage")
+    public String showShipIngPage(){
+        return "include/shipIng";
+    }
+
+
+    /**
+     * 获取所有已发货的订单的信息
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/shipIngList.json")
+    public AdminOrderListWithCountVo getShipIngList(@PageDefault(required = false) PageQuery pageQuery) {
+        AdminOrderListWithCountVo adminOrderListWithCountVo = getAdminOrderListWithCountVo(OrderStatus.WAIT_RECEIVE, pageQuery, true, true, false);
+        return adminOrderListWithCountVo;
+    }
+
+
+    /**
+     * 显示待评价页面
+     * @return
+     */
+    @RequestMapping("/waitCommentPage")
+    public String showWaitCommentPage(){
+        return "include/waitComment";
+    }
+
+    /**
+     * 获取所有已发货的订单的信息
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/waitCommentList.json")
+    public AdminOrderListWithCountVo getWaitCommentList(@PageDefault(required = false) PageQuery pageQuery) {
+        AdminOrderListWithCountVo adminOrderListWithCountVo = getAdminOrderListWithCountVo(OrderStatus.WAIT_COMMENT, pageQuery, true, true, false);
+        return adminOrderListWithCountVo;
+    }
+
+
+    /**
+     * 显示待评价页面
+     * @return
+     */
+    @RequestMapping("/completedPage")
+    public String showCompletedPage(){
+        return "include/completed";
+    }
+
+    /**
+     * 获取所有已发货的订单的信息
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/completedList.json")
+    public AdminOrderListWithCountVo getComletedList(@PageDefault(required = false) PageQuery pageQuery) {
+        AdminOrderListWithCountVo adminOrderListWithCountVo = getAdminOrderListWithCountVo(OrderStatus.COMPLETED, pageQuery, true, true, false);
+        return adminOrderListWithCountVo;
+    }
+
     /**
      * 获取订单展示对象
      * @param orderStatus
@@ -161,7 +228,12 @@ public class OrderController {
             orderService.updateStatus2ShipByIds(ids);
         return "{\"result\":\"success\"}";
     }
-    @RequestMapping()
+
+    /**
+     * 显示待发货页面
+     * @return
+     */
+    @RequestMapping("/waitShip")
     public String showProduct() {
         return "include/sendGoods";
     }
