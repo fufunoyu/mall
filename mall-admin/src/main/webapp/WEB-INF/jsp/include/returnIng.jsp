@@ -49,7 +49,7 @@
             method: 'get',
             success: function (data) {
 //                console.log(data)
-                refreshPage(data, 1)
+                returnIngRefreshPage(data, 1)
             }
         })
     }
@@ -99,7 +99,7 @@
                                         url: '${pageContext.request.contextPath}/order/returnIngList.json?page=' + pageNumber + "&size=" + pageSize,
                                         method: 'get',
                                         success: function (data) {
-                                            refreshPage(data, pageNumber)
+                                            returnIngRefreshPage(data, pageNumber)
                                         }
                                     })
                                     //删除处理后的行
@@ -127,7 +127,7 @@
                 url: '${pageContext.request.contextPath}/order/returnIngList.json?page=' + pageNumber + "&size=" + pageSize,
                 method: 'get',
                 success: function (data) {
-                    refreshPage(data, pageNumber)
+                    returnIngRefreshPage(data, pageNumber)
                 }
             })
             $(this).pagination('loaded');
@@ -137,7 +137,7 @@
     /**
      * 刷新列表
      */
-    function refreshPage(data, pageNumber) {
+    function returnIngRefreshPage(data, pageNumber) {
         var arr = []
         for (var i = 0; i < data.adminOrderVoList.length; i++) {
             arr.push({
@@ -152,13 +152,13 @@
         }
 //                console.log(arr)
         $('#returnIng_grid').datagrid('loadData', arr)
-        changePage(pageNumber, data.count)
+        returnIngChangePage(pageNumber, data.count)
     }
 
     /**
      * 分页设置每页显示条数和当前目录及其子目录共有多少件商品
      * */
-    function changePage(page, total) {
+    function returnIngChangePage(page, total) {
         $('#returnIng_pagination').pagination({
             total: total,
             pageNumber: page
