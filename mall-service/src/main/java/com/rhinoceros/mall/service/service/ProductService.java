@@ -72,4 +72,6 @@ public interface ProductService {
      * @param inputStreamWithFileNames
      */
     void addSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
+
+    String editor(Product product, List<InputStreamWithFileName> list);
 }

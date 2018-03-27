@@ -6,7 +6,14 @@
 
 </head>
 <body>
+<script>
+    window.UEDITOR_HOME_URL = "${pageContext.request.contextPath}/static/ueditor/"
 
+</script>
+
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <%--图片大小--%>
 <style>
     .photo {
@@ -195,7 +202,7 @@
         data.append("discount",$("#productDiscount").numberspinner("getValue"))
         data.append("storeNum",$("#productStoreNum").numberspinner("getValue"))
         data.append("status",$("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        data.append("description",$("#productDescription").texteditor('getValue'))
+        data.append("description",editor.getContent())
         $.ajax({
             url: '${pageContext.request.contextPath}/product/update',
             processData: false,
@@ -402,7 +409,7 @@
             }
         })
 
-        $("#productDescription").texteditor('setValue', row.description)
+        editor.setContent(row.description)
         $("#productName").textbox('setText', row.name)
         $("#productPrice").numberspinner("setValue", row.price)
         $("#productDiscount").numberspinner("setValue",  row.discount)
@@ -466,10 +473,10 @@
         })
 
 
-        <%--商品描述框--%>
-        $('#productDescription').texteditor({
-            //...
-        });
+        <%--&lt;%&ndash;商品描述框&ndash;%&gt;--%>
+        <%--$('#productDescription').texteditor({--%>
+            <%--//...--%>
+        <%--});--%>
         $('#productDescription1').texteditor({
             //...
         });
@@ -497,7 +504,7 @@
 <input hidden id="tmpRightClickImgUrl">
 <%--参数窗口--%>
 <div id="product_win" class="easyui-window" title="详细参数" data-options="iconCls:'icon-save',closed:true,modal:true"
-     style="padding:10px;width: 500px;height: 100%">
+     style="padding:10px;width: 1000px;height: 100%">
     <div style="margin-bottom:20px">
         <input id="productName" class="easyui-textbox" name="name" style="width:100%"
                data-options="label:'商品名称:',required:true">
@@ -552,10 +559,14 @@
         <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
                data-options="label:'评论总数:',required:true" readonly>
     </div>
-    <div>
-        <span>商品详情:</span>
-        <div id="productDescription" class="easyui-texteditor" style="height: 300px">
-        </div>
+    <div style="margin-bottom:20px">
+        <h2>富文本</h2>
+        <form id="productDescription" method="post" target="_blank" style="width:100%;height: 500px">
+            <script type="text/plain" id="myEditor" name="myEditor" ></script>
+        </form>
+        <script type="text/javascript">
+            var editor = UE.getEditor('productDescription');
+        </script>
     </div>
     <div style="margin-bottom:20px">
         <button onclick="product_button_edit_confirm()">确认</button>

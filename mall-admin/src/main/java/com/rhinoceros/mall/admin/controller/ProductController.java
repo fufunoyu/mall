@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 创建商品控制器
@@ -30,6 +32,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    public static final String UPLOAD_IMAGE_NAME = "image";
     //定义要调用的逻辑业务对象
     @Autowired
     private ProductService productService;
@@ -53,6 +56,11 @@ public class ProductController {
         return productsWithCountVo;
     }
 
+//    @RequestMapping("/edict")
+//    public Product updateSelectionProduct() {
+//        return ProductManager.updateSelectionById();
+//    }
+
     /**
      * 显示商品
      *
@@ -62,11 +70,6 @@ public class ProductController {
     public String showProduct() {
         return "include/product";
     }
-
-//    @RequestMapping("/edict")
-//    public Product updateSelectionProduct() {
-//        return ProductManager.updateSelectionById();
-//    }
 
     /**
      * 删除商品
@@ -85,13 +88,13 @@ public class ProductController {
      * @param product
      */
     @ResponseBody
-    @RequestMapping(value = "/update",produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/update", produces = "text/plain;charset=UTF-8")
     public String update(@RequestPart("files") MultipartFile[] multipartFiles, Product product) {
         List<InputStreamWithFileName> list = new LinkedList<>();
         uploadFile(multipartFiles, list);
         try {
             productService.updateSelectionById(product, list);
-        }catch (FileUplodException e){
+        } catch (FileUplodException e) {
             e.printStackTrace();
             return "图片格式不正确";
         }
@@ -125,7 +128,7 @@ public class ProductController {
         }
         try {
             productService.addSelectionById(product, list);
-        }catch (FileUplodException e){
+        } catch (FileUplodException e) {
             e.printStackTrace();
             return "图片格式不正确";
         }
@@ -148,4 +151,57 @@ public class ProductController {
             log.error(e.getMessage());
         }
     }
+
+
+    /**
+     * 富文本上传图片
+     * @param image
+     * @param action
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/editor")
+    public Map<String, Object> uplodImage(@RequestParam(value = ProductController.UPLOAD_IMAGE_NAME, required = false) MultipartFile image,
+                                          @RequestParam(value = "action", required = false) String action,Product product) {
+        String acionName = "upload";
+        Map<String, Object> config = new HashMap<>();
+
+        if ("config".equals(action)) {
+            config.put("imageUrl", "");
+            config.put("imageUrlPrefix", "");
+            config.put("imagePath", "");
+            config.put("imageFieldName", UPLOAD_IMAGE_NAME);
+            config.put("imageMaxSize", 2048);
+            String[] images = {".jpg"};
+            config.put("imageAllowFiles", images);
+            config.put("imageActionName", acionName);
+            return config;
+        }
+        if (acionName.equals(action)&&image!=null) {
+            List<InputStreamWithFileName> list = new LinkedList<>();
+            InputStreamWithFileName inputStreamWithFileName=new InputStreamWithFileName();
+            try {
+                String fireName=image.getName();
+                InputStream is=image.getInputStream();
+                inputStreamWithFileName.setIs(is);
+                inputStreamWithFileName.setFileName(fireName);
+                list.add(inputStreamWithFileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+            }
+            //保存图片生成url
+            productService.editor(product,list);
+            String url = product.getDescription();
+            config.put("url", url);
+            config.put("name", "name");
+            config.put("state", "SUCCESS");
+            config.put("original", image.getOriginalFilename());
+            config.put("type", image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".")));
+            return config;
+        }
+        config.put("state", "ERROR");
+        return config;
+    }
+
 }
