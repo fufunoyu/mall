@@ -42,8 +42,11 @@
     </div>
 
 
-    <img id="loginBackgroundImg" class="loginBackgroundImg"
-         src="${pageContext.request.contextPath}/static/img/site/loginBackground.jpg">
+    <div id="loginBackgroundImg" class="loginBackgroundImg">
+        <img src="${pageContext.request.contextPath}/static/img/site/loginBackground5.png">
+    </div>
+    <%--<img id="loginBackgroundImg" class="loginBackgroundImg"--%>
+         <%--src="${pageContext.request.contextPath}/static/img/site/loginBackground5.png">--%>
 
     <form class="loginForm" action="${pageContext.request.contextPath}/loginSubmit" method="post">
         <div id="loginSmallDiv" class="loginSmallDiv">
