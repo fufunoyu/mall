@@ -7,7 +7,6 @@ body {
     font-family: Arial;
     min-width: 1024px;
     /* 	width:1920px; */
-    background-color: #efefef;
 
 }
 
@@ -262,7 +261,7 @@ div.homepageCategoryProducts {
     /*background-color: #F5F5F5;*/
     padding: 50px 10px 50px 10px;
     margin: 10px auto;
-    max-width: 1025px;
+    max-width: 1320px;
 }
 
 div.left-mark {
@@ -281,13 +280,19 @@ span.categoryTitle {
 }
 
 div.productItem {
-    width: 189px;
+    width: 245px;
     height: 285px;
     border: 1px solid white;
     background-color: white;
     margin: 8px 4px;
     float: left;
     cursor: pointer;
+    padding:0 20px;
+}
+
+.productItem a{
+    display: block;
+    width: 100%;
 }
 
 a.productItemDescLink {
@@ -319,8 +324,8 @@ div.eachHomepageCategoryProducts {
 }
 
 div.productItem img {
-    width: 187px;
-    height: 190px;
+    width: 100%;
+    height: 200px;
 }
 
 div.productItem img:hover {
@@ -349,8 +354,11 @@ div.footer_desc {
     border-top-style: solid;
     border-top-width: 1px;
     border-top-color: #e7e7e7;
-    padding-top: 30px;
-    margin: 0px 20px;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 div.footer div.copyright div.white_link a {
@@ -364,9 +372,9 @@ div.footer div.copyright div.white_link {
 }
 
 div.footer_desc div.descColumn {
-    width: 20%;
-    float: left;
-    padding-left: 15px;
+}
+.descColumn:last-child{
+    margin-right: 0;
 }
 
 div.footer_desc div.descColumn span.descColumnTitle {
@@ -408,14 +416,16 @@ div.license span {
 }
 
 div.simpleLogo {
-    padding: 32px 50px;
+    padding: 22px 50px;
 }
 
-img.loginBackgroundImg {
+div.loginBackgroundImg {
     display: block;
+    background-color: rgb(205, 29, 0);
+}
+div.loginBackgroundImg img{
     margin: 0px auto;
-    width: calc(100% - 180px);
-    height: 500px;
+    display: block;
 }
 
 div.loginDivInProductPageModalDiv {
@@ -437,7 +447,7 @@ div.loginSmallDiv {
     background-color: white;
     position: absolute;
     right: 180px;
-    top: 180px;
+    top: 200px;
     width: 350px;
     height: 400px;
     padding: 60px 25px 80px 25px;
@@ -2168,60 +2178,21 @@ div.makeReviewButtonDiv button {
     font-weight: bold;
 }
 
-div.registerDiv {
-    margin: 10px 20px;
-    text-align: center;
-}
-
-table.registerTable {
-    color: #3C3C3C;
-    font-size: 16px;
-    table-layout: fixed;
-    margin-top: 50px;
-}
-
-table.registerTable td {
-    /* 	border:1px dotted skyblue !important; */
-    padding: 10px 30px;
-}
-
-td.registerTableLeftTD {
-    width: 300px;
-    text-align: right;
-}
-
-td.registerTableRightTD {
-    width: 300px;
-    text-align: left;
+.registerForm {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background-color: #fff;
+    width: 500px;
 }
 
 td.registerTip {
     font-weight: bold;
 }
 
-table.registerTable input {
-    border: 1px solid #DEDEDE;
-    width: 213px;
-    height: 36px;
-    font-size: 14px;
-}
 
-td.registerButtonTD {
-    text-align: center;
-}
-
-table.registerTable button {
-    width: 170px;
-    height: 36px;
-    border-radius: 2px;
-    color: white;
-    background-color: #C40000;
-    border-width: 0px;
-}
-
-table.registerTable {
-
-}
 
 div.registerSuccessDiv {
     margin: 10px 20px;
@@ -2259,11 +2230,11 @@ div.reviewStasticsDiv {
 }
 
 div.registerErrorMessageDiv {
-    width: 600px;
-    margin: 0px auto;
-    height: 50px;
-    visibility: hidden;
+    padding-bottom: 10px;
+    display: none;
+
 }
+
 
 td.orderItemProductInfoPartTD {
     border-bottom: solid 1px #ECECEC;
@@ -2333,4 +2304,12 @@ table td {
 
 span.dingdanhao {
     color: #aaa;
+}
+
+
+.register_title{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #555;
 }
