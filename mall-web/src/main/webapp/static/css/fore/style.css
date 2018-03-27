@@ -64,7 +64,7 @@ nav.top div.row div {
 
 div.searchDiv {
     background-color: #C40000;
-    width: 400px;
+    width: 650px;
     padding: 1px;
     height: 40px;
     display: block;
@@ -72,7 +72,7 @@ div.searchDiv {
 }
 
 div.searchDiv input {
-    width: 275px;
+    width: 500px;
     border: 1px solid transparent;
     height: 36px;
     margin: 1px;
@@ -80,7 +80,7 @@ div.searchDiv input {
 }
 
 div.searchDiv button {
-    width: 110px;
+    width: 140px;
     border: 1px solid transparent;
     background-color: #C40000;
     color: white;
@@ -251,10 +251,16 @@ img.catear {
 
 img.logo {
     position: absolute;
-    left: 30px;
-    top: 55px;
+    left: 300px;
+    top: 72px;
     width: 250px;
     /* 	z-index:-1; */
+}
+img.anim {
+    position: absolute;
+    left: 20px;
+    top: 25px;
+    width: 250px;
 }
 
 div.homepageCategoryProducts {
@@ -2181,11 +2187,10 @@ div.makeReviewButtonDiv button {
 .registerForm {
     position: absolute;
     top: 200px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 60%;
     padding: 20px;
     background-color: #fff;
-    width: 500px;
+    width: 450px;
 }
 
 td.registerTip {
@@ -2312,4 +2317,7 @@ span.dingdanhao {
     font-weight: bold;
     text-align: center;
     color: #555;
+}
+.register_bg{
+    width: 100%;
 }
