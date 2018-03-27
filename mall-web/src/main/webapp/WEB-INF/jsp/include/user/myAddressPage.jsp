@@ -103,7 +103,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close" onclick="updateclose()">&times;</span>
-                <h2>编辑地址</h2>
+                <h3>编辑地址</h3>
             </div>
             <div class="modal-body">
                 <br/>
@@ -160,7 +160,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close" onclick="addclose()">&times;</span>
-                <h2>添加地址</h2>
+                <h3>添加地址</h3>
             </div>
             <div class="modal-body">
                 <br/>
