@@ -88,6 +88,7 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public int updateSelectionById(Product product) {
         int modify = productDao.updateSelectionById(product);
+        product = productDao.findById(product.getId());
         try {
             byte[] bytes = mapper.writeValueAsBytes(product);
             client.prepareUpdate("mall", "product", product.getId().toString())
@@ -95,6 +96,7 @@ public class ProductManagerImpl implements ProductManager {
                     .get();
             return modify;
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("json转换失败");
             throw new BaseManagerException("json转换失败");
         }

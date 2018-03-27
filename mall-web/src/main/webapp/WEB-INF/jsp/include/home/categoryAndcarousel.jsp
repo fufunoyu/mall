@@ -71,7 +71,7 @@
     });
 </script>
 
-<img src="${pageContext.request.contextPath}/static/img/site/catear.png" id="catear" class="catear"/>
+<%--<img src="${pageContext.request.contextPath}/static/img/site/xiniu.jpg" id="catear" class="catear"/>--%>
 
 <div class="categoryWithCarousel">
     <div class="headbar show1">

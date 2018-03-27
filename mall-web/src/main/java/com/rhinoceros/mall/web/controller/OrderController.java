@@ -20,11 +20,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -43,6 +44,8 @@ public class OrderController {
     private CommentService commentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PayService payService;
 
 
     /**
@@ -54,7 +57,7 @@ public class OrderController {
      */
     @Authentication
     @RequestMapping("/add")
-    public String showOrderConfirm(OrderDto orderDto, Model model,HttpSession session) {
+    public String showOrderConfirm(OrderDto orderDto, Model model, HttpSession session) {
         //获取对应用户
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         //获取商品的id
@@ -70,7 +73,7 @@ public class OrderController {
             model.addAttribute("total", calculate(product.getPrice(), product.getDiscount(), orderDto.getProductNum()));
             //获取用户的收货地址
             List<Address> addresses = addressService.findByUserId(user.getId());
-            model.addAttribute("addressList",addresses);
+            model.addAttribute("addressList", addresses);
 
             return "buy";
         }
@@ -90,6 +93,7 @@ public class OrderController {
     public String showCartOrderConfirm(@RequestParam("id") List<Long> ids, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         List<CartProduct> cartProducts = cartProductService.findCartProducts(ids, user.getId());
+
         //根据商品id获取商品信息
         List<OrderProductVo> orderProductVos = new LinkedList<>();
         BigDecimal total = BigDecimal.ZERO;
@@ -105,17 +109,18 @@ public class OrderController {
         }
 
         List<Address> addresses = addressService.findByUserId(user.getId());
-        model.addAttribute("addressList",addresses);
+        model.addAttribute("addressList", addresses);
         model.addAttribute("orderProducts", orderProductVos);
         model.addAttribute("total", total);
         String cartSubmit = "success";
-        model.addAttribute("cartSubmit",cartSubmit);
+        model.addAttribute("cartSubmit", cartSubmit);
         return "buy";
 
     }
 
     /**
-     * 显示地址列表
+     * 提交订单按钮
+     *
      * @param addressId
      * @param dtos
      * @param session
@@ -124,12 +129,63 @@ public class OrderController {
      */
     @Authentication
     @RequestMapping("/confirm")
-    public String addOrder(@RequestParam("addressId")Long addressId, OrderListDto dtos,HttpSession session,Model model){
+    public String addOrder(@RequestParam("addressId") Long addressId, OrderListDto dtos, HttpSession session, Model model) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
-        List<Order> orders = orderService.add(dtos,user.getId(),addressId);
-        model.addAttribute("orders",orders);
-        return "alipay";
+        List<Order> orders = orderService.add(dtos, user.getId(), addressId);
+        String paypage = payService.toPayByOrderList(orders);
+        model.addAttribute("page", paypage);
+        return "pay";
     }
+
+    /**
+     * 按付款按钮
+     *
+     * @param oid
+     * @param model
+     * @return
+     */
+    @Authentication
+    @RequestMapping("payFromOrder")
+    public String addOrder(@RequestParam("oid") Long oid, Model model) {
+        List<Order> orders = new LinkedList<>();
+        orders.add(orderService.findById(oid));
+        String paypage = payService.toPayByOrderList(orders);
+        model.addAttribute("page", paypage);
+        return "pay";
+    }
+
+    /**
+     * 支付功能
+     *
+     * @param orderIdList
+     * @return
+     */
+/*    @Authentication
+    @RequestMapping({"/payFunction"})
+    public String pay(@RequestParam("oid") List<Long> orderIdList,
+                      Model model) {
+        String paypage = payService.toPayByOrderList(orderIdList);
+        model.addAttribute("page", paypage);
+        return "pay";
+    }*/
+
+    /**
+     * 支付返回
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping({"/payResult"})
+    public String payResult(HttpServletRequest request) throws IOException {
+        //加了抛异常就不能加model了？？
+        Map<String, String[]> parameter = request.getParameterMap();
+        ServletInputStream inputStream = request.getInputStream();
+        List<String> orderIdentifierList = payService.payBack(parameter, inputStream);
+        return "paySuccess";
+    }
+
+
     /**
      * 订单显示页面
      *
@@ -178,7 +234,6 @@ public class OrderController {
         model.addAttribute("orderStatus", orderStatus == null ? "ALL" : orderStatus.name());
         return "bought";
     }
-
 
 
     /**
@@ -311,13 +366,10 @@ public class OrderController {
     @Authentication
     @RequestMapping({"/returnOrder"})
     public String returnOrder(@RequestParam("oid") Long oid) {
-        Order order = new Order();
-        order.setId(oid);
-        //更改订单状态
-        order.setStatus(OrderStatus.WAIT_RETURN);
-        orderService.updateSelectionById(order);
-        return "redirect:/order/list?status=WAIT_RETURN";
+        orderService.applyReturnOrder(oid);
+        return "redirect:/order/list?status=RETURN_ING";
     }
+
 
     /**
      * 计算商品总额

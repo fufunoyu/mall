@@ -21,6 +21,18 @@
         <module>mall-admin</module>
     </modules>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <properties>
         <spring.version>4.3.14.RELEASE</spring.version>
         <mybatis.version>3.4.5</mybatis.version>
@@ -121,6 +133,18 @@
                 <groupId>com.rhinoceros</groupId>
                 <artifactId>mall-web</artifactId>
                 <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <!--支付宝支付-->
+            <dependency>
+                <groupId>com.egzosn</groupId>
+                <artifactId>pay-java-common</artifactId>
+                <version>2.0.7-RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>com.egzosn</groupId>
+                <artifactId>pay-java-ali</artifactId>
+                <version>2.0.7-RELEASE</version>
             </dependency>
 
             <!--elasticsearch-->
@@ -265,18 +289,6 @@
                 <version>[7.2.0, 7.2.99]</version>
             </dependency>
 
-            <!--<dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.6.2</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.squareup.okhttp3</groupId>
-                <artifactId>okhttp</artifactId>
-                <version>3.3.1</version>
-                <scope>compile</scope>
-            </dependency>-->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -286,18 +298,4 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

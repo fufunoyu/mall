@@ -72,11 +72,11 @@
     })()
 
     //获得被选中的订单号
-    function getSelectionsIds(){
+    function getWaitSendIds(){
         var sels = $("#sendGoods_grid").datagrid("getSelections");
         var ids = [];
         for(var i in sels){
-            ids.push(sels[i].id);
+            ids.push(sels[i].identifier);
         }
         return ids;
     }
@@ -88,7 +88,7 @@
         text:'发货',
         iconCls: 'icon-remove',
         handler:function () {
-            var ids = getSelectionsIds();
+            var ids = getWaitSendIds();
             if(ids.length == 0){
                 $.messager.alert('提示','请选择至少一行！');
                 return
