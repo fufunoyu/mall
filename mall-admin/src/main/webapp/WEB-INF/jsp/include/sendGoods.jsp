@@ -75,10 +75,12 @@
     function getWaitSendIds(){
         var sels = $("#sendGoods_grid").datagrid("getSelections");
         var ids = [];
+        var identifies = []
         for(var i in sels){
-            ids.push(sels[i].identifier);
+            ids.push(sels[i].id);
+            identifies.push(sels[i].identifier)
         }
-        return ids;
+        return {ids:ids,identifiers:identifies};
     }
     /**
      * 工具栏
@@ -88,18 +90,19 @@
         text:'发货',
         iconCls: 'icon-remove',
         handler:function () {
-            var ids = getWaitSendIds();
-            if(ids.length == 0){
+            var obj = getWaitSendIds();
+
+            if(obj.ids.length == 0){
                 $.messager.alert('提示','请选择至少一行！');
                 return
             }
-            $.messager.confirm('确认','确定发货的订单号为'+ids+'吗？',function (r) {
+            $.messager.confirm('确认','确定发货的订单号为'+obj.identifiers+'吗？',function (r) {
                 if(r){
                     $.ajax({
                         url:'${pageContext.request.contextPath}/order/update.json',
                         method:'post',
                         data:{
-                            'ids':ids
+                            'ids':obj.ids
                         },
                         success:function (data) {
 //                            console.log(data)
@@ -131,7 +134,7 @@
                     var data = result.deliveryInfoVos
                     for(var i=0;i<data.length;i++){
                         arr.push({
-                            identifier:data[i].order.id,
+                            id:data[i].order.id,
                             identifier:data[i].order.identifier,
                             createAt:data[i].order.createAt,
                             name:data[i].product.name,

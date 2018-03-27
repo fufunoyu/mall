@@ -118,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setImageUrls(urls.stream()
                 .reduce((left, acc) -> left + Product.IMAGE_SEPARATION + acc)
-                .orElse("")
+                .orElse(null)
         );
         productManager.updateSelectionById(product);
     }
@@ -185,6 +185,23 @@ public class ProductServiceImpl implements ProductService {
                 .orElse("")
         );
         productManager.add(product);
+    }
+
+    /**
+     * 传递富文本的图片
+     * @param product
+     * @param list
+     * @return
+     */
+    @Override
+    public String editor(final Product product, List<InputStreamWithFileName> list) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        String dateString = formatter.format(new Date());
+        String savePath = "product/description" + dateString;
+        String saveName = UUID.randomUUID().toString() + "_" + list.get(0).getFileName();
+        String url = fileUploadManager.upload(list.get(0).getIs(), savePath, saveName);
+        product.setDescription(url);
+        return url;
     }
 
 

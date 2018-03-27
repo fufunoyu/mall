@@ -6,7 +6,14 @@
 
 </head>
 <body>
+<script>
+    window.UEDITOR_HOME_URL = "${pageContext.request.contextPath}/static/ueditor/"
 
+</script>
+
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <%--图片大小--%>
 <style>
     .photo {
@@ -84,7 +91,7 @@
         data.append("discount",$("#productDiscount1").numberspinner("getValue"))
         data.append("storeNum",$("#productStoreNum1").numberspinner("getValue"))
         data.append("status",$("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        data.append("description",$("#productDescription1").texteditor('getValue'))
+        data.append("description",editor1.getContent())
         if($("#productName1").textbox('getText')==null||$("#productName1").textbox('getText').trim()==""){
             $.messager.alert('提示', '商品名输入不正确！');
         }else if(files==null||files.length==0){
@@ -195,7 +202,7 @@
         data.append("discount",$("#productDiscount").numberspinner("getValue"))
         data.append("storeNum",$("#productStoreNum").numberspinner("getValue"))
         data.append("status",$("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        data.append("description",$("#productDescription").texteditor('getValue'))
+        data.append("description",editor.getContent())
         $.ajax({
             url: '${pageContext.request.contextPath}/product/update',
             processData: false,
@@ -402,7 +409,7 @@
             }
         })
 
-        $("#productDescription").texteditor('setValue', row.description)
+        editor.setContent(row.description)
         $("#productName").textbox('setText', row.name)
         $("#productPrice").numberspinner("setValue", row.price)
         $("#productDiscount").numberspinner("setValue",  row.discount)
@@ -450,7 +457,7 @@
             var files = this.files;
             if (window.FileReader) {
                 $("#image").empty()
-                for(var i=0;i<files.length;i++){
+                for (var i = 0; i < files.length; i++) {
                     var reader = new FileReader();
                     reader.readAsDataURL(files[i]);
                     //监听文件读取结束后事件
@@ -464,40 +471,41 @@
                 }
             }
         })
+    })
 
+        <%--&lt;%&ndash;商品描述框&ndash;%&gt;--%>
+        <%--$('#productDescription').texteditor({--%>
+        <%--//...--%>
+        <%--});--%>
+        //     $('#productDescription1').texteditor({
+        //         //...
+        //     });
+        // });
 
-        <%--商品描述框--%>
-        $('#productDescription').texteditor({
-            //...
-        });
-        $('#productDescription1').texteditor({
-            //...
-        });
-    });
+        <%--商品分类下拉框--%>
 
-    <%--商品分类下拉框--%>
-
-    function product_categoryFilter(data) {
-        var arr = []
-        for (var i = 0; i < data.length; i++) {
-            arr.push({
-                id: data[i].id,
-                text: data[i].name,
-                state: 'closed',
-                parentId: data[i].parentId,
-                // children: [{
-                //     text: ''
-                // }]
-            })
+        function product_categoryFilter(data) {
+            var arr = []
+            for (var i = 0; i < data.length; i++) {
+                arr.push({
+                    id: data[i].id,
+                    text: data[i].name,
+                    state: 'closed',
+                    parentId: data[i].parentId,
+                    // children: [{
+                    //     text: ''
+                    // }]
+                })
+            }
+            return arr
         }
-        return arr
-    }
+
 
 </script>
 <input hidden id="tmpRightClickImgUrl">
 <%--参数窗口--%>
 <div id="product_win" class="easyui-window" title="详细参数" data-options="iconCls:'icon-save',closed:true,modal:true"
-     style="padding:10px;width: 500px;height: 100%">
+     style="padding:10px;width: 1000px;height: 100%">
     <div style="margin-bottom:20px">
         <input id="productName" class="easyui-textbox" name="name" style="width:100%"
                data-options="label:'商品名称:',required:true">
@@ -552,10 +560,15 @@
         <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
                data-options="label:'评论总数:',required:true" readonly>
     </div>
-    <div>
-        <span>商品详情:</span>
-        <div id="productDescription" class="easyui-texteditor" style="height: 300px">
-        </div>
+    <div> <span>商品详情:</span>
+    <div style="margin-bottom:20px">
+        <form id="productDescription" method="post" target="_blank" style="width:100%;height: 500px">
+            <script type="text/plain" id="myEditor" name="myEditor" ></script>
+        </form>
+        <script type="text/javascript">
+            var editor = UE.getEditor('productDescription');
+        </script>
+    </div>
     </div>
     <div style="margin-bottom:20px">
         <button onclick="product_button_edit_confirm()">确认</button>
@@ -565,7 +578,7 @@
 <%--录入商品--%>
 <div id="product_insert_win" class="easyui-window" title="录入商品"
      data-options="iconCls:'icon-save',closed:true,modal:true"
-     style="padding:10px;width: 500px;height: 100%">
+     style="padding:10px;width: 1000px;height: 100%">
     <div style="margin-bottom:20px">
         <input id="productName1" class="easyui-textbox" name="name" style="width:100%"
                data-options="label:'商品名称:',required:true">
@@ -619,7 +632,13 @@
     <%--</div>--%>
     <div>
         <span>商品详情:</span>
-        <div id="productDescription1" class="easyui-texteditor" style="height: 300px">
+        <div style="margin-bottom:20px">
+            <form id="productDescription1" method="post" target="_blank" style="width:100%;height: 500px">
+                <script type="text/plain" id="myEditor1" name="myEditor1" ></script>
+            </form>
+            <script type="text/javascript">
+                var editor1 = UE.getEditor('productDescription1');
+            </script>
         </div>
     </div>
     <div style="margin-bottom:20px">
