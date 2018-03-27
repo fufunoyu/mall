@@ -34,7 +34,7 @@ public class CartProductController {
      */
     @Authentication
     @RequestMapping("/cart/list")
-    public String cart(Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+    public String cart(Model model, HttpSession session) {
         User user = (User) session.getAttribute(ConstantValue.CURRENT_USER);
         List<CartProduct> cartProducts = cartProductService.findByUserId(user.getId());
         List<ProductVo> products = new LinkedList<ProductVo>();

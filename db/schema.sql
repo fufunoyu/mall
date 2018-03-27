@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `address`;
 DROP TABLE IF EXISTS `index_product`;
 DROP TABLE IF EXISTS `index_slider`;
+DROP TABLE IF EXISTS `ali_pay`;
 
 
 CREATE TABLE `permission` (
@@ -175,6 +176,8 @@ CREATE TABLE `order` (
   COMMENT '商品id',
   product_num INT(5)  NOT NULL
   COMMENT '商品数量',
+  pay_type VARCHAR(20)      DEFAULT NULL
+  COMMENT '支付方式',
   PRIMARY KEY `id`(`id`),
   KEY `user_id`(`user_id`),
   KEY `identifier`(`identifier`),
@@ -182,6 +185,18 @@ CREATE TABLE `order` (
 )
   COMMENT '订单表';
 
+CREATE TABLE `ali_pay` (
+  order_identifier CHAR(18) NOT NULL
+  COMMENT '订单编号',
+  trade_no CHAR(32) DEFAULT NULL
+  COMMENT  '支付宝订单id',
+  return_id CHAR(32) DEFAULT NULL
+  COMMENT '支付宝退货订单id',
+  order_total_id CHAR (18) NOT NULL
+  COMMENT '订单的总订单号',
+  KEY `trade_no`(`trade_no`)
+)
+COMMENT '阿里支付订单表';
 
 
 

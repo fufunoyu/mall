@@ -16,6 +16,11 @@
             <groupId>com.rhinoceros</groupId>
             <artifactId>mall-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.egzosn</groupId>
+            <artifactId>pay-java-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 

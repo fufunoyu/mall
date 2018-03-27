@@ -20,13 +20,13 @@ import java.io.InputStream;
  */
 @Component
 public class FileUploadManagerImpl implements FileUploadManager {
+    private static final String BASE_URL = "http://p5u6o7frf.bkt.clouddn.com";
     @Value("#{qiniuConfig['qiniu.bucket']}")
     private String bucket;
     @Value("#{qiniuConfig['qiniu.secretKey']}")
     private String secretKey;
     @Value("#{qiniuConfig['qiniu.accessKey']}")
     private String accessKey;
-    private static final String basePath = "http://p5u6o7frf.bkt.clouddn.com";
 
 
     @Override
@@ -36,14 +36,14 @@ public class FileUploadManagerImpl implements FileUploadManager {
         //通过该类上传文件
         UploadManager uploadManager = new UploadManager(cfg);
         Auth auth = Auth.create(accessKey, secretKey);
-        String key = filePath.endsWith("/") ? (filePath + fileName) : (filePath + "/" + fileName);
+        String key = filePath.endsWith("/") ? filePath + fileName : filePath + "/" + fileName;
         String uploadToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(is, key, uploadToken, null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
 
-            return basePath + "/" + putRet.key;
+            return BASE_URL + "/" + putRet.key;
         } catch (QiniuException e) {
             e.printStackTrace();
             throw new FileUplodException("文件上传失败");

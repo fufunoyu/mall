@@ -2,9 +2,9 @@ package com.rhinoceros.mall.admin.interceptor;
 
 import com.rhinoceros.mall.core.constant.ConstantValue;
 import com.rhinoceros.mall.core.dto.LoginUserDto;
-import com.rhinoceros.mall.core.po.User;
+import com.rhinoceros.mall.core.po.Admin;
 import com.rhinoceros.mall.service.impl.exception.user.UserException;
-import com.rhinoceros.mall.service.service.UserService;
+import com.rhinoceros.mall.service.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class UserCookieInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
-    private UserService userService;
+    private AdminService adminService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -60,9 +60,9 @@ public class UserCookieInterceptor extends HandlerInterceptorAdapter {
         dto.setUsername(username);
         dto.setPassword(password);
         try {
-            User user = userService.login(dto);
+            Admin admin = adminService.login(dto);
             //把用户信息放在session里面
-            request.getSession().setAttribute(ConstantValue.CURRENT_USER, user);
+            request.getSession().setAttribute(ConstantValue.CURRENT_USER, admin);
         } catch (UserException e) {
             e.printStackTrace();
             log.info(e.getMessage());

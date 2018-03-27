@@ -95,32 +95,23 @@
             <li>
                 <span>订单管理</span>
                 <ul>
-                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order'}">
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/waitShip'}">
                         <span>待发货</span>
                     </li>
-                    <li>
-                        <span>Program Files</span>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/shipIngPage'}">
+                        <span>已发货</span>
                     </li>
-                    <li>index.html</li>
-                    <li>about.html</li>
-                    <li>welcome.html</li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/waitCommentPage'}">
+                        <span>待评价</span>
+                    </li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/completedPage'}">
+                        <span>已完成</span>
+                    </li>
+                    <li data-options="attributes:{'url':'${pageContext.request.contextPath}/order/returnIngPage'}">
+                        <span>退货中</span>
+                    </li>
                 </ul>
             </li>
-            <li>
-                <span>用户管理</span>
-                <ul>
-                    <li>
-                        <span>Photos</span>
-                    </li>
-                    <li>
-                        <span>Program Files</span>
-                    </li>
-                    <li>index.html</li>
-                    <li>about.html</li>
-                    <li>welcome.html</li>
-                </ul>
-            </li>
-            <li>
             <li>
                 <span>首页管理</span>
                 <ul>

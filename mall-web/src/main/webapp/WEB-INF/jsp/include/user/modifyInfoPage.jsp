@@ -213,12 +213,7 @@
                 document.getElementById("pass2").value=""
                 return false
             }
-/*            if(pass1 == ${sessionScope[ConstantValue.CURRENT_USER].password}){
-                alert("新密码不可以和旧密码一样！")
-                document.getElementById("pass1").value=""
-                document.getElementById("pass2").value=""
-                return false
-            }*/
+
             $.ajax({
                 url:'${pageContext.request.contextPath}/user/update.json',
                 method:'post',

@@ -4,6 +4,7 @@ package com.rhinoceros.mall.service.service;
 
 import com.rhinoceros.mall.core.po.Product;
 import com.rhinoceros.mall.core.query.PageQuery;
+import com.rhinoceros.mall.core.vo.InputStreamWithFileName;
 
 import java.util.List;
 
@@ -53,9 +54,22 @@ public interface ProductService {
      */
     Long countDeepByCategoryId(Long categoryId);
 
+    /**
+     * 根据id删除商品
+     * @param id
+     */
     void deleteById(Long id);
 
-    void updateSelectionById(Product product);
+    /**
+     * 根据id修改商品
+     * @param product
+     * @param inputStreamWithFileNames
+     */
+    void updateSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
 
-    void addSelectionById(Product product);
+    /**
+     * 根据id新增商品
+     * @param inputStreamWithFileNames
+     */
+    void addSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
 }
