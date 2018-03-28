@@ -157,7 +157,7 @@ div.categoryWithCarousel div.head {
 }
 
 div.productsAsideCategorys a {
-    color: #999;
+
     font-size: 14px;
     margin: 8px;
 }
@@ -168,14 +168,40 @@ div.productsAsideCategorys a:hover {
 }
 
 div.productsAsideCategorys div.row {
-    margin: 20px 80px 0px 80px;
+    margin: 20px;
 }
 
 div.productsAsideCategorys div.row div.seperator {
-    margin-top: 20px;
+    margin-top: 10px;
     border-bottom-style: dashed;
     border-bottom-width: 1px;
     border-bottom-color: #e7e7e7;
+}
+
+.wrapper {
+}
+
+.submenu {
+    display: inline-block;
+    width: 70px;
+    text-align: justify;
+    text-align-last: justify;
+    font-weight: bold;
+    color: #000;
+}
+
+/*.submenu:after {
+    display: inline-block;
+    content: "";
+    width: 100%;
+    height: 0;
+}*/
+
+.thirdmenu {
+    display: inline-block;
+    margin-left: 10px;
+    color: #999;
+
 }
 
 div.categoryMenu a {

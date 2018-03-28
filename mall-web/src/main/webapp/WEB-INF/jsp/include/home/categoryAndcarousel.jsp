@@ -7,16 +7,29 @@
         $("div.eachCategory[cid=" + cid + "]").css("background-color", "white");
         $("div.eachCategory[cid=" + cid + "] a").css("color", "red");
         var row = $("div.productsAsideCategorys[cid=" + cid + "] div.row")
-        if (row.children().length <=0) {
+        if (row.children().length <= 0) {
             $.ajax({
-                url: '${pageContext.request.contextPath}/category/list.json?parentId=' + cid,
+                url: '${pageContext.request.contextPath}/category/list.json?size=100&parentId=' + cid,
                 method: 'get',
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        var a = $("<a href='${pageContext.request.contextPath}/category/product/list?cid=" + data[i].id + "'>" + data[i].name + "</a>")
-                        row.append(a)
+                        var submenu = $("<a class='submenu' href='${pageContext.request.contextPath}/category/product/list?cid=" + data[i].id + "'>" + data[i].name + "</a>")
+                        row.append(submenu)
+                        row.append("&gt;")
+                        var thirdmenu = $("<div class='thirdmenu'></div>")
+                        $.ajax({
+                            url: '${pageContext.request.contextPath}/category/list.json?size=10&parentId=' + data[i].id,
+                            method: 'get',
+                            success: function (data2) {
+                                for (var i = 0; i < data2.length; i++) {
+                                    var a = $("<a class='menuitem' href='${pageContext.request.contextPath}/category/product/list?cid=" + data2[i].id + "'>" + data2[i].name + "</a>")
+                                    thirdmenu.append(a)
+                                }
+                            }
+                        })
+                        row.append(thirdmenu)
+                        row.append($("<div class='seperator'></div>"))
                     }
-                    row.append($("<div class='seperator'></div>"))
                 }
             })
         }
