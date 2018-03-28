@@ -105,11 +105,11 @@ public class ProductServiceImpl implements ProductService {
         List<String> urls = new LinkedList<>();
         for (InputStreamWithFileName inputStreamWithFileName : inputStreamWithFileNames) {
             //获取文件后缀
-            String str=inputStreamWithFileName.getFileName().substring(inputStreamWithFileName.getFileName().lastIndexOf(".")+1);
+            String str = inputStreamWithFileName.getFileName().substring(inputStreamWithFileName.getFileName().lastIndexOf(".") + 1);
             //后缀转化为小写
-            String extName=convertString(str);
+            String extName = convertString(str);
             //判断文件格式是否为图片
-            if(!extName.equals("jpg")&&!extName.equals("png")&&!extName.equals("bmp")&&!extName.equals("gif")){
+            if (!extName.equals("jpg") && !extName.equals("png") && !extName.equals("bmp") && !extName.equals("gif")) {
                 throw new FileUplodException("图片格式不正确");
             }
             String saveName = UUID.randomUUID().toString() + "_" + inputStreamWithFileName.getFileName();
@@ -125,13 +125,14 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 格式化
+     *
      * @param str
      * @return
      */
     private String convertString(String str) {
-        char[] ch=str.toCharArray();
-        StringBuffer sbf=new StringBuffer();
-        for(int i=0;i<ch.length;i++){
+        char[] ch = str.toCharArray();
+        StringBuffer sbf = new StringBuffer();
+        for (int i = 0; i < ch.length; i++) {
             sbf.append(charToLower(ch[i]));
         }
         return sbf.toString();
@@ -139,12 +140,13 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 转小写
+     *
      * @param ch
      * @return
      */
     private char charToLower(char ch) {
-        if(ch<=90&&ch>=65){
-            ch+=32;
+        if (ch <= 90 && ch >= 65) {
+            ch += 32;
         }
         return ch;
     }
@@ -168,11 +170,11 @@ public class ProductServiceImpl implements ProductService {
         List<String> urls = new LinkedList<>();
         for (InputStreamWithFileName inputStreamWithFileName : inputStreamWithFileNames) {
             //获取文件后缀
-            String str=inputStreamWithFileName.getFileName().substring(inputStreamWithFileName.getFileName().lastIndexOf(".")+1);
+            String str = inputStreamWithFileName.getFileName().substring(inputStreamWithFileName.getFileName().lastIndexOf(".") + 1);
             //后缀转化为小写
-            String extName=convertString(str);
+            String extName = convertString(str);
             //判断文件格式是否为图片
-            if(!extName.equals("jpg")&&!extName.equals("png")&&!extName.equals("bmp")&&!extName.equals("gif")){
+            if (!extName.equals("jpg") && !extName.equals("png") && !extName.equals("bmp") && !extName.equals("gif")) {
                 throw new FileUplodException("图片格式不正确");
             }
             inputStreamWithFileName.getFileName();
@@ -189,6 +191,7 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 传递富文本的图片
+     *
      * @param product
      * @param list
      * @return
@@ -203,6 +206,5 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(url);
         return url;
     }
-
 
 }

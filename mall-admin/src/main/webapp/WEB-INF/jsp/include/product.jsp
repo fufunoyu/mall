@@ -8,12 +8,16 @@
 <body>
 <script>
     window.UEDITOR_HOME_URL = "${pageContext.request.contextPath}/static/ueditor/"
+    window.SERVER_URL = "${pageContext.request.contextPath}/product/editor"
 
 </script>
 
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8"
+        src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8"
+        src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8"
+        src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <%--图片大小--%>
 <style>
     .photo {
@@ -80,31 +84,31 @@
         var categoryId = null
         if (selected != null) {
             categoryId = selected.id
-            data.append("categoryId",categoryId)
+            data.append("categoryId", categoryId)
         }
         var files = $('#selectImage1')[0].files
-        for(var i=0;i<files.length;i++){
-            data.append("files",files[i])
+        for (var i = 0; i < files.length; i++) {
+            data.append("files", files[i])
         }
-        data.append("name",$("#productName1").textbox('getText'))
-        data.append("price",$("#productPrice1").numberspinner("getValue"))
-        data.append("discount",$("#productDiscount1").numberspinner("getValue"))
-        data.append("storeNum",$("#productStoreNum1").numberspinner("getValue"))
-        data.append("status",$("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        data.append("description",editor1.getContent())
-        if($("#productName1").textbox('getText')==null||$("#productName1").textbox('getText').trim()==""){
+        data.append("name", $("#productName1").textbox('getText'))
+        data.append("price", $("#productPrice1").numberspinner("getValue"))
+        data.append("discount", $("#productDiscount1").numberspinner("getValue"))
+        data.append("storeNum", $("#productStoreNum1").numberspinner("getValue"))
+        data.append("status", $("#productStatus1").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
+        data.append("description", editor1.getContent())
+        if ($("#productName1").textbox('getText') == null || $("#productName1").textbox('getText').trim() == "") {
             $.messager.alert('提示', '商品名输入不正确！');
-        }else if(files==null||files.length==0){
+        } else if (files == null || files.length == 0) {
             $.messager.alert('提示', '图片不能为空!');
-        }else if($("#productPrice1").numberspinner("getValue")==null||$("#productPrice1").textbox('getText').trim()==""){
+        } else if ($("#productPrice1").numberspinner("getValue") == null || $("#productPrice1").textbox('getText').trim() == "") {
             $.messager.alert('提示', '商品价格不正确!');
-        }else if($("#productDiscount1").numberspinner("getValue")==null||$("#productDiscount1").textbox('getText').trim()==""){
+        } else if ($("#productDiscount1").numberspinner("getValue") == null || $("#productDiscount1").textbox('getText').trim() == "") {
             $.messager.alert('提示', '商品优惠价格不正确!');
-        }else if($("#productStoreNum1").numberspinner("getValue")==null||$("#productStoreNum1").textbox('getText').trim()==""){
+        } else if ($("#productStoreNum1").numberspinner("getValue") == null || $("#productStoreNum1").textbox('getText').trim() == "") {
             $.messager.alert('提示', '商品库存不正确!');
-        }else if(categoryId==null){
+        } else if (categoryId == null) {
             $.messager.alert('提示', '请选择商品分类!');
-        }else{
+        } else {
             $.ajax({
                 url: '${pageContext.request.contextPath}/product/add',
                 processData: false,
@@ -127,7 +131,7 @@
                         })
                     }
                 },
-                error:function (errorMsg) {
+                error: function (errorMsg) {
                     $.messager.alert('提示', errorMsg);
                 }
             })
@@ -188,27 +192,27 @@
         var categoryId = null
         if (selected != null) {
             categoryId = selected.id
-            data.append("categoryId",categoryId)
+            data.append("categoryId", categoryId)
         }
         var t = $('#product_table');
         var row = t.datagrid('getSelected');
         var files = $('#selectImage')[0].files
-        for(var i=0;i<files.length;i++){
-            data.append("files",files[i])
+        for (var i = 0; i < files.length; i++) {
+            data.append("files", files[i])
         }
-        data.append("id",row.id)
-        data.append("name",$("#productName").textbox('getText'))
-        data.append("price",$("#productPrice").numberspinner("getValue"))
-        data.append("discount",$("#productDiscount").numberspinner("getValue"))
-        data.append("storeNum",$("#productStoreNum").numberspinner("getValue"))
-        data.append("status",$("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
-        data.append("description",editor.getContent())
+        data.append("id", row.id)
+        data.append("name", $("#productName").textbox('getText'))
+        data.append("price", $("#productPrice").numberspinner("getValue"))
+        data.append("discount", $("#productDiscount").numberspinner("getValue"))
+        data.append("storeNum", $("#productStoreNum").numberspinner("getValue"))
+        data.append("status", $("#productStatus").textbox("getText") == "上架" ? "ON_SHELF" : "LEAVE_SHELF")
+        data.append("description", editor.getContent())
         $.ajax({
             url: '${pageContext.request.contextPath}/product/update',
             processData: false,
             contentType: false,
             method: 'post',
-            data:data,
+            data: data,
             success: function (result) {
                 $.messager.alert('提示', result);
                 $("#product_win").window("close")
@@ -224,7 +228,7 @@
                     }
                 })
             },
-            error:function (errorMsg) {
+            error: function (errorMsg) {
                 $.messager.alert('提示', errorMsg);
             }
         })
@@ -412,8 +416,8 @@
         editor.setContent(row.description)
         $("#productName").textbox('setText', row.name)
         $("#productPrice").numberspinner("setValue", row.price)
-        $("#productDiscount").numberspinner("setValue",  row.discount)
-        $("#productStoreNum").numberspinner("setValue",  row.storeNum)
+        $("#productDiscount").numberspinner("setValue", row.discount)
+        $("#productStoreNum").numberspinner("setValue", row.storeNum)
         $("#productSaleNum").textbox('setText', row.saleNum)
         $("#productCommentNum").textbox('setText', row.commentNum)
         var status
@@ -473,32 +477,32 @@
         })
     })
 
-        <%--&lt;%&ndash;商品描述框&ndash;%&gt;--%>
-        <%--$('#productDescription').texteditor({--%>
-        <%--//...--%>
-        <%--});--%>
-        //     $('#productDescription1').texteditor({
-        //         //...
-        //     });
-        // });
+    <%--&lt;%&ndash;商品描述框&ndash;%&gt;--%>
+    <%--$('#productDescription').texteditor({--%>
+    <%--//...--%>
+    <%--});--%>
+    //     $('#productDescription1').texteditor({
+    //         //...
+    //     });
+    // });
 
-        <%--商品分类下拉框--%>
+    <%--商品分类下拉框--%>
 
-        function product_categoryFilter(data) {
-            var arr = []
-            for (var i = 0; i < data.length; i++) {
-                arr.push({
-                    id: data[i].id,
-                    text: data[i].name,
-                    state: 'closed',
-                    parentId: data[i].parentId,
-                    // children: [{
-                    //     text: ''
-                    // }]
-                })
-            }
-            return arr
+    function product_categoryFilter(data) {
+        var arr = []
+        for (var i = 0; i < data.length; i++) {
+            arr.push({
+                id: data[i].id,
+                text: data[i].name,
+                state: 'closed',
+                parentId: data[i].parentId,
+                // children: [{
+                //     text: ''
+                // }]
+            })
         }
+        return arr
+    }
 
 
 </script>
@@ -560,15 +564,15 @@
         <input id="productCommentNum" class="easyui-textbox" name="commentNum" style="width:100%"
                data-options="label:'评论总数:',required:true" readonly>
     </div>
-    <div> <span>商品详情:</span>
-    <div style="margin-bottom:20px">
-        <form id="productDescription" method="post" target="_blank" style="width:100%;height: 500px">
-            <script type="text/plain" id="myEditor" name="myEditor" ></script>
-        </form>
-        <script type="text/javascript">
-            var editor = UE.getEditor('productDescription');
-        </script>
-    </div>
+    <div><span>商品详情:</span>
+        <div style="margin-bottom:20px">
+            <form id="productDescription" method="post" target="_blank" style="width:100%;height: 500px">
+                <script type="text/plain" id="myEditor" name="myEditor"></script>
+            </form>
+            <script type="text/javascript">
+                var editor = UE.getEditor('productDescription');
+            </script>
+        </div>
     </div>
     <div style="margin-bottom:20px">
         <button onclick="product_button_edit_confirm()">确认</button>
@@ -634,7 +638,7 @@
         <span>商品详情:</span>
         <div style="margin-bottom:20px">
             <form id="productDescription1" method="post" target="_blank" style="width:100%;height: 500px">
-                <script type="text/plain" id="myEditor1" name="myEditor1" ></script>
+                <script type="text/plain" id="myEditor1" name="myEditor1"></script>
             </form>
             <script type="text/javascript">
                 var editor1 = UE.getEditor('productDescription1');

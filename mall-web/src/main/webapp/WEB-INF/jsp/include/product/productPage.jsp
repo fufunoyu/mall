@@ -12,4 +12,6 @@
 	<%@include file="productReview.jsp" %>
 	
 	<%@include file="productDetail.jsp" %>
+
+    <%@include file="recommends.jsp"%>
 </div>

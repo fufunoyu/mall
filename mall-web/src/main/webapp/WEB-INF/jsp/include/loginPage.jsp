@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ page import="com.rhinoceros.mall.core.constant.ConstantValue" %>
 <script>
     $(function () {
 
@@ -46,7 +45,7 @@
         <img src="${pageContext.request.contextPath}/static/img/site/loginBackground5.png">
     </div>
     <%--<img id="loginBackgroundImg" class="loginBackgroundImg"--%>
-         <%--src="${pageContext.request.contextPath}/static/img/site/loginBackground5.png">--%>
+    <%--src="${pageContext.request.contextPath}/static/img/site/loginBackground5.png">--%>
 
     <form class="loginForm" action="${pageContext.request.contextPath}/loginSubmit" method="post">
         <div id="loginSmallDiv" class="loginSmallDiv">
@@ -58,12 +57,13 @@
             </div>
 
             <div class="login_acount_text">账户登录</div>
-            <input name="${ConstantValue.CALLBACK_URL}" value="${requestScope[ConstantValue.CALLBACK_URL]}" type="hidden">
+            <input name="${ConstantValue.CALLBACK_URL}" value="${requestScope[ConstantValue.CALLBACK_URL]}"
+                   type="hidden"/>
             <div class="loginInput ">
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-user"></span>
 				</span>
-                <input id="name" name="username" value="${loginUser.username}" placeholder="用户名" type="text">
+                <input id="name" name="username" value="${loginUser.username}" placeholder="用户名" type="text"/>
             </div>
 
 
@@ -71,9 +71,10 @@
 				<span class="loginInputIcon ">
 					<span class=" glyphicon glyphicon-lock"></span>
 				</span>
-                <input id="password" name="password" type="password" value="${loginUser.password}" placeholder="密码">
+                <input id="password" name="password" type="password" value="${loginUser.password}"
+                       placeholder="密码"/>
             </div>
-            <input id="remberBtn" name="rememberMe" type="checkbox">
+            <input id="remberBtn" name="rememberMe" type="checkbox"/>
             <span class="loginInputIcon ">记住我</span>
 
             <br/>

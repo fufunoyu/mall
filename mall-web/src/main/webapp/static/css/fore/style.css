@@ -1,3 +1,7 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
 .show {
     border: 1px dotted skyblue !important;
 }
@@ -157,7 +161,6 @@ div.categoryWithCarousel div.head {
 }
 
 div.productsAsideCategorys a {
-
     font-size: 14px;
     margin: 8px;
 }
@@ -168,7 +171,7 @@ div.productsAsideCategorys a:hover {
 }
 
 div.productsAsideCategorys div.row {
-    margin: 20px;
+    margin: 10px 20px;
 }
 
 div.productsAsideCategorys div.row div.seperator {
@@ -461,11 +464,14 @@ div.login_acount_text {
     color: #3C3C3C;
     font-size: 16px;
     font-weight: bold;
+    text-align: center;
 }
 
 div.loginInput {
     border: 1px solid #CBCBCB;
     margin: 20px 0px;
+
+    padding: 0;
 }
 
 div.loginInput input {
@@ -478,10 +484,13 @@ div.loginInput input {
     background: #fff;
     padding: 0;
     margin: 0;
+
 }
 
 div.loginInput span, div.loginInput input {
     display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
 }
 
 div.loginInput span.loginInputIcon {
@@ -489,6 +498,7 @@ div.loginInput span.loginInputIcon {
     background-color: #CBCBCB;
     width: 40px;
     height: 40px;
+    box-sizing: border-box;
 }
 
 span.loginInputIcon span.glyphicon {
@@ -925,13 +935,15 @@ div.infoInimgAndInfo span.serviceCommitmentLink a {
 }
 
 div.productDetailDiv {
-    width: 1400px;
-    margin: 40px auto;
+    width: 1000px;
+    margin: 40px 0;
+    display: inline-block;
 }
 
 div.productReviewDiv {
-    width: 790px;
-    margin: 40px auto;
+    width: 1000px;
+    margin: 40px 0;
+    display: inline-block;
 }
 
 div.productReviewContentPart {
@@ -2382,4 +2394,28 @@ body {
 
 .activity img {
     width: 100%;
+}
+
+.recommends {
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+    right: 0;
+    margin-left: 100px;
+}
+
+.recommends h2 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.recommends .item {
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.recommends .item:hover {
+    border: 2px solid #C40000;
 }

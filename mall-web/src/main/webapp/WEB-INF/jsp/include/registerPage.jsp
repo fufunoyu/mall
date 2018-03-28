@@ -109,5 +109,5 @@
         <label for="email">邮箱</label>
         <input id="email" name="email" value="${registerUser.email}" placeholder="请输入你的邮箱" class="form-control">
     </div>
-    <button type="submit" style="width: 100%" class="btn btn-primary">提交</button>
+    <button type="submit" style="width: 100%" class="btn btn-danger">提交</button>
 </form>

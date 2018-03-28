@@ -56,12 +56,14 @@ public interface ProductService {
 
     /**
      * 根据id删除商品
+     *
      * @param id
      */
     void deleteById(Long id);
 
     /**
      * 根据id修改商品
+     *
      * @param product
      * @param inputStreamWithFileNames
      */
@@ -69,9 +71,11 @@ public interface ProductService {
 
     /**
      * 根据id新增商品
+     *
      * @param inputStreamWithFileNames
      */
     void addSelectionById(Product product, List<InputStreamWithFileName> inputStreamWithFileNames);
 
     String editor(Product product, List<InputStreamWithFileName> list);
+
 }
