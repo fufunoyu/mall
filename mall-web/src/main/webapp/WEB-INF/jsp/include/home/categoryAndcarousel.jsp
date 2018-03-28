@@ -13,21 +13,28 @@
                 method: 'get',
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
+                        var wrapper=$("<div class='wrapper'></div>")
                         var submenu = $("<a class='submenu' href='${pageContext.request.contextPath}/category/product/list?cid=" + data[i].id + "'>" + data[i].name + "</a>")
-                        row.append(submenu)
-                        row.append("&gt;")
+                        wrapper.append(submenu)
                         var thirdmenu = $("<div class='thirdmenu'></div>")
                         $.ajax({
                             url: '${pageContext.request.contextPath}/category/list.json?size=10&parentId=' + data[i].id,
                             method: 'get',
+                            async : false,
                             success: function (data2) {
-                                for (var i = 0; i < data2.length; i++) {
-                                    var a = $("<a class='menuitem' href='${pageContext.request.contextPath}/category/product/list?cid=" + data2[i].id + "'>" + data2[i].name + "</a>")
+                                for (var j = 0; j < data2.length; j++) {
+                                    var a = $("<a class='menuitem' href='${pageContext.request.contextPath}/category/product/list?cid=" + data2[j].id + "'>" + data2[j].name + "</a>")
                                     thirdmenu.append(a)
                                 }
                             }
                         })
-                        row.append(thirdmenu)
+                        thirdmenu.find("a.menuitem").each(function(){
+                            var v = Math.round(Math.random() *6);
+                            if(v == 1)
+                                $(this).css("color","#C40000");
+                        });
+                        wrapper.append(thirdmenu)
+                        row.append(wrapper)
                         row.append($("<div class='seperator'></div>"))
                     }
                 }
