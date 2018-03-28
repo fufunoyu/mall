@@ -55,7 +55,7 @@
 
 
         <div class="license">
-            <div class="copyRightYear">&copy; 2003-2016 MSMall.COM 版权所有</div>
+            <div class="copyRightYear">&copy; 2017-2018 犀牛项目组版权所有</div>
         </div>
     </div>
 </div>
