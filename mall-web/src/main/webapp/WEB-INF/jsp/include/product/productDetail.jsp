@@ -9,7 +9,7 @@
                 class="productDetailTopReviewLinkNumber">${productVo.product.commentNum}</span> </a>
     </div>
 
-    <div>
+    <div class="description">
         ${productVo.product.description}
     </div>
 

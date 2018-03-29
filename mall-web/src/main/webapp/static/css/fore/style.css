@@ -941,6 +941,10 @@ div.productDetailDiv {
     display: inline-block;
 }
 
+.productDetailDiv .description img{
+    width: 100%;
+}
+
 div.productReviewDiv {
     width: 1000px;
     margin: 40px 0;
@@ -1078,9 +1082,6 @@ span.userInfoGrayPart {
     color: #999999;
 }
 
-div.productReviewDiv {
-    display: none;
-}
 
 div.buyPageDiv {
     margin: 20px auto;

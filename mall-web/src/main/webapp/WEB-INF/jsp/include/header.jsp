@@ -44,6 +44,7 @@
 
 
         $(function () {
+
             $("a.productDetailTopReviewLink").click(function () {
                 $("div.productReviewDiv").show();
                 $("div.productDetailDiv").hide();
@@ -62,6 +63,9 @@
             });
         });
 
+        $(document).ready(function(){
+            $("div.productReviewDiv").hide();
+        })
     </script>
 </head>
 
