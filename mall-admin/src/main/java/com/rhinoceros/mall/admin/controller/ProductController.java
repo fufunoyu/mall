@@ -172,7 +172,7 @@ public class ProductController {
             config.put("imagePath", "");
             config.put("imageFieldName", UPLOAD_IMAGE_NAME);
             config.put("imageMaxSize", 2048);
-            String[] images = {".jpg"};
+            String[] images = {".jpg",".png"};
             config.put("imageAllowFiles", images);
             config.put("imageActionName", acionName);
             return config;

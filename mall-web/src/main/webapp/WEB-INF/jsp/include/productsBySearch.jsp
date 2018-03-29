@@ -10,7 +10,7 @@
         kkpager.generPageHtml({
             pno: '${page.page}',
             //总页码
-            total: '${(total+page.size)/page.size}',
+            total: '${(total+page.size-1)/page.size}',
             //总数据条数
             totalRecords: '${total}',
             //链接前部
