@@ -1521,7 +1521,7 @@ div.warningDiv {
 }
 
 div.cartDiv {
-    max-width: 1013px;
+    max-width: 1400px;
     margin: 10px auto;
     color: black;
 }
@@ -1670,7 +1670,7 @@ div.cartFoot button {
 }
 
 div.boughtDiv {
-    max-width: 1013px;
+    max-width: 1400px;
     margin: 10px auto;
 }
 
@@ -2345,11 +2345,12 @@ body {
 .header {
     width: 1400px;
     margin: 0 auto;
+    vertical-align: middle;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.header > * {
-    display: inline-block;
-}
 
 .header .logo {
 }
@@ -2363,6 +2364,8 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    align-self: center;
+    vertical-align: middle;
 }
 
 .search input {
