@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 商品详情页跳转
@@ -54,11 +55,12 @@ public class ProductController {
         if (page == null) {
             page = 1;
         }
-        ProductVo productVo = new ProductVo(productService.findById(id));
+        Product product = productService.findById(id);
+        ProductVo productVo = new ProductVo(product);
         //获取商品详情
         model.addAttribute("productVo", productVo);
 
-        List<Comment> comments = commentService.findByProductId(id, new PageQuery(page, 10,new Order("createAt", Order.Direction.DESC)));
+        List<Comment> comments = commentService.findByProductId(id, new PageQuery(page, 10, new Order("createAt", Order.Direction.DESC)));
 
         List<CommentVo> commentVos = new LinkedList<>();
         for (Comment comment : comments) {
@@ -68,8 +70,16 @@ public class ProductController {
             commentVos.add(vo);
         }
 
+        //查询相关商品
+
+        List<Product> products = productService.query(product.getName(), new PageQuery(1, 5));
+        //过滤掉本商品
+        products = products.stream().filter(it -> !it.getId().equals(product.getId()))
+                .collect(Collectors.toList());
+
         model.addAttribute("comments", commentVos);
         model.addAttribute("nowPage", page);
+        model.addAttribute("recommends", products);
         return "product";
     }
 
