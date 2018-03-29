@@ -28,18 +28,24 @@ ul, li{
     float: left;
     width: 200px;
     height: 760px;
-    background-image: url("http://pic.58pic.com/58pic/13/49/66/44858PIC5uJ_1024.jpg");
-    background-color: white;
+    /*background-image: url("http://pic.58pic.com/58pic/13/49/66/44858PIC5uJ_1024.jpg");*/
+    background-color: #f4f4f4;
 }
 .right {
-    background-image: url("http://www.zdsee.com/bbs/attachment/Mon_0612/30_17712_67c269e2a6f9775.jpg");
+    /*background-image: url("http://www.zdsee.com/bbs/attachment/Mon_0612/30_17712_67c269e2a6f9775.jpg");*/
+    /*background-image: url("http://pic.58pic.com/58pic/13/49/66/44858PIC5uJ_1024.jpg");*/
     margin-left: 210px;
-    height: 760px;
+    height: 260px;
+    /*760px*/
+    border-radius: 25px;
+    background-color: white;
+    /*background-color: #f4f4f4;*/
 }
 .right .info{
-    margin: 30px 0 10px 0;
+    margin:30px 10px 10px 30px; /*30px 0 10px 0;*/
     padding-bottom: 10px;
     font-size: 20px;
+    font-weight: bold;
     border-bottom: 1px solid #eaeaea;
 }
 .right li{
@@ -48,6 +54,7 @@ ul, li{
     text-align: left;
     white-space: nowrap;
     outline: 0;
+    margin: 0 0 0 30px;
 }
 .right label{
     width: 160px;
@@ -124,6 +131,7 @@ ul, li{
 .modal-body {padding: 2px 16px;}
 
 .button {
+    border-radius: 10px;
     position: relative;
     background-color: #b80d1d;
     border: none;

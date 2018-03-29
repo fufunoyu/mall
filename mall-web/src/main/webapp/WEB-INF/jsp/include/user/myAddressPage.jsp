@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix='fmt' %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<html style="background-color:#f4f4f4;">
 <head>
     <title>收货地址管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap/3.3.6/bootstrap.min.css">
@@ -96,7 +96,7 @@
         <br/>
         <br/>
         <br/>
-        <button class="button" id="add" onclick="add()">添 加</button>
+        <button class="button0" id="add" onclick="add()">添 加</button>
     </div>
     <%--编辑地址弹窗--%>
     <div class="modal" id="updateWin" title="编辑地址">
