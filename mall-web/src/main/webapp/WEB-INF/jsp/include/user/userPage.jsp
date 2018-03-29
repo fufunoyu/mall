@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/fore//nav.css">
 
 
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #f4f4f4">
     <%--导航栏--%>
 <%--    <ul class="sidenav col-md-2">
         <h2>
@@ -39,7 +39,7 @@
         </section>
         </div>
     <%--内容--%>
-    <iframe class="content col-md-10" src="${pageContext.request.contextPath}/user/detail"
+    <iframe class="content col-md-10" style="background-color: #f4f4f4" src="${pageContext.request.contextPath}/user/detail"
             name="iframe_a">
     </iframe>
 </div>

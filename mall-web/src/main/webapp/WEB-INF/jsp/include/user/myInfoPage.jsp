@@ -13,6 +13,7 @@
 <head>
     <title>个人信息</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/fore/myInfo.css">
+
 </head>
 <body>
 <div class="left">
@@ -52,5 +53,6 @@
         </li>
     </ul>
 </div>
+
 </body>
 </html>
