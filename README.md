@@ -7,7 +7,7 @@
 2. 配置mall-dao-impl中的db.properties为自己数据库参数
 3. 下载maven jar包
 4. 编译mall-web为war包
-5. 放入tomcat中运行
+5. 放入tomcat中运行 
 
 # 目录结构
 * mall
