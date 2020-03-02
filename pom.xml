@@ -38,7 +38,7 @@
         <mybatis.version>3.4.5</mybatis.version>
         <druid.version>1.1.8</druid.version>
         <elasticSearch.version>6.2.2</elasticSearch.version>
-        <jackson.version>2.9.4</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
     </properties>
 
     <dependencies>
