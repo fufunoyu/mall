@@ -34,7 +34,7 @@
         </plugins>
     </build>
     <properties>
-        <spring.version>4.3.14.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <mybatis.version>3.4.5</mybatis.version>
         <druid.version>1.1.8</druid.version>
         <elasticSearch.version>6.2.2</elasticSearch.version>
